@@ -1,0 +1,34 @@
+{
+  "users": {
+    "123": {
+      "activities": {
+        "activity 1": {
+          "name": "Running",
+          "attribute1": "8 min/mile",
+          "attribute2": "Trail running"
+        },
+        "activity 2": {
+          "name": "Swimming",
+          "attribute1": "Open water"
+        },
+        "activity 3": {
+          "name": "Tennis",
+          "attribute1": "4.0"
+        }
+      }
+    },
+    "234": {
+      "activities": {
+        "activity 1": {
+          "name": "Running"
+        },
+        "activity 2": {
+          "name": "Swimming"
+        },
+        "activity 3": {
+          "name": "Tennis"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "buddies_v3",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "firebase": "^3.6.9",
+    "firebase-token-generator": "^2.0.0",
+    "firebaseui": "^1.0.0",
+    "lodash": "^4.17.4",
+    "react": "15.4.2",
+    "react-native": "0.41.2",
+    "react-native-camera-roll-picker": "^1.1.9",
+    "react-native-cli": "^2.0.1",
+    "react-native-fbsdk": "^0.5.0",
+    "react-native-fbsdklogin": "0.0.8",
+    "react-native-gifted-chat": "^0.1.3",
+    "react-native-nav": "^1.1.4",
+    "react-native-router-flux": "^3.37.0",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-jest": "18.0.0",
+    "babel-preset-react-native": "1.9.1",
+    "eslint-config-rallycoding": "^3.2.0",
+    "jest": "18.1.0",
+    "react-test-renderer": "15.4.2"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

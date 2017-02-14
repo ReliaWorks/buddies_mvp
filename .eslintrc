@@ -1,0 +1,16 @@
+{
+  "extends": "rallycoding",
+  "rules": {
+      "arrow-body-style": 0,
+      "no-undef": 0,
+      "no-underscore-dangle": 0,
+      "comma-spacing": 0,
+      "max-len": 0,
+      "global-require": 0,
+      "react/require-extension": 0,
+      "object-shorthand": 0,
+      "quotes": 0,
+      "keyword-spacing": 0,
+      "prefer-template": 0,
+  }
+}
