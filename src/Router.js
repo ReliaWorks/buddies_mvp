@@ -1,14 +1,9 @@
 import React from 'react';
 import { ActionConst, Actions, Scene, Router } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
-//import FirebaseLoginForm from './components/FirebaseLoginForm';
 import Settings from './components/Settings';
 import BrowseBuddies from './components/BrowseBuddies';
-//import ProfileSetup from './components/ProfileSetup';
-import PicSetup from './components/PicSetup';
-import ActivitySetup from './components/ActivitySetup';
-import AffiliationSetup from './components/AffiliationSetup';
-import DescriptionSetup from './components/DescriptionSetup';
+import { PicSetup, ActivitySetup, AffiliationSetup, DescriptionSetup, ProfileSetupComplete } from './components/profile-setup';
 import UserEdit from './components/UserEdit';
 import UserView from './components/UserView';
 import Matches from './components/Matches';
@@ -26,23 +21,30 @@ const RouterComponent = () => {
       <Scene key="root">
         <Scene key="login" direction="vertical" component={LoginForm} title="Buddies" />
       </Scene>
-      <Scene key="profileSetup" initial>
+      <Scene key="profileSetup">
         <Scene
           key="picSetup"
+          title="Profile Setup"
           component={PicSetup}
-          initial
         />
         <Scene
           key="activitySetup"
+          title="Profile Setup"
           component={ActivitySetup}
         />
         <Scene
           key="affiliationSetup"
+          title="Profile Setup"
           component={AffiliationSetup}
         />
         <Scene
           key="descriptionSetup"
+          title="Profile Setup"
           component={DescriptionSetup}
+        />
+        <Scene
+          key="profileSetupComplete"
+          component={ProfileSetupComplete}
         />
       </Scene>
       <Scene key="main" type={ActionConst.RESET}>

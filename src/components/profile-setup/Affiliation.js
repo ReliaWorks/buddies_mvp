@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
-import { FullSizeImageModal } from './common';
+import { FullSizeImageModal } from '../common';
 
-const ggtcAffiliationImage = require('./common/img/ggtc_logo.png');
-const rrcaAffiliationImage = require('./common/img/rrca_logo.png');
+const ggtcAffiliationImage = require('../common/img/ggtc_logo.png');
+const rrcaAffiliationImage = require('../common/img/rrca_logo.png');
 
 class Affiliation extends Component {
-  state = { showModal: false, selectedImage: require('./common/img/ggtc_logo.png') };
+  state = { showModal: false, selectedImage: require('../common/img/ggtc_logo.png') };
 
   onModalClose() {
     this.setState({ showModal: false });

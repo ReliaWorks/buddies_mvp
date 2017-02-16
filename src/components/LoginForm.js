@@ -33,7 +33,7 @@ class LoginForm extends Component {
   initUser(token) {
     const profileRequestParams = {
       fields: {
-        string: 'id, name, email, first_name, last_name, gender'
+        string: 'id, name, email, first_name, last_name, gender, user_photos'
       }
     };
 
@@ -81,7 +81,7 @@ class LoginForm extends Component {
     const auth = firebase.auth();
     const provider = firebase.auth.FacebookAuthProvider;
 
-    LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends'])
+    LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends', 'user_photos'])
       .then((result) => {
         if (result.isCancelled) {
           console.log('Login cancelled');

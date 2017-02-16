@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
 import { textStyle } from './common/styles';
 //import ActivityList from './ActivityList';
-import Affiliation from './Affiliation';
+import Affiliation from './profile-setup/Affiliation';
 
 //const defaultProfileImageURL = require('./common/img/sarahpallittacrop.jpg');
 
@@ -13,7 +13,7 @@ class Profile extends Component {
     return (
      <View style={{ flex: 1, justifyContent: 'flex-start', alignSelf: 'stretch' }}>
        <Image
-         source={{uri:profileImageURL}}
+         source={{ uri: profileImageURL }}
          style={styles.imageStyle}
        />
        <View style={styles.containerStyle}>

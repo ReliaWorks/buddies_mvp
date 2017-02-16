@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { CardItem } from './common';
-import { headerTextStyle, textStyle } from './common/styles';
+import { CardItem } from '../common';
+import { headerTextStyle, textStyle } from '../common/styles';
 
 class Activity extends Component {
   onRowPress() {

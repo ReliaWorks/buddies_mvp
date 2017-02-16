@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, ScrollView, TouchableOpacity, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ActivityList from './ActivityList';
-import Affiliation from './Affiliation';
+import Affiliation from './profile-setup/Affiliation';
 
 const defaultProfileImageURL = require('./common/img/sarahpallittacrop.jpg');
 

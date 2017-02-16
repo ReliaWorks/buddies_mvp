@@ -12,5 +12,6 @@
       "quotes": 0,
       "keyword-spacing": 0,
       "prefer-template": 0,
+      "object-curly-spacing": 0,
   }
 }

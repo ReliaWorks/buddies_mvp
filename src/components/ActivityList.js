@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import { activitiesFetch } from '../actions';
-import Activity from './Activity';
+import Activity from './profile-setup/Activity';
 
 class ActivityList extends Component {
   componentWillMount() {

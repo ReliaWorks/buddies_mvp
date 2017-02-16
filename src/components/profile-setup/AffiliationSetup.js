@@ -1,65 +1,51 @@
 import React, { Component } from 'react';
 import { Button, ListView, Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import ActivityCard from './ActivityCard';
-//import ActivityList from './components/ActivityList';
-import { containerStyle, textStyle } from './common/styles';
-import { Header } from './common';
-import sampleActivityData from './demo-data/activities';
+import { textStyle } from '../common/styles';
+import { Header, Tile } from '../common';
+import sampleAffiliationData from '../demo-data/affiliations';
 
+const addIcon = require('../common/img/add_icon.png');
 
-//const defaultProfileImageURL = require('./common/img/sarahpallittacrop.jpg');
-const addIcon = require('./common/img/add_icon.png');
-
-class ActivitySetup extends Component {
+class AffiliationSetup extends Component {
   constructor() {
     super();
 
     const activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: activitiesDS.cloneWithRows(sampleActivityData),
+      dataSource: activitiesDS.cloneWithRows(sampleAffiliationData),
     };
   }
 
   render() {
     return(
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <Header headerTitle="Profile Setup" />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
           <Text style={textStyle}>
-          Select Activities:
+          Select Affiliations:
           </Text>
           <Button
-            onPress={() => Actions.affiliationSetup()}
+            onPress={() => Actions.descriptionSetup()}
             style={textStyle}
             title="Next"
             color="#4267B2"
           />
         </View>
-        <View
-          style={{
-            flex: 4,
-            padding: 10,
-            alignSelf: 'flex-start'
-          }}
-        >
-          <ListView
-            style={styles.container}
+        <ListView
+            contentContainerStyle={styles.list}
             dataSource={this.state.dataSource}
-            horizontal
-            renderRow={(data) => <ActivityCard {...data} />}
-          />
-        </View>
-        <View style={{ justifyContent: 'center' }}>
+            renderRow={(rowData) => <Tile tileName={rowData.affiliationName} tileIcon={rowData.affiliationIcon.medium} />}
+        />
+        <Text style={{ marginLeft: 50 }}>Add New</Text>
         <TouchableOpacity onPress={() => { Actions.root(); }}>
-          <View style={{ padding: 10 }}>
+          <View style={{ alignSelf: 'center', marginBottom: 20 }}>
             <Image
               style={styles.iconStyle}
               source={addIcon}
             />
           </View>
         </TouchableOpacity>
-        </View>
       </View>
     );
   }
@@ -71,6 +57,17 @@ const styles = {
     justifyContent: 'center',
     height: 25,
     width: 25
+  },
+  list: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    padding: 20,
+  },
+  item: {
+    backgroundColor: 'red',
+    margin: 3,
+    width: 100,
   },
   mainImageStyle: {
     alignSelf: 'stretch',
@@ -84,4 +81,4 @@ const styles = {
   },
 };
 
-export default ActivitySetup;
+export { AffiliationSetup };
