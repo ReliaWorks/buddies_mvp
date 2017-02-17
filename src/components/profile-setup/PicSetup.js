@@ -3,9 +3,8 @@ import { Button, Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import { textStyle } from '../common/styles';
-import { Header } from '../common';
-
-const addIcon = require('../common/img/add_icon.png');
+import { Header, Spinner } from '../common';
+import { ADD_ICON, EDIT_ICON } from './strings';
 
 class PicSetup extends Component {
   constructor(props) {
@@ -130,6 +129,10 @@ class PicSetup extends Component {
     }
   }
 
+  editPhoto() {
+
+  }
+
   render() {
     return(
       <View>
@@ -145,21 +148,35 @@ class PicSetup extends Component {
             color="#4267B2"
           />
         </View>
-        <TouchableOpacity onPress={() => { Actions.root(); }}>
-          <View style={{ padding: 10 }}>
-            <Image
-              style={styles.mainImageStyle}
-              source={{ uri: this.state.img1Source }}
-            />
+        <Image
+          style={styles.mainImageStyle}
+          source={{ uri: this.state.img1Source }}
+        >
+          <View style={styles.editIconStyle}>
+            <TouchableOpacity onPress={() => { this.editPhoto(); }}>
+              <Image
+                style={{width: 20, height: 20}}
+                source={{ uri: EDIT_ICON }}
+              />
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
+        </Image>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
           <TouchableOpacity onPress={() => { Actions.root(); }}>
             <View style={{ padding: 10 }}>
               <Image
                 style={styles.smallImageStyle}
                 source={{ uri: this.state.img2Source }}
-              />
+              >
+              <View style={styles.editIconStyle}>
+                <TouchableOpacity onPress={() => { this.editPhoto(); }}>
+                  <Image
+                    style={{width: 20, height: 20}}
+                    source={{ uri: EDIT_ICON }}
+                  />
+                </TouchableOpacity>
+              </View>
+              </Image>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => { Actions.root(); }}>
@@ -167,7 +184,16 @@ class PicSetup extends Component {
               <Image
                 style={styles.smallImageStyle}
                 source={{ uri: this.state.img3Source }}
-              />
+              >
+              <View style={styles.editIconStyle}>
+                <TouchableOpacity onPress={() => { this.editPhoto(); }}>
+                  <Image
+                    style={{width: 20, height: 20}}
+                    source={{ uri: EDIT_ICON }}
+                  />
+                </TouchableOpacity>
+              </View>
+              </Image>
             </View>
           </TouchableOpacity>
           <View style={{ justifyContent: 'center' }}>
@@ -175,7 +201,7 @@ class PicSetup extends Component {
             <View style={{ padding: 10 }}>
               <Image
                 style={styles.iconStyle}
-                source={addIcon}
+                source={ADD_ICON}
               />
             </View>
           </TouchableOpacity>
@@ -187,6 +213,12 @@ class PicSetup extends Component {
 }
 
 const styles = {
+  editIconStyle: {
+    backgroundColor: 'white',
+    alignSelf: 'flex-end',
+    width: 30,
+    padding: 5,
+  },
   iconStyle: {
     flexDirection: 'column',
     justifyContent: 'center',
@@ -195,13 +227,16 @@ const styles = {
   },
   mainImageStyle: {
     alignSelf: 'stretch',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     height: 300,
-    width: null
+    width: null,
+    padding: 5,
   },
   smallImageStyle: {
     height: 120,
     width: 120,
+    justifyContent: 'flex-end',
+    padding: 5,
   },
 };
 

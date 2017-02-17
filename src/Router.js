@@ -21,11 +21,12 @@ const RouterComponent = () => {
       <Scene key="root">
         <Scene key="login" direction="vertical" component={LoginForm} title="Buddies" />
       </Scene>
-      <Scene key="profileSetup">
+      <Scene key="profileSetup" initial>
         <Scene
           key="picSetup"
           title="Profile Setup"
           component={PicSetup}
+          initial
         />
         <Scene
           key="activitySetup"

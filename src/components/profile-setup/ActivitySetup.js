@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { Button, ListView, Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-//import ActivityList from './components/ActivityList';
 import { textStyle } from '../common/styles';
 import { Header, Tile } from '../common';
 import sampleActivityData from '../demo-data/activities';
 
-
-//const defaultProfileImageURL = require('./common/img/sarahpallittacrop.jpg');
 const addIcon = require('../common/img/add_icon.png');
 
 class ActivitySetup extends Component {
