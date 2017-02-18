@@ -13,18 +13,28 @@ import { loginUser, createUser } from '../actions';
 
 const backgroundImageURL = require('./common/img/WorkoutBuddiesImage.jpg');
 
-class LoginForm extends Component {
-  state = { email: '', first_name: '', last_name: '', pic: '', error: '', loading: false, loggedIn: false };
+/* LoginForm.js
+ * ------------
+ * Check to see if the user had already authenticated
+ *  - if so, direct to the browse page
+ *  - if not, display login form
+ * Login Form: prompt user to login via FB
+ *  - if user already has an account, then direct to the browse page
+ *  - if not, direct to the profile setup scene
+ */
 
+class LoginForm extends Component {
   componentWillMount() {
+    console.log("in LoginForm componentWillMount");
     AccessToken.getCurrentAccessToken().then(
       (data) => {
         if (data) {
           Actions.main();
-          this.props.loggedIn = true;
         }
       }
-    );
+    ).catch((error) => {
+      console.log(error);
+    });
   }
 
   renderLoginForm() {
@@ -48,11 +58,11 @@ class LoginForm extends Component {
   }
 
   render() {
-    if (this.props.loggedIn) {
-      Actions.browse();
-    } else {
+//    if (this.props.loggedIn) {
+//      Actions.main();
+//    } else {
       return this.renderLoginForm();
-    }
+//    }
   }
 }
 
