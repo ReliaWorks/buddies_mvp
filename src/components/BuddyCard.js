@@ -1,40 +1,43 @@
 import React from 'react';
 import { Text, Image, View } from 'react-native';
-import { Card, CardItem } from './common';
+import { CardItem, Tile } from './common';
 
-//const defaultProfileImageURL = require('./common/img/sarahpallittacrop.jpg');
+const tileIcon = "https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984";
 
 const BuddyCard = (props) => {
-  const { firstName, age, activities, profileImageURL } = props.value;
-  const { containerStyle, imageStyle, textStyle, descriptionContainerStyle } = styles;
+  const { firstName, age, activities, description, profileImageURL } = props.value;
+  const { containerStyle, imageStyle, textStyle, descriptionStyle, descriptionContainerStyle } = styles;
 
   return (
-      <Card>
-        <CardItem>
-          <View style={containerStyle}>
-            <Image
-              source={profileImageURL}
-              style={imageStyle}
-            />
-          </View>
-          <View style={descriptionContainerStyle}>
-            <View>
-              <Text style={textStyle}>{firstName}, {age}</Text>
-              <Text style={textStyle}>{activities}</Text>
-            </View>
-          </View>
-        </CardItem>
-      </Card>
+      <View style={{flex: 1}}>
+        <View style={containerStyle}>
+          <Image
+            source={profileImageURL}
+            style={imageStyle}
+          />
+        </View>
+        <View style={descriptionContainerStyle}>
+          <Text style={textStyle}>{firstName}, {age}</Text>
+          <Tile tileName={activities} tileIcon={tileIcon} />
+          <Text style={descriptionStyle}>{description}</Text>
+        </View>
+      </View>
   );
 };
 
 const styles = {
   containerStyle: {
-    flex: 5,
-    alignItems: 'center'
+    flex: 2,
+//    alignItems: 'center'
   },
   textStyle: {
     fontSize: 18,
+    marginLeft: 10,
+    marginTop: 10,
+  },
+  descriptionStyle: {
+    fontSize: 16,
+    padding: 10,
   },
   imageStyle: {
     alignSelf: 'stretch',
@@ -45,8 +48,6 @@ const styles = {
   descriptionContainerStyle: {
     backgroundColor: 'white',
     flex: 1,
-    marginLeft: 10,
-    marginRight: 10
   }
 };
 

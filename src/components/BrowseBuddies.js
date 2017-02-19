@@ -13,7 +13,8 @@ class BrowseBuddies extends Component {
             firstName: 'Peter',
             age: '35',
             profileImageURL: profileImageURL,
-            activities: 'Running, Tennis'
+            activities: 'Running',
+            description: 'Looking for a running buddy'
           }}
         />
     </View>

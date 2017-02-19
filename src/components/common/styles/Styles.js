@@ -1,4 +1,4 @@
-//const BRAND_PRIMARY_COLOR = '#BA77FF';'#ff7200'
+const BRAND_PRIMARY_COLOR = '#00BAFF';
 
 export const backgroundImage = {
   flex: 1,
@@ -25,10 +25,12 @@ export const containerStyle = {
   flex: 1,
   justifyContent: 'center',
   alignItems: 'center',
-//  backgroundColor: BRAND_PRIMARY_COLOR,
+  backgroundColor: 'white',
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 0.2,
-  elevation: 2
+  elevation: 2,
+  borderWidth: 1,
+  borderColor: '#979797',
 };
 
 export const convoThumbnailStyle = {
@@ -58,7 +60,9 @@ export const loginButtonStyle = {
 };
 
 export const navigationBarStyle = {
-//  backgroundColor: BRAND_PRIMARY_COLOR
+  backgroundColor: BRAND_PRIMARY_COLOR,
+  borderWidth: 1,
+  borderColor: '#979797',
 };
 
 export const spinnerStyle = {

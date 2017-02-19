@@ -2,31 +2,23 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 
 const Tile = (props) => {
-  console.log(props);
+  const { tileName, tileIcon } = props;
+  const { cardStyle, imageStyle } = styles;
+  
   return (
-    <View style={styles.cardStyle}>
+    <View style={cardStyle}>
       <Text style={{ alignSelf: 'center' }}>
-        {props.tileName}
+        {tileName}
       </Text>
-      <Image style={styles.imageStyle} source={{ uri: props.tileIcon }} />
+      <Image style={imageStyle} source={{ uri: tileIcon }} />
     </View>
   );
 };
-
-//<TouchableOpacity onPress={() => { Actions.root(); }}>
-//  <View style={{ padding: 10 }}>
-//    <Image
-//      style={styles.mainImageStyle}
-//      source={{ uri: this.state.img1Source }}
-//    />
-//  </View>
-//</TouchableOpacity>
 
 const styles = {
   imageStyle: {
     height: 100,
     width: 100,
-//    marginTop: 20,
   },
   cardStyle: {
     borderWidth: 1,
