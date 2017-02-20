@@ -65,6 +65,7 @@ const styles = {
   },
   headerTextStyle: {
     fontSize: 18,
+    fontFamily: 'Avenir-Book',
   },
   noConvoThumbnailStyle: {
     height: 75,

@@ -12,7 +12,7 @@ const BuddyCard = (props) => {
       <View style={{flex: 1}}>
         <View style={containerStyle}>
           <Image
-            source={profileImageURL}
+            source={{ uri: profileImageURL }}
             style={imageStyle}
           />
         </View>
@@ -28,16 +28,17 @@ const BuddyCard = (props) => {
 const styles = {
   containerStyle: {
     flex: 2,
-//    alignItems: 'center'
   },
   textStyle: {
     fontSize: 18,
     marginLeft: 10,
     marginTop: 10,
+    fontFamily: 'Avenir-Book',
   },
   descriptionStyle: {
     fontSize: 16,
     padding: 10,
+    fontFamily: 'Avenir-Book',
   },
   imageStyle: {
     alignSelf: 'stretch',

@@ -46,6 +46,7 @@ const styles = {
     alignSelf: 'center',
     fontSize: 18,
     marginBottom: 10,
+    fontFamily: 'Avenir-Book',
   },
   descriptionInput: {
     height: 300,

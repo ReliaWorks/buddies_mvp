@@ -64,13 +64,14 @@ const styles = {
   },
   textStyle: {
     fontSize: 18,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    fontFamily: 'Avenir-Book',
   },
   imageStyle: {
     alignSelf: 'stretch',
     justifyContent: 'center',
     height: 175,
-    width: 175
+    width: 175,
   },
 };
 

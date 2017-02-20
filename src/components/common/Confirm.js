@@ -33,6 +33,7 @@ const styles = {
   textStyle: {
     flex: 1,
     fontSize: 18,
+    fontFamily: 'Avenir-Book',
     textAlign: 'center',
     lineHeight: 40
 

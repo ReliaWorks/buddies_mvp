@@ -26,7 +26,8 @@ const styles = {
     position: 'relative'
   },
   textStyle: {
-    fontSize: 30
+    fontSize: 30,
+    fontFamily: 'Avenir-Book',    
   }
 };
 

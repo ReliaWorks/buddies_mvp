@@ -27,6 +27,7 @@ const styles = {
     fontSize: 18,
     textAlign: 'center',
     color: 'white',
+    fontFamily: 'Avenir-Book',
   },
   containerStyle: {
     backgroundColor: 'rgba(1, 1, 1, 1)',
