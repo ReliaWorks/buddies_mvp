@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, View, Image, Text } from 'react-native';
+import { Button, View, Image, Text, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import {
   AccessToken,
@@ -12,6 +12,7 @@ import { loginUser, createUser } from '../actions';
 //import { Card, CardItem, Button, Input, Spinner } from './common';
 
 const backgroundImageURL = require('./common/img/WorkoutBuddiesImage.jpg');
+const buddiesLogo = require('./common/img/buddies_logo.png');
 
 /* LoginForm.js
  * ------------
@@ -41,13 +42,16 @@ class LoginForm extends Component {
     return (
       <View style={styles.container}>
         <Image source={backgroundImageURL} style={backgroundImage}>
+          <View>
+            <Image source={buddiesLogo} style={{height: 79, width: 102, opacity: 1.0}} />
+          </View>
           <View style={loginButtonStyle}>
-            <Button
+            <TouchableHighlight
               onPress={this.props.loginUser}
-              title="Log in with FB"
-              style={styles.facebookLoginButton}
-              color="#4267B2"
-            />
+              color="white"
+            >
+              <Text style={styles.fbLoginText}>Log in with Facebook</Text>
+            </TouchableHighlight>
           </View>
         </Image>
         <View>
@@ -68,12 +72,18 @@ class LoginForm extends Component {
 
 const styles = {
   container: {
-    flex: 1,
+   flex: 1,
     justifyContent: 'flex-end'
   },
-  facebookLoginButton: {
-    alignSelf: 'center',
-    width: 480,
+  fbLoginText: {
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 10,
+    marginRight: 10,
   },
 };
 

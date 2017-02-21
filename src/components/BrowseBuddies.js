@@ -7,7 +7,7 @@ const profileImageURL = "https://firebasestorage.googleapis.com/v0/b/activities-
 class BrowseBuddies extends Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.cardStyle}>
         <BuddyCard
           value={{
             firstName: 'Peter',
@@ -21,5 +21,19 @@ class BrowseBuddies extends Component {
     );
   }
 }
+
+const styles = {
+  cardStyle: {
+    flex: 1,
+    marginTop: 5,
+    padding: 5,
+    borderRadius: 25,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 1
+  }
+};
 
 export default BrowseBuddies;

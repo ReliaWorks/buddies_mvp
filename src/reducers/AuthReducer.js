@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   user: null,
   email: '',
   first_name: '',
+  newUser: true,
   error: '',
   loading: false,
 };
@@ -16,7 +17,7 @@ const INITIAL_STATE = {
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CREATE_USER:
-      return state;
+      return { ...state, user: action.payload, newUser: false };
     case LOGIN_USER:
         return { ...state,
           loading: true,

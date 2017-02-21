@@ -13,6 +13,8 @@ import {
   CREATE_USER,
 } from './types';
 
+const USERS_LOCATION = 'https://activities-test-a3871.firebaseio.com/users';
+
 const responseCallback = ((error, result) => {
   if (error) {
     response.ok = false;
@@ -27,11 +29,27 @@ const responseCallback = ((error, result) => {
   return (response);
 });
 
+function userExistsCallback(userId, exists) {
+  if(exists) {
+    alert('user ' + userId + ' exists!');
+  } else {
+    alert('user ' + userId + ' does not exist!');
+  }
+}
+
+function checkIfUserExists(userId, usersRef) {
+  usersRef.child(userId).once('value', (snapshot) => {
+    const exists = (snapshot.val() !== null);
+    userExistsCallback(userId, exists);
+  });
+}
+
 export const loginUser = () => {
   return (dispatch) => {
     dispatch({ type: LOGIN_USER });
 
     const auth = firebase.auth();
+    const usersRef = firebase.database().ref("users");
     const provider = firebase.auth.FacebookAuthProvider;
 
     LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends', 'user_photos'])
@@ -39,10 +57,14 @@ export const loginUser = () => {
         if (result.isCancelled) {
           console.log('Login cancelled');
         } else {
+          console.log('Login success.');
+          console.log(result);
           AccessToken.getCurrentAccessToken()
             .then(accessTokenData => {
+              //check to see if user exists in firebase
               loginUserSuccess(dispatch, result);
               const credential = provider.credential(accessTokenData.accessToken);
+              usersRef.child(authData.uid).set({provider, name: accessTokenData.first_name});
               return auth.signInWithCredential(credential);
             }).then(credData => {
               console.log(credData);
@@ -52,17 +74,26 @@ export const loginUser = () => {
         }
       },
       (error) => {
+        /* When login fails, enters this case.
+         * Need to check if user already exists in Firebase.
+         * If not, create user and redirect to FTUE
+         */
         console.log('Login fail with error: ' + error);
+        createUser(dispatch);
+        const credential = provider.credential(accessTokenData.accessToken);
+        usersRef.child(authData.uid).set({provider, name: accessTokenData.first_name});
+        return auth.signInWithCredential(credential);
       }
     );
   };
 };
 
-const createUser = (dispatch, user) => {
+const createUser = (dispatch) => {
   dispatch({
     type: CREATE_USER,
     payload: user
   });
+  Actions.profileSetup();
 };
 
 const loginUserFail = (dispatch) => {

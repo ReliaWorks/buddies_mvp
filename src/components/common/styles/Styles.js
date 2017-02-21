@@ -1,8 +1,11 @@
-const BRAND_PRIMARY_COLOR = '#00BAFF';
+//const BRAND_PRIMARY_COLOR = '#00BAFF';
+const BRAND_PRIMARY_COLOR = '#FF703B';
 
 export const backgroundImage = {
   flex: 1,
   alignSelf: 'stretch',
+  alignItems: 'center',
+  justifyContent: 'space-around',
   width: null,
   height: null
 };
@@ -29,8 +32,8 @@ export const containerStyle = {
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 0.2,
   elevation: 2,
-  borderWidth: 1,
-  borderColor: '#979797',
+//  borderWidth: 1,
+//  borderColor: '#979797',
 };
 
 export const convoThumbnailStyle = {
@@ -56,9 +59,12 @@ export const legalTextStyle = {
 };
 
 export const loginButtonStyle = {
-  flex: 1,
-  alignSelf: 'center',
-  justifyContent: 'center',
+//  flex: 1,
+  alignItems: 'center',
+  backgroundColor: '#4267B2',
+  height: 45,
+  borderRadius: 10,
+  borderWidth: 1,
 };
 
 export const navTitleStyle = {
@@ -68,23 +74,10 @@ export const navTitleStyle = {
 
 export const navBarStyle = {
   backgroundColor: BRAND_PRIMARY_COLOR,
-  borderWidth: 1,
-  borderColor: '#979797',
 };
 
 export const spinnerStyle = {
   alignSelf: 'center'
-};
-
-export const textInputStyle = {
-  borderStyle: 'solid',
-  height: 40,
-  width: 315,
-  opacity: 0.4,
-//  borderBottomColor: 'black',
-//  fontSize: 24,
-  fontFamily: 'Avenir-Book',
-  marginLeft: 30,
 };
 
 export const centeredTextStyle = {

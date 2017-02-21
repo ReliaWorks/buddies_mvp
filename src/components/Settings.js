@@ -3,7 +3,7 @@ import { ListView, Image, Switch, Text, TextInput, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { LoginButton } from 'react-native-fbsdk';
 //import { Button } from './common';
-import { buttonStyle, centeredTextStyle, legalTextStyle, textInputStyle, textStyle } from './common/styles';
+import { buttonStyle, centeredTextStyle, legalTextStyle, textStyle } from './common/styles';
 
 const emailIcon = require('./common/img/add_icon.png');
 const settingsBackground = require('./common/img/settingBackground.png');
@@ -11,17 +11,17 @@ const settingsBackground = require('./common/img/settingBackground.png');
 
 class Settings extends Component {
   render() {
-    const { containerStyle, labelStyle, settingsContainerStyle } = styles;
+    const { containerStyle, labelStyle, settingsContainerStyle, switchStyle, textInputStyle } = styles;
 
     return (
       <View contentContainerStyle={containerStyle}>
         <View>
-          <Image source={settingsBackground} style={{width: null, height: 200, backgroundColor: '#D8D8D8'}} />
+          <Image source={settingsBackground} style={{width: null, height: 200,backgroundColor: 'gray'}} />
         </View>
         <View style={settingsContainerStyle}>
           <View>
             <Text style={labelStyle}>Full Name</Text>
-            <Text style={{ marginLeft: 30, fontSize: 20, fontFamily: 'Avenir' }}>Shireen Brathwaite</Text>
+            <Text style={{ marginLeft: 30, fontSize: 20, fontFamily: 'Avenir', opacity: 1 }}>Shireen Brathwaite</Text>
           </View>
         </View>
         <View style={settingsContainerStyle}>
@@ -33,14 +33,14 @@ class Settings extends Component {
         <View style={settingsContainerStyle}>
           <Text style={labelStyle}>Email Notifications</Text>
           <Switch
-            style={{ marginRight: 30 }}
+            style={switchStyle}
             value
           />
         </View>
         <View style={settingsContainerStyle}>
           <Text style={labelStyle}>Mobile Notifications</Text>
           <Switch
-            style={{ marginRight: 30 }}
+            style={switchStyle}
             value
           />
         </View>
@@ -67,7 +67,17 @@ const styles = {
     fontFamily: 'Avenir',
     fontSize: 20,
     marginLeft: 30,
-    opacity: 0.5,
+    opacity: 0.6,
+  },
+  textInputStyle: {
+    borderStyle: 'solid',
+    height: 40,
+    width: 315,
+    opacity: 1,
+  //  borderBottomColor: 'black',
+  //  fontSize: 24,
+    fontFamily: 'Avenir-Book',
+    marginLeft: 30,
   },
   containerStyle: {
     justifyContent: 'space-around',
@@ -80,6 +90,11 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
+  },
+  switchStyle: {
+    marginRight: 30,
+    marginBottom: 10,
+    height: 10,
   }
 };
 
