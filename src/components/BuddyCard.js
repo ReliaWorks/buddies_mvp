@@ -1,40 +1,34 @@
 import React from 'react';
-import { Text, Image, View } from 'react-native';
+import { Dimensions, Text, Image, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { CardItem, Tile } from './common';
 
 const tileIcon = "https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984";
+const { height, width } = Dimensions.get('window');
 
 const BuddyCard = (props) => {
-  const { firstName, age, activities, description, profileImageURL } = props.value;
-  const { containerStyle, imageStyle, textStyle, descriptionStyle, descriptionContainerStyle } = styles;
+  const { firstName, age, activities, description, profileImages } = props.value;
+  const { containerStyle, nameTextStyle, imageStyle, textStyle, descriptionStyle, descriptionContainerStyle } = styles;
 
   return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, padding: 4}}>
         <View style={containerStyle}>
           <Swiper horizontal={false}>
-            <View>
-              <Image
-                source={{ uri: profileImageURL }}
-                style={imageStyle}
-              />
-            </View>
-            <View>
-              <Image
-                source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2FPeter2.png?alt=media&token=debe4efa-7318-46fb-a47f-18ab9e34e9b1' }}
-                style={imageStyle}
-              />
-            </View>
-            <View>
-              <Image
-                source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2FPeter3.JPG?alt=media&token=7844831f-a89b-439b-9e66-0774432d527f' }}
-                style={imageStyle}
-              />
-            </View>
+            {profileImages.map((img, key) => {
+              return (
+                <View key={key}>
+                  <Image
+                    source={{ uri: img.imageURI }}
+                    style={imageStyle}
+                  />
+                </View>
+              );
+            })}
           </Swiper>
         </View>
         <View style={descriptionContainerStyle}>
-          <Text style={textStyle}>{firstName}, {age}</Text>
+          <Text style={nameTextStyle}>{firstName}, {age}</Text>
+          <Text style={textStyle}>San Francisco, California </Text>
           <Tile tileName={activities} tileIcon={tileIcon} />
           <Text style={descriptionStyle}>{description}</Text>
         </View>
@@ -44,12 +38,17 @@ const BuddyCard = (props) => {
 
 const styles = {
   containerStyle: {
-    flex: 2,
+    flex: 3,
+  },
+  nameTextStyle: {
+    fontSize: 18,
+    marginLeft: 10,
+    marginTop: -10,
+    fontFamily: 'Avenir-Book',
   },
   textStyle: {
     fontSize: 18,
     marginLeft: 10,
-    marginTop: 10,
     fontFamily: 'Avenir-Book',
   },
   descriptionStyle: {
@@ -60,12 +59,12 @@ const styles = {
   imageStyle: {
     alignSelf: 'stretch',
     justifyContent: 'center',
-    height: 550,
-    width: null
+    height: (height * 0.6) - 25, //60% of the screen - navbar height - padding
+    width: width - 20,
   },
   descriptionContainerStyle: {
     backgroundColor: 'white',
-    flex: 1,
+    flex: 2,
   }
 };
 
