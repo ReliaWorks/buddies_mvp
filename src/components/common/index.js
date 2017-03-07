@@ -1,7 +1,6 @@
 export * from './Button';
 export * from './CardItem';
 export * from './Confirm';
-export * from './Conversation';
 export * from './ConversationListItem';
 export * from './FullSizeImageModal';
 export * from './Header';

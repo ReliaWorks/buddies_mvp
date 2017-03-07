@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
 import firebase from 'firebase';
 //import firebase-ui from 'firebaseui';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
-import RouterComponent from './Router';
+import Routes from './Routes';
 //import { View, Text } from 'react-native';
 
+//const middleware = [];
+//const store = compose(applyMiddleware(...middleware))(createStore)(reducers);
 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+//const store = createStore(reducers);
+
 
 class App extends Component {
   componentWillMount() {
@@ -21,13 +25,12 @@ class App extends Component {
       };
 
       firebase.initializeApp(config);
-      console.log('successfully connected to firebase');
     }
 
   render() {
     return (
       <Provider store={store}>
-        <RouterComponent />
+        <Routes />
       </Provider>
     );
   }

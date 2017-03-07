@@ -1,29 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 import { convoThumbnailStyle, textStyle } from './styles';
 
-const onButtonPress = () => {
-  Actions.conversation();
-};
+//const onButtonPress = () => {
+//  Actions.conversation({friend});
+//};
 
-const ConversationListItem = (props) => (
-  <TouchableOpacity
-    onPress={onButtonPress}
-  >
-    <View style={styles.container}>
-      <Image
-        style={convoThumbnailStyle}
-        source={{ uri: props.picture.large }}
-      />
-      <View style={styles.convoContainerStyle}>
-        <Text style={textStyle}>
-          {`${props.name.first} ${props.name.last}`}
-        </Text>
+class ConversationListItem extends Component {
+  render() {
+    return (
+    <TouchableOpacity
+      onPress={() => Actions.conversation()}
+    >
+      <View style={styles.container}>
+        <Image
+          style={convoThumbnailStyle}
+          source={{ uri: this.props.picture.large }}
+        />
+        <View style={styles.convoContainerStyle}>
+          <Text style={textStyle}>
+            {`${this.props.name.first} ${this.props.name.last}`}
+          </Text>
+        </View>
       </View>
-    </View>
-  </TouchableOpacity>
-);
+    </TouchableOpacity>
+    );
+  }
+}
 
 const styles = {
   container: {
@@ -37,16 +42,6 @@ const styles = {
   },
   convoContainerStyle: {
     flexDirection: 'row',
-//    backgroundColor: 'purple',
-//    borderWidth: 1,
-//    borderRadius: 2,
-//    borderColor: '#ddd',
-//    borderBottomWidth: 0,
-//    shadowColor: '#000',
-//    shadowOffset: { width: 0, height: 2 },
-//    shadowOpacity: 0.1,
-//    shadowRadius: 2,
-//    elevation: 1,
     marginLeft: 5,
     marginRight: 5,
     marginTop: 1,

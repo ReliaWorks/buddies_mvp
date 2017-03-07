@@ -6,5 +6,5 @@ import ActivityReducer from './ActivityReducer';
 export default combineReducers({
   auth: AuthReducer,
   activityForm: ActivityFormReducer,
-  activities: ActivityReducer
+  activities: ActivityReducer,
 });

@@ -64,7 +64,7 @@ export const loginUser = () => {
               //check to see if user exists in firebase
               loginUserSuccess(dispatch, result);
               const credential = provider.credential(accessTokenData.accessToken);
-              usersRef.child(authData.uid).set({provider, name: accessTokenData.first_name});
+              //usersRef.child(authData.uid).set({provider, name: accessTokenData.first_name});
               return auth.signInWithCredential(credential);
             }).then(credData => {
               console.log(credData);
