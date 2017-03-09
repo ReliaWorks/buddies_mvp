@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import BuddyCard from './BuddyCard';
+import BuddyCard from './buddycard/BuddyCard';
 import userSampleData from './demo-data/Users.js';
 
 class BrowseBuddies extends Component {

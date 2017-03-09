@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Image, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import { containerStyle, textStyle } from './common/styles/Styles';
-import BuddyCard from './BuddyCard';
+import { textStyle } from './common/styles/Styles';
+import BuddyCard from './buddycard/BuddyCard';
 
 const profileImages = [
   { imageURI: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fshireen2.jpg?alt=media&token=9e8a03a7-6465-405c-825f-848f796448c0' },

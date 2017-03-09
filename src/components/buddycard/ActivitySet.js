@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ListView } from 'react-native';
-import { Tile } from './common';
+import { Tile } from '../common';
 
 //Displays a list of activities visually as tiles (with icons).
 class ActivitySet extends Component {
