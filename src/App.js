@@ -21,7 +21,7 @@ class App extends Component {
         authDomain: 'activities-test-a3871.firebaseapp.com',
         databaseURL: 'https://activities-test-a3871.firebaseio.com',
         storageBucket: 'activities-test-a3871.appspot.com',
-        messagingSenderId: '432468217036'
+        messagingSenderId: '432468217036'    
       };
 
       firebase.initializeApp(config);
