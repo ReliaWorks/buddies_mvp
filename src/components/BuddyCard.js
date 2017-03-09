@@ -1,67 +1,73 @@
-import React from 'react';
-import { Dimensions, ListView, Image, ScrollView, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { Dimensions, Image, ScrollView, Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ActivitySet from './ActivitySet';
+import AffiliationSet from './AffiliationSet';
 
-const tileIcon = "https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984";
 const { height, width } = Dimensions.get('window');
 
+class BuddyCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstName: this.props.value.firstName,
+      age: this.props.value.age,
+      location: this.props.value.location,
+      profileImages: this.props.value.profileImages,
+      activities: this.props.value.activities,
+      affiliations: this.props.value.affiliations,
+      description: this.props.value.description,
+    };
+  }
+  renderActivities(activities) {
+    if(activities.length > 0) return <ActivitySet value={{activities}} />;
+  }
 
-const BuddyCard = (props) => {
-  const { firstName, age, location, profileImages, activities, affiliations, description } = props.value;
-  const { containerStyle, listStyle, nameTextStyle, imageStyle, textStyle, descriptionStyle, descriptionContainerStyle } = styles;
+  renderAffiliations(affiliations) {
+    if(affiliations.length > 0) return <AffiliationSet value={{affiliations}} />;
+  }
 
-  return (
-      <View style={{flex: 1, padding: 4 }}>
-        <View style={containerStyle}>
-          <Swiper horizontal={false}>
-            {profileImages.map((img, key) => {
-              return (
-                <View key={key}>
-                  <Image
-                    source={{ uri: img.imageURI }}
-                    style={imageStyle}
-                  />
-                </View>
-              );
-            })}
-          </Swiper>
+  render() {
+    const { firstName, age, location, profileImages, activities, affiliations, description } = this.state;
+    const { containerStyle, imageStyle, textStyle, descriptionContainerStyle } = styles;
+
+    return (
+        <View style={{flex: 1, padding: 4 }}>
+          <View style={containerStyle}>
+            <Swiper horizontal={false}>
+              {profileImages.map((img, key) => {
+                return (
+                  <View key={key}>
+                    <Image
+                      source={{ uri: img.imageURI }}
+                      style={imageStyle}
+                    />
+                  </View>
+                );
+              })}
+            </Swiper>
+          </View>
+          <View style={descriptionContainerStyle}>
+            <ScrollView>
+              <Text style={textStyle}>{firstName}, {age}</Text>
+              <Text style={textStyle}>{location.city}</Text>
+              {this.renderActivities(activities)}
+              {this.renderAffiliations(affiliations)}
+              <Text style={textStyle}>{description}</Text>
+            </ScrollView>
+          </View>
         </View>
-        <View style={descriptionContainerStyle}>
-          <ScrollView>
-            <Text style={textStyle}>{firstName}, {age}</Text>
-            <Text style={textStyle}>{location.city}</Text>
-            <ActivitySet value={{activities}} />
-            <Text style={textStyle}>{description}</Text>
-          </ScrollView>
-        </View>
-      </View>
-  );
-};
-
-//<ScrollView
-//  contentContainerStyle={{backgroundColor: 'gainsboro'}}
-//  automaticallyAdjustContentInsets={false}
-//>
+    );
+  }
+}
 
 const styles = {
   containerStyle: {
     flex: 3,
   },
-  listStyle: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    padding: 20,
-  },
   textStyle: {
     fontSize: 18,
     marginLeft: 10,
-    fontFamily: 'Avenir-Book',
-  },
-  descriptionStyle: {
-    fontSize: 16,
-    padding: 10,
     fontFamily: 'Avenir-Book',
   },
   imageStyle: {

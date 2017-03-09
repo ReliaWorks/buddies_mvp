@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { Tile } from './common';
 
-//Displays a list of activities visually as tiles (with icons).
-class ActivitySet extends Component {
+class AffiliationSet extends Component {
   render() {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    dataSource = ds.cloneWithRows(this.props.value.activities);
+    dataSource = ds.cloneWithRows(this.props.value.affiliations);
 
     return(
       <ListView
@@ -28,4 +27,4 @@ const styles = {
   },
 };
 
-export default ActivitySet;
+export default AffiliationSet;

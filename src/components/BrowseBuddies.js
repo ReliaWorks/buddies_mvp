@@ -18,6 +18,7 @@ class BrowseBuddies extends Component {
                   location: buddy.location,
                   profileImages: buddy.profileImages,
                   activities: buddy.activities,
+                  affiliations: buddy.affiliations,
                   description: buddy.description,
                 }}
               />

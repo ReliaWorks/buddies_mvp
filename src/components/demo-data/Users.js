@@ -22,7 +22,14 @@ export default userSampleData = [
       }
     ],
     affiliations: [
-      { name: 'Golden Gate Tri Club', icon: 'test' }
+      {
+        name: 'Golden Gate Tri Club',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2Fggtc.png?alt=media&token=7126aaf1-2e91-4be5-bc0a-af442696edb3'
+      },
+      {
+        name: 'Nike Run Club',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2FNikeRunClub.jpg?alt=media&token=c4c31ca9-18d1-4a60-a7e0-a2a7d60b5baa'
+      },
     ],
     description: 'Looking for a running buddy',
   },
@@ -49,7 +56,10 @@ export default userSampleData = [
       }
     ],
     affiliations: [
-      { name: 'Golden Gate Tri Club', icon: 'test' }
+      {
+        name: 'Bay Club',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2Fbayclub_logo2.png?alt=media&token=fa345ef2-88a4-40d1-9f92-e2f6f80a1794' 
+      }
     ],
     description: 'Looking for a biking buddy',
   },
@@ -77,7 +87,6 @@ export default userSampleData = [
       }
     ],
     affiliations: [
-      { name: 'Golden Gate Tri Club', icon: 'test' }
     ],
     description: 'Looking for a dancing buddy',
   }
