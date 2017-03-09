@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ListView, Text, View } from 'react-native';
 import { Tile } from './common';
 
-//Displays a list of activities visually as tiles (with icons).  
+//Displays a list of activities visually as tiles (with icons).
 class ActivitySet extends Component {
   render() {
     const ds = new ListView.DataSource({
@@ -25,6 +25,8 @@ const styles = {
     alignItems: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
+//    flex: 1,
+    backgroundColor: 'yellow'
   },
 };
 
