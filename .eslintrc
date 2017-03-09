@@ -4,7 +4,6 @@
       "arrow-body-style": 0,
       "no-undef": 0,
       "no-underscore-dangle": 0,
-      "no-unused-vars": 0,
       "comma-spacing": 0,
       "max-len": 0,
       "global-require": 0,
