@@ -2,8 +2,8 @@ import { Actions } from 'react-native-router-flux';
 import {
   AccessToken,
   LoginManager,
-//  GraphRequest,
-//  GraphRequestManager
+  GraphRequest,
+  GraphRequestManager
 } from 'react-native-fbsdk';
 import firebase from 'firebase';
 import {
@@ -11,37 +11,114 @@ import {
   LOGIN_USER_FAIL,
   LOGIN_USER,
   CREATE_USER,
+  LOGIN_FB_SUCCESS
 } from './types';
 
 const USERS_LOCATION = 'https://activities-test-a3871.firebaseio.com/users';
 
-const responseCallback = ((error, result) => {
-  if (error) {
-    response.ok = false;
-    response.error = error;
-    alert("Graph API Didn't work");
-    return (response);
-//    return;
-  }
-  response.ok = true;
-  response.json = result;
-  console.log(result);
-  return (response);
-});
+function setupUserFirebase(user,ref, accessTokenData) {
+  const token = accessTokenData.accessToken;
 
-function userExistsCallback(userId, exists) {
-  if(exists) {
-    alert('user ' + userId + ' exists!');
-  } else {
-    alert('user ' + userId + ' does not exist!');
-  }
+  let counter = 0;
+  console.log(token);
+  const infoRequest = new GraphRequest(
+    '/me',
+    {
+      parameters: {
+        fields: { string: 'id,first_name,last_name,albums{name}' },
+        access_token: { string: token.toString() }
+    },
+   },
+   (error, result) => {
+      if(error) {
+        console.log('Error fetching data: ' + error.toString());
+      } else {
+        console.log("in responseCallback with result = ");
+        console.log(result);
+
+        const fbAlbums = result.albums.data;
+
+        const profileAlbum = fbAlbums.find((album) => {
+           return album.name === 'Profile Pictures';
+        });
+
+        ref.ref(`/users/${user.uid}`).set({ first_name: result.first_name, last_name: result.last_name, album: profileAlbum });
+
+        AccessToken.getCurrentAccessToken().then(
+          (data1) => {
+            const profilePicRequest = new GraphRequest(
+              `/${profileAlbum.id}`,
+              {
+                parameters: {
+                  fields: { string: 'photos' },
+                  access_token: { string: token.toString() }
+                },
+              },
+              (error1, result1) => {
+                console.log('storing photos');
+                if (error) {
+                  console.log('Error fetching data: ' + error1.toString());
+                } else{
+                  const profilePics = result1.photos.data;
+                  profilePics.forEach(
+                    (pic) => {
+                      if (counter > 3) return;
+                      const picRequest = new GraphRequest(
+                        `/${pic.id}`,
+                        {
+                          parameters: {
+                            fields: { string: 'images' },
+                            access_token: { string: token }
+                          },
+                       },
+                       (error2, result3) => {
+                         if(error) {
+                           console.log('Error fetching data: ' + error2.toString());
+                         } else {
+                           console.log("adding pic");
+                           console.log(result3.images);
+
+                           ref.ref(`/users/${user.uid}/images/${counter++}`).set({ url: result3.images[0].source });
+                         }
+                       }
+                      );
+                      new GraphRequestManager().addRequest(picRequest).start();
+                    }
+                  );
+                }
+              }
+            );
+            new GraphRequestManager().addRequest(profilePicRequest).start();
+          }
+        );
+     }
+   }
+  );
+  new GraphRequestManager().addRequest(infoRequest).start();
 }
 
-function checkIfUserExists(userId, usersRef) {
-  usersRef.child(userId).once('value', (snapshot) => {
-    const exists = (snapshot.val() !== null);
-    userExistsCallback(userId, exists);
-  });
+function setImageProfileFirebase(counter, url) {
+    console.log(counter);
+}
+
+function userExistsCallback(user,ref, exists, accessTokenData) {
+  if(exists) {
+    console.log('user ' + user.uid + ' exists!');
+  } else {
+    console.log('user ' + user.uid + ' does not exist!');
+    setupUserFirebase(user,ref, accessTokenData);
+  }
+  Actions.main();
+}
+
+function checkIfUserExists(user, ref, accessTokenData) {
+  console.log('checkIfUserExists');
+
+  ref.ref(`/users/${user.uid}`)
+    .on('value', snapshot => {
+      const exists = (snapshot.val() !== null);
+      userExistsCallback(user,ref, exists, accessTokenData);
+    });
 }
 
 export const loginUser = () => {
@@ -62,14 +139,8 @@ export const loginUser = () => {
           AccessToken.getCurrentAccessToken()
             .then(accessTokenData => {
               //check to see if user exists in firebase
-              loginUserSuccess(dispatch, result);
-              const credential = provider.credential(accessTokenData.accessToken);
-              //usersRef.child(authData.uid).set({provider, name: accessTokenData.first_name});
-              return auth.signInWithCredential(credential);
-            }).then(credData => {
-              console.log(credData);
-            }).catch(err => {
-              console.log(err);
+              console.log("Go the token");
+              signInFirebase(dispatch, auth,provider, accessTokenData);
             });
         }
       },
@@ -89,6 +160,7 @@ export const loginUser = () => {
 };
 
 const createUser = (dispatch) => {
+  console.log('in create user');
   dispatch({
     type: CREATE_USER,
     payload: user
@@ -100,10 +172,32 @@ const loginUserFail = (dispatch) => {
   dispatch({ type: LOGIN_USER_FAIL });
 };
 
-const loginUserSuccess = (dispatch, user) => {
+const signInFirebase = (dispatch, auth, provider, accessTokenData) => {
+  console.log('accessTokenData');
+  console.log(accessTokenData);
+
+  dispatch({
+    type: LOGIN_FB_SUCCESS,
+    payload: accessTokenData
+  });
+  const credential = provider.credential(accessTokenData.accessToken);
+  console.log('signupCredentials');
+  auth.signInWithCredential(credential).then(credData => {
+    loginUserSuccess(dispatch, credData, firebase.database(), accessTokenData);
+    console.log("Got fire");
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+const loginUserSuccess = (dispatch, user, ref, accessTokenData) => {
+    console.log('loginUserSuccess');
     dispatch({
       type: LOGIN_USER_SUCCESS,
       payload: user
     });
-    Actions.main();
+    console.log('loginUser');
+    console.log(accessTokenData);
+
+    checkIfUserExists(user, ref, accessTokenData);
 };

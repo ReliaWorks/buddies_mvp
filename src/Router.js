@@ -19,7 +19,7 @@ const RouterComponent = () => {
   return (
     <Router sceneStyle={styles.routerStyle} navigationBarStyle={navBarStyle} titleStyle={navTitleStyle}>
       <Scene key="root">
-        <Scene key="login" direction="vertical" component={LoginForm} hideNavBar title="Buddies" />
+        <Scene key="login" direction="vertical" component={LoginForm} hideNavBar title="Buddies" initial />
       </Scene>
       <Scene key="profileSetup">
         <Scene
