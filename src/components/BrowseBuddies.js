@@ -15,8 +15,9 @@ class BrowseBuddies extends Component {
                 value={{
                   firstName: buddy.firstName,
                   age: buddy.age,
+                  location: buddy.location,
                   profileImages: buddy.profileImages,
-                  activities: buddy.activities[0].name,
+                  activities: buddy.activities,
                   description: buddy.description,
                 }}
               />

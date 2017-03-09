@@ -18,6 +18,8 @@ class UserView extends Component {
       first_name: '',
       pic: 'https://randomuser.me/api/portraits/women/22.jpg',
       age: '36',
+      location: { city: 'San Francisco, California', distance: ''},
+      description: 'I\'m a stop-and-smell-the-roses runner.'
     };
   }
 
@@ -49,7 +51,8 @@ class UserView extends Component {
               age: this.state.age,
               profileImages: profileImages,
               activities: 'Running',
-              description: 'Sample desc'
+              location: this.state.location,
+              description: this.state.description,
             }}
           />
         </View>
