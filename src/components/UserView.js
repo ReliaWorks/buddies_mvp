@@ -5,6 +5,11 @@ import { GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import { containerStyle, textStyle } from './common/styles/Styles';
 import BuddyCard from './BuddyCard';
 
+const profileImages = [
+  { imageURI: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fshireen2.jpg?alt=media&token=9e8a03a7-6465-405c-825f-848f796448c0' },
+  { imageURI: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fshireen.png?alt=media&token=38575098-3bb5-41b0-a196-4cb7138cefbd' }
+];
+
 class UserView extends Component {
   constructor(props) {
     super(props);
@@ -37,12 +42,12 @@ class UserView extends Component {
   render() {
     return (
       <View style={{flex: 1, justifyContent: 'space-between'}}>
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, padding: 5}}>
           <BuddyCard
             value={{
               firstName: this.state.first_name,
               age: this.state.age,
-              profileImageURL: this.state.pic,
+              profileImages: profileImages,
               activities: 'Running',
               description: 'Sample desc'
             }}
@@ -67,7 +72,6 @@ const styles = {
   },
   editContainerStyle: {
     backgroundColor: 'white',
-//    flex: 1,
     alignItems: 'center',
     marginLeft: 10,
     marginRight: 10

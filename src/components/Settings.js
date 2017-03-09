@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListView, Image, Switch, Text, TextInput, View } from 'react-native';
+import { Button, Linking, ListView, Image, Switch, Text, TextInput, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { LoginButton } from 'react-native-fbsdk';
 //import { Button } from './common';
@@ -8,8 +8,19 @@ import { buttonStyle, centeredTextStyle, legalTextStyle, textStyle } from './com
 const emailIcon = require('./common/img/add_icon.png');
 const settingsBackground = require('./common/img/settingBackground.png');
 
+const url = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/legal%2FApple_Developer_Program_License_Agreement_20160921.pdf?alt=media&token=07bb73b8-b294-42a0-817a-92fd8150d347';
 
 class Settings extends Component {
+  openLink() {
+    Linking.canOpenURL(url).then(supported => {
+      if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+      } else {
+        return Linking.openURL(url);
+      }
+    }).catch(err => console.error('An error occurred', err));
+  }
+
   render() {
     const { containerStyle, labelStyle, settingsContainerStyle, switchStyle, textInputStyle } = styles;
 
@@ -45,7 +56,10 @@ class Settings extends Component {
           />
         </View>
         <View style={{marginTop: 20}}>
-          <Text style={legalTextStyle}>Privacy Policy</Text>
+          <Button
+            onPress={this.openLink}
+            title="Privacy Policy"
+          />
           <Text style={legalTextStyle}>Terms of Service</Text>
           <Text style={centeredTextStyle}>Contact Us</Text>
         </View>
