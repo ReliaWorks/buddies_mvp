@@ -12,7 +12,14 @@ export default userSampleData = [
       { imageURI: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2FPeter3.JPG?alt=media&token=7844831f-a89b-439b-9e66-0774432d527f' },
     ],
     activities: [
-      { name: 'Running', icon: 'test' }
+      {
+        name: 'Running',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984'
+      },
+      {
+        name: 'Running',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984'
+      }
     ],
     affiliations: [
       { name: 'Golden Gate Tri Club', icon: 'test' }
@@ -30,7 +37,16 @@ export default userSampleData = [
       { imageURI: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Foscar.jpg?alt=media&token=26ba8d11-7e2e-4620-a0b9-ea0dba5080ef' }
     ],
     activities: [
-      { name: 'Biking', icon: 'test' }
+      {
+        _id: Math.round(Math.random() * 1000000),
+        name: 'Biking',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Fbiking_icon.png?alt=media&token=d0793482-6ab4-4382-831b-29996b6db6cc'
+      },
+      {
+        _id: Math.round(Math.random() * 1000000),
+        name: 'Running',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984'
+      }
     ],
     affiliations: [
       { name: 'Golden Gate Tri Club', icon: 'test' }
@@ -49,7 +65,16 @@ export default userSampleData = [
       { imageURI: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fkayleigh2.jpg?alt=media&token=6518a380-374d-4f29-b40a-0ddcfcad79c7' }
     ],
     activities: [
-      { name: 'Dancing', icon: 'test' }
+      {
+        _id: Math.round(Math.random() * 1000000),
+        name: 'Hiking',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2FHiking_icon.png?alt=media&token=5b882368-82ca-4605-b0ea-ecf38fa5607d'
+      },
+      {
+        _id: Math.round(Math.random() * 1000000),
+        name: 'Running',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984'
+      }
     ],
     affiliations: [
       { name: 'Golden Gate Tri Club', icon: 'test' }

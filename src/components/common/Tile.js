@@ -4,7 +4,7 @@ import { Image, Text, View } from 'react-native';
 const Tile = (props) => {
   const { tileName, tileIcon } = props;
   const { cardStyle, imageStyle } = styles;
-  
+
   return (
     <View style={cardStyle}>
       <Text style={{ alignSelf: 'center' }}>
@@ -17,8 +17,8 @@ const Tile = (props) => {
 
 const styles = {
   imageStyle: {
-    height: 100,
-    width: 100,
+    height: 85,
+    width: 85,
   },
   cardStyle: {
     borderWidth: 1,
@@ -32,8 +32,8 @@ const styles = {
     marginLeft: 5,
     marginRight: 5,
     marginTop: 10,
-    width: 100,
-    height: 120,
+    width: 85,
+    height: 100,
   }
 };
 
