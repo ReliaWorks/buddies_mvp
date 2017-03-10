@@ -1,4 +1,7 @@
-//const BRAND_PRIMARY_COLOR = '#00BAFF';
+import { Dimensions } from 'react-native';
+
+const { height, width } = Dimensions.get('window');
+
 const BRAND_PRIMARY_COLOR = '#FF703B';
 
 export const backgroundImage = {
@@ -65,6 +68,13 @@ export const loginButtonStyle = {
   height: 45,
   borderRadius: 10,
   borderWidth: 1,
+};
+
+export const profileImageStyle = {
+  alignSelf: 'stretch',
+  justifyContent: 'center',
+  height: (height * 0.6) - 40, //60% of the screen - navbar height - padding
+  width: width - 18,
 };
 
 export const navTitleStyle = {
