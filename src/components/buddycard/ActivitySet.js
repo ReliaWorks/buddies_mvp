@@ -25,6 +25,7 @@ const styles = {
     alignItems: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    backgroundColor: 'white'
   },
 };
 

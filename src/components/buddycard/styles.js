@@ -1,6 +1,4 @@
-import { Dimensions } from 'react-native';
-
-const { height, width } = Dimensions.get('window');
+//import { Dimensions } from 'react-native';
 
 export default styles = {
   containerStyle: {
@@ -23,12 +21,6 @@ export default styles = {
     fontSize: 18,
     marginLeft: 10,
     fontFamily: 'Avenir-Book',
-  },
-  imageStyle: {
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-    height: (height * 0.6) - 25, //60% of the screen - navbar height - padding
-    width: width - 18,
   },
   descriptionContainerStyle: {
     flex: 2,

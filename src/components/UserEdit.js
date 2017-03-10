@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, ScrollView, TouchableOpacity, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import ActivityList from './ActivityList';
+import ActivitySet from './buddycard/ActivitySet';
 import Affiliation from './profile-setup/Affiliation';
 
 const defaultProfileImageURL = require('./common/img/sarahpallittacrop.jpg');
@@ -47,7 +47,7 @@ class UserEdit extends Component {
         {this.renderProfileImages()}
         <View style={{ flex: 2, padding: 10 }}>
           <Text style={styles.textStyle}>Activities</Text>
-          <ActivityList />
+          <ActivitySet />
         </View>
         <View style={{ flex: 1, padding: 10 }}>
           <Text style={styles.textStyle}>Affiliations</Text>

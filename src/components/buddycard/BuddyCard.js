@@ -3,6 +3,7 @@ import { Image, ScrollView, Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ActivitySet from './ActivitySet';
 import AffiliationSet from './AffiliationSet';
+import { profileImageStyle } from '../common/styles';
 import styles from './styles.js';
 
 class BuddyCard extends Component {
@@ -16,10 +17,10 @@ class BuddyCard extends Component {
 
   render() {
     const { firstName, age, location, profileImages, activities, affiliations, description } = this.props.value;
-    const { containerStyle, imageStyle, locationTextStyle, nameTextStyle, textStyle, descriptionContainerStyle } = styles;
+    const { containerStyle, locationTextStyle, nameTextStyle, textStyle, descriptionContainerStyle } = styles;
 
     return (
-        <View style={{flex: 1, padding: 4 }}>
+        <View style={{flex: 1, padding: 4, alignSelf: 'stretch' }}>
           <View style={containerStyle}>
             <Swiper horizontal={false}>
               {profileImages.map((img, key) => {
@@ -27,7 +28,7 @@ class BuddyCard extends Component {
                   <View key={key}>
                     <Image
                       source={{ uri: img.imageURI }}
-                      style={imageStyle}
+                      style={profileImageStyle}
                     />
                   </View>
                 );
