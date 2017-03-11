@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Button, Linking, ListView, Image, Switch, Text, TextInput, View } from 'react-native';
+import { Button, Linking, Image, Switch, Text, TextInput, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { LoginButton } from 'react-native-fbsdk';
 //import { Button } from './common';
-import { buttonStyle, centeredTextStyle, legalTextStyle, textStyle } from './common/styles';
+import { centeredTextStyle, legalTextStyle } from '../components/common/styles';
 
-const emailIcon = require('./common/img/add_icon.png');
-const settingsBackground = require('./common/img/settingBackground.png');
+//const emailIcon = require('../components/common/img/add_icon.png');
+const settingsBackground = require('../components/common/img/settingBackground.png');
 
 const url = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/legal%2FApple_Developer_Program_License_Agreement_20160921.pdf?alt=media&token=07bb73b8-b294-42a0-817a-92fd8150d347';
 

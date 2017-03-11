@@ -58,7 +58,7 @@ export default userSampleData = [
     affiliations: [
       {
         name: 'Bay Club',
-        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2Fbayclub_logo2.png?alt=media&token=fa345ef2-88a4-40d1-9f92-e2f6f80a1794' 
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2Fbayclub_logo2.png?alt=media&token=fa345ef2-88a4-40d1-9f92-e2f6f80a1794'
       }
     ],
     description: 'Looking for a biking buddy',

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { ActionConst, Actions, Scene, Reducer, Router } from 'react-native-router-flux';
-import { connect } from 'react-redux';
-import LoginForm from './components/LoginForm';
-import Settings from './components/Settings';
-import BrowseBuddies from './components/BrowseBuddies';
+import { ActionConst, Actions, Scene, Router } from 'react-native-router-flux';
+import LoginForm from './scenes/LoginForm';
+import Settings from './scenes/Settings';
+import BrowseBuddies from './scenes/BrowseBuddies';
 import { PicSetup, ActivitySetup, AffiliationSetup, DescriptionSetup, ProfileSetupComplete } from './components/profile-setup';
-import UserEdit from './components/UserEdit';
-import UserView from './components/UserView';
-import Matches from './components/Matches';
-import { Conversation } from './components/Conversation';
+import UserEdit from './scenes/UserEdit';
+import UserView from './scenes/UserView';
+import Matches from './scenes/Matches';
+import { Conversation } from './scenes/Conversation';
 import { buttonIconStyle, navBarStyle, navTitleStyle } from './components/common/styles';
 
 const homeImageLocation = require('./components/common/img/home.png');

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Image, ScrollView, TouchableOpacity, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import ActivitySet from './buddycard/ActivitySet';
-import Affiliation from './profile-setup/Affiliation';
+import ActivitySet from '../components/buddycard/ActivitySet';
+import Affiliation from '../components/profile-setup/Affiliation';
 
-const defaultProfileImageURL = require('./common/img/sarahpallittacrop.jpg');
+const defaultProfileImageURL = require('../components/common/img/sarahpallittacrop.jpg');
 
 class UserEdit extends Component {
   renderProfileImages() {

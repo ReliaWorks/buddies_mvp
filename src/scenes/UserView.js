@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { textStyle } from './common/styles/Styles';
-import BuddyCard from './buddycard/BuddyCard';
-import currentUser from './demo-data/CurrentUser.js';
+import { textStyle } from '../components/common/styles/Styles';
+import BuddyCard from '../components/buddycard/BuddyCard';
+import currentUser from '../components/demo-data/CurrentUser.js';
 
 class UserView extends Component {
   render() {

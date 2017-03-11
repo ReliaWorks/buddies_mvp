@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import BuddyCard from './buddycard/BuddyCard';
-import userSampleData from './demo-data/Users.js';
+import BuddyCard from '../components/buddycard/BuddyCard';
+import userSampleData from '../components/demo-data/Users.js';
 
 class BrowseBuddies extends Component {
   render() {

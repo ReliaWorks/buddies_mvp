@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { ListView, Text, View } from 'react-native';
-import { containerStyle, textStyle } from './common/styles/Styles';
-import { ConversationListItem, NoConvoMatch } from './common';
-import sampleData from './demo-data/demoData';
-import matchesSampleData from './demo-data/matchesSampleData';
+import { containerStyle, textStyle } from '../components/common/styles/Styles';
+import { ConversationListItem, NoConvoMatch } from '../components/common';
+import sampleData from '../components/demo-data/demoData';
+import matchesSampleData from '../components/demo-data/matchesSampleData';
 
 class Matches extends Component {
   constructor() {

@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import { Button, View, Image, Text, TouchableHighlight } from 'react-native';
+import { View, Image, Text, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import {
   AccessToken,
-  GraphRequest,
-  GraphRequestManager
 } from 'react-native-fbsdk';
 import { Actions } from 'react-native-router-flux';
-import { backgroundImage, loginButtonStyle, legalTextStyle } from './common/styles';
+import { backgroundImage, loginButtonStyle, legalTextStyle } from '../components/common/styles';
 import { loginUser, createUser } from '../actions';
 //import { Card, CardItem, Button, Input, Spinner } from './common';
 
-const backgroundImageURL = require('./common/img/WorkoutBuddiesImage.jpg');
-const buddiesLogo = require('./common/img/buddies_logo.png');
+const backgroundImageURL = require('../components/common/img/WorkoutBuddiesImage.jpg');
+const buddiesLogo = require('../components/common/img/buddies_logo.png');
 
 /* LoginForm.js
  * ------------
