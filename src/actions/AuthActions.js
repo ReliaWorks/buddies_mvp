@@ -23,7 +23,7 @@ function setupUserFirebase(user,ref, accessTokenData) {
     '/me',
     {
       parameters: {
-        fields: { string: 'id,first_name,last_name,albums{name}' },
+        fields: { string: 'id,first_name,last_name,location, email, birthday, albums{name}' },
         access_token: { string: token.toString() }
     },
    },
@@ -40,7 +40,7 @@ function setupUserFirebase(user,ref, accessTokenData) {
            return album.name === 'Profile Pictures';
         });
 
-        ref.ref(`/user_profiles/${user.uid}`).set({ first_name: result.first_name, last_name: result.last_name });
+        ref.ref(`/user_profiles/${user.uid}`).set({ first_name: result.first_name, last_name: result.last_name, email: result.email,  location: location });
 
         AccessToken.getCurrentAccessToken().then(
           () => {
