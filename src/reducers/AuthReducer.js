@@ -1,6 +1,7 @@
 import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
+  LOGIN_FB_SUCCESS,
   LOGIN_USER,
   CREATE_USER
 } from '../actions/types';
@@ -11,6 +12,7 @@ const INITIAL_STATE = {
   first_name: '',
   newUser: true,
   error: '',
+  fbtoken: null,
   loading: false,
 };
 
@@ -24,6 +26,8 @@ export default(state = INITIAL_STATE, action) => {
           error: '' };
     case LOGIN_USER_SUCCESS:
       return { ...state, user: action.payload };
+    case LOGIN_FB_SUCCESS:
+      return { ...state, fbtoken: action.payload };
     case LOGIN_USER_FAIL:
       return { ...state, error: 'Authentication Failed.', loading: false };
     default:
