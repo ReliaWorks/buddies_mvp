@@ -38,7 +38,7 @@ class PicSetup extends Component {
           '/me',
           {
             parameters: {
-              fields: { string: 'id,first_name,albums{name}' },
+              fields: { string: 'id,first_name,friends.location,albums{name}' },
               access_token: { string: token.toString() }
             },
          },

@@ -14,8 +14,6 @@ import {
   LOGIN_FB_SUCCESS
 } from './types';
 
-const USERS_LOCATION = 'https://activities-test-a3871.firebaseio.com/users';
-
 function setupUserFirebase(user,ref, accessTokenData) {
   const token = accessTokenData.accessToken;
 
@@ -25,7 +23,7 @@ function setupUserFirebase(user,ref, accessTokenData) {
     '/me',
     {
       parameters: {
-        fields: { string: 'id,first_name,last_name,albums{name}' },
+        fields: { string: 'id,first_name,last_name,location, email, birthday, albums{name}' },
         access_token: { string: token.toString() }
     },
    },
@@ -42,10 +40,10 @@ function setupUserFirebase(user,ref, accessTokenData) {
            return album.name === 'Profile Pictures';
         });
 
-        ref.ref(`/users/${user.uid}`).set({ first_name: result.first_name, last_name: result.last_name, album: profileAlbum });
+        ref.ref(`/user_profiles/${user.uid}`).set({ first_name: result.first_name, last_name: result.last_name, email: result.email,  location: location });
 
         AccessToken.getCurrentAccessToken().then(
-          (data1) => {
+          () => {
             const profilePicRequest = new GraphRequest(
               `/${profileAlbum.id}`,
               {
@@ -78,7 +76,7 @@ function setupUserFirebase(user,ref, accessTokenData) {
                            console.log("adding pic");
                            console.log(result3.images);
 
-                           ref.ref(`/users/${user.uid}/images/${counter++}`).set({ url: result3.images[0].source });
+                           ref.ref(`/user_profiles/${user.uid}/images/${counter++}`).set({ url: result3.images[0].source });
                          }
                        }
                       );
@@ -114,7 +112,7 @@ function userExistsCallback(user,ref, exists, accessTokenData) {
 function checkIfUserExists(user, ref, accessTokenData) {
   console.log('checkIfUserExists');
 
-  ref.ref(`/users/${user.uid}`)
+  ref.ref(`/user_profiles/${user.uid}`)
     .on('value', snapshot => {
       const exists = (snapshot.val() !== null);
       userExistsCallback(user,ref, exists, accessTokenData);
@@ -126,7 +124,7 @@ export const loginUser = () => {
     dispatch({ type: LOGIN_USER });
 
     const auth = firebase.auth();
-    const usersRef = firebase.database().ref("users");
+    const usersRef = firebase.database().ref("user_profiles");
     const provider = firebase.auth.FacebookAuthProvider;
 
     LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends', 'user_photos'])
