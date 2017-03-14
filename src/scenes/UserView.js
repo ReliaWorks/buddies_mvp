@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 import { textStyle } from '../components/common/styles/Styles';
+import { currentUserFetch } from '../actions';
 import BuddyCard from '../components/buddycard/BuddyCard';
-import currentUser from '../components/demo-data/CurrentUser.js';
+//import currentUser from '../components/demo-data/CurrentUser.js';
 
 class UserView extends Component {
+  componentWillMount() {
+    this.props.currentUserFetch();
+    //debugger;
+  }
+
   render() {
-    const { firstName, age, location, profileImages, activities, affiliations, description } = currentUser[0];
+    const { firstName, age, location, profileImages, activities, affiliations, description } = this.props;
+    console.log("In UserView render ");
+    console.log(this.props);
 
     return (
       <View style={{flex: 1}}>
@@ -41,4 +50,9 @@ const styles = {
   }
 };
 
-export default UserView;
+const mapStateToProps = (state) => {
+  const { currentUser } = state;
+  return currentUser;
+};
+
+export default connect(mapStateToProps, { currentUserFetch })(UserView);
