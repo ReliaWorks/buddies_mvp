@@ -18,16 +18,16 @@ class BuddyCard extends Component {
   render() {
     const { firstName, age, location, profileImages, activities, affiliations, description } = this.props.value;
     const { containerStyle, locationTextStyle, nameTextStyle, textStyle, descriptionContainerStyle } = styles;
-
+    //debugger;
     return (
         <View style={{flex: 1, padding: 4, alignSelf: 'stretch' }}>
           <View style={containerStyle}>
             <Swiper horizontal={false}>
-              {profileImages.map((img, key) => {
+              { profileImages.map((img, key) => {
                 return (
                   <View key={key}>
                     <Image
-                      source={{ uri: img.imageURI }}
+                      source={{ uri: img.url }}
                       style={profileImageStyle}
                     />
                   </View>

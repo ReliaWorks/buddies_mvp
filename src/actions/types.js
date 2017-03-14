@@ -9,3 +9,5 @@ export const CREATE_USER = 'create_user';
 export const PICTURES_REQUESTED = 'pictures_requested';
 export const PICTURE_REQUEST_SUCCESS = 'picture_request_success';
 export const LOGIN_FB_SUCCESS = 'login_fb_success';
+
+export const CURRENT_USER_FETCH_SUCCESS = 'current_user_fetch_success';

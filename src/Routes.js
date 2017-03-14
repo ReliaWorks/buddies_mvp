@@ -16,25 +16,12 @@ const sprocketImageLocation = require('./components/common/img/224_gear.png');
 const chatImageLocation = require('./components/common/img/224_chat.png');
 
 class Routes extends Component {
-/*  static propTypes = {
-    dispatch: React.PropTypes.func,
-  };
-
-  reducerCreate(params) {
-    const defaultReducer = Reducer(params);
-    return(state, action) => {
-      this.props.dispatch(action);
-      return defaultReducer(state, action);
-    };
-  }
-*/
   render() {
     return (
       <Router
         sceneStyle={styles.routerStyle}
         navigationBarStyle={navBarStyle}
         titleStyle={navTitleStyle}
-//        createReducer={this.reducerCreate.bind(this)}
       >
         <Scene key="root">
           <Scene
@@ -137,5 +124,4 @@ const styles = {
   },
 };
 
-//export default connect()(Routes);
 export default Routes;
