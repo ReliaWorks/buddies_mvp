@@ -39,9 +39,7 @@ function setupUserFirebase(user,ref, accessTokenData) {
         const profileAlbum = fbAlbums.find((album) => {
            return album.name === 'Profile Pictures';
         });
-
-        ref.ref(`/user_profiles/${user.uid}`).set({ first_name: result.first_name, last_name: result.last_name, email: result.email,  location: location });
-
+        ref.ref(`/user_profiles/${user.uid}`).set({ first_name: result.first_name, last_name: result.last_name, email: result.email, location: location});
         AccessToken.getCurrentAccessToken().then(
           () => {
             const profilePicRequest = new GraphRequest(
@@ -95,27 +93,24 @@ function setupUserFirebase(user,ref, accessTokenData) {
   new GraphRequestManager().addRequest(infoRequest).start();
 }
 
-function setImageProfileFirebase(counter, url) {
-    console.log(counter);
-}
-
-function userExistsCallback(user,ref, exists, accessTokenData) {
+function userExistsCallback(user,ref, exists) {
   if(exists) {
     console.log('user ' + user.uid + ' exists!');
+    //Actions.main();
+    Actions.profileSetup();
   } else {
     console.log('user ' + user.uid + ' does not exist!');
-    setupUserFirebase(user,ref, accessTokenData);
+    Actions.profileSetup();
   }
-  Actions.main();
 }
 
-function checkIfUserExists(user, ref, accessTokenData) {
+function checkIfUserExists(user, ref) {
   console.log('checkIfUserExists');
 
   ref.ref(`/user_profiles/${user.uid}`)
     .on('value', snapshot => {
       const exists = (snapshot.val() !== null);
-      userExistsCallback(user,ref, exists, accessTokenData);
+      userExistsCallback(user,ref, exists);
     });
 }
 
@@ -197,5 +192,5 @@ const loginUserSuccess = (dispatch, user, ref, accessTokenData) => {
     console.log('loginUser');
     console.log(accessTokenData);
 
-    checkIfUserExists(user, ref, accessTokenData);
+    checkIfUserExists(user, ref);
 };
