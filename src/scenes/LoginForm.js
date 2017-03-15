@@ -25,18 +25,6 @@ const buddiesLogo = require('../components/common/img/buddies_logo.png');
 class LoginForm extends Component {
   componentWillMount() {
     console.log("in LoginForm componentWillMount");
-    AccessToken.getCurrentAccessToken().then(
-      (accessTokenData) => {
-        console.log("LoginForm");
-        console.log(accessTokenData);
-        if (accessTokenData) {
-          Actions.main();
-        }
-      }
-    ).catch((error) => {
-      console.log("no token");
-      console.log(error);
-    });
   }
 
   renderLoginForm() {
