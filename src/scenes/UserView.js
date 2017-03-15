@@ -10,13 +10,10 @@ import BuddyCard from '../components/buddycard/BuddyCard';
 class UserView extends Component {
   componentWillMount() {
     this.props.currentUserFetch();
-    //debugger;
   }
 
   render() {
     const { firstName, age, location, profileImages, activities, affiliations, description } = this.props;
-    console.log("In UserView render ");
-    console.log(this.props);
 
     return (
       <View style={{flex: 1}}>

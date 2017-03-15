@@ -1,8 +1,7 @@
+//Container component responsible for calling to Firebase and loading the 10 most recent messages in a conversation between the currentUser and a given user.
+
 import React, { Component } from 'react';
-//import { Platform, Text, View } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
-//import CustomActions from './CustomActions';
-//import CustomView from './CustomView';
 
 class Conversation extends Component {
   constructor(props) {
