@@ -23,13 +23,8 @@ export default(state = INITIAL_STATE, action) => {
         });
       }
       const firstName = action.payload.first_name;
-      let age = '';
-      if(action.payload.age) age = action.payload.age;
-      let location = {
-        city: '',
-        distance: ''
-      };
-      if(action.payload.location) location = action.payload.location;
+      const age = action.payload.age;
+      const location = action.payload.location;
       let activities = [];
       if(action.payload.activities) {
         activities = action.payload.activities.map((activity) => {

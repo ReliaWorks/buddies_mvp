@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Image, ScrollView, Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
@@ -7,6 +8,17 @@ import { profileImageStyle } from '../common/styles';
 import styles from './styles.js';
 
 class BuddyCard extends Component {
+  renderAge(age) {
+    if(age) {
+      return `, ${age}`;
+    }
+  }
+
+  renderLocation(location, locationTextStyle) {
+    if(_.isEmpty(location)) return;
+    return <Text style={locationTextStyle}>{location.city}, {location.distance} away</Text>;
+  }
+
   renderActivities(activities) {
     if(activities.length > 0) return <ActivitySet value={{activities}} />;
   }
@@ -37,8 +49,11 @@ class BuddyCard extends Component {
           </View>
           <View style={descriptionContainerStyle}>
             <ScrollView>
-              <Text style={nameTextStyle}>{firstName}, {age}</Text>
-              <Text style={locationTextStyle}>{location.city}, {location.distance} away</Text>
+              <Text style={nameTextStyle}>
+                {firstName}
+                {this.renderAge(age)}
+              </Text>
+              {this.renderLocation(location, locationTextStyle)}
               {this.renderActivities(activities)}
               {this.renderAffiliations(affiliations)}
               <Text style={textStyle}>{description}</Text>
