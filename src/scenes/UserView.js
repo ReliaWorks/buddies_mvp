@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { textStyle } from '../components/common/styles/Styles';
 import { currentUserFetch } from '../actions';
 import BuddyCard from '../components/buddycard/BuddyCard';
-//import currentUser from '../components/demo-data/CurrentUser.js';
 
 class UserView extends Component {
   componentWillMount() {
@@ -30,22 +27,10 @@ class UserView extends Component {
             }}
           />
         </View>
-        <View style={styles.editContainerStyle}>
-          <Text style={textStyle} onPress={() => Actions.userEdit()}>
-            Edit Profile
-          </Text>
-        </View>
       </View>
     );
   }
 }
-
-const styles = {
-  editContainerStyle: {
-    backgroundColor: 'white',
-    alignItems: 'center',
-  }
-};
 
 const mapStateToProps = (state) => {
   const { currentUser } = state;
