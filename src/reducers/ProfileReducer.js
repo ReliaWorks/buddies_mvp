@@ -25,6 +25,7 @@ export default(state = INITIAL_STATE, action) => {
       const firstName = action.payload.first_name;
       const age = action.payload.age;
       const location = action.payload.location;
+      const email = action.payload.email;
       let activities = [];
       if(action.payload.activities) {
         activities = action.payload.activities.map((activity) => {
@@ -44,9 +45,8 @@ export default(state = INITIAL_STATE, action) => {
         });
       }
       let description = '';
-      if(description) description = action.payload.description;
-      console.log(action.payload);
-      return { ...state, firstName, profileImages, age, location, activities, affiliations, description };
+      if(action.payload.description) description = action.payload.description;
+      return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email };
     }
     default:
       return state;
