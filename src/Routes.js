@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ActionConst, Actions, Scene, Router } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
-import Settings from './scenes/Settings';
+import SettingsScene from './scenes/settings';
 import BrowseBuddies from './scenes/BrowseBuddies';
 import { ActivitySetup, AffiliationSetup, DescriptionSetup, ProfileSetupComplete } from './components/profile-setup';
 import { PicSetup } from './scenes/PictSetup';
@@ -95,7 +95,7 @@ class Routes extends Component {
           />
           <Scene
             key="settings"
-            component={Settings}
+            component={SettingsScene}
             title="Settings"
           />
         </Scene>

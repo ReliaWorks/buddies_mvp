@@ -7,7 +7,6 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { backgroundImage, loginButtonStyle, legalTextStyle } from '../components/common/styles';
 import { loginUser, createUser } from '../actions';
-//import { Card, CardItem, Button, Input, Spinner } from './common';
 
 const backgroundImageURL = require('../components/common/img/WorkoutBuddiesImage.jpg');
 const buddiesLogo = require('../components/common/img/buddies_logo.png');
