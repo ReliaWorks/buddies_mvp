@@ -10,11 +10,12 @@ class ActivitySet extends Component {
     });
     dataSource = ds.cloneWithRows(this.props.value.activities);
 
-    return(
+    return (
       <ListView
           contentContainerStyle={styles.list}
           dataSource={dataSource}
           renderRow={(rowData) => <Tile tileName={rowData.name} tileIcon={rowData.icon} />}
+          enableEmptySections
       />
     );
   }

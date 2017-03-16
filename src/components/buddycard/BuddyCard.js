@@ -4,10 +4,37 @@ import { Image, ScrollView, Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ActivitySet from './ActivitySet';
 import AffiliationSet from './AffiliationSet';
+import { Spinner } from '../common';
 import { profileImageStyle } from '../common/styles';
 import styles from './styles.js';
 
 class BuddyCard extends Component {
+  renderProfileImages(profileImages, containerStyle) {
+    if(!profileImages) {
+      return (
+        <View>
+          <Spinner size="small" />
+        </View>
+      );
+    }
+    return (
+      <View style={containerStyle}>
+        <Swiper horizontal={false}>
+          { profileImages.map((img, key) => {
+            return (
+              <View key={key}>
+                <Image
+                  source={{ uri: img.url }}
+                  style={profileImageStyle}
+                />
+              </View>
+            );
+          })}
+        </Swiper>
+      </View>
+    );
+  }
+
   renderAge(age) {
     if(age) {
       return `, ${age}`;
@@ -19,34 +46,13 @@ class BuddyCard extends Component {
     return <Text style={locationTextStyle}>{location.city}, {location.distance} away</Text>;
   }
 
-  renderActivities(activities) {
-    if(activities.length > 0) return <ActivitySet value={{activities}} />;
-  }
-
-  renderAffiliations(affiliations) {
-    if(affiliations.length > 0) return <AffiliationSet value={{affiliations}} />;
-  }
-
   render() {
     const { firstName, age, location, profileImages, activities, affiliations, description } = this.props.value;
     const { containerStyle, locationTextStyle, nameTextStyle, textStyle, descriptionContainerStyle } = styles;
-    //debugger;
+
     return (
         <View style={{flex: 1, padding: 4, alignSelf: 'stretch' }}>
-          <View style={containerStyle}>
-            <Swiper horizontal={false}>
-              { profileImages.map((img, key) => {
-                return (
-                  <View key={key}>
-                    <Image
-                      source={{ uri: img.url }}
-                      style={profileImageStyle}
-                    />
-                  </View>
-                );
-              })}
-            </Swiper>
-          </View>
+          {this.renderProfileImages(profileImages, containerStyle)}
           <View style={descriptionContainerStyle}>
             <ScrollView>
               <Text style={nameTextStyle}>
@@ -54,8 +60,8 @@ class BuddyCard extends Component {
                 {this.renderAge(age)}
               </Text>
               {this.renderLocation(location, locationTextStyle)}
-              {this.renderActivities(activities)}
-              {this.renderAffiliations(affiliations)}
+              <ActivitySet value={{activities}} />
+              <AffiliationSet value={{affiliations}} />
               <Text style={textStyle}>{description}</Text>
             </ScrollView>
           </View>

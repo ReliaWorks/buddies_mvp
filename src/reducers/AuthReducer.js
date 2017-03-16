@@ -19,15 +19,15 @@ const INITIAL_STATE = {
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CREATE_USER:
-      return { ...state, user: action.payload, newUser: false };
+      return { ...state, loading: true, user: action.payload, newUser: false };
     case LOGIN_USER:
         return { ...state,
           loading: true,
           error: '' };
     case LOGIN_USER_SUCCESS:
-      return { ...state, user: action.payload };
+      return { ...state, ...INITIAL_STATE, user: action.payload };
     case LOGIN_FB_SUCCESS:
-      return { ...state, fbtoken: action.payload };
+      return { ...state, ...INITIAL_STATE, fbtoken: action.payload };
     case LOGIN_USER_FAIL:
       return { ...state, error: 'Authentication Failed.', loading: false };
     default:
