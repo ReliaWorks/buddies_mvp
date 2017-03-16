@@ -14,6 +14,7 @@ class AffiliationSet extends Component {
           contentContainerStyle={styles.list}
           dataSource={dataSource}
           renderRow={(rowData) => <Tile tileName={rowData.name} tileIcon={rowData.icon} />}
+          enableEmptySections
       />
     );
   }
