@@ -17,7 +17,7 @@ class PhotoSetup extends Component {
                 source={{ uri: url }}
               >
               <View style={styles.editIconStyle}>
-                <TouchableOpacity onPress={() => self.props.addPic(url)}>
+                <TouchableOpacity onPress={() => this.props.addPic(url)}>
                   <Image
                     style={{width: 20, height: 20}}
                     source={TRASH_ICON}
@@ -40,7 +40,7 @@ class PhotoSetup extends Component {
           source={{ uri: url }}
         >
           <View style={styles.editIconStyle}>
-            <TouchableOpacity onPress={() => self.props.addPic(url)}>
+            <TouchableOpacity onPress={() => this.props.addPic(url)}>
               <Image
                 style={{width: 20, height: 20 }}
                 source={TRASH_ICON}

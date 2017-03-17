@@ -69,11 +69,14 @@ export const loginButtonStyle = {
   borderRadius: 10,
   borderWidth: 1,
 };
+export const profileImageContainer = {
+  flex: 3,
+};
 
-export const profileImageStyle = {
+export const profileImage = {
   alignSelf: 'stretch',
   justifyContent: 'center',
-  height: (height * 0.6) - 40, //60% of the screen - navbar height - padding
+  height: (height * 0.6) - 50, //60% of the screen - navbar height - padding
   width: width - 18,
 };
 

@@ -2,10 +2,10 @@ import React from 'react';
 import { Image, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { Spinner } from './Spinner';
-import { profileImageStyle } from './styles';
+import { profileImageContainer, profileImage } from './styles';
 
 const ProfileImages = (props) => {
-  const { profileImages, containerStyle } = props.value;
+  const { profileImages } = props.value;
 
   if(profileImages.length === 0) {
     return (
@@ -15,14 +15,14 @@ const ProfileImages = (props) => {
     );
   }
   return (
-    <View style={containerStyle}>
+    <View style={profileImageContainer}>
       <Swiper horizontal={false}>
         { profileImages.map((img, key) => {
           return (
             <View key={key}>
               <Image
                 source={{ uri: img.url }}
-                style={profileImageStyle}
+                style={profileImage}
               />
             </View>
           );
