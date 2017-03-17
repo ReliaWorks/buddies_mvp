@@ -1,45 +1,40 @@
 import React, { Component } from 'react';
 import { Text, View, Button, TouchableOpacity, Image } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { textStyle } from '../components/common/styles';
-import { Header } from '../components/common';
-import { EDIT_ICON } from '../components/profile-setup/strings';
+import { EDIT_ICON, TRASH_ICON } from '../components/profile-setup/strings';
 import { addPic, savePics } from '../actions';
 
 class PhotoSetup extends Component {
-
-  componentWillMount() {
-      console.log("On PhotoSetup");
+  renderOtherPics(profile_pics) {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        {profile_pics.map((url, key) => {
+          return (
+            <View key={key} style={{ padding: 5 }}>
+              <Image
+                style={styles.smallImageStyle}
+                source={{ uri: url }}
+              >
+              <View style={styles.editIconStyle}>
+                <TouchableOpacity onPress={() => self.props.addPic(url)}>
+                  <Image
+                    style={{width: 20, height: 20}}
+                    source={TRASH_ICON}
+                  />
+                </TouchableOpacity>
+              </View>
+              </Image>
+            </View>
+        );
+        })}
+      </View>
+    );
   }
 
-  editPhoto() {
-
-  }
-
-  render() {
-    console.log("Rendering photos");
-    console.log(this.props.profile_pics);
-    const self = this;
+  renderPrimaryPic(url) {
     return(
-      <View>
-      <Header headerTitle="Get Started" />
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
-          <Text style={textStyle}>
-          Review photos:
-          </Text>
-          <Button
-            onPress={() => this.props.savePics(this.props.selectedPics)}
-            style={textStyle}
-            title="Next"
-            color="#4267B2"
-          />
-        </View>
-        {this.props.profile_pics.map(function( url, index ){
-          console.log("index");
-          console.log(url);
-          console.log(index);
-          return(
+      <View style={{ padding: 10 }}>
         <Image
           style={styles.mainImageStyle}
           source={{ uri: url }}
@@ -47,15 +42,42 @@ class PhotoSetup extends Component {
           <View style={styles.editIconStyle}>
             <TouchableOpacity onPress={() => self.props.addPic(url)}>
               <Image
-                style={{width: 20, height: 20}}
-                source={{ uri: EDIT_ICON }}
+                style={{width: 20, height: 20 }}
+                source={TRASH_ICON}
               />
             </TouchableOpacity>
           </View>
-        </Image>);
-      })}
+        </Image>
+      </View>
+    );
+  }
 
+  renderSectionHeader(selectedPics) {
+    return(
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
+        <Text style={textStyle}>
+        Review photos:
+        </Text>
+        <Button
+          onPress={() => this.props.savePics(selectedPics)}
+          style={textStyle}
+          title="Next"
+          color="#4267B2"
+        />
+      </View>
+    );
+  }
 
+  render() {
+    const { profile_pics, selectedPics } = this.props;
+    const firstProfileImage = profile_pics[0];
+    const otherProfileImages = profile_pics.slice(1);
+
+    return (
+      <View>
+        {this.renderSectionHeader(selectedPics)}
+        {this.renderPrimaryPic(firstProfileImage)}
+        {this.renderOtherPics(otherProfileImages)}
       </View>
     );
   }
@@ -65,14 +87,18 @@ const styles = {
   editIconStyle: {
     backgroundColor: 'white',
     alignSelf: 'flex-end',
-    width: 30,
-    padding: 5,
+    marginRight: 2,
+    marginBottom: 2,
+    borderRadius: 2,
   },
   iconStyle: {
-    flexDirection: 'column',
     justifyContent: 'center',
-    height: 25,
-    width: 25
+    height: 20,
+    width: 20,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'black',
+    padding: 2,
   },
   mainImageStyle: {
     alignSelf: 'stretch',
@@ -80,18 +106,17 @@ const styles = {
     height: 300,
     width: null,
     padding: 5,
+    borderRadius: 10,
   },
   smallImageStyle: {
-    height: 120,
-    width: 120,
+    height: 115,
+    width: 115,
     justifyContent: 'flex-end',
-    padding: 5,
+    borderRadius: 10,
   },
 };
 
 const mapStateToProps = ({ auth }) => {
-  console.log('props');
-  console.log(auth);
   return auth;
 };
 

@@ -4,7 +4,7 @@ import LoginForm from './scenes/LoginForm';
 import SettingsScene from './scenes/settings';
 import BrowseBuddies from './scenes/BrowseBuddies';
 import { ActivitySetup, AffiliationSetup, DescriptionSetup, ProfileSetupComplete } from './components/profile-setup';
-import PhotoSetup  from './scenes/PhotoSetup';
+import PhotoSetup from './scenes/PhotoSetup';
 import UserEdit from './scenes/UserEdit';
 import UserView from './scenes/UserView';
 import Matches from './scenes/Matches';
@@ -24,7 +24,7 @@ class Routes extends Component {
         navigationBarStyle={navBarStyle}
         titleStyle={navTitleStyle}
       >
-        <Scene key="root">
+        <Scene key="root" initial>
           <Scene
             key="login"
             direction="vertical"
@@ -73,7 +73,6 @@ class Routes extends Component {
             rightButtonIconStyle={buttonIconStyle}
             onRight={() => Actions.matchesConversations()}
             type={ActionConst.RESET}
-            initial
           />
         </Scene>
         <Scene key="profileSettings">
