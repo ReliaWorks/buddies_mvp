@@ -8,7 +8,7 @@ import UserEdit from './scenes/UserEdit';
 import UserView from './scenes/UserView';
 import Matches from './scenes/Matches';
 import { Conversation } from './components/common';
-import { buttonIconStyle, navBarStyle, navTitleStyle } from './components/common/styles';
+import { iconStyle, navBarStyle, navTitleStyle } from './components/common/styles';
 
 const homeImageLocation = require('./components/common/img/home.png');
 const wrenchImageLocation = require('./components/common/img/wrench.png');
@@ -55,9 +55,9 @@ const RouterComponent = () => {
           title="Buddies"
           leftButtonImage={sprocketImageLocation}
           rightButtonImage={chatImageLocation}
-          leftButtonIconStyle={buttonIconStyle}
+          lefticonStyle={iconStyle}
           onLeft={() => Actions.profileSettings()}
-          rightButtonIconStyle={buttonIconStyle}
+          righticonStyle={iconStyle}
           onRight={() => Actions.matchesConversations()}
           type={ActionConst.RESET}
           initial
@@ -70,10 +70,10 @@ const RouterComponent = () => {
           component={UserView}
           title="Profile Settings"
           leftButtonImage={wrenchImageLocation}
-          leftButtonIconStyle={buttonIconStyle}
+          lefticonStyle={iconStyle}
           onLeft={() => Actions.settings()}
           rightButtonImage={homeImageLocation}
-          rightButtonIconStyle={buttonIconStyle}
+          righticonStyle={iconStyle}
           onRight={() => Actions.main()}
         />
         <Scene key="userEdit" component={UserEdit} title="Edit Profile" />
@@ -89,7 +89,7 @@ const RouterComponent = () => {
           component={Matches}
           title="Matches"
           leftButtonImage={homeImageLocation}
-          leftButtonIconStyle={buttonIconStyle}
+          lefticonStyle={iconStyle}
           onLeft={() => Actions.main()}
         />
         <Scene

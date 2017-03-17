@@ -16,10 +16,10 @@ class PhotoSetup extends Component {
                 style={styles.smallImageStyle}
                 source={{ uri: url }}
               >
-              <View style={styles.editIconStyle}>
+              <View style={styles.editIconContainer}>
                 <TouchableOpacity onPress={() => this.props.addPic(url)}>
                   <Image
-                    style={{width: 20, height: 20}}
+                    style={styles.iconStyle}
                     source={TRASH_ICON}
                   />
                 </TouchableOpacity>
@@ -39,10 +39,10 @@ class PhotoSetup extends Component {
           style={styles.mainImageStyle}
           source={{ uri: url }}
         >
-          <View style={styles.editIconStyle}>
+          <View style={styles.editIconContainer}>
             <TouchableOpacity onPress={() => this.props.addPic(url)}>
               <Image
-                style={{width: 20, height: 20 }}
+                style={styles.iconStyle}
                 source={TRASH_ICON}
               />
             </TouchableOpacity>
@@ -84,7 +84,7 @@ class PhotoSetup extends Component {
 }
 
 const styles = {
-  editIconStyle: {
+  editIconContainer: {
     backgroundColor: 'white',
     alignSelf: 'flex-end',
     marginRight: 2,

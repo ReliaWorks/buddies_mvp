@@ -13,16 +13,13 @@ export const backgroundImage = {
   height: null
 };
 
-export const buttonIconStyle = {
+export const iconStyle = {
   width: 20,
   height: 20
 };
 
 export const buttonStyle = {
-    backgroundColor: '#fff',
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: 'red',
     marginLeft: 5,
     marginRight: 5
 };
@@ -35,8 +32,6 @@ export const containerStyle = {
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 0.2,
   elevation: 2,
-//  borderWidth: 1,
-//  borderColor: '#979797',
 };
 
 export const convoThumbnailStyle = {
@@ -44,6 +39,14 @@ export const convoThumbnailStyle = {
   width: 75,
   marginLeft: 10,
   marginBottom: 10
+};
+
+export const editIconContainer = {
+  backgroundColor: 'white',
+  alignSelf: 'flex-end',
+  marginRight: 2,
+  marginBottom: 2,
+  borderRadius: 2,
 };
 
 export const headerTextStyle = {

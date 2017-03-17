@@ -9,7 +9,7 @@ import UserEdit from './scenes/UserEdit';
 import UserView from './scenes/UserView';
 import Matches from './scenes/Matches';
 import { Conversation } from './scenes/Conversation';
-import { buttonIconStyle, navBarStyle, navTitleStyle } from './components/common/styles';
+import { iconStyle, navBarStyle, navTitleStyle } from './components/common/styles';
 
 const homeImageLocation = require('./components/common/img/home.png');
 const wrenchImageLocation = require('./components/common/img/wrench.png');
@@ -67,9 +67,9 @@ class Routes extends Component {
             title="Buddies"
             leftButtonImage={sprocketImageLocation}
             rightButtonImage={chatImageLocation}
-            leftButtonIconStyle={buttonIconStyle}
+            leftButtonIconStyle={iconStyle}
             onLeft={() => Actions.profileSettings()}
-            rightButtonIconStyle={buttonIconStyle}
+            rightButtonIconStyle={iconStyle}
             onRight={() => Actions.matchesConversations()}
             type={ActionConst.RESET}
           />
@@ -81,10 +81,10 @@ class Routes extends Component {
             component={UserView}
             title="Profile Settings"
             leftButtonImage={wrenchImageLocation}
-            leftButtonIconStyle={buttonIconStyle}
+            leftButtonIconStyle={iconStyle}
             onLeft={() => Actions.settings()}
             rightButtonImage={homeImageLocation}
-            rightButtonIconStyle={buttonIconStyle}
+            rightButtonIconStyle={iconStyle}
             onRight={() => Actions.main()}
           />
           <Scene
@@ -104,7 +104,7 @@ class Routes extends Component {
             component={Matches}
             title="Matches"
             leftButtonImage={homeImageLocation}
-            leftButtonIconStyle={buttonIconStyle}
+            leftButtonIconStyle={iconStyle}
             onLeft={() => Actions.main()}
           />
           <Scene
