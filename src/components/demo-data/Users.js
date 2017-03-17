@@ -90,16 +90,4 @@ export default userSampleData = [
     ],
     description: 'Looking for a dancing buddy',
   },
-  {
-    firstName: 'Gabi',
-    age: '21',
-    location: {
-      city: 'San Francisco, California',
-      distance: '1 mile'
-    },
-    profileImages: [],
-    activities: [],
-    affiliations: [],
-    description: '',
-  }
 ];
