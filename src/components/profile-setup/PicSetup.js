@@ -3,7 +3,7 @@ import { Button, Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import { textStyle } from '../common/styles';
-import { Header, Spinner } from '../common';
+import { Header } from '../common';
 import { ADD_ICON, EDIT_ICON } from './strings';
 
 class PicSetup extends Component {
@@ -21,9 +21,6 @@ class PicSetup extends Component {
       fbToken: '',
       pic: 'https://randomuser.me/api/portraits/women/22.jpg',
     };
-//    this.state.imgArr.push({ id: 1, source: 'https://randomuser.me/api/portraits/women/22.jpg' });
-//    this.state.imgArr.push({ id: 2, source: 'https://randomuser.me/api/portraits/women/22.jpg' });
-//    this.state.imgArr.push({ id: 3, source: 'https://randomuser.me/api/portraits/women/22.jpg' });
   }
 
   componentWillMount() {
@@ -47,7 +44,7 @@ class PicSetup extends Component {
         new GraphRequestManager().addRequest(infoRequest).start();
       }
     ).catch((error) => {
-      alert('Error fetching access token' + error.toString());
+      console.log('Error fetching access token' + error.toString());
     });
   }
 
