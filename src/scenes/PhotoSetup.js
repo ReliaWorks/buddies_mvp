@@ -95,7 +95,6 @@ const styles = {
     justifyContent: 'center',
     height: 20,
     width: 20,
-    borderWidth: 1,
     borderRadius: 10,
     borderColor: 'black',
     padding: 2,
