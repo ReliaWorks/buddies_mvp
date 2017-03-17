@@ -2,7 +2,8 @@ import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 import {
   SELECT_PIC,
-  SAVE_PICS
+  SAVE_PICS,
+  DESCRIPTION_SAVED,
 } from './types';
 
 export const addPic = (url) => {
@@ -30,5 +31,12 @@ export const savePics = (selectedPics) => {
       payload: {}
     });
     Actions.activitySetup();
+  };
+};
+
+export const descriptionSaved = (text) => {
+  return {
+    type: DESCRIPTION_SAVED,
+    payload: text
   };
 };

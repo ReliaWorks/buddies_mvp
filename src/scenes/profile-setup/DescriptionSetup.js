@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { descriptionSaved } from '../../actions';
 
 class DescriptionSetup extends Component {
   constructor(props) {
@@ -9,10 +11,17 @@ class DescriptionSetup extends Component {
       text: "I'm a stop-and-smell-the-roses runner. Not competitive. I just like to get outside and enjoy the beautiful weather while getting healthy!",
       height: 300,
     };
+    console.log("In Description Setup");
+    console.log(this.props);
+  }
+
+  componentWillMount() {
+    console.log("In Description Setup");
+    console.log(this.props);
   }
 
   render() {
-    return(
+    return (
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'flex-end', padding: 5}}>
           <Button
@@ -25,7 +34,10 @@ class DescriptionSetup extends Component {
         <TextInput
           multiline
           style={styles.descriptionInput}
-          onChangeText={(text) => this.setState({text})}
+          onChangeText={(text) => {
+            this.props.descriptionSaved(text);
+            }
+          }
           onContentSizeChange={(event) => {
             this.setState({height: event.nativeEvent.contentSize.height});
           }}
@@ -59,4 +71,4 @@ const styles = {
   }
 };
 
-export { DescriptionSetup };
+export default connect(null, { descriptionSaved })(DescriptionSetup);

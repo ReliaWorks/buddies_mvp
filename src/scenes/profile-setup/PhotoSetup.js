@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, Button, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
-import { textStyle } from '../components/common/styles';
-import { EDIT_ICON, TRASH_ICON } from '../components/profile-setup/strings';
-import { addPic, savePics } from '../actions';
+import { textStyle } from '../../components/common/styles';
+import { EDIT_ICON, TRASH_ICON } from './strings';
+import { addPic, savePics } from '../../actions';
 
 class PhotoSetup extends Component {
   renderOtherPics(profile_pics) {

@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import ActivitySet from './ActivitySet';
 import AffiliationSet from './AffiliationSet';
 import { ProfileImages } from '../common';
-import { EDIT_ICON } from '../profile-setup/strings';
+import { EDIT_ICON } from '../../scenes/profile-setup/strings';
 import { buttonStyle, iconStyle, textStyle } from '../common/styles';
 import styles from './styles.js';
 
@@ -44,7 +44,7 @@ class BuddyCard extends Component {
           <ProfileImages value={{profileImages, editable}} />
           <View style={descriptionContainerStyle}>
             <ScrollView>
-              <View style={{ flexDirection: 'row' }}>
+              <View>
                 <Text style={nameTextStyle}>
                   {firstName}
                   {this.renderAge(age)}

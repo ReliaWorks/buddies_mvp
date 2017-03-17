@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Button, ListView, Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { textStyle } from '../common/styles';
-import { Header, Tile } from '../common';
-import sampleAffiliationData from '../demo-data/affiliations';
+import { textStyle } from '../../components/common/styles';
+import { Header, Tile } from '../../components/common';
+import sampleAffiliationData from '../../components/demo-data/affiliations';
 
-const addIcon = require('../common/img/add_icon.png');
+const addIcon = require('../../components/common/img/add_icon.png');
 
 class AffiliationSetup extends Component {
   constructor() {

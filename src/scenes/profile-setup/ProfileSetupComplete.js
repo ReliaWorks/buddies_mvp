@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { textStyle } from '../common/styles';
+import { textStyle } from '../../components/common/styles';
 
 class ProfileSetupComplete extends Component {
   render() {
