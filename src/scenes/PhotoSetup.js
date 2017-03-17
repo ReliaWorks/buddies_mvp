@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { textStyle } from '../components/common/styles';
 import { Header } from '../components/common';
 import { EDIT_ICON } from '../components/profile-setup/strings';
-import { addPic } from '../actions';
+import { addPic, savePics } from '../actions';
 
 class PhotoSetup extends Component {
 
@@ -29,7 +29,7 @@ class PhotoSetup extends Component {
           Review photos:
           </Text>
           <Button
-            onPress={() => Actions.activitySetup()}
+            onPress={() => this.props.savePics(this.props.selectedPics)}
             style={textStyle}
             title="Next"
             color="#4267B2"
@@ -95,4 +95,4 @@ const mapStateToProps = ({ auth }) => {
   return auth;
 };
 
-export default connect(mapStateToProps, { addPic })(PhotoSetup);
+export default connect(mapStateToProps, { addPic, savePics })(PhotoSetup);

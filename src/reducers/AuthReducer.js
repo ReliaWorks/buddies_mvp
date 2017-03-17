@@ -30,6 +30,7 @@ export default(state = INITIAL_STATE, action) => {
       console.log("In profile reducer");
       console.log(selectedPics);
       if (!selectedPics[action.payload]) selectedPics[action.payload] = true;
+      console.log(selectedPics);
       return { ...state, selectedPics: selectedPics };
     case PROFILE_INFO:
       console.log('On profile info');

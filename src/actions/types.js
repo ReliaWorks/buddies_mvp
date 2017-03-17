@@ -12,5 +12,6 @@ export const LOGIN_FB_SUCCESS = 'login_fb_success';
 export const PROFILE_INFO = 'profile_info';
 export const PROFILE_PIC = 'profile_pic';
 export const SELECT_PIC = 'select_pic';
+export const SAVE_PICS = 'save_pics';
 
 export const CURRENT_USER_FETCH_SUCCESS = 'current_user_fetch_success';
