@@ -1,5 +1,6 @@
 import {
   CURRENT_USER_FETCH_SUCCESS,
+  DESCRIPTION_SAVED,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -47,6 +48,12 @@ export default(state = INITIAL_STATE, action) => {
       let description = '';
       if(action.payload.description) description = action.payload.description;
       return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email };
+    }
+    case DESCRIPTION_SAVED: {
+      console.log("In ProfileReducer");
+      console.log(action.payload);
+      console.log(state);
+      return { ...state, description: action.payload };
     }
     default:
       return state;
