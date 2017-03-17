@@ -153,10 +153,14 @@ export const loginUser = () => {
          * If not, create user and redirect to FTUE
          */
         console.log('Login fail with error: ' + error);
-        createUser(dispatch);
-        const credential = provider.credential(accessTokenData.accessToken);
-        usersRef.child(authData.uid).set({provider, name: accessTokenData.first_name});
-        return auth.signInWithCredential(credential);
+        AccessToken.getCurrentAccessToken()
+          .then(accessTokenData => {
+            //check to see if user exists in firebase
+            console.log("getting token");
+            console.log(accessTokenData);
+            const credential = provider.credential(accessTokenData.accessToken);
+            auth.signInWithCredential(credential);
+          });
       }
     );
   };
@@ -166,7 +170,7 @@ const createUser = (dispatch) => {
   console.log('in create user');
   dispatch({
     type: CREATE_USER,
-    payload: user
+    payload: {}
   });
   Actions.profileSetup();
 };

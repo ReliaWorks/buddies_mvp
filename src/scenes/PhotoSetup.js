@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Button, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { textStyle } from '../components/common/styles';
 import { Header } from '../components/common';
@@ -33,10 +33,10 @@ class PhotoSetup extends Component {
 
           <View style={styles.editIconStyle}>
             <TouchableOpacity onPress={this.editPhoto()}>
-
+              <Text>Some</Text>
             </TouchableOpacity>
           </View>
-        
+
 
       </View>
     );
