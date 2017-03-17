@@ -60,7 +60,7 @@ class Routes extends Component {
           />
 
         </Scene>
-        <Scene key="main" type={ActionConst.RESET}>
+        <Scene key="main" type={ActionConst.RESET} initial>
           <Scene
             key="browse"
             component={BrowseBuddies}
@@ -91,6 +91,7 @@ class Routes extends Component {
             key="userEdit"
             component={UserEdit}
             title="Edit Profile"
+            initial
           />
           <Scene
             key="settings"

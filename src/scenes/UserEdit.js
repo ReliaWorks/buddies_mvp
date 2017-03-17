@@ -1,78 +1,68 @@
 import React, { Component } from 'react';
-import { Image, ScrollView, TouchableOpacity, Text, View } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { ScrollView, Text, View } from 'react-native';
+import { connect } from 'react-redux';
 import ActivitySet from '../components/buddycard/ActivitySet';
-import Affiliation from '../components/profile-setup/Affiliation';
+import AffiliationSet from '../components/buddycard/AffiliationSet';
+import { currentUserFetch } from '../actions';
+import { textStyle } from '../components/common/styles';
 
-const defaultProfileImageURL = require('../components/common/img/sarahpallittacrop.jpg');
 
 class UserEdit extends Component {
-  renderProfileImages() {
+  componentWillMount() {
+    this.props.currentUserFetch();
+  }
+
+  renderActivities(activities) {
+    return(
+      <View style={{ flex: 3, padding: 10 }}>
+        <Text style={styles.sectionHeader}>Activities</Text>
+        <ActivitySet value={{activities}} />
+      </View>
+    );
+  }
+
+  renderAffiliations(affiliations) {
+    return(
+      <View style={{ flex: 2, padding: 10 }}>
+      <Text style={styles.sectionHeader}>Affiliations</Text>
+      <AffiliationSet value={{affiliations}} />
+      </View>
+    );
+  }
+
+  renderDescription() {
     return (
-      <ScrollView
-        style={{ flexDirection: 'row', flex: 3, alignSelf: 'stretch' }}
-        horizontal
-      >
-        <TouchableOpacity onPress={() => { Actions.root(); }}>
-          <View style={{ padding: 10 }}>
-            <Image
-              style={styles.imageStyle}
-              source={defaultProfileImageURL}
-            />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => { Actions.root(); }}>
-          <View style={{ padding: 10 }}>
-            <Image
-              style={styles.imageStyle}
-              source={defaultProfileImageURL}
-            />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => { Actions.root(); }}>
-          <View style={{ padding: 10 }}>
-            <Image
-              style={styles.imageStyle}
-              source={defaultProfileImageURL}
-            />
-          </View>
-        </TouchableOpacity>
-      </ScrollView>
+      <View style={{ flex: 1, padding: 10 }}>
+        <Text style={styles.sectionHeader}>About Me</Text>
+        <Text style={textStyle}>Im a stop and smell the roses runner</Text>
+      </View>
     );
   }
 
   render() {
+    const { activities, affiliations } = this.props;
+
     return (
-      <View style={styles.containerStyle}>
-        {this.renderProfileImages()}
-        <View style={{ flex: 2, padding: 10 }}>
-          <Text style={styles.textStyle}>Activities</Text>
-          <ActivitySet />
-        </View>
-        <View style={{ flex: 1, padding: 10 }}>
-          <Text style={styles.textStyle}>Affiliations</Text>
-          <Affiliation />
-        </View>
-      </View>
+      <ScrollView contentContainerStyle={{ flex: 1 }}>
+        {this.renderActivities(activities)}
+        {this.renderAffiliations(affiliations)}
+        {this.renderDescription()}
+      </ScrollView>
     );
   }
 }
 
 const styles = {
-  containerStyle: {
-    flex: 1,
-  },
-  textStyle: {
-    fontSize: 18,
-    alignSelf: 'center',
+  sectionHeader: {
     fontFamily: 'Avenir-Book',
-  },
-  imageStyle: {
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-    height: 175,
-    width: 175,
-  },
+    fontSize: 20,
+    alignSelf: 'center',
+    fontWeight: 'bold'
+  }
 };
 
-export default UserEdit;
+const mapStateToProps = ({ currentUser }) => {
+  return currentUser;
+};
+
+export default connect(mapStateToProps, { currentUserFetch})(UserEdit);
