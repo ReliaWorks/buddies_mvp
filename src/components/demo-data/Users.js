@@ -17,7 +17,7 @@ export default userSampleData = [
         icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984'
       },
       {
-        name: 'Running',
+        name: 'Walking',
         icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984'
       }
     ],
@@ -89,5 +89,17 @@ export default userSampleData = [
     affiliations: [
     ],
     description: 'Looking for a dancing buddy',
+  },
+  {
+    firstName: 'Gabi',
+    age: '21',
+    location: {
+      city: 'San Francisco, California',
+      distance: '1 mile'
+    },
+    profileImages: [],
+    activities: [],
+    affiliations: [],
+    description: '',
   }
 ];

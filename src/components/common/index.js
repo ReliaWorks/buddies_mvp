@@ -5,6 +5,7 @@ export * from './ConversationListItem';
 export * from './FullSizeImageModal';
 export * from './Header';
 export * from './Input';
+export * from './ProfileImages';
 export * from './Spinner';
 export * from './Tile';
 export * from './NoConvoMatch';
