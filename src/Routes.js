@@ -24,7 +24,7 @@ class Routes extends Component {
         navigationBarStyle={navBarStyle}
         titleStyle={navTitleStyle}
       >
-        <Scene key="root" initial>
+        <Scene key="root">
           <Scene
             key="login"
             direction="vertical"
@@ -38,7 +38,6 @@ class Routes extends Component {
             key="photoSetup"
             title="Profile Setup"
             component={PhotoSetup}
-            initial
           />
           <Scene
             key="activitySetup"
@@ -61,7 +60,7 @@ class Routes extends Component {
           />
 
         </Scene>
-        <Scene key="main" type={ActionConst.RESET}>
+        <Scene key="main" type={ActionConst.RESET} initial>
           <Scene
             key="browse"
             component={BrowseBuddies}

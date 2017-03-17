@@ -34,11 +34,11 @@ class BuddyCard extends Component {
 
   render() {
     const { firstName, age, editable, location, profileImages, activities, affiliations, description } = this.props.value;
-    const { containerStyle, locationTextStyle, nameTextStyle, textStyle, descriptionContainerStyle } = styles;
+    const { locationTextStyle, nameTextStyle, descriptionContainerStyle } = styles;
 
     return (
         <View style={{flex: 1, padding: 4, alignSelf: 'stretch' }}>
-          <ProfileImages value={{profileImages, containerStyle, editable}} />
+          <ProfileImages value={{profileImages, editable}} />
           <View style={descriptionContainerStyle}>
             <ScrollView>
               <Text style={nameTextStyle}>

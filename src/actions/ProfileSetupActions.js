@@ -1,8 +1,9 @@
+import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 import {
   SELECT_PIC,
   SAVE_PICS
 } from './types';
-import firebase from 'firebase';
 
 export const addPic = (url) => {
   console.log("Action url");
@@ -17,17 +18,17 @@ export const addPic = (url) => {
 
 export const savePics = (selectedPics) => {
   const auth = firebase.auth();
-  
-  console.log("Saving pics");
-  let images = [];
+
+  const images = [];
   Object.keys(selectedPics).forEach(key => {
     images.push(key);
   });
-  console.log(images);
+
   return (dispatch) => {
     dispatch({
       type: SAVE_PICS,
       payload: {}
     });
+    Actions.activitySetup();
   };
 };

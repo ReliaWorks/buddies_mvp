@@ -1,9 +1,6 @@
 //import { Dimensions } from 'react-native';
 
 export default styles = {
-  containerStyle: {
-    flex: 3,
-  },
   nameTextStyle: {
     fontSize: 18,
     marginLeft: 10,
@@ -21,8 +18,10 @@ export default styles = {
     fontSize: 18,
     marginLeft: 10,
     fontFamily: 'Avenir-Book',
+    backgroundColor: 'white',
   },
   descriptionContainerStyle: {
     flex: 2,
+    backgroundColor: 'white',
   }
 };
