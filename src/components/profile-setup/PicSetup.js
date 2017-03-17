@@ -3,7 +3,7 @@ import { Button, Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import { textStyle } from '../common/styles';
-import { Header } from '../common';
+//import { Header } from '../common';
 import { ADD_ICON, EDIT_ICON } from './strings';
 
 class PicSetup extends Component {
@@ -133,7 +133,6 @@ class PicSetup extends Component {
   render() {
     return(
       <View>
-        <Header headerTitle="Get Started" />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
           <Text style={textStyle}>
           Review photos:

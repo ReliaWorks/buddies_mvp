@@ -23,6 +23,7 @@ class UserView extends Component {
             affiliations,
             location,
             description,
+            editable: true,
           }}
         />
       </View>

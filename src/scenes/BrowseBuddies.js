@@ -10,7 +10,7 @@ class BrowseBuddies extends Component {
   render() {
     if(!userSampleData) {
       return (
-        <View style={{justifyContent: 'center', alignSelf: 'center'}}>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Spinner size="large" />
         </View>
       );
