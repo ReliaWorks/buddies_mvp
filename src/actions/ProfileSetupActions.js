@@ -1,6 +1,14 @@
-import { PICTURES_REQUESTED, PICTURE_REQUEST_SUCCESS } from './types';
+import {
+  SELECT_PIC
+} from './types';
 
-export const requestPics = () => {
+export const addPic = (url) => {
+  console.log("Action url");
+  console.log(url);
   return (dispatch) => {
+    dispatch({
+      type: SELECT_PIC,
+      payload: url
+    });
   };
 };

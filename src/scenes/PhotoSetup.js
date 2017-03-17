@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { Text, View, Button, TouchableOpacity } from 'react-native';
+import { Text, View, Button, TouchableOpacity, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 import { textStyle } from '../components/common/styles';
 import { Header } from '../components/common';
+import { EDIT_ICON } from '../components/profile-setup/strings';
+import { addPic } from '../actions';
 
 class PhotoSetup extends Component {
 
   componentWillMount() {
-      console.log("On picsetup");
+      console.log("On PhotoSetup");
   }
 
   editPhoto() {
@@ -15,6 +18,9 @@ class PhotoSetup extends Component {
   }
 
   render() {
+    console.log("Rendering photos");
+    console.log(this.props.profile_pics);
+    const self = this;
     return(
       <View>
       <Header headerTitle="Get Started" />
@@ -29,13 +35,25 @@ class PhotoSetup extends Component {
             color="#4267B2"
           />
         </View>
-
-
+        {this.props.profile_pics.map(function( url, index ){
+          console.log("index");
+          console.log(url);
+          console.log(index);
+          return(
+        <Image
+          style={styles.mainImageStyle}
+          source={{ uri: url }}
+        >
           <View style={styles.editIconStyle}>
-            <TouchableOpacity onPress={this.editPhoto()}>
-              <Text>Some</Text>
+            <TouchableOpacity onPress={() => self.props.addPic(url)}>
+              <Image
+                style={{width: 20, height: 20}}
+                source={{ uri: EDIT_ICON }}
+              />
             </TouchableOpacity>
           </View>
+        </Image>);
+      })}
 
 
       </View>
@@ -71,4 +89,10 @@ const styles = {
   },
 };
 
-export default PhotoSetup;
+const mapStateToProps = ({ auth }) => {
+  console.log('props');
+  console.log(auth);
+  return auth;
+};
+
+export default connect(mapStateToProps, { addPic })(PhotoSetup);

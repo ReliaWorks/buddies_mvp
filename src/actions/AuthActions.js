@@ -16,7 +16,7 @@ import {
   PROFILE_PIC
 } from './types';
 
-function setupUserFirebase(user,ref, accessTokenData) {
+function setupUserFirebase(user,ref, accessTokenData, dispatch) {
   const token = accessTokenData.accessToken;
 
   let counter = 0;
@@ -42,9 +42,18 @@ function setupUserFirebase(user,ref, accessTokenData) {
            return album.name === 'Profile Pictures';
         });
 
+        const profile = {
+          first_name: result.first_name || '',
+          last_name: result.last_name || '',
+          email: result.email || '',
+          location: result.location || ''
+        };
+
+        ref.ref(`/user_profiles/${user.uid}`).set(profile);
+
         dispatch({
           type: PROFILE_INFO,
-          payload: { first_name: result.first_name, last_name: result.last_name, email: result.email, location: location}
+          payload: profile
         });
 
         AccessToken.getCurrentAccessToken().then(
@@ -102,7 +111,7 @@ function setupUserFirebase(user,ref, accessTokenData) {
   new GraphRequestManager().addRequest(infoRequest).start();
 }
 
-function userExistsCallback(user,ref, exists, accessTokenData) {
+function userExistsCallback(user,ref, exists, accessTokenData, dispatch) {
   if(exists) {
     console.log('user ' + user.uid + ' exists!');
     //Actions.main();
@@ -110,17 +119,17 @@ function userExistsCallback(user,ref, exists, accessTokenData) {
   } else {
     console.log('user ' + user.uid + ' does not exist!');
 
-    setupUserFirebase(user,ref, accessTokenData);
+    setupUserFirebase(user,ref, accessTokenData, dispatch);
   }
 }
 
-function checkIfUserExists(user, ref, accessTokenData) {
+function checkIfUserExists(user, ref, accessTokenData, dispatch) {
   console.log('checkIfUserExists');
 
   ref.ref(`/user_profiles/${user.uid}`)
     .on('value', snapshot => {
       const exists = (snapshot.val() !== null);
-      userExistsCallback(user,ref, exists, accessTokenData);
+      userExistsCallback(user,ref, exists, accessTokenData, dispatch);
     });
 }
 
@@ -206,5 +215,5 @@ const loginUserSuccess = (dispatch, user, ref, accessTokenData) => {
     console.log('loginUser');
     console.log(accessTokenData);
 
-    checkIfUserExists(user, ref, accessTokenData);
+    checkIfUserExists(user, ref, accessTokenData, dispatch);
 };

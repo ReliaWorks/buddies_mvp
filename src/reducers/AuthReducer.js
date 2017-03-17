@@ -5,7 +5,8 @@ import {
   LOGIN_USER,
   CREATE_USER,
   PROFILE_INFO,
-  PROFILE_PIC
+  PROFILE_PIC,
+  SELECT_PIC
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -16,16 +17,23 @@ const INITIAL_STATE = {
   error: '',
   fbtoken: null,
   loading: false,
-  user_profile: null,
-  profile_pics: []
+  profile_pics: [],
+  selectedPics: {}
 };
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CREATE_USER:
       return { ...state, loading: true, user: action.payload, newUser: false };
+    case SELECT_PIC:
+      let selectedPics = Object.assign({}, state.selectedPics);
+      console.log("In profile reducer");
+      console.log(selectedPics);
+      if (!selectedPics[action.payload]) selectedPics[action.payload] = true;
+      return { ...state, selectedPics: selectedPics };
     case PROFILE_INFO:
-      return { ...state, user_profile: action.payload };
+      console.log('On profile info');
+      return { ...state, user: action.payload, email: action.payload.email, first_name: action.payload.first_name, };
     case LOGIN_USER:
         return { ...state,
           loading: true,
@@ -33,7 +41,11 @@ export default(state = INITIAL_STATE, action) => {
     case LOGIN_USER_SUCCESS:
       return { ...state, ...INITIAL_STATE, user: action.payload };
     case PROFILE_PIC:
-      return {...state, profile_pics: profile_pics.push(action.payload)};
+      console.log('On profile pic adding');
+      let pics = state.profile_pics.slice();
+      pics.push(action.payload);
+      console.log(pics);
+      return {...state, profile_pics: pics};
     case LOGIN_FB_SUCCESS:
       return { ...state, ...INITIAL_STATE, fbtoken: action.payload };
     case LOGIN_USER_FAIL:
