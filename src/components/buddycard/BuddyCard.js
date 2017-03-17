@@ -1,10 +1,12 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import ActivitySet from './ActivitySet';
 import AffiliationSet from './AffiliationSet';
 import { ProfileImages } from '../common';
-import { buttonStyle, textStyle } from '../common/styles';
+import { EDIT_ICON } from '../profile-setup/strings';
+import { buttonStyle, iconStyle, textStyle } from '../common/styles';
 import styles from './styles.js';
 
 class BuddyCard extends Component {
@@ -12,10 +14,11 @@ class BuddyCard extends Component {
     if(!editable) return;
     return (
       <View>
-        <TouchableOpacity style={buttonStyle}>
-          <Text style={textStyle}>
-          Edit
-          </Text>
+        <TouchableOpacity onPress={() => Actions.userEdit()} style={buttonStyle}>
+          <Image
+            style={iconStyle}
+            source={{ uri: EDIT_ICON}}
+          />
         </TouchableOpacity>
       </View>
     );
@@ -41,11 +44,13 @@ class BuddyCard extends Component {
           <ProfileImages value={{profileImages, editable}} />
           <View style={descriptionContainerStyle}>
             <ScrollView>
-              <Text style={nameTextStyle}>
-                {firstName}
-                {this.renderAge(age)}
-              </Text>
-              {this.showEditableButton(editable)}
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={nameTextStyle}>
+                  {firstName}
+                  {this.renderAge(age)}
+                </Text>
+                {this.showEditableButton(editable)}
+              </View>
               {this.renderLocation(location, locationTextStyle)}
               <ActivitySet value={{activities}} />
               <AffiliationSet value={{affiliations}} />
