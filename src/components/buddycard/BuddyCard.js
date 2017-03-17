@@ -44,7 +44,7 @@ class BuddyCard extends Component {
           <ProfileImages value={{profileImages, editable}} />
           <View style={descriptionContainerStyle}>
             <ScrollView>
-              <View>
+              <View style={{ flexDirection: 'row' }}>
                 <Text style={nameTextStyle}>
                   {firstName}
                   {this.renderAge(age)}
