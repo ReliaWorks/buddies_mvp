@@ -35,6 +35,10 @@ export const savePics = (selectedPics) => {
 };
 
 export const descriptionSaved = (text) => {
+  const { currentUser } = firebase.auth();
+
+  firebase.database().ref(`user_profiles/${currentUser.uid}/description`).set(text);
+
   return {
     type: DESCRIPTION_SAVED,
     payload: text
