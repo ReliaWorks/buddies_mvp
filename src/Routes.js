@@ -61,7 +61,7 @@ class Routes extends Component {
           />
 
         </Scene>
-        <Scene key="main" type={ActionConst.RESET}>
+        <Scene key="main" type={ActionConst.RESET} initial>
           <Scene
             key="browse"
             component={BrowseBuddies}
