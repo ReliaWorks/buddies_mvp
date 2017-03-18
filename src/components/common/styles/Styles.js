@@ -10,7 +10,7 @@ export const backgroundImage = {
   alignItems: 'center',
   justifyContent: 'space-around',
   width: null,
-  height: null
+  height: null,
 };
 
 export const iconStyle = {
@@ -64,14 +64,6 @@ export const legalTextStyle = {
   margin: 5,
 };
 
-export const loginButtonStyle = {
-//  flex: 1,
-  alignItems: 'center',
-  backgroundColor: '#4267B2',
-  height: 45,
-  borderRadius: 10,
-  borderWidth: 1,
-};
 export const profileImageContainer = {
   flex: 3,
 };

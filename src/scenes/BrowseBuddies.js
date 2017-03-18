@@ -29,6 +29,7 @@ class BrowseBuddies extends Component {
                     activities: buddy.activities,
                     affiliations: buddy.affiliations,
                     description: buddy.description,
+                    likeable: true,
                   }}
                 />
               </View>
