@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { View, Image, Text, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
-import {
-  AccessToken,
-} from 'react-native-fbsdk';
-import { Actions } from 'react-native-router-flux';
-import { backgroundImage, loginButtonStyle, legalTextStyle } from '../components/common/styles';
+import { backgroundImage, legalTextStyle } from '../components/common/styles';
 import { loginUser, createUser } from '../actions';
 
-const backgroundImageURL = require('../components/common/img/WorkoutBuddiesImage.jpg');
+//const backgroundImageURL = require('../components/common/img/WorkoutBuddiesImage.jpg');
+const backgroundImageURL = require('../components/common/img/wavelengthLoginBackground.png');
 const buddiesLogo = require('../components/common/img/buddies_logo.png');
 
 /* LoginForm.js
@@ -30,10 +27,10 @@ class LoginForm extends Component {
     return (
       <View style={styles.container}>
         <Image source={backgroundImageURL} style={backgroundImage}>
-          <View>
+          <View style={{ flex: 2, marginTop: 20 }}>
             <Image source={buddiesLogo} style={{height: 79, width: 102, opacity: 1.0}} />
           </View>
-          <View style={loginButtonStyle}>
+          <View style={styles.loginButtonContainer}>
             <TouchableHighlight
               onPress={this.props.loginUser}
               color="white"
@@ -64,11 +61,18 @@ const styles = {
     fontSize: 18,
     textAlign: 'center',
     justifyContent: 'center',
-    marginTop: 10,
-    marginBottom: 10,
     marginLeft: 10,
     marginRight: 10,
   },
+  loginButtonContainer: {
+    flex: .2,
+    height: null,
+    width: null,
+    justifyContent: 'center',
+    backgroundColor: '#4267B2',
+    borderRadius: 10,
+    marginBottom: 30,
+  }
 };
 
 const mapStateToProps = ({ auth }) => {

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ActivitySet from './ActivitySet';
 import AffiliationSet from './AffiliationSet';
@@ -24,6 +24,21 @@ class BuddyCard extends Component {
     );
   }
 
+  renderMatchControls(likeable) {
+    if(!likeable) return;
+    return (
+      <View style={localStyles.footer}>
+        <TouchableOpacity style={localStyles.passButton}>
+          <Text style={localStyles.footerText}>Pass</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={localStyles.connectButton}>
+            <Text style={localStyles.footerText}>Connect</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+
   renderAge(age) {
     if(age) {
       return `, ${age}`;
@@ -36,7 +51,7 @@ class BuddyCard extends Component {
   }
 
   render() {
-    const { firstName, age, editable, location, profileImages, activities, affiliations, description } = this.props.value;
+    const { firstName, age, editable, likeable, location, profileImages, activities, affiliations, description } = this.props.value;
     const { locationTextStyle, nameTextStyle, descriptionContainerStyle } = styles;
 
     return (
@@ -56,10 +71,58 @@ class BuddyCard extends Component {
               <AffiliationSet value={{affiliations}} />
               <Text style={textStyle}>{description}</Text>
             </ScrollView>
+            {this.renderMatchControls(likeable)}
           </View>
         </View>
     );
   }
 }
+
+const localStyles = StyleSheet.create({
+  footer: {
+    position: 'absolute',
+    left: -15,
+    right: -15,
+    bottom: 45,
+    backgroundColor: 'white',
+    borderWidth: 2,
+    borderColor: 'black',
+    flexDirection: 'row',
+    height: 75,
+    alignItems: 'center',
+  },
+  connectButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    padding: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 10,
+    backgroundColor: 'teal',
+    opacity: 0.75,
+  },
+  passButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    padding: 10,
+    marginRight: 10,
+    marginLeft: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 10,
+    backgroundColor: 'darkgray',
+    opacity: 0.75,
+  },
+  footerText: {
+    color: 'white',
+    fontWeight: 'bold',
+    alignItems: 'center',
+    fontSize: 18,
+  },
+});
 
 export default BuddyCard;
