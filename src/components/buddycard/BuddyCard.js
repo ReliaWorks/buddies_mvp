@@ -1,13 +1,16 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import ActivitySet from './ActivitySet';
 import AffiliationSet from './AffiliationSet';
 import { ProfileImages } from '../common';
 import { EDIT_ICON } from '../../scenes/profile-setup/strings';
-import { buttonStyle, iconStyle, textStyle } from '../common/styles';
+import { buttonStyle, iconStyle } from '../common/styles';
 import styles from './styles.js';
+
+//const { height, width } = Dimensions.get('window');
 
 class BuddyCard extends Component {
   showEditableButton(editable) {
@@ -15,9 +18,11 @@ class BuddyCard extends Component {
     return (
       <View>
         <TouchableOpacity onPress={() => Actions.userEdit()} style={buttonStyle}>
-          <Image
-            style={iconStyle}
-            source={{ uri: EDIT_ICON}}
+          <Icon
+            name="edit"
+            size={20}
+            color="black"
+            style={{padding: 4, marginTop: 10}}
           />
         </TouchableOpacity>
       </View>
@@ -55,7 +60,7 @@ class BuddyCard extends Component {
     const { locationTextStyle, nameTextStyle, descriptionContainerStyle } = styles;
 
     return (
-        <View style={{flex: 1, padding: 4, alignSelf: 'stretch' }}>
+        <View style={{flex: 1, alignSelf: 'stretch' }}>
           <ProfileImages value={{profileImages, editable}} />
           <View style={descriptionContainerStyle}>
             <ScrollView>
@@ -69,7 +74,9 @@ class BuddyCard extends Component {
               {this.renderLocation(location, locationTextStyle)}
               <ActivitySet value={{activities}} />
               <AffiliationSet value={{affiliations}} />
-              <Text style={textStyle}>{description}</Text>
+              <View style={{ marginTop: 15, borderTopWidth: 0.5 }}>
+                <Text style={localStyles.descriptionText}>{description}</Text>
+              </View>
             </ScrollView>
             {this.renderMatchControls(likeable)}
           </View>
@@ -83,10 +90,10 @@ const localStyles = StyleSheet.create({
     position: 'absolute',
     left: -15,
     right: -15,
-    bottom: 45,
+    bottom: 40,
     backgroundColor: 'white',
-    borderWidth: 2,
     borderColor: 'black',
+//    borderTopWidth: 1,
     flexDirection: 'row',
     height: 75,
     alignItems: 'center',
@@ -98,10 +105,9 @@ const localStyles = StyleSheet.create({
     padding: 10,
     marginLeft: 10,
     marginRight: 10,
-    borderWidth: 1,
     borderColor: 'black',
-    borderRadius: 10,
-    backgroundColor: 'teal',
+    borderRadius: 3,
+    backgroundColor: '#1DABB5',
     opacity: 0.75,
   },
   passButton: {
@@ -111,9 +117,8 @@ const localStyles = StyleSheet.create({
     padding: 10,
     marginRight: 10,
     marginLeft: 10,
-    borderWidth: 1,
     borderColor: 'black',
-    borderRadius: 10,
+    borderRadius: 3,
     backgroundColor: 'darkgray',
     opacity: 0.75,
   },
@@ -123,6 +128,13 @@ const localStyles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 18,
   },
+  descriptionText: {
+    fontSize: 18,
+    marginLeft: 10,
+    marginTop: 15,
+    fontFamily: 'Avenir-Book',
+    backgroundColor: 'white',
+  }
 });
 
 export default BuddyCard;

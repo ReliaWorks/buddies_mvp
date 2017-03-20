@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableHighlight } from 'react-native';
+import { Dimensions, View, Image, Text, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import { backgroundImage, legalTextStyle } from '../components/common/styles';
 import { loginUser, createUser } from '../actions';
@@ -7,6 +7,9 @@ import { loginUser, createUser } from '../actions';
 //const backgroundImageURL = require('../components/common/img/WorkoutBuddiesImage.jpg');
 const backgroundImageURL = require('../components/common/img/wavelengthLoginBackground.png');
 const buddiesLogo = require('../components/common/img/buddies_logo.png');
+
+const { height, width } = Dimensions.get('window');
+const LOGINFORM_MARGIN = 14;
 
 /* LoginForm.js
  * ------------
@@ -22,13 +25,22 @@ class LoginForm extends Component {
   componentWillMount() {
     console.log("in LoginForm componentWillMount");
   }
+//  <Image source={buddiesLogo} style={{height: 79, width: 102, opacity: 1.0}} />
 
   renderLoginForm() {
     return (
       <View style={styles.container}>
+        <View style={{alignItems: 'center', flex: .1, marginTop: -30}}>
+          <Text style={{
+            fontFamily: 'Avenir-Book',
+            fontSize: 45,
+            fontWeight: 'bold',
+          }}>
+            Social.
+          </Text>
+        </View>
         <Image source={backgroundImageURL} style={backgroundImage}>
           <View style={{ flex: 2, marginTop: 20 }}>
-            <Image source={buddiesLogo} style={{height: 79, width: 102, opacity: 1.0}} />
           </View>
           <View style={styles.loginButtonContainer}>
             <TouchableHighlight
@@ -58,20 +70,21 @@ const styles = {
   },
   fbLoginText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: 'Avenir-Book',
     textAlign: 'center',
     justifyContent: 'center',
     marginLeft: 10,
     marginRight: 10,
+    //fontWeight: 'bold',
   },
   loginButtonContainer: {
     flex: .2,
     height: null,
-    width: null,
+    width: width - (LOGINFORM_MARGIN * 2),
     justifyContent: 'center',
-    backgroundColor: '#4267B2',
-    borderRadius: 10,
-    marginBottom: 30,
+//    backgroundColor: '#4267B2',
+    backgroundColor: 'black',
   }
 };
 

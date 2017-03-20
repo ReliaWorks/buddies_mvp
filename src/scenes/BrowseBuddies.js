@@ -44,7 +44,6 @@ class BrowseBuddies extends Component {
 const styles = {
   cardStyle: {
     flex: 1,
-    padding: 5,
     elevation: 1
   },
 };
