@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ActivitySet from './ActivitySet';
 import AffiliationSet from './AffiliationSet';
 import { ProfileImages } from '../common';
-import { EDIT_ICON } from '../../scenes/profile-setup/strings';
-import { buttonStyle, iconStyle } from '../common/styles';
+import { buttonStyle } from '../common/styles';
 import styles from './styles.js';
 
 //const { height, width } = Dimensions.get('window');
@@ -43,6 +42,13 @@ class BuddyCard extends Component {
     );
   }
 
+  renderActivitiesAffiliations(activities, affiliations) {
+    const activitiesAndAffiliations = activities.concat(affiliations);
+    return (
+        <ActivitySet value={{activitiesAndAffiliations}} />
+    );
+  }
+  //        <AffiliationSet value={{affiliations}} />
 
   renderAge(age) {
     if(age) {
@@ -72,8 +78,7 @@ class BuddyCard extends Component {
                 {this.showEditableButton(editable)}
               </View>
               {this.renderLocation(location, locationTextStyle)}
-              <ActivitySet value={{activities}} />
-              <AffiliationSet value={{affiliations}} />
+              {this.renderActivitiesAffiliations(activities, affiliations)}
               <View style={{ marginTop: 15, borderTopWidth: 0.5 }}>
                 <Text style={localStyles.descriptionText}>{description}</Text>
               </View>

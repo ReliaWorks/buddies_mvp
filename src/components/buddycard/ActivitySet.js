@@ -8,7 +8,7 @@ class ActivitySet extends Component {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    dataSource = ds.cloneWithRows(this.props.value.activities);
+    dataSource = ds.cloneWithRows(this.props.value.activitiesAndAffiliations);
 
     return (
       <ListView
