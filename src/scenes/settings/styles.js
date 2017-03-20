@@ -28,7 +28,7 @@ export default styles = {
     borderStyle: 'solid',
   },
   linkContainerStyle: {
-    marginTop: 120,
+    marginTop: 80,
     flexDirection: 'column',
     justifyContent: 'flex-end',
   },
@@ -49,6 +49,6 @@ export default styles = {
   },
   logoutContainerStyle: {
     flex: 1,
-    alignSelf: 'center'
+    alignSelf: 'center',
   }
 };
