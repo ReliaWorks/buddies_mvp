@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ActivitySet from './ActivitySet';
-import AffiliationSet from './AffiliationSet';
+//import AffiliationSet from './AffiliationSet';
 import { ProfileImages } from '../common';
 import { buttonStyle } from '../common/styles';
 import styles from './styles.js';
@@ -32,9 +32,6 @@ class BuddyCard extends Component {
     if(!likeable) return;
     return (
       <View style={localStyles.footer}>
-        <TouchableOpacity style={localStyles.passButton}>
-          <Text style={localStyles.footerText}>Pass</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={localStyles.connectButton}>
             <Text style={localStyles.footerText}>Connect</Text>
         </TouchableOpacity>
@@ -48,7 +45,6 @@ class BuddyCard extends Component {
         <ActivitySet value={{activitiesAndAffiliations}} />
     );
   }
-  //        <AffiliationSet value={{affiliations}} />
 
   renderAge(age) {
     if(age) {
@@ -93,14 +89,13 @@ class BuddyCard extends Component {
 const localStyles = StyleSheet.create({
   footer: {
     position: 'absolute',
-    left: -15,
-    right: -15,
-    bottom: 40,
+    left: 100,
+    right: 100,
+    bottom: 55,
     backgroundColor: 'white',
     borderColor: 'black',
-//    borderTopWidth: 1,
     flexDirection: 'row',
-    height: 75,
+    height: 50,
     alignItems: 'center',
   },
   connectButton: {
@@ -110,21 +105,8 @@ const localStyles = StyleSheet.create({
     padding: 10,
     marginLeft: 10,
     marginRight: 10,
-    borderColor: 'black',
     borderRadius: 3,
     backgroundColor: '#1DABB5',
-    opacity: 0.75,
-  },
-  passButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    padding: 10,
-    marginRight: 10,
-    marginLeft: 10,
-    borderColor: 'black',
-    borderRadius: 3,
-    backgroundColor: 'darkgray',
     opacity: 0.75,
   },
   footerText: {

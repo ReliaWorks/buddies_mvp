@@ -63,7 +63,7 @@ class Routes extends Component {
           <Scene
             key="browse"
             component={BrowseBuddies}
-            title="Social."
+            title="wave length"
             leftButton={profileIconButton}
             leftButtonIconStyle={iconStyle}
             rightButton={chatIconButton}
