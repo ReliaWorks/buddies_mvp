@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+//import { Dimensions } from 'react-native';
+//import Icon from 'react-native-vector-icons';
 import { ActionConst, Actions, Scene, Router } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
 import SettingsScene from './scenes/settings';
@@ -11,11 +13,7 @@ import UserView from './scenes/UserView';
 import Matches from './scenes/Matches';
 import { Conversation } from './scenes/Conversation';
 import { iconStyle, navBarStyle, navTitleStyle } from './components/common/styles';
-
-const homeImageLocation = require('./components/common/img/home.png');
-const wrenchImageLocation = require('./components/common/img/wrench.png');
-const sprocketImageLocation = require('./components/common/img/224_gear.png');
-const chatImageLocation = require('./components/common/img/224_chat.png');
+import { chatIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
 class Routes extends Component {
   render() {
@@ -61,16 +59,14 @@ class Routes extends Component {
           />
 
         </Scene>
-        <Scene key="main" type={ActionConst.RESET}>
+        <Scene key="main" type={ActionConst.RESET} initial>
           <Scene
             key="browse"
             component={BrowseBuddies}
-            title="Buddies"
-            leftButtonImage={sprocketImageLocation}
-            rightButtonImage={chatImageLocation}
+            title="Social."
+            leftButton={profileIconButton}
             leftButtonIconStyle={iconStyle}
-            onLeft={() => Actions.profileSettings()}
-            rightButtonIconStyle={iconStyle}
+            rightButton={chatIconButton}
             onRight={() => Actions.matchesConversations()}
             type={ActionConst.RESET}
           />
@@ -81,12 +77,11 @@ class Routes extends Component {
             direction="vertical"
             component={UserView}
             title="Profile Settings"
-            leftButtonImage={wrenchImageLocation}
+            leftButton={wrenchIconButton}
             leftButtonIconStyle={iconStyle}
-            onLeft={() => Actions.settings()}
-            rightButtonImage={homeImageLocation}
-            rightButtonIconStyle={iconStyle}
-            onRight={() => Actions.main()}
+//            onLeft={() => Actions.settings()}
+            rightButton={homeRightIconButton}
+//            onRight={() => Actions.main()}
           />
           <Scene
             key="userEdit"
@@ -104,8 +99,8 @@ class Routes extends Component {
             key="matches"
             component={Matches}
             title="Matches"
-            leftButtonImage={homeImageLocation}
-            leftButtonIconStyle={iconStyle}
+            leftButton={homeLeftIconButton}
+//            leftButtonIconStyle={iconStyle}
             onLeft={() => Actions.main()}
           />
           <Scene

@@ -4,12 +4,13 @@ export default styles = {
   nameTextStyle: {
     fontSize: 18,
     marginLeft: 10,
+    marginTop: 15,
     fontWeight: 'bold',
     fontFamily: 'Avenir-Book',
   },
   locationTextStyle: {
     fontSize: 14,
-    color: 'gainsboro',
+    color: '#707070',
     marginLeft: 10,
     fontWeight: 'bold',
     fontFamily: 'Avenir-Book',
@@ -23,5 +24,7 @@ export default styles = {
   descriptionContainerStyle: {
     flex: 2,
     backgroundColor: 'white',
+    marginLeft: 14,
+    marginRight: 14
   }
 };

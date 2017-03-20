@@ -1,21 +1,21 @@
-import { Dimensions } from 'react-native';
+//import { Dimensions } from 'react-native';
 
-const { height, width } = Dimensions.get('window');
-
-const BRAND_PRIMARY_COLOR = '#FF703B';
+const BRAND_PRIMARY_COLOR = 'white';
 
 export const backgroundImage = {
   flex: 1,
   alignSelf: 'stretch',
   alignItems: 'center',
   justifyContent: 'space-around',
+  marginLeft: 14,
+  marginRight: 14,
   width: null,
   height: null,
 };
 
 export const iconStyle = {
   width: 20,
-  height: 20
+  height: 20,
 };
 
 export const buttonStyle = {
@@ -57,22 +57,12 @@ export const headerTextStyle = {
 
 export const legalTextStyle = {
   alignSelf: 'center',
-  color: 'blue',
+  color: 'black',
   fontFamily: 'Avenir-Book',
   fontSize: 12,
   textAlign: 'center',
-  margin: 5,
-};
-
-export const profileImageContainer = {
-  flex: 3,
-};
-
-export const profileImage = {
-  alignSelf: 'stretch',
-  justifyContent: 'center',
-  height: (height * 0.6) - 50, //60% of the screen - navbar height - padding
-  width: width - 18,
+  marginTop: 5,
+  marginBottom: 14,
 };
 
 export const navTitleStyle = {
@@ -97,6 +87,7 @@ export const centeredTextStyle = {
 };
 
 export const textStyle = {
-  fontSize: 20,
-  fontFamily: 'Avenir-Book',
+    fontSize: 16,
+    color: 'black',
+    fontFamily: 'Avenir-Book',
 };

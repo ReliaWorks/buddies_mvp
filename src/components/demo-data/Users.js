@@ -88,6 +88,6 @@ export default userSampleData = [
     ],
     affiliations: [
     ],
-    description: 'Looking for a dancing buddy',
+    description: 'nubia nostra, per inceptos himenaeos. Quisque sed tellus et urna semper aliquet vitae tincidunt odio. Etiam convallis, metus quis faucibus interdum, purus libero accumsan augue',
   },
 ];
