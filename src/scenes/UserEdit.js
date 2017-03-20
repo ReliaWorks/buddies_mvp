@@ -16,7 +16,7 @@ class UserEdit extends Component {
     return(
       <View style={{ flex: 1, padding: 10 }}>
         <Text style={styles.sectionHeader}>Activities</Text>
-        <ActivitySet value={{activities}} />
+        <ActivitySet value={{activitiesAndAffiliations: activities}} />
       </View>
     );
   }
