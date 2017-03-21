@@ -32,11 +32,9 @@ class Conversation extends Component {
     const { currentUser } = firebase.auth();
     const firstName = this.props.currentUser.firstName;
     const branchKey = this.constructBranchId(currentUser, this.props.chat.selectedMatch);
-    console.log("Branch key");
-    console.log(branchKey);
 
     const user = {...messages[0].user, name: firstName, avatar: this.props.chat.selectedMatchAvatar};
-    const m1 = {...messages[0], user, createdAt: new Date().toString()};
+    const m1 = {...messages[0], user, createdAt: firebase.database.ServerValue.TIMESTAMP};
     firebase.database().ref(`user_chats/${branchKey}/`).push(m1);
 
     this.setState((previousState) => {
@@ -65,14 +63,14 @@ class Conversation extends Component {
     return null;
   }
   render() {
-    console.log("In Conversation");
-    console.log(this);
+    const { currentUser } = firebase.auth();
+
     return(
       <GiftedChat
         messages={this.state.messages}
         onSend={this.onSend}
         user={{
-          _id: "duZphaxR0ue1OjaPOEewe0UjbZV2",
+          _id: currentUser.uid,
         }}
         renderFooter={this.renderFooter.bind(this)}
       />
