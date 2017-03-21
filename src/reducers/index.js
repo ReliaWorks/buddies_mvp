@@ -4,7 +4,7 @@ import ActivityFormReducer from './ActivityFormReducer';
 import ActivityReducer from './ActivityReducer';
 import ProfileReducer from './ProfileReducer';
 import SettingsReducer from './SettingsReducer';
-//import BrowseReducer from './BrowseReducer';
+import ChatReducer from './ChatReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -12,5 +12,5 @@ export default combineReducers({
   activities: ActivityReducer,
   currentUser: ProfileReducer,
   settings: SettingsReducer,
-//  potentials: BrowseReducer,
+  chat: ChatReducer,
 });

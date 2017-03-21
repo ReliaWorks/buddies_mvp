@@ -19,8 +19,6 @@ import {
 function setupUserFirebase(user,ref, accessTokenData, dispatch) {
   const token = accessTokenData.accessToken;
 
-  let counter = 0;
-  console.log(token);
   const infoRequest = new GraphRequest(
     '/me',
     {
@@ -113,12 +111,8 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
 
 function userExistsCallback(user,ref, exists, accessTokenData, dispatch) {
   if(exists) {
-    console.log('user ' + user.uid + ' exists!');
-    //Actions.main();
     Actions.profileSetup();
   } else {
-    console.log('user ' + user.uid + ' does not exist!');
-
     setupUserFirebase(user,ref, accessTokenData, dispatch);
   }
 }
