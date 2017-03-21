@@ -5,9 +5,10 @@ import { ActionConst, Actions, Scene, Router } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
 import SettingsScene from './scenes/settings';
 import BrowseBuddies from './scenes/BrowseBuddies';
-import { ActivitySetup, AffiliationSetup, ProfileSetupComplete } from './scenes/profile-setup';
+import { ActivitySetup, ProfileSetupComplete } from './scenes/profile-setup';
 import PhotoSetup from './scenes/profile-setup/PhotoSetup';
 import DescriptionSetup from './scenes/profile-setup/DescriptionSetup';
+import AffiliationSetup from './scenes/profile-setup/AffiliationSetup';
 import UserEdit from './scenes/UserEdit';
 import UserView from './scenes/UserView';
 import Matches from './scenes/Matches';
@@ -59,7 +60,7 @@ class Routes extends Component {
           />
 
         </Scene>
-        <Scene key="main" type={ActionConst.RESET} initial>
+        <Scene key="main" type={ActionConst.RESET}>
           <Scene
             key="browse"
             component={BrowseBuddies}

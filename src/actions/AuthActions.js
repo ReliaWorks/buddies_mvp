@@ -8,9 +8,7 @@ import {
 import firebase from 'firebase';
 import {
   LOGIN_USER_SUCCESS,
-  LOGIN_USER_FAIL,
   LOGIN_USER,
-  CREATE_USER,
   LOGIN_FB_SUCCESS,
   PROFILE_INFO,
   PROFILE_PIC
@@ -141,7 +139,6 @@ export const loginUser = () => {
           console.log('Login cancelled');
         } else {
           console.log('Login success.');
-          console.log(result);
           AccessToken.getCurrentAccessToken()
             .then(accessTokenData => {
               //check to see if user exists in firebase
@@ -169,29 +166,12 @@ export const loginUser = () => {
   };
 };
 
-const createUser = (dispatch) => {
-  console.log('in create user');
-  dispatch({
-    type: CREATE_USER,
-    payload: {}
-  });
-  Actions.profileSetup();
-};
-
-const loginUserFail = (dispatch) => {
-  dispatch({ type: LOGIN_USER_FAIL });
-};
-
 const signInFirebase = (dispatch, auth, provider, accessTokenData) => {
-  console.log('accessTokenData');
-  console.log(accessTokenData);
-
   dispatch({
     type: LOGIN_FB_SUCCESS,
     payload: accessTokenData
   });
   const credential = provider.credential(accessTokenData.accessToken);
-  console.log('signupCredentials');
   auth.signInWithCredential(credential).then(credData => {
     loginUserSuccess(dispatch, credData, firebase.database(), accessTokenData);
     console.log("Got fire");
@@ -201,13 +181,10 @@ const signInFirebase = (dispatch, auth, provider, accessTokenData) => {
 };
 
 const loginUserSuccess = (dispatch, user, ref, accessTokenData) => {
-    console.log('loginUserSuccess');
     dispatch({
       type: LOGIN_USER_SUCCESS,
       payload: user
     });
-    console.log('loginUser');
-    console.log(accessTokenData);
 
     checkIfUserExists(user, ref, accessTokenData, dispatch);
 };

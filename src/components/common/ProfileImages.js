@@ -5,7 +5,6 @@ import { Spinner } from './Spinner';
 
 const { height, width } = Dimensions.get('window');
 
-
 const ProfileImages = (props) => {
   const { profileImages } = props.value;
   const { profileImageContainer, profileImage } = styles;
@@ -25,7 +24,7 @@ const ProfileImages = (props) => {
           return (
             <View key={key}>
               <Image
-                source={{ uri: img.url }}
+                source={{ uri: img }}
                 style={profileImage}
               />
             </View>

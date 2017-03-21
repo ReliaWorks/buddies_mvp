@@ -20,7 +20,6 @@ class ActivitySetup extends Component {
   render() {
     return(
       <View style={{ flex: 1 }}>
-        <Header headerTitle="Profile Setup" />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
           <Text style={textStyle}>
           Select Activities:

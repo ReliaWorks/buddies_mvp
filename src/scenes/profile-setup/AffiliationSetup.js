@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { Button, ListView, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Button, ListView, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { affiliationsSaved } from '../../actions';
 import { textStyle } from '../../components/common/styles';
-import { Header, Tile } from '../../components/common';
+import { Tile } from '../../components/common';
 import sampleAffiliationData from '../../components/demo-data/affiliations';
 
-const addIcon = require('../../components/common/img/add_icon.png');
-
 class AffiliationSetup extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     const activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
@@ -20,13 +20,16 @@ class AffiliationSetup extends Component {
   render() {
     return(
       <View style={{ flex: 1 }}>
-        <Header headerTitle="Profile Setup" />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
           <Text style={textStyle}>
           Select Affiliations:
           </Text>
           <Button
-            onPress={() => Actions.descriptionSetup()}
+            onPress={() => {
+                this.props.affiliationsSaved(this.props.uid);
+                Actions.descriptionSetup();
+              }
+            }
             style={textStyle}
             title="Next"
             color="#4267B2"
@@ -37,15 +40,6 @@ class AffiliationSetup extends Component {
             dataSource={this.state.dataSource}
             renderRow={(rowData) => <Tile tileName={rowData.affiliationName} tileIcon={rowData.affiliationIcon.medium} />}
         />
-        <Text style={{ marginLeft: 50 }}>Add New</Text>
-        <TouchableOpacity onPress={() => { Actions.root(); }}>
-          <View style={{ alignSelf: 'center', marginBottom: 20 }}>
-            <Image
-              style={styles.iconStyle}
-              source={addIcon}
-            />
-          </View>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -81,4 +75,4 @@ const styles = {
   },
 };
 
-export { AffiliationSetup };
+export default connect(null, { affiliationsSaved })(AffiliationSetup);

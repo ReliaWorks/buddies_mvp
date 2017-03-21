@@ -7,11 +7,6 @@ const { width } = Dimensions.get('window');
 const ICON_WIDTH = 25;
 const ICON_PADDING = 6;
 
-//const homeImageLocation = require('./components/common/img/home.png');
-//const wrenchImageLocation = require('./components/common/img/wrench.png');
-//const sprocketImageLocation = require('./components/common/img/224_gear.png');
-//const chatImageLocation = require('./components/common/img/224_chat.png');
-
 export const chatIconButton = () => {
   return (
     <TouchableOpacity onPress={() => Actions.matchesConversations()}>

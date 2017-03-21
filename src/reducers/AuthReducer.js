@@ -11,6 +11,7 @@ import {
 
 const INITIAL_STATE = {
   user: null,
+  uid: 'duZphaxR0ue1OjaPOEewe0UjbZV2',
   email: '',
   first_name: '',
   newUser: true,
@@ -26,11 +27,8 @@ export default(state = INITIAL_STATE, action) => {
     case CREATE_USER:
       return { ...state, loading: true, user: action.payload, newUser: false };
     case SELECT_PIC:
-      let selectedPics = Object.assign({}, state.selectedPics);
-      console.log("In profile reducer");
-      console.log(selectedPics);
+      const selectedPics = Object.assign({}, state.selectedPics);
       if (!selectedPics[action.payload]) selectedPics[action.payload] = true;
-      console.log(selectedPics);
       return { ...state, selectedPics: selectedPics };
     case PROFILE_INFO:
       console.log('On profile info');
@@ -43,7 +41,7 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, ...INITIAL_STATE, user: action.payload };
     case PROFILE_PIC:
       console.log('On profile pic adding');
-      let pics = state.profile_pics.slice();
+      const pics = state.profile_pics.slice();
       pics.push(action.payload);
       console.log(pics);
       return {...state, profile_pics: pics};

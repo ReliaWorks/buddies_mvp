@@ -1,9 +1,11 @@
 import {
+  AFFILIATIONS_SAVED,
   CURRENT_USER_FETCH_SUCCESS,
   DESCRIPTION_SAVED,
 } from '../actions/types';
 
 const INITIAL_STATE = {
+  uid: 'EEUpUy692aTXpRJN16TjXbZxmVT2',
   firstName: '',
   email: '',
   age: '',
@@ -17,11 +19,12 @@ const INITIAL_STATE = {
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CURRENT_USER_FETCH_SUCCESS: {
-      let profileImages = [];
-      if(action.payload.images) {
-        profileImages = action.payload.images.map((image) => {
-          return { url: image.url };
-        });
+      const profileImages = action.payload.profileImages;
+//    let profileImages = [];  
+      if(action.payload.profileImages) {
+//        profileImages = action.payload.profileImages.map((image) => {
+//          return { url: image.url };
+//        });
       }
       const firstName = action.payload.first_name;
       const age = action.payload.age;
@@ -48,6 +51,9 @@ export default(state = INITIAL_STATE, action) => {
       let description = '';
       if(action.payload.description) description = action.payload.description;
       return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email };
+    }
+    case AFFILIATIONS_SAVED: {
+      return state;
     }
     case DESCRIPTION_SAVED: {
       console.log("In ProfileReducer");
