@@ -11,7 +11,7 @@ import DescriptionSetup from './scenes/profile-setup/DescriptionSetup';
 import UserEdit from './scenes/UserEdit';
 import UserView from './scenes/UserView';
 import Matches from './scenes/Matches';
-import { Conversation } from './scenes/Conversation';
+import Conversation from './scenes/Conversation';
 import { iconStyle, navBarStyle, navTitleStyle } from './components/common/styles';
 import { chatIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 

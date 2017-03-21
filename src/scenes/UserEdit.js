@@ -6,7 +6,6 @@ import AffiliationSet from '../components/buddycard/AffiliationSet';
 import { currentUserFetch } from '../actions';
 import { textStyle } from '../components/common/styles';
 
-
 class UserEdit extends Component {
   componentWillMount() {
     this.props.currentUserFetch();

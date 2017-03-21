@@ -1,10 +1,7 @@
 import firebase from 'firebase';
-//import { Actions } from 'react-native-router-flux';
+
 import {
-//  ACTIVITY_UPDATE,
-//  ACTIVITY_CREATE,
   ACTIVITIES_FETCH_SUCCESS,
-//  ACTIVITY_SAVE_SUCCESS
 } from './types';
 
 export const activitiesFetch = () => {
