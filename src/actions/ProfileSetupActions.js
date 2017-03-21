@@ -4,6 +4,7 @@ import {
   SELECT_PIC,
   SAVE_PICS,
   DESCRIPTION_SAVED,
+  AFFILIATIONS_SAVED,
 } from './types';
 
 export const addPic = (url) => {
@@ -18,29 +19,45 @@ export const addPic = (url) => {
 };
 
 export const savePics = (selectedPics) => {
-  const auth = firebase.auth();
+  const { currentUser } = firebase.auth();
 
-  const images = [];
+  const profileImages = [];
   Object.keys(selectedPics).forEach(key => {
-    images.push(key);
+    profileImages.push(key);
   });
 
   return (dispatch) => {
-    dispatch({
-      type: SAVE_PICS,
-      payload: {}
-    });
-    Actions.activitySetup();
+    firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
+      .set(profileImages)
+      .then(() => {
+        dispatch({ type: SAVE_PICS });
+        Actions.activitySetup();
+      });
+  };
+};
+
+export const profileSaved = (currentUserId, description, profileImages) => {
+  const { currentUser } = firebase.auth();
+
+  return () => {
+    firebase.database().ref(`user_profiles/${currentUser.uid}/description`)
+      .set(description);
+    firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
+      .set(profileImages);
+    Actions.profileSetupComplete();
   };
 };
 
 export const descriptionSaved = (text) => {
-  const { currentUser } = firebase.auth();
-
-  firebase.database().ref(`user_profiles/${currentUser.uid}/description`).set(text);
-
   return {
     type: DESCRIPTION_SAVED,
     payload: text
+  };
+};
+
+export const affiliationsSaved = (affiliations) => {
+  return {
+    type: AFFILIATIONS_SAVED,
+    payload: affiliations
   };
 };

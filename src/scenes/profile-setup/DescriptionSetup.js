@@ -2,30 +2,32 @@ import React, { Component } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { descriptionSaved } from '../../actions';
+import { descriptionSaved, profileSaved } from '../../actions';
 
 class DescriptionSetup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "I'm a stop-and-smell-the-roses runner. Not competitive. I just like to get outside and enjoy the beautiful weather while getting healthy!",
+      placeholder: "I'm a stop-and-smell-the-roses runner. Not competitive. I just like to get outside and enjoy the beautiful weather while getting healthy!",
+      text: '',
       height: 300,
     };
-    console.log("In Description Setup");
-    console.log(this.props);
-  }
-
-  componentWillMount() {
-    console.log("In Description Setup");
-    console.log(this.props);
   }
 
   render() {
+    const { uid, description } = this.props.currentUser;
+    console.log("In Description Setup render props = ");
+    console.log(this.props);
+    console.log(this.state);
+
     return (
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'flex-end', padding: 5}}>
           <Button
-            onPress={() => Actions.main()}
+            onPress={() => {
+              this.props.profileSaved(uid, description, this.props.auth.profile_pics);
+              Actions.main();
+            }}
             title="Next"
             color="#4267B2"
           />
@@ -33,20 +35,16 @@ class DescriptionSetup extends Component {
         <Text style={styles.textStyle}>About Me</Text>
         <TextInput
           multiline
+          placeholder={this.state.placeholder}
           style={styles.descriptionInput}
-          onChangeText={(text) => {
-            this.props.descriptionSaved(text);
+          onChangeText={value => {
+              this.props.descriptionSaved(value);
             }
           }
           onContentSizeChange={(event) => {
             this.setState({height: event.nativeEvent.contentSize.height});
           }}
-          value={this.state.text}
-        />
-        <Button
-          onPress={() => { Actions.main(); }}
-          title="Skip"
-          style={{alignSelf: 'center', marginTop: 30}}
+          value={this.props.text}
         />
       </View>
     );
@@ -71,4 +69,7 @@ const styles = {
   }
 };
 
-export default connect(null, { descriptionSaved })(DescriptionSetup);
+const mapStateToProps = ({ currentUser, auth }) => {
+  return { currentUser, auth };
+};
+export default connect(mapStateToProps, { descriptionSaved, profileSaved })(DescriptionSetup);

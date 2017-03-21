@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { Dimensions, View, Image, Text, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import { backgroundImage, legalTextStyle } from '../components/common/styles';
-import { loginUser, createUser } from '../actions';
+import { loginUser } from '../actions';
 
-//const backgroundImageURL = require('../components/common/img/WorkoutBuddiesImage.jpg');
 const backgroundImageURL = require('../components/common/img/wavelengthLoginBackground.png');
-const buddiesLogo = require('../components/common/img/buddies_logo.png');
+//const buddiesLogo = require('../components/common/img/buddies_logo.png');
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const LOGINFORM_MARGIN = 14;
 
 /* LoginForm.js
@@ -22,26 +21,24 @@ const LOGINFORM_MARGIN = 14;
  */
 
 class LoginForm extends Component {
-  componentWillMount() {
-    console.log("in LoginForm componentWillMount");
-  }
 //  <Image source={buddiesLogo} style={{height: 79, width: 102, opacity: 1.0}} />
 
   renderLoginForm() {
     return (
       <View style={styles.container}>
-        <View style={{alignItems: 'center', flex: .1, marginTop: -30}}>
-          <Text style={{
-            fontFamily: 'Avenir-Book',
-            fontSize: 45,
-            fontWeight: 'bold',
-          }}>
-            Social.
+        <View style={{alignItems: 'center', flex: 0.1, marginTop: -30}}>
+          <Text
+            style={{
+              fontFamily: 'Avenir-Book',
+              fontSize: 45,
+              fontWeight: 'bold',
+            }}
+          >
+            Buddies
           </Text>
         </View>
         <Image source={backgroundImageURL} style={backgroundImage}>
-          <View style={{ flex: 2, marginTop: 20 }}>
-          </View>
+          <View style={{ flex: 2, marginTop: 20 }} />
           <View style={styles.loginButtonContainer}>
             <TouchableHighlight
               onPress={this.props.loginUser}
@@ -59,7 +56,7 @@ class LoginForm extends Component {
   }
 
   render() {
-      return this.renderLoginForm();
+    return this.renderLoginForm();
   }
 }
 
@@ -76,14 +73,12 @@ const styles = {
     justifyContent: 'center',
     marginLeft: 10,
     marginRight: 10,
-    //fontWeight: 'bold',
   },
   loginButtonContainer: {
-    flex: .2,
+    flex: 0.2,
     height: null,
     width: width - (LOGINFORM_MARGIN * 2),
     justifyContent: 'center',
-//    backgroundColor: '#4267B2',
     backgroundColor: 'black',
   }
 };
@@ -94,4 +89,4 @@ const mapStateToProps = ({ auth }) => {
   return { token };
 };
 
-export default connect(mapStateToProps, { loginUser, createUser })(LoginForm);
+export default connect(mapStateToProps, { loginUser })(LoginForm);
