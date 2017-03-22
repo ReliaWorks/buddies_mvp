@@ -36,7 +36,7 @@ export const savePics = (selectedPics) => {
   };
 };
 
-export const profileSaved = (currentUserId, description, profileImages) => {
+export const profileSaved = (currentUserId, activities, affiliations, description, profileImages) => {
   const { currentUser } = firebase.auth();
 
   return () => {
@@ -56,6 +56,8 @@ export const descriptionSaved = (text) => {
 };
 
 export const affiliationsSaved = (affiliations) => {
+  console.log("affiliationsSaved");
+  console.log(affiliations);
   return {
     type: AFFILIATIONS_SAVED,
     payload: affiliations

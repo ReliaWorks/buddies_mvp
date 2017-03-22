@@ -15,17 +15,15 @@ class DescriptionSetup extends Component {
   }
 
   render() {
-    const { uid, description } = this.props.currentUser;
-    console.log("In Description Setup render props = ");
-    console.log(this.props);
-    console.log(this.state);
+    debugger;
+    const { uid, activities, affiliations, description } = this.props.currentUser;
 
     return (
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'flex-end', padding: 5}}>
           <Button
             onPress={() => {
-              this.props.profileSaved(uid, description, this.props.auth.profile_pics);
+              this.props.profileSaved(uid, activities, affiliations, description, this.props.auth.profile_pics);
               Actions.main();
             }}
             title="Next"

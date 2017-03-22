@@ -11,7 +11,6 @@ import {
 
 const INITIAL_STATE = {
   user: null,
-  uid: 'duZphaxR0ue1OjaPOEewe0UjbZV2',
   email: '',
   first_name: '',
   newUser: true,
@@ -19,7 +18,7 @@ const INITIAL_STATE = {
   fbtoken: null,
   loading: false,
   profile_pics: [],
-  selectedPics: {}
+  selectedPics: {},
 };
 
 export default(state = INITIAL_STATE, action) => {
