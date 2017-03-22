@@ -110,8 +110,8 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
 function userExistsCallback(user,ref, exists, accessTokenData, dispatch) {
   console.log("In userExistsCallback");
   if(exists) {
-    Actions.profileSetup();
-//    Actions.main();
+//    Actions.profileSetup();
+    Actions.main();
   } else {
     setupUserFirebase(user,ref, accessTokenData, dispatch);
     Actions.profileSetup();
