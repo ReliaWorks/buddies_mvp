@@ -33,7 +33,7 @@ class Settings extends Component {
 
   render() {
     const { containerStyle, labelStyle, linkContainerStyle, logoutContainerStyle, settingsContainerStyle, settingsBackgroundImgStyle, textStyle, textInputStyle } = styles;
-    const { firstName, email } = this.props.value;
+    const { firstName, email, onLogout } = this.props.value;
 
     return (
       <View contentContainerStyleStyle={containerStyle} style={{flexDirection: 'column', justifyContent: 'flex-end'}}>
@@ -67,7 +67,9 @@ class Settings extends Component {
           <LoginButton
             onLogoutFinished={() => {
               firebase.auth().signOut().then(() => {
+                this.props.onLogout();
                 Actions.root();
+                console.log("Just logged out");
               }, (error) => {
                 console.log(`Error signing out ${error}`);
               });

@@ -46,8 +46,8 @@ class AffiliationSetup extends Component {
   render() {
     return(
       <View style={{ flex: 1 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
-          <Text style={{ padding: 10, fontSize: 21 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, flex: 0.07 }}>
+          <Text style={{ padding: 10, fontSize: 20 }}>
           Select Affiliations:
           </Text>
           <Button

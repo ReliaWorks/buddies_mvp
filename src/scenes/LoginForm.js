@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, View, Image, Text, TouchableHighlight } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import firebase from 'firebase';
+import { Spinner } from '../components/common';
 import { backgroundImage, legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
 
@@ -11,16 +10,6 @@ const backgroundImageURL = require('../components/common/img/wavelengthLoginBack
 
 const { width } = Dimensions.get('window');
 const LOGINFORM_MARGIN = 14;
-
-/* LoginForm.js
- * ------------
- * Check to see if the user had already authenticated
- *  - if so, direct to the browse page
- *  - if not, display login form
- * Login Form: prompt user to login via FB
- *  - if user already has an account, then direct to the browse page
- *  - if not, direct to the profile setup scene
- */
 
 class LoginForm extends Component {
 //  <Image source={buddiesLogo} style={{height: 79, width: 102, opacity: 1.0}} />
@@ -61,20 +50,15 @@ class LoginForm extends Component {
     );
   }
 
-  userAlreadyLoggedIn() {
-    const auth = firebase.auth();
-    if (auth.currentUser != null) return true;
-    return false;
-  }
-
   render() {
-    if(this.userAlreadyLoggedIn()) {
-      return(
-        <View>
-          <Text>Test</Text>
+    if(this.props.loading) {
+      return (
+        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+          <Spinner size="large" />
         </View>
       );
     }
+    console.log("Rendering login form");
     return this.renderLoginForm();
   }
 }
@@ -103,11 +87,9 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const { token } = state.auth;
+  const { token, loggedIn, loading } = state.auth;
 
-  console.log("In LoginForm");
-  console.log(state);
-  return { token };
+  return { token, loggedIn, loading };
 };
 
 export default connect(mapStateToProps, { loginUser })(LoginForm);

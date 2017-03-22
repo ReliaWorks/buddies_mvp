@@ -3,7 +3,6 @@ import { Button, ListView, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { activitiesSaved, activitySelected } from '../../actions';
-import { textStyle } from '../../components/common/styles';
 import { SelectableTile } from '../../components/common';
 import sampleActivityData from '../../components/demo-data/activities';
 
@@ -21,15 +20,20 @@ class ActivitySetup extends Component {
   render() {
     return(
       <View style={{ flex: 1 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
-          <Text style={textStyle}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, flex: 0.07 }}>
+          <Text style={{ padding: 10, fontSize: 20 }}>
           Select Activities:
           </Text>
           <Button
             onPress={() => {
               Actions.affiliationSetup();
             }}
-            style={textStyle}
+            style={{
+              flex: 1,
+              fontSize: 16,
+              color: 'black',
+              fontFamily: 'Avenir-Book',
+            }}
             title="Next"
             color="#4267B2"
           />
@@ -64,6 +68,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: 20,
+    flex: 1,
   },
   item: {
     backgroundColor: 'red',
