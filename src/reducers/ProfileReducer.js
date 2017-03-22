@@ -1,6 +1,8 @@
 import {
   AFFILIATIONS_SAVED,
   CURRENT_USER_FETCH_SUCCESS,
+  ACTIVITY_SAVED,
+  ACTIVITY_SELECTED,
   AFFILIATION_SELECTED,
   DESCRIPTION_SAVED,
 } from '../actions/types';
@@ -53,11 +55,19 @@ export default(state = INITIAL_STATE, action) => {
       if(action.payload.description) description = action.payload.description;
       return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email };
     }
+    case ACTIVITY_SELECTED: {
+      const updatedActivities = [...state.activities, action.payload];
+      console.log(`In activity_selected: ${updatedActivities}`);
+      return { ...state, activities: updatedActivities };
+    }
     case AFFILIATION_SELECTED: {
       console.log("In Affilation Selected");
       const updatedAffiliations = [...state.affiliations, action.payload];
       console.log(updatedAffiliations);
       return { ...state, affiliations: updatedAffiliations };
+    }
+    case ACTIVITY_SAVED: {
+      return { ...state, activities: action.payload};
     }
     case AFFILIATIONS_SAVED: {
       return { ...state, affiliations: action.payload };

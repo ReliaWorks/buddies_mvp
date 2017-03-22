@@ -14,12 +14,10 @@ class AffiliationSetup extends Component {
     const activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       dataSource: activitiesDS.cloneWithRows(sampleAffiliationData),
-      //Need to replace 10 with the NUMBER_AFFILIATIONS in the system
-      selectedAffs: [],
     };
   }
 
-  handleSelect(id) {
+  handleSelect(id, name, icon) {
 /*    console.log("In handleSelect");
     const newAffiliation = { id: id };
     const selectedAffs = [...this.state.selectedAffs, newAffiliation];
@@ -27,7 +25,7 @@ class AffiliationSetup extends Component {
     this.setState({ selectedAffs });
     debugger;
 */
-    this.props.affiliationSelected({id: id});
+    this.props.affiliationSelected({id, name, icon});
   }
 
   selectedAffiliations() {
@@ -54,7 +52,6 @@ class AffiliationSetup extends Component {
           </Text>
           <Button
             onPress={() => {
-                this.props.affiliationsSaved(this.selectedAffiliations());
                 Actions.descriptionSetup();
               }
             }
@@ -71,7 +68,7 @@ class AffiliationSetup extends Component {
                 tileId={rowData._id}
                 tileName={rowData.affiliationName}
                 tileIcon={rowData.affiliationIcon.medium}
-                onSelect={(id) => this.handleSelect(id)}
+                onSelect={(id, name, icon) => this.handleSelect(id, name, icon)}
               />}
         />
       </View>

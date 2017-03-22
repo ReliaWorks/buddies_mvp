@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { Button, ListView, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Button, ListView, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { activitiesSaved, activitySelected } from '../../actions';
 import { textStyle } from '../../components/common/styles';
-import { Header, Tile } from '../../components/common';
+import { SelectableTile } from '../../components/common';
 import sampleActivityData from '../../components/demo-data/activities';
 
-const addIcon = require('../../components/common/img/add_icon.png');
-
 class ActivitySetup extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     const activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       dataSource: activitiesDS.cloneWithRows(sampleActivityData),
     };
   }
+
 
   render() {
     return(
@@ -25,7 +26,9 @@ class ActivitySetup extends Component {
           Select Activities:
           </Text>
           <Button
-            onPress={() => Actions.affiliationSetup()}
+            onPress={() => {
+              Actions.affiliationSetup();
+            }}
             style={textStyle}
             title="Next"
             color="#4267B2"
@@ -34,18 +37,16 @@ class ActivitySetup extends Component {
         <ListView
             contentContainerStyle={styles.list}
             dataSource={this.state.dataSource}
-            renderRow={(rowData) => <Tile tileName={rowData.activityName} tileIcon={rowData.activityIcon.medium} />}
+            renderRow={(rowData) =>
+              <SelectableTile
+                tileId={rowData._id}
+                tileName={rowData.activityName}
+                tileIcon={rowData.activityIcon.medium}
+                onSelect={(id, name, icon) => {
+                  this.props.activitySelected({id: id, name: name, icon: icon});
+                }}
+              />}
         />
-        <View style={{ justifyContent: 'center' }}>
-        <TouchableOpacity onPress={() => { Actions.root(); }}>
-          <View style={{ padding: 10 }}>
-            <Image
-              style={styles.iconStyle}
-              source={addIcon}
-            />
-          </View>
-        </TouchableOpacity>
-        </View>
       </View>
     );
   }
@@ -81,4 +82,4 @@ const styles = {
   },
 };
 
-export { ActivitySetup };
+export default connect(null, { activitiesSaved, activitySelected })(ActivitySetup);

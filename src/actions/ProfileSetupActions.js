@@ -4,6 +4,8 @@ import {
   SELECT_PIC,
   SAVE_PICS,
   DESCRIPTION_SAVED,
+  ACTIVITY_SELECTED,
+  ACTIVITIES_SAVED,
   AFFILIATIONS_SAVED,
   AFFILIATION_SELECTED,
 } from './types';
@@ -47,6 +49,8 @@ export const profileSaved = (currentUserId, activities, affiliations, descriptio
       .set(profileImages);
     firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations`)
       .set(affiliations);
+    firebase.database().ref(`user_profiles/${currentUser.uid}/activities`)
+      .set(activities);
     Actions.profileSetupComplete();
   };
 };
@@ -58,6 +62,20 @@ export const descriptionSaved = (text) => {
   };
 };
 
+export const activitySelected = (id) => {
+  return {
+    type: ACTIVITY_SELECTED,
+    payload: id
+  };
+};
+
+export const activitiesSaved = (activities) => {
+  return {
+    type: ACTIVITIES_SAVED,
+    payload: activities
+  };
+};
+
 export const affiliationSelected = (id) => {
   return {
     type: AFFILIATION_SELECTED,
@@ -66,8 +84,6 @@ export const affiliationSelected = (id) => {
 };
 
 export const affiliationsSaved = (affiliations) => {
-  console.log("affiliationsSaved");
-  console.log(affiliations);
   return {
     type: AFFILIATIONS_SAVED,
     payload: affiliations
