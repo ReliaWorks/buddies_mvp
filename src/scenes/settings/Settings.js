@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Linking, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import firebase from 'firebase';
 import { LoginButton } from 'react-native-fbsdk';
 import { centeredTextStyle, legalTextStyle } from '../../components/common/styles';
 import styles from './styles';
@@ -65,7 +66,11 @@ class Settings extends Component {
         <View style={logoutContainerStyle}>
           <LoginButton
             onLogoutFinished={() => {
-              Actions.root();
+              firebase.auth().signOut().then(() => {
+                Actions.root();
+              }, (error) => {
+                console.log(`Error signing out ${error}`);
+              });
             }}
           />
         </View>

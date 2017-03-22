@@ -4,7 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { affiliationsSaved } from '../../actions';
 import { textStyle } from '../../components/common/styles';
-import { Tile } from '../../components/common';
+import { SelectableTile } from '../../components/common';
 import sampleAffiliationData from '../../components/demo-data/affiliations';
 
 class AffiliationSetup extends Component {
@@ -17,6 +17,12 @@ class AffiliationSetup extends Component {
     };
   }
 
+  selectedAffiliations() {
+    const selectedAffiliations = {1: true, 2: true};
+
+    return selectedAffiliations;
+  }
+
   render() {
     return(
       <View style={{ flex: 1 }}>
@@ -26,7 +32,7 @@ class AffiliationSetup extends Component {
           </Text>
           <Button
             onPress={() => {
-                this.props.affiliationsSaved(this.props.uid);
+                this.props.affiliationsSaved(this.selectedAffiliations());
                 Actions.descriptionSetup();
               }
             }
@@ -38,7 +44,7 @@ class AffiliationSetup extends Component {
         <ListView
             contentContainerStyle={styles.list}
             dataSource={this.state.dataSource}
-            renderRow={(rowData) => <Tile tileName={rowData.affiliationName} tileIcon={rowData.affiliationIcon.medium} />}
+            renderRow={(rowData) => <SelectableTile tileName={rowData.affiliationName} tileIcon={rowData.affiliationIcon.medium} />}
         />
       </View>
     );

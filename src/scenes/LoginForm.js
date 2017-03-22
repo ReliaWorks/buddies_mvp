@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Dimensions, View, Image, Text, TouchableHighlight } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import firebase from 'firebase';
 import { backgroundImage, legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
 
@@ -23,6 +25,10 @@ const LOGINFORM_MARGIN = 14;
 class LoginForm extends Component {
 //  <Image source={buddiesLogo} style={{height: 79, width: 102, opacity: 1.0}} />
 
+  onButtonPress() {
+    this.props.loginUser();
+  }
+
   renderLoginForm() {
     return (
       <View style={styles.container}>
@@ -41,7 +47,7 @@ class LoginForm extends Component {
           <View style={{ flex: 2, marginTop: 20 }} />
           <View style={styles.loginButtonContainer}>
             <TouchableHighlight
-              onPress={this.props.loginUser}
+              onPress={this.onButtonPress.bind(this)}
               color="white"
             >
               <Text style={styles.fbLoginText}>Log in with Facebook</Text>
@@ -55,7 +61,20 @@ class LoginForm extends Component {
     );
   }
 
+  userAlreadyLoggedIn() {
+    const auth = firebase.auth();
+    if (auth.currentUser != null) return true;
+    return false;
+  }
+
   render() {
+    if(this.userAlreadyLoggedIn()) {
+      return(
+        <View>
+          <Text>Test</Text>
+        </View>
+      );
+    }
     return this.renderLoginForm();
   }
 }
@@ -83,9 +102,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ auth }) => {
-  const { token } = auth;
+const mapStateToProps = (state) => {
+  const { token } = state.auth;
 
+  console.log("In LoginForm");
+  console.log(state);
   return { token };
 };
 

@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   age: '',
   profileImages: [],
   activities: [],
-  affiliations: [],
+  affiliations: {},
   location: {},
   description: '',
 };
@@ -20,7 +20,7 @@ export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CURRENT_USER_FETCH_SUCCESS: {
       const profileImages = action.payload.profileImages;
-//    let profileImages = [];  
+//    let profileImages = [];
       if(action.payload.profileImages) {
 //        profileImages = action.payload.profileImages.map((image) => {
 //          return { url: image.url };
@@ -53,12 +53,9 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email };
     }
     case AFFILIATIONS_SAVED: {
-      return state;
+      return { ...state, affiliations: action.payload };
     }
     case DESCRIPTION_SAVED: {
-      console.log("In ProfileReducer");
-      console.log(action.payload);
-      console.log(state);
       return { ...state, description: action.payload };
     }
     default:

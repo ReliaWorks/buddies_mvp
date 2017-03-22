@@ -108,20 +108,21 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
 }
 
 function userExistsCallback(user,ref, exists, accessTokenData, dispatch) {
+  console.log("In userExistsCallback");
   if(exists) {
     Actions.profileSetup();
+//    Actions.main();
   } else {
     setupUserFirebase(user,ref, accessTokenData, dispatch);
+    Actions.profileSetup();
   }
 }
 
 function checkIfUserExists(user, ref, accessTokenData, dispatch) {
-  console.log('checkIfUserExists');
-
   ref.ref(`/user_profiles/${user.uid}`)
-    .on('value', snapshot => {
+    .once('value', snapshot => {
       const exists = (snapshot.val() !== null);
-      userExistsCallback(user,ref, exists, accessTokenData, dispatch);
+      userExistsCallback(user, ref, exists, accessTokenData, dispatch);
     });
 }
 
@@ -130,7 +131,7 @@ export const loginUser = () => {
     dispatch({ type: LOGIN_USER });
 
     const auth = firebase.auth();
-    const usersRef = firebase.database().ref("user_profiles");
+    const ref = firebase.database();
     const provider = firebase.auth.FacebookAuthProvider;
 
     LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends', 'user_photos'])
@@ -138,12 +139,10 @@ export const loginUser = () => {
         if (result.isCancelled) {
           console.log('Login cancelled');
         } else {
-          console.log('Login success.');
           AccessToken.getCurrentAccessToken()
             .then(accessTokenData => {
-              //check to see if user exists in firebase
-              console.log("Go the token");
-              signInFirebase(dispatch, auth,provider, accessTokenData);
+//              checkIfUserExists(auth.currentUser.uid, ref, accessTokenData, dispatch);
+              signInFirebase(dispatch, auth, provider, accessTokenData);
             });
         }
       },
@@ -167,10 +166,11 @@ export const loginUser = () => {
 };
 
 const signInFirebase = (dispatch, auth, provider, accessTokenData) => {
-  dispatch({
+/*  dispatch({
     type: LOGIN_FB_SUCCESS,
     payload: accessTokenData
   });
+  */
   const credential = provider.credential(accessTokenData.accessToken);
   auth.signInWithCredential(credential).then(credData => {
     loginUserSuccess(dispatch, credData, firebase.database(), accessTokenData);
@@ -181,10 +181,10 @@ const signInFirebase = (dispatch, auth, provider, accessTokenData) => {
 };
 
 const loginUserSuccess = (dispatch, user, ref, accessTokenData) => {
-    dispatch({
+/*    dispatch({
       type: LOGIN_USER_SUCCESS,
       payload: user
     });
-
+*/
     checkIfUserExists(user, ref, accessTokenData, dispatch);
 };
