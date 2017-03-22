@@ -5,6 +5,7 @@ import {
   SAVE_PICS,
   DESCRIPTION_SAVED,
   AFFILIATIONS_SAVED,
+  AFFILIATION_SELECTED,
 } from './types';
 
 export const addPic = (url) => {
@@ -44,6 +45,8 @@ export const profileSaved = (currentUserId, activities, affiliations, descriptio
       .set(description);
     firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
       .set(profileImages);
+    firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations`)
+      .set(affiliations);
     Actions.profileSetupComplete();
   };
 };
@@ -52,6 +55,13 @@ export const descriptionSaved = (text) => {
   return {
     type: DESCRIPTION_SAVED,
     payload: text
+  };
+};
+
+export const affiliationSelected = (id) => {
+  return {
+    type: AFFILIATION_SELECTED,
+    payload: id
   };
 };
 

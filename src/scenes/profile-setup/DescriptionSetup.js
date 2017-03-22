@@ -15,7 +15,6 @@ class DescriptionSetup extends Component {
   }
 
   render() {
-    debugger;
     const { uid, activities, affiliations, description } = this.props.currentUser;
 
     return (

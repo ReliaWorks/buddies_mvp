@@ -30,7 +30,6 @@ export default(state = INITIAL_STATE, action) => {
       if (!selectedPics[action.payload]) selectedPics[action.payload] = true;
       return { ...state, selectedPics: selectedPics };
     case PROFILE_INFO:
-      console.log('On profile info');
       return { ...state, user: action.payload, email: action.payload.email, first_name: action.payload.first_name, };
     case LOGIN_USER:
         return { ...state,
@@ -39,10 +38,8 @@ export default(state = INITIAL_STATE, action) => {
     case LOGIN_USER_SUCCESS:
       return { ...state, ...INITIAL_STATE, user: action.payload };
     case PROFILE_PIC:
-      console.log('On profile pic adding');
       const pics = state.profile_pics.slice();
       pics.push(action.payload);
-      console.log(pics);
       return {...state, profile_pics: pics};
     case LOGIN_FB_SUCCESS:
       return { ...state, ...INITIAL_STATE, fbtoken: action.payload };

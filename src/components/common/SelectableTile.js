@@ -12,13 +12,19 @@ class SelectableTile extends Component {
   }
 
   onTilePress() {
-    this.setState({ selected: !this.state.selected, tileBackgroundColor: (this.state.selected ? 'white' : 'purple')});
-    this.props.selectedAffilations();
+    const { onSelect, tileId } = this.props;
+    const selected = !this.state.selected;
+
+    this.setState({ selected, tileBackgroundColor: (selected ? 'purple' : 'white')});
+    console.log(`Calling onSelect ${tileId} ${selected}`);
+    if(selected) onSelect(tileId);
   }
 
   render() {
-    const { selectTile, tileName, tileIcon } = this.props;
-    const { cardStyle, imageStyle } = styles;
+    const { tileId, tileName, tileIcon } = this.props;
+    const { imageStyle } = styles;
+
+    console.log(`Tile id = ${tileId}`);
 
     return (
       <TouchableOpacity onPress={this.onTilePress.bind(this)}>
@@ -36,7 +42,7 @@ class SelectableTile extends Component {
             height: 150,
           }}
         >
-          <Text style={{ alignSelf: 'center', fontSize: 12 }}>
+          <Text style={{ alignSelf: 'center', fontSize: 18, marginBottom: 5 }}>
             {tileName}
           </Text>
           <Image style={imageStyle} source={{ uri: tileIcon }} />

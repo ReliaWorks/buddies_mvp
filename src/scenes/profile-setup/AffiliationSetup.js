@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, ListView, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { affiliationsSaved } from '../../actions';
+import { affiliationsSaved, affiliationSelected } from '../../actions';
 import { textStyle } from '../../components/common/styles';
 import { SelectableTile } from '../../components/common';
 import sampleAffiliationData from '../../components/demo-data/affiliations';
@@ -14,20 +14,42 @@ class AffiliationSetup extends Component {
     const activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       dataSource: activitiesDS.cloneWithRows(sampleAffiliationData),
+      //Need to replace 10 with the NUMBER_AFFILIATIONS in the system
+      selectedAffs: [],
     };
   }
 
-  selectedAffiliations() {
-    const selectedAffiliations = {1: true, 2: true};
+  handleSelect(id) {
+/*    console.log("In handleSelect");
+    const newAffiliation = { id: id };
+    const selectedAffs = [...this.state.selectedAffs, newAffiliation];
+    console.log(selectedAffs);
+    this.setState({ selectedAffs });
+    debugger;
+*/
+    this.props.affiliationSelected({id: id});
+  }
 
-    return selectedAffiliations;
+  selectedAffiliations() {
+    const affiliations = [
+      {
+        name: 'GGTC',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2Fggtc.png?alt=media&token=7126aaf1-2e91-4be5-bc0a-af442696edb3'
+      },
+      {
+        name: 'NRC',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2FNikeRunClub.jpg?alt=media&token=c4c31ca9-18d1-4a60-a7e0-a2a7d60b5baa'
+      },
+    ];
+
+    return affiliations;
   }
 
   render() {
     return(
       <View style={{ flex: 1 }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
-          <Text style={textStyle}>
+          <Text style={{ padding: 10, fontSize: 21 }}>
           Select Affiliations:
           </Text>
           <Button
@@ -44,7 +66,13 @@ class AffiliationSetup extends Component {
         <ListView
             contentContainerStyle={styles.list}
             dataSource={this.state.dataSource}
-            renderRow={(rowData) => <SelectableTile tileName={rowData.affiliationName} tileIcon={rowData.affiliationIcon.medium} />}
+            renderRow={(rowData) =>
+              <SelectableTile
+                tileId={rowData._id}
+                tileName={rowData.affiliationName}
+                tileIcon={rowData.affiliationIcon.medium}
+                onSelect={(id) => this.handleSelect(id)}
+              />}
         />
       </View>
     );
@@ -62,7 +90,7 @@ const styles = {
     alignItems: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    padding: 20,
+    marginLeft: 25,
   },
   item: {
     backgroundColor: 'red',
@@ -81,4 +109,4 @@ const styles = {
   },
 };
 
-export default connect(null, { affiliationsSaved })(AffiliationSetup);
+export default connect(null, { affiliationsSaved, affiliationSelected })(AffiliationSetup);

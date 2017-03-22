@@ -15,6 +15,7 @@ export const SELECT_PIC = 'select_pic';
 export const SAVE_PICS = 'save_pics';
 export const DESCRIPTION_SAVED = 'description_saved';
 export const AFFILIATIONS_SAVED = 'affiliations_saved';
+export const AFFILIATION_SELECTED = 'affiliation_selected';
 
 export const CURRENT_USER_FETCH_SUCCESS = 'current_user_fetch_success';
 export const CHAT_SELECTED = 'chat_selected';
