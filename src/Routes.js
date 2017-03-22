@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-//import { Dimensions } from 'react-native';
-//import Icon from 'react-native-vector-icons';
 import { ActionConst, Actions, Scene, Router } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
 import SettingsScene from './scenes/settings';
@@ -34,11 +32,6 @@ class Routes extends Component {
           />
         </Scene>
         <Scene key="profileSetup">
-          <Scene
-            key="photoSetup"
-            title="Profile Setup"
-            component={PhotoSetup}
-          />
           <Scene
             key="activitySetup"
             title="Profile Setup"

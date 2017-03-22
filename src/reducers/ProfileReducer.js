@@ -1,6 +1,7 @@
 import {
   AFFILIATIONS_SAVED,
   CURRENT_USER_FETCH_SUCCESS,
+  AFFILIATION_SELECTED,
   DESCRIPTION_SAVED,
 } from '../actions/types';
 
@@ -51,6 +52,12 @@ export default(state = INITIAL_STATE, action) => {
       let description = '';
       if(action.payload.description) description = action.payload.description;
       return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email };
+    }
+    case AFFILIATION_SELECTED: {
+      console.log("In Affilation Selected");
+      const updatedAffiliations = [...state.affiliations, action.payload];
+      console.log(updatedAffiliations);
+      return { ...state, affiliations: updatedAffiliations };
     }
     case AFFILIATIONS_SAVED: {
       return { ...state, affiliations: action.payload };

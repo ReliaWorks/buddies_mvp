@@ -42,7 +42,7 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
           first_name: result.first_name || '',
           last_name: result.last_name || '',
           email: result.email || '',
-          location: result.location || ''
+          location: result.location || '',
         };
 
         ref.ref(`/user_profiles/${user.uid}`).set(profile);
