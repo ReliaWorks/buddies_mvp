@@ -8,6 +8,7 @@ import userSampleData from '../components/demo-data/Users.js';
 
 class BrowseBuddies extends Component {
   render() {
+    console.log("Rendering Browse Buddies");
     if(!userSampleData) {
       return (
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -48,9 +49,4 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({ auth }) => {
-  const { loading } = auth;
-  return { loading };
-};
-
-export default connect(mapStateToProps)(BrowseBuddies);
+export default connect(null)(BrowseBuddies);

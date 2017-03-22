@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Settings from './Settings';
+import { logoutUser } from '../../actions';
 
 class SettingsScene extends Component {
   render() {
     const { firstName, email } = this.props;
+    console.log(`In SettingsScene`);
+    console.log(this.props);
 
-    return(
+    return (
       <Settings
         value={{
           firstName,
-          email,
+          email
         }}
+        onLogout={() => this.props.logoutUser()}
       />
     );
   }
@@ -22,4 +26,4 @@ const mapStateToProps = (state) => {
   return { firstName, email };
 };
 
-export default connect(mapStateToProps)(SettingsScene);
+export default connect(mapStateToProps, { logoutUser })(SettingsScene);
