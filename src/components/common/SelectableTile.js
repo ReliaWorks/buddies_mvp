@@ -12,12 +12,11 @@ class SelectableTile extends Component {
   }
 
   onTilePress() {
-    const { onSelect, tileId } = this.props;
+    const { onSelect, tileId, tileName, tileIcon } = this.props;
     const selected = !this.state.selected;
 
     this.setState({ selected, tileBackgroundColor: (selected ? 'purple' : 'white')});
-    console.log(`Calling onSelect ${tileId} ${selected}`);
-    if(selected) onSelect(tileId);
+    if(selected) onSelect(tileId, tileName, tileIcon);
   }
 
   render() {

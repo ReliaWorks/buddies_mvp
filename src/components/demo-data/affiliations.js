@@ -1,7 +1,7 @@
 export default sampleAffiliationData = [
   {
     _id: Math.round(Math.random() * 1000000),
-    affiliationName: 'Golden Gate Triathlon Club',
+    affiliationName: 'GGTC',
     affiliationDescription: '',
     affiliationIcon: {
       large: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984',
@@ -23,7 +23,7 @@ export default sampleAffiliationData = [
   },
   {
     _id: Math.round(Math.random() * 1000000),
-    affiliationName: 'Nike Run Club',
+    affiliationName: 'NRC',
     affiliationDescription: '',
     affiliationIcon: {
       large: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984',
@@ -56,7 +56,7 @@ export default sampleAffiliationData = [
   },
   {
     _id: Math.round(Math.random() * 1000000),
-    affiliationName: 'Road Runners of America',
+    affiliationName: 'Road Runners',
     affiliationDescription: '',
     createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
     affiliationIcon: {
