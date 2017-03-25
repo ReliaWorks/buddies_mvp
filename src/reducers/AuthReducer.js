@@ -1,5 +1,6 @@
 import {
   LOGIN_USER,
+  LOGIN_USER_SUCCESS,
   LOGOUT_USER,
   PROFILE_INFO,
   PROFILE_PIC,
@@ -21,7 +22,11 @@ const INITIAL_STATE = {
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN_USER:
-        return { ...state, loading: true, loggedIn: true };
+        return { ...state, loading: true, };
+    case LOGIN_USER_SUCCESS: {
+      console.log("In AuthReducer LOGIN_USER_SUCCESS");
+      return { ...state, loading: false, loggedIn: true };
+    }
     case LOGOUT_USER:
         return { ...state, loading: false, loggedIn: false };
     case SELECT_PIC: {

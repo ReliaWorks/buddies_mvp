@@ -6,9 +6,6 @@ import { logoutUser } from '../../actions';
 class SettingsScene extends Component {
   render() {
     const { firstName, email } = this.props;
-    console.log(`In SettingsScene`);
-    console.log(this.props);
-
     return (
       <Settings
         value={{

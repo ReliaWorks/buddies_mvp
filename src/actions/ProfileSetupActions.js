@@ -5,14 +5,13 @@ import {
   SAVE_PICS,
   DESCRIPTION_SAVED,
   ACTIVITY_SELECTED,
+  ACTIVITY_UNSELECTED,
   ACTIVITIES_SAVED,
   AFFILIATIONS_SAVED,
   AFFILIATION_SELECTED,
 } from './types';
 
 export const addPic = (url) => {
-  console.log("Action url");
-  console.log(url);
   return (dispatch) => {
     dispatch({
       type: SELECT_PIC,
@@ -39,18 +38,12 @@ export const savePics = (selectedPics) => {
   };
 };
 
-export const profileSaved = (currentUserId, activities, affiliations, description, profileImages) => {
+export const profileSaved = (currentUserId, description) => {
   const { currentUser } = firebase.auth();
 
   return () => {
     firebase.database().ref(`user_profiles/${currentUser.uid}/description`)
       .set(description);
-    firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
-      .set(profileImages);
-    firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations`)
-      .set(affiliations);
-    firebase.database().ref(`user_profiles/${currentUser.uid}/activities`)
-      .set(activities);
     Actions.profileSetupComplete();
   };
 };
@@ -69,10 +62,22 @@ export const activitySelected = (id) => {
   };
 };
 
-export const activitiesSaved = (activities) => {
+export const activityUnselected = (id) => {
   return {
-    type: ACTIVITIES_SAVED,
-    payload: activities
+    type: ACTIVITY_UNSELECTED,
+    payload: id
+  };
+};
+
+export const activitiesSaved = (activities, profileImages) => {
+  const { currentUser } = firebase.auth();
+
+  return (dispatch) => {
+    dispatch({ type: ACTIVITIES_SAVED, payload: activities });
+    firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
+      .set(profileImages);
+    firebase.database().ref(`user_profiles/${currentUser.uid}/activities`)
+      .set(activities);
   };
 };
 
@@ -83,9 +88,19 @@ export const affiliationSelected = (id) => {
   };
 };
 
-export const affiliationsSaved = (affiliations) => {
+export const affiliationUnselected = (id) => {
   return {
-    type: AFFILIATIONS_SAVED,
-    payload: affiliations
+    type: AFFILIATION_UNSELECTED,
+    payload: id
+  };
+};
+
+export const affiliationsSaved = (affiliations) => {
+  const { currentUser } = firebase.auth();
+
+  return (dispatch) => {
+    dispatch({ type: AFFILIATIONS_SAVED, payload: affiliations });
+    firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations`)
+      .set(affiliations);
   };
 };

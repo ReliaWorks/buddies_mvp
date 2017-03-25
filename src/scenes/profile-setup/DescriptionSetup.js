@@ -15,14 +15,14 @@ class DescriptionSetup extends Component {
   }
 
   render() {
-    const { uid, activities, affiliations, description } = this.props.currentUser;
+    const { uid, description } = this.props.currentUser;
 
     return (
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'flex-end', padding: 5}}>
           <Button
             onPress={() => {
-              this.props.profileSaved(uid, activities, affiliations, description, this.props.auth.profile_pics);
+              this.props.profileSaved(uid, description);
               Actions.main();
             }}
             title="Next"
@@ -69,4 +69,5 @@ const styles = {
 const mapStateToProps = ({ currentUser, auth }) => {
   return { currentUser, auth };
 };
+
 export default connect(mapStateToProps, { descriptionSaved, profileSaved })(DescriptionSetup);

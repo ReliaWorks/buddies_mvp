@@ -8,6 +8,7 @@ import {
 import firebase from 'firebase';
 import {
   LOGIN_USER,
+  LOGIN_USER_SUCCESS,
   LOGOUT_USER,
   PROFILE_INFO,
   PROFILE_PIC
@@ -28,9 +29,6 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
       if(error) {
         console.log('Error fetching data: ' + error.toString());
       } else {
-        console.log("in responseCallback with result = ");
-        console.log(result);
-
         const fbAlbums = result.albums.data;
 
         const profileAlbum = fbAlbums.find((album) => {
@@ -62,8 +60,7 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
                 },
               },
               (error1, result1) => {
-                console.log('storing photos');
-                if (error) {
+                if (error1) {
                   console.log('Error fetching data: ' + error1.toString());
                 } else{
                   const profilePics = result1.photos.data;
@@ -78,13 +75,10 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
                           },
                        },
                        (error2, result3) => {
-                         if(error) {
+                         if(error2) {
                            console.log('Error fetching data: ' + error2.toString());
                          } else {
-                           console.log("adding pic");
-                           console.log(result3.images);
-
-                           dispatch({
+                            dispatch({
                              type: PROFILE_PIC,
                              payload: result3.images[0].source
                            });
@@ -154,9 +148,11 @@ function checkIfUserExists(user, ref, accessTokenData, dispatch) {
 
 const signIntoFirebase = (dispatch, auth, provider, accessTokenData) => {
   const credential = provider.credential(accessTokenData.accessToken);
-  auth.signInWithCredential(credential).then(credData => {
-    checkIfUserExists(credData, firebase.database(), accessTokenData, dispatch);
-  }).catch(err => {
+  auth.signInWithCredential(credential)
+    .then(credData => {
+//      dispatch({ type: LOGIN_USER_SUCCESS });
+      checkIfUserExists(credData, firebase.database(), accessTokenData, dispatch);
+    }).catch(err => {
     console.log(`Error signing into Firebase ${err}`);
   });
 };

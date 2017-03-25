@@ -52,6 +52,7 @@ class LoginForm extends Component {
 
   render() {
     if(this.props.loading) {
+      console.log("this.props.loading = true");
       return (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <Spinner size="large" />
