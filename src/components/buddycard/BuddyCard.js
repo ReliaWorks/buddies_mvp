@@ -40,7 +40,8 @@ class BuddyCard extends Component {
   }
 
   renderActivitiesAffiliations(activities, affiliations) {
-    const activitiesAndAffiliations = activities.concat(affiliations);
+    let activitiesAndAffiliations = affiliations;
+    if(activities.length > 0) activitiesAndAffiliations = activities.concat(affiliations);
     return (
         <ActivitySet value={{activitiesAndAffiliations}} />
     );

@@ -2,7 +2,7 @@ import {
   LOGIN_USER,
   AFFILIATIONS_SAVED,
   CURRENT_USER_FETCH_SUCCESS,
-  ACTIVITY_SAVED,
+  ACTIVITIES_SAVED,
   ACTIVITY_SELECTED,
   ACTIVITY_UNSELECTED,
   AFFILIATION_SELECTED,
@@ -72,6 +72,9 @@ export default(state = INITIAL_STATE, action) => {
       const updatedActivityList = state.activities.filter(
         (item) => item.uid !== uid);
       return { ...state, activities: updatedActivityList };
+    }
+    case ACTIVITIES_SAVED: {
+      return { ...state, activities: action.payload };
     }
     case AFFILIATION_SELECTED: {
       const updatedAffiliations = [...state.affiliations, action.payload];
