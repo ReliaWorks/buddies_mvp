@@ -1,19 +1,22 @@
 import {
+  LOGIN_USER,
   AFFILIATIONS_SAVED,
   CURRENT_USER_FETCH_SUCCESS,
   ACTIVITY_SAVED,
   ACTIVITY_SELECTED,
+  ACTIVITY_UNSELECTED,
   AFFILIATION_SELECTED,
+  AFFILIATION_UNSELECTED,
   DESCRIPTION_SAVED,
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  uid: 'EEUpUy692aTXpRJN16TjXbZxmVT2',
+  uid: '',
   firstName: '',
   email: '',
   age: '',
   profileImages: [],
-  activities: [],
+  activities: {},
   affiliations: {},
   location: {},
   description: '',
@@ -21,6 +24,11 @@ const INITIAL_STATE = {
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case LOGIN_USER: {
+      let id = '';
+      if(action.payload) id = action.payload.uid;
+      return { ...state, uid: id };
+    }
     case CURRENT_USER_FETCH_SUCCESS: {
       const profileImages = action.payload.profileImages;
 //    let profileImages = [];
@@ -57,17 +65,23 @@ export default(state = INITIAL_STATE, action) => {
     }
     case ACTIVITY_SELECTED: {
       const updatedActivities = [...state.activities, action.payload];
-      console.log(`In activity_selected: ${updatedActivities}`);
       return { ...state, activities: updatedActivities };
     }
+    case ACTIVITY_UNSELECTED: {
+      const uid = action.payload.uid;
+      const updatedActivityList = state.activities.filter(
+        (item) => item.uid !== uid);
+      return { ...state, activities: updatedActivityList };
+    }
     case AFFILIATION_SELECTED: {
-      console.log("In Affilation Selected");
       const updatedAffiliations = [...state.affiliations, action.payload];
-      console.log(updatedAffiliations);
       return { ...state, affiliations: updatedAffiliations };
     }
-    case ACTIVITY_SAVED: {
-      return { ...state, activities: action.payload};
+    case AFFILIATION_UNSELECTED: {
+      const uid = action.payload.uid;
+      const updatedAffiliationList = state.affiliations.filter(
+        (item) => item.uid !== uid);
+      return { ...state, affiliations: updatedAffiliationList };
     }
     case AFFILIATIONS_SAVED: {
       return { ...state, affiliations: action.payload };

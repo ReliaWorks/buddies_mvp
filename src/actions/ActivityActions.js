@@ -1,17 +1,24 @@
 import firebase from 'firebase';
 
 import {
-  ACTIVITIES_FETCH_SUCCESS,
+  ALL_ACTIVITIES_FETCH,
+  ALL_AFFILIATIONS_FETCH,
 } from './types';
 
 export const activitiesFetch = () => {
-  const { currentUser } = firebase.auth();
-  console.log(`currentUser =${currentUser}`);
   return (dispatch) => {
-    console.log(`In activities fetch`);
-    firebase.database().ref(`/users/123/activities`)
-      .on('value', snapshot => {
-        dispatch({ type: ACTIVITIES_FETCH_SUCCESS, payload: snapshot.val() });
+    firebase.database().ref('/activities')
+      .once('value', snapshot => {
+        dispatch({ type: ALL_ACTIVITIES_FETCH, payload: snapshot.val() });
+      });
+  };
+};
+
+export const affiliationsFetch = () => {
+  return (dispatch) => {
+    firebase.database().ref('/affiliations')
+      .once('value', snapshot => {
+        dispatch({ type: ALL_AFFILIATIONS_FETCH, payload: snapshot.val() });
       });
   };
 };

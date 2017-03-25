@@ -7,23 +7,21 @@ class SelectableTile extends Component {
     super(props);
     this.state = {
       tileBackgroundColor: 'white',
-      selected: false,
+      isSelected: false,
     };
   }
 
   onTilePress() {
     const { onSelect, tileId, tileName, tileIcon } = this.props;
-    const selected = !this.state.selected;
+    const isSelected = !this.state.isSelected;
 
-    this.setState({ selected, tileBackgroundColor: (selected ? 'purple' : 'white')});
-    if(selected) onSelect(tileId, tileName, tileIcon);
+    this.setState({ isSelected, tileBackgroundColor: (isSelected ? 'purple' : 'white')});
+    onSelect(tileId, tileName, tileIcon, isSelected);
   }
 
   render() {
-    const { tileId, tileName, tileIcon } = this.props;
+    const { tileName, tileIcon } = this.props;
     const { imageStyle } = styles;
-
-    console.log(`Tile id = ${tileId}`);
 
     return (
       <TouchableOpacity onPress={this.onTilePress.bind(this)}>
