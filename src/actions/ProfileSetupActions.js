@@ -9,6 +9,7 @@ import {
   ACTIVITIES_SAVED,
   AFFILIATIONS_SAVED,
   AFFILIATION_SELECTED,
+  AFFILIATION_UNSELECTED,
 } from './types';
 
 export const addPic = (url) => {

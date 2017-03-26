@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
+const SELECTED_COLOR = '#D8FCFC';
+const SELECTED_BORDER_COLOR = '#1DABB5';
 
 class SelectableTile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tileBackgroundColor: 'white',
+      tileBorderColor: '#ECECEC',
       isSelected: false,
     };
   }
@@ -15,34 +18,35 @@ class SelectableTile extends Component {
     const { onSelect, tileId, tileName, tileIcon } = this.props;
     const isSelected = !this.state.isSelected;
 
-    this.setState({ isSelected, tileBackgroundColor: (isSelected ? 'purple' : 'white')});
+    this.setState({
+      isSelected,
+      tileBackgroundColor: (isSelected ? SELECTED_COLOR : 'white'),
+//      tileBorderColor: (isSelected ? SELECTED_BORDER_COLOR : '#ECECEC'),
+    });
     onSelect(tileId, tileName, tileIcon, isSelected);
   }
 
   render() {
     const { tileName, tileIcon } = this.props;
-    const { imageStyle } = styles;
+    const { activityTextLabel, imageStyle } = styles;
 
     return (
       <TouchableOpacity onPress={this.onTilePress.bind(this)}>
         <View
           style={{
             borderWidth: 1,
-            borderRadius: 2,
-            borderColor: '#ddd',
+            borderColor: this.state.tileBorderColor,
             backgroundColor: this.state.tileBackgroundColor,
-            marginLeft: 5,
-            marginRight: 5,
-            marginTop: 10,
+            marginRight: 10,
             marginBottom: 10,
-            width: 150,
-            height: 150,
+            width: 101,
+            height: 101,
           }}
         >
-          <Text style={{ alignSelf: 'center', fontSize: 18, marginBottom: 5 }}>
+          <Image style={imageStyle} source={{ uri: tileIcon }} />
+          <Text style={activityTextLabel}>
             {tileName}
           </Text>
-          <Image style={imageStyle} source={{ uri: tileIcon }} />
         </View>
       </TouchableOpacity>
     );
@@ -51,21 +55,15 @@ class SelectableTile extends Component {
 
 const styles = {
   imageStyle: {
-    height: 90,
-    width: 90,
+    height: 70,
+    width: 70,
     alignSelf: 'center',
+    marginTop: 5,
   },
-  cardStyle: {
-    borderWidth: 1,
-    borderRadius: 2,
-    borderColor: '#ddd',
-    backgroundColor: 'white',
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: 10,
-    marginBottom: 10,
-    width: 150,
-    height: 150,
+  activityTextLabel: {
+    fontSize: 14,
+    fontWeight: '500',
+    textAlign: 'center',
   }
 };
 

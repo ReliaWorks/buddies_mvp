@@ -34,12 +34,12 @@ class Routes extends Component {
         <Scene key="profileSetup">
           <Scene
             key="activitySetup"
-            title="Profile Setup"
+            title="Select Activities"
             component={ActivitySetupScene}
           />
           <Scene
             key="affiliationSetup"
-            title="Profile Setup"
+            title="Select Affiliations"
             component={AffiliationSetupScene}
           />
           <Scene
@@ -59,9 +59,7 @@ class Routes extends Component {
             component={BrowseBuddies}
             title="wave length"
             leftButton={profileIconButton}
-            leftButtonIconStyle={iconStyle}
             rightButton={chatIconButton}
-            onRight={() => Actions.matchesConversations()}
             type={ActionConst.RESET}
           />
         </Scene>
