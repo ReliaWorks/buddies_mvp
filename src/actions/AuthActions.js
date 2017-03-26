@@ -7,9 +7,9 @@ import {
 } from 'react-native-fbsdk';
 import firebase from 'firebase';
 import {
-  LOGIN_USER_SUCCESS,
   LOGIN_USER,
-  LOGIN_FB_SUCCESS,
+  LOGIN_USER_SUCCESS,
+  LOGOUT_USER,
   PROFILE_INFO,
   PROFILE_PIC
 } from './types';
@@ -29,9 +29,6 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
       if(error) {
         console.log('Error fetching data: ' + error.toString());
       } else {
-        console.log("in responseCallback with result = ");
-        console.log(result);
-
         const fbAlbums = result.albums.data;
 
         const profileAlbum = fbAlbums.find((album) => {
@@ -42,7 +39,7 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
           first_name: result.first_name || '',
           last_name: result.last_name || '',
           email: result.email || '',
-          location: result.location || ''
+          location: result.location || '',
         };
 
         ref.ref(`/user_profiles/${user.uid}`).set(profile);
@@ -63,8 +60,7 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
                 },
               },
               (error1, result1) => {
-                console.log('storing photos');
-                if (error) {
+                if (error1) {
                   console.log('Error fetching data: ' + error1.toString());
                 } else{
                   const profilePics = result1.photos.data;
@@ -79,13 +75,10 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
                           },
                        },
                        (error2, result3) => {
-                         if(error) {
+                         if(error2) {
                            console.log('Error fetching data: ' + error2.toString());
                          } else {
-                           console.log("adding pic");
-                           console.log(result3.images);
-
-                           dispatch({
+                            dispatch({
                              type: PROFILE_PIC,
                              payload: result3.images[0].source
                            });
@@ -107,30 +100,9 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
   new GraphRequestManager().addRequest(infoRequest).start();
 }
 
-function userExistsCallback(user,ref, exists, accessTokenData, dispatch) {
-  if(exists) {
-    Actions.profileSetup();
-  } else {
-    setupUserFirebase(user,ref, accessTokenData, dispatch);
-  }
-}
-
-function checkIfUserExists(user, ref, accessTokenData, dispatch) {
-  console.log('checkIfUserExists');
-
-  ref.ref(`/user_profiles/${user.uid}`)
-    .on('value', snapshot => {
-      const exists = (snapshot.val() !== null);
-      userExistsCallback(user,ref, exists, accessTokenData, dispatch);
-    });
-}
-
 export const loginUser = () => {
   return (dispatch) => {
-    dispatch({ type: LOGIN_USER });
-
     const auth = firebase.auth();
-    const usersRef = firebase.database().ref("user_profiles");
     const provider = firebase.auth.FacebookAuthProvider;
 
     LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends', 'user_photos'])
@@ -138,53 +110,49 @@ export const loginUser = () => {
         if (result.isCancelled) {
           console.log('Login cancelled');
         } else {
-          console.log('Login success.');
           AccessToken.getCurrentAccessToken()
             .then(accessTokenData => {
-              //check to see if user exists in firebase
-              console.log("Go the token");
-              signInFirebase(dispatch, auth,provider, accessTokenData);
+              signIntoFirebase(dispatch, auth, provider, accessTokenData);
+              dispatch({ type: LOGIN_USER });
             });
         }
-      },
-      (error) => {
-        /* When login fails, enters this case.
-         * Need to check if user already exists in Firebase.
-         * If not, create user and redirect to FTUE
-         */
-        console.log('Login fail with error: ' + error);
-        AccessToken.getCurrentAccessToken()
-          .then(accessTokenData => {
-            //check to see if user exists in firebase
-            console.log("getting token");
-            console.log(accessTokenData);
-            const credential = provider.credential(accessTokenData.accessToken);
-            auth.signInWithCredential(credential);
-          });
+      }, (error) => {
+        console.log(`In AuthActions loginUser. Error = ${error}`);
       }
     );
   };
 };
 
-const signInFirebase = (dispatch, auth, provider, accessTokenData) => {
-  dispatch({
-    type: LOGIN_FB_SUCCESS,
-    payload: accessTokenData
-  });
-  const credential = provider.credential(accessTokenData.accessToken);
-  auth.signInWithCredential(credential).then(credData => {
-    loginUserSuccess(dispatch, credData, firebase.database(), accessTokenData);
-    console.log("Got fire");
-  }).catch(err => {
-    console.log(err);
-  });
+export const logoutUser = () => {
+  return (dispatch) => {
+    dispatch({
+      type: LOGOUT_USER,
+      payload: null,
+    });
+    firebase.auth().signOut();
+  };
 };
 
-const loginUserSuccess = (dispatch, user, ref, accessTokenData) => {
-    dispatch({
-      type: LOGIN_USER_SUCCESS,
-      payload: user
+function checkIfUserExists(user, ref, accessTokenData, dispatch) {
+  ref.ref(`/user_profiles/${user.uid}`)
+    .once('value', snapshot => {
+      const exists = (snapshot.val() !== null);
+      if(exists) {
+        Actions.main();
+      } else {
+        setupUserFirebase(user,ref, accessTokenData, dispatch);
+        Actions.profileSetup();
+      }
     });
+}
 
-    checkIfUserExists(user, ref, accessTokenData, dispatch);
+const signIntoFirebase = (dispatch, auth, provider, accessTokenData) => {
+  const credential = provider.credential(accessTokenData.accessToken);
+  auth.signInWithCredential(credential)
+    .then(credData => {
+//      dispatch({ type: LOGIN_USER_SUCCESS });
+      checkIfUserExists(credData, firebase.database(), accessTokenData, dispatch);
+    }).catch(err => {
+    console.log(`Error signing into Firebase ${err}`);
+  });
 };

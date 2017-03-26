@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, View, Image, Text, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
+import { Spinner } from '../components/common';
 import { backgroundImage, legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
 
@@ -10,18 +11,12 @@ const backgroundImageURL = require('../components/common/img/wavelengthLoginBack
 const { width } = Dimensions.get('window');
 const LOGINFORM_MARGIN = 14;
 
-/* LoginForm.js
- * ------------
- * Check to see if the user had already authenticated
- *  - if so, direct to the browse page
- *  - if not, display login form
- * Login Form: prompt user to login via FB
- *  - if user already has an account, then direct to the browse page
- *  - if not, direct to the profile setup scene
- */
-
 class LoginForm extends Component {
 //  <Image source={buddiesLogo} style={{height: 79, width: 102, opacity: 1.0}} />
+
+  onButtonPress() {
+    this.props.loginUser();
+  }
 
   renderLoginForm() {
     return (
@@ -41,7 +36,7 @@ class LoginForm extends Component {
           <View style={{ flex: 2, marginTop: 20 }} />
           <View style={styles.loginButtonContainer}>
             <TouchableHighlight
-              onPress={this.props.loginUser}
+              onPress={this.onButtonPress.bind(this)}
               color="white"
             >
               <Text style={styles.fbLoginText}>Log in with Facebook</Text>
@@ -56,6 +51,15 @@ class LoginForm extends Component {
   }
 
   render() {
+    if(this.props.loading) {
+      console.log("this.props.loading = true");
+      return (
+        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+          <Spinner size="large" />
+        </View>
+      );
+    }
+    console.log("Rendering login form");
     return this.renderLoginForm();
   }
 }
@@ -83,10 +87,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ auth }) => {
-  const { token } = auth;
+const mapStateToProps = (state) => {
+  const { token, loggedIn, loading } = state.auth;
 
-  return { token };
+  return { token, loggedIn, loading };
 };
 
 export default connect(mapStateToProps, { loginUser })(LoginForm);

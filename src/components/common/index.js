@@ -7,6 +7,7 @@ export * from './Header';
 export * from './Input';
 export * from './Message';
 export * from './ProfileImages';
+export * from './SelectableTile';
 export * from './Spinner';
 export * from './Tile';
 export * from './NoConvoMatch';

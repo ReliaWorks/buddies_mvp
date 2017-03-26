@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-//import { Dimensions } from 'react-native';
-//import Icon from 'react-native-vector-icons';
 import { ActionConst, Actions, Scene, Router } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
 import SettingsScene from './scenes/settings';
 import BrowseBuddies from './scenes/BrowseBuddies';
-import { ActivitySetup, ProfileSetupComplete } from './scenes/profile-setup';
-import PhotoSetup from './scenes/profile-setup/PhotoSetup';
+import { ProfileSetupComplete } from './scenes/profile-setup';
+import ActivitySetupScene from './scenes/activity-setup/';
+import AffiliationSetupScene from './scenes/affiliation-setup/';
 import DescriptionSetup from './scenes/profile-setup/DescriptionSetup';
-import AffiliationSetup from './scenes/profile-setup/AffiliationSetup';
 import UserEdit from './scenes/UserEdit';
 import UserView from './scenes/UserView';
 import Matches from './scenes/Matches';
@@ -35,19 +33,14 @@ class Routes extends Component {
         </Scene>
         <Scene key="profileSetup">
           <Scene
-            key="photoSetup"
-            title="Profile Setup"
-            component={PhotoSetup}
-          />
-          <Scene
             key="activitySetup"
             title="Profile Setup"
-            component={ActivitySetup}
+            component={ActivitySetupScene}
           />
           <Scene
             key="affiliationSetup"
             title="Profile Setup"
-            component={AffiliationSetup}
+            component={AffiliationSetupScene}
           />
           <Scene
             key="descriptionSetup"
@@ -80,9 +73,7 @@ class Routes extends Component {
             title="Profile Settings"
             leftButton={wrenchIconButton}
             leftButtonIconStyle={iconStyle}
-//            onLeft={() => Actions.settings()}
             rightButton={homeRightIconButton}
-//            onRight={() => Actions.main()}
           />
           <Scene
             key="userEdit"

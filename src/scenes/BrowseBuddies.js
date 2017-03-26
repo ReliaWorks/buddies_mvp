@@ -33,6 +33,7 @@ class BrowseBuddies extends Component {
   }
 
   render() {
+
     console.log('On render');
 
     if(this.state.matches.length === 0) {
@@ -62,9 +63,4 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({ auth }) => {
-  const { loading } = auth;
-  return { loading };
-};
-
-export default connect(mapStateToProps)(BrowseBuddies);
+export default connect(null)(BrowseBuddies);
