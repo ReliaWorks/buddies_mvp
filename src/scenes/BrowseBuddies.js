@@ -14,19 +14,27 @@ class BrowseBuddies extends Component {
     axios.get('https://matching-api.appspot.com/match/0du4iTIWosZCGXvMmd0jmUYFoUW2')
       .then(response => {
         const keys = Object.keys(response.data);
-        const arr = [];
+        let arr = [];
 
         keys.forEach((key) => {
-          arr[key] = response.data[key];
+          arr.push(response.data[key]);
         });
 
-        console.log('arr',arr);
-
         this.setState({ matches: arr });
+        console.log('arr',this.state);
       });
   }
 
+  renderProfile() {
+    let i=0;
+    return this.state.matches.map((buddy,key) =>
+        <Text key={i++}>{buddy.first_name || "Unkown"}</Text>
+    );
+  }
+
   render() {
+    console.log('On render');
+
     if(this.state.matches.length === 0) {
       return (
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -34,29 +42,15 @@ class BrowseBuddies extends Component {
         </View>
       );
     } else {
-        console.log("got results");
-        return(
-          <Swiper>
-          {this.state.matches.map((buddy, key) => {
-            return (
-              <View key={key} style={styles.cardStyle}>
-                <BuddyCard
-                  value={{
-                    firstName: buddy.firstName,
-                    age: buddy.age,
-                    location: buddy.location,
-                    profileImages: buddy.profileImages,
-                    activities: buddy.activities,
-                    affiliations: buddy.affiliations,
-                    description: buddy.description,
-                    likeable: true,
-                  }}
-                />
-              </View>
-            );
-          })}
+        console.log("got results", this.state.matches);
+
+        return (
+        <Swiper>
+          <View>
+          {this.renderProfile()}
+          </View>
         </Swiper>
-        );
+      );
     }
   }
 }
