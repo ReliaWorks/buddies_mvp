@@ -8,7 +8,6 @@ import userSampleData from '../components/demo-data/Users.js';
 
 class BrowseBuddies extends Component {
   render() {
-    console.log("Rendering Browse Buddies");
     if(!userSampleData) {
       return (
         <View style={{justifyContent: 'center', alignItems: 'center'}}>

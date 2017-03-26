@@ -2,17 +2,6 @@
 
 const BRAND_PRIMARY_COLOR = 'white';
 
-export const backgroundImage = {
-  flex: 1,
-  alignSelf: 'stretch',
-  alignItems: 'center',
-  justifyContent: 'space-around',
-  marginLeft: 14,
-  marginRight: 14,
-  width: null,
-  height: null,
-};
-
 export const iconStyle = {
   width: 20,
   height: 20,
@@ -67,7 +56,8 @@ export const legalTextStyle = {
 
 export const navTitleStyle = {
   fontFamily: 'Avenir-Book',
-  fontSize: 24,
+  fontSize: 18,
+  fontWeight: 'bold',
 };
 
 export const navBarStyle = {

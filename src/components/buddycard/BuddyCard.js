@@ -117,7 +117,7 @@ const localStyles = StyleSheet.create({
     fontSize: 18,
   },
   descriptionText: {
-    fontSize: 18,
+    fontSize: 16,
     marginLeft: 10,
     marginTop: 15,
     fontFamily: 'Avenir-Book',

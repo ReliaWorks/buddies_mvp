@@ -17,19 +17,28 @@ export default userSampleData = [
         icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984'
       },
       {
-        name: 'Walking',
-        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984'
-      }
+        name: 'Swimming',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Fswim2.png?alt=media&token=7d3c824a-55f9-45bd-8f81-b944e3e4ffcd'
+      },
     ],
     affiliations: [
       {
         name: 'GGTC',
-        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2Fggtc.png?alt=media&token=7126aaf1-2e91-4be5-bc0a-af442696edb3'
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2FGGTCKayleigh.png?alt=media&token=c210a96d-57e1-4451-b617-8235188f2b55'
+      },
+      {
+        name: 'Bay Club',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2FBayClubKayleigh.png?alt=media&token=2180371c-6286-449f-83e7-9366d74ee0e4'
       },
       {
         name: 'NRC',
         icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2FNikeRunClub.jpg?alt=media&token=c4c31ca9-18d1-4a60-a7e0-a2a7d60b5baa'
       },
+      {
+        name: 'NRC',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2FNikeRunClub.jpg?alt=media&token=c4c31ca9-18d1-4a60-a7e0-a2a7d60b5baa'
+      },
+
     ],
     description: 'Looking for a running buddy',
   },
@@ -46,16 +55,20 @@ export default userSampleData = [
     activities: [
       {
         _id: Math.round(Math.random() * 1000000),
-        name: 'Biking',
-        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Fbiking_icon.png?alt=media&token=d0793482-6ab4-4382-831b-29996b6db6cc'
+        name: 'Crossfit',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Fcrossfit1x.png?alt=media&token=26fae214-f184-4fa8-8094-775c96e91262'
       },
       {
         _id: Math.round(Math.random() * 1000000),
-        name: 'Running',
-        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Frunning_exercise.png?alt=media&token=7b691e7a-5831-432a-a146-32dd04dc0984'
+        name: 'Rock Climbing',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Factivity_icons%2Fswim2.png?alt=media&token=7d3c824a-55f9-45bd-8f81-b944e3e4ffcd'
       }
     ],
     affiliations: [
+      {
+        name: 'GGTC',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2FGGTCKayleigh.png?alt=media&token=c210a96d-57e1-4451-b617-8235188f2b55'
+      },
       {
         name: 'Bay Club',
         icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2Fbayclub_logo2.png?alt=media&token=fa345ef2-88a4-40d1-9f92-e2f6f80a1794'
@@ -87,6 +100,10 @@ export default userSampleData = [
       }
     ],
     affiliations: [
+      {
+        name: 'GGTC',
+        icon: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Faffiliation_logos%2FGGTCKayleigh.png?alt=media&token=c210a96d-57e1-4451-b617-8235188f2b55'
+      },
     ],
     description: 'nubia nostra, per inceptos himenaeos. Quisque sed tellus et urna semper aliquet vitae tincidunt odio. Etiam convallis, metus quis faucibus interdum, purus libero accumsan augue',
   },

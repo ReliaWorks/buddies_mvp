@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { Tile } from '../common';
 
+const MARGIN = 15;
+
 //Displays a list of activities visually as tiles (with icons).
 class ActivitySet extends Component {
   render() {
@@ -23,10 +25,13 @@ class ActivitySet extends Component {
 
 const styles = {
   list: {
-    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+//    alignItems: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'white'
+//    backgroundColor: 'red',
+    marginLeft: MARGIN,
+    marginRight: MARGIN,
   },
 };
 
