@@ -19,10 +19,10 @@ class Conversation extends Component {
 
   componentWillMount() {
     const { currentUser } = firebase.auth();
-    const branchKey = this.constructBranchId(currentUser, this.props.chat.selectedMatch);
+    const branchKey = this.constructBranchId(currentUser, this.props.chat.selectedMatchId);
     const chatRef = firebase.database().ref(`/user_chats/${branchKey}`);
     chatRef.on('value', snapshot => {
-      //.reverse() returns data in reverse chronological order
+      //reverse() returns data in reverse chronological order
         this.setState({messages: _.map(snapshot.val()).reverse(), loading: false});
     });
     this.setState({loading: false});
@@ -31,8 +31,9 @@ class Conversation extends Component {
   onSend(messages = []) {
     const { currentUser } = firebase.auth();
     const firstName = this.props.currentUser.firstName;
-    const branchKey = this.constructBranchId(currentUser, this.props.chat.selectedMatch);
+    const branchKey = this.constructBranchId(currentUser, this.props.chat.selectedMatchId);
 
+    //avatar: NEEDS TO BE UPDATED to this.props.currentUser.profilePic ...NOT The other guy's match avatar
     const user = {...messages[0].user, name: firstName, avatar: this.props.chat.selectedMatchAvatar};
     const m1 = {...messages[0], user, createdAt: firebase.database.ServerValue.TIMESTAMP};
     firebase.database().ref(`user_chats/${branchKey}/`).push(m1);

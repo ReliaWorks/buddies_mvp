@@ -3,14 +3,15 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  selectedMatch: 'rKymFdHeUUfuXlhVl9E4Ad0hJ4B3',
-  selectedMatchAvatar: 'https://facebook.github.io/react/img/logo_og.png',
+  selectedMatchId: '',
+  selectedMatchName: '',
+  selectedMatchAvatar: '',
 };
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CHAT_SELECTED: {
-      return state;
+      return {...state, selectedMatchId: action.payload.uid, selectedMatchAvatar: action.payload.avatar, selectedMatchName: action.payload.name};
     }
     default:
       return state;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { ListView, Text, View } from 'react-native';
 import { containerStyle, textStyle } from '../components/common/styles/Styles';
-import { ConversationListItem, NoConvoMatch } from '../components/common';
+import NoConvoMatch from '../components/common/NoConvoMatch';
+import ConversationListItem from '../components/common/ConversationListItem';
 import sampleData from '../components/demo-data/demoData';
 import matchesSampleData from '../components/demo-data/matchesSampleData';
 

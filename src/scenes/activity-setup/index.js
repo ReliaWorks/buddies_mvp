@@ -28,7 +28,6 @@ class ActivitySetupScene extends Component {
   }
 
   render() {
-    console.log(this.props.currentUser);
     return (
       <ActivitySetup
         activities={this.props.activities}

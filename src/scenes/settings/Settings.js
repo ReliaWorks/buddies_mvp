@@ -69,7 +69,6 @@ class Settings extends Component {
               firebase.auth().signOut().then(() => {
                 this.props.onLogout();
                 Actions.root();
-                console.log("Just logged out");
               }, (error) => {
                 console.log(`Error signing out ${error}`);
               });

@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import { Dimensions, View, Image, Text, TouchableHighlight } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import { AccessToken } from 'react-native-fbsdk';
+import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Spinner } from '../components/common';
 import { legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
 
-const appName = "Wavelength";
+const appName = "wave length";
 const backgroundImageURL = require('../components/common/img/wavelengthLoginBackground.png');
 
 const { width } = Dimensions.get('window');
 const LOGINFORM_MARGIN = 15;
 
 class LoginForm extends Component {
+  componentWillMount() {
+    if(this.props.loggedIn) Actions.main();
+  }
+
   onButtonPress() {
     this.props.loginUser();
   }
@@ -51,17 +58,19 @@ class LoginForm extends Component {
     );
   }
 
-  render() {
+  renderContent() {
     if(this.props.loading) {
-      console.log("this.props.loading = true");
       return (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <Spinner size="large" />
         </View>
       );
     }
-    console.log("Rendering login form");
     return this.renderLoginForm();
+  }
+
+  render() {
+    return this.renderContent();
   }
 }
 
