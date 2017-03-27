@@ -47,12 +47,27 @@ class BrowseBuddies extends Component {
         console.log("got results", this.state.matches);
 
         return (
-        <Swiper>
-          <View>
-          {this.renderProfile()}
-          </View>
-        </Swiper>
-      );
+          <Swiper>
+            {this.state.matches.map((buddy, key) => {
+              return (
+                <View key={key} style={styles.cardStyle}>
+                  <BuddyCard
+                    value={{
+                      firstName: buddy.first_name,
+                      age: "35",
+                      location: "SF",
+                      profileImages: buddy.profileImages,
+                      activities: buddy.activities,
+                      affiliations: buddy.affiliations,
+                      description: buddy.description,
+                      likeable: true,
+                    }}
+                  />
+                </View>
+              );
+            })}
+          </Swiper>
+        );
     }
   }
 }
