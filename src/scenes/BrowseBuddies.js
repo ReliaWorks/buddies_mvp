@@ -1,40 +1,56 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import axios from 'axios';
+import { View, Text } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { Spinner } from '../components/common';
-import userSampleData from '../components/demo-data/Users.js';
 
 class BrowseBuddies extends Component {
+
+  state = { matches: [] };
+
+  componentWillMount() {
+    axios.get('https://matching-api.appspot.com/match/0du4iTIWosZCGXvMmd0jmUYFoUW2')
+      .then(response => {
+        const keys = Object.keys(response.data);
+        let arr = [];
+
+        keys.forEach((key) => {
+          arr.push(response.data[key]);
+        });
+
+        this.setState({ matches: arr });
+        console.log('arr',this.state);
+      });
+  }
+
+  renderProfile() {
+    let i=0;
+    return this.state.matches.map((buddy,key) =>
+        <Text key={i++}>{buddy.first_name || "Unkown"}</Text>
+    );
+  }
+
   render() {
-    if(!userSampleData) {
+
+    console.log('On render');
+
+    if(this.state.matches.length === 0) {
+
       return (
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Spinner size="large" />
         </View>
       );
     } else {
-      return (
+        console.log("got results", this.state.matches);
+
+        return (
         <Swiper>
-          {userSampleData.map((buddy, key) => {
-            return (
-              <View key={key} style={styles.cardStyle}>
-                <BuddyCard
-                  value={{
-                    firstName: buddy.firstName,
-                    age: buddy.age,
-                    location: buddy.location,
-                    profileImages: buddy.profileImages,
-                    activities: buddy.activities,
-                    affiliations: buddy.affiliations,
-                    description: buddy.description,
-                    likeable: true,
-                  }}
-                />
-              </View>
-            );
-          })}
+          <View>
+          {this.renderProfile()}
+          </View>
         </Swiper>
       );
     }

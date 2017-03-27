@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "firebase": "^3.6.9",
     "firebase-token-generator": "^2.0.0",
     "firebaseui": "^1.0.0",
