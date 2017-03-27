@@ -150,7 +150,6 @@ const signIntoFirebase = (dispatch, auth, provider, accessTokenData) => {
   const credential = provider.credential(accessTokenData.accessToken);
   auth.signInWithCredential(credential)
     .then(credData => {
-//      dispatch({ type: LOGIN_USER_SUCCESS });
       checkIfUserExists(credData, firebase.database(), accessTokenData, dispatch);
     }).catch(err => {
     console.log(`Error signing into Firebase ${err}`);

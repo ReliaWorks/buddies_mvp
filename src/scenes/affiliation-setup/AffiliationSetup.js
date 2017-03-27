@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
-import { Button, ListView, Text, View } from 'react-native';
+import { Dimensions, ListView, Text, TouchableOpacity, View } from 'react-native';
 import { SelectableTile } from '../../components/common';
+
+const { width } = Dimensions.get('window');
+const LOGINFORM_MARGIN = 15;
 
 class AffiliationSetup extends Component {
   renderSectionHeader(onNext) {
     return(
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, flex: 0.07 }}>
-        <Text style={{ padding: 10, fontSize: 20 }}>
-        Select Affiliations:
-        </Text>
-        <Button
-          onPress={onNext}
-          style={{
-            flex: 1,
-            fontSize: 16,
-            color: 'black',
-            fontFamily: 'Avenir-Book',
-          }}
-          title="Next"
-          color="#4267B2"
-        />
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={onNext}>
+          <Text
+            style={{
+              flex: 1,
+              fontSize: 16,
+              fontWeight: 'bold',
+              fontFamily: 'Avenir-Book',
+              marginRight: LOGINFORM_MARGIN * 2,
+              marginTop: 10,
+            }}
+          >
+          Next
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -41,18 +44,38 @@ class AffiliationSetup extends Component {
     );
   }
 
+  renderNextButton(onNext) {
+    return (
+      <View style={styles.nextButtonContainer}>
+        <TouchableOpacity
+          onPress={onNext}
+          color="white"
+        >
+          <Text style={styles.nextButtonText}>Next</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   render() {
     const { affiliationsDS, onNext, onSelected } = this.props;
     return (
       <View style={{ flex: 1 }}>
         {this.renderSectionHeader(onNext)}
         {this.renderAffiliationList(affiliationsDS, onSelected)}
+        {this.renderNextButton(onNext)}
       </View>
     );
   }
 }
 
 const styles = {
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    flex: 0.1,
+    borderTopWidth: 7,
+  },
   iconStyle: {
     flexDirection: 'column',
     justifyContent: 'center',
@@ -80,6 +103,23 @@ const styles = {
   smallImageStyle: {
     height: 120,
     width: 120,
+  },
+  nextButtonContainer: {
+    flex: 0.1,
+    width: width,
+    marginTop: 10,
+    justifyContent: 'center',
+    backgroundColor: 'black',
+  },
+  nextButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontFamily: 'Avenir-Book',
+    fontWeight: '700',
+    textAlign: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
+    marginRight: 10,
   },
 };
 

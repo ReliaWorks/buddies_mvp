@@ -7,30 +7,28 @@ const Tile = (props) => {
 
   return (
     <View style={cardStyle}>
-      <Text style={{ alignSelf: 'center', fontSize: 12 }}>
+      <Image style={imageStyle} source={{ uri: tileIcon }} />
+      <Text style={{ alignSelf: 'center', fontSize: 11, fontWeight: '700', textAlign: 'center' }}>
         {tileName}
       </Text>
-      <Image style={imageStyle} source={{ uri: tileIcon }} />
     </View>
   );
 };
 
 const styles = {
   imageStyle: {
-    height: 50,
-    width: 50,
-    padding: 5,
+    height: 60,
+    width: 60,
     alignSelf: 'center',
   },
   cardStyle: {
-    borderWidth: 1,
     borderRadius: 2,
     borderColor: '#ddd',
-    marginLeft: 5,
-    marginRight: 5,
+    marginLeft: 10,
+    marginRight: 10,
     marginTop: 10,
-    width: 60,
-    height: 75,
+    width: 75,
+    height: 100,
   }
 };
 

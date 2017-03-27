@@ -37,6 +37,7 @@ class BrowseBuddies extends Component {
     console.log('On render');
 
     if(this.state.matches.length === 0) {
+
       return (
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Spinner size="large" />

@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { selectChat } from '../../actions';
 import { convoThumbnailStyle, textStyle } from './styles';
-
-//const onButtonPress = () => {
-//  Actions.conversation({friend});
-//};
 
 class ConversationListItem extends Component {
   render() {
     return (
     <TouchableOpacity
-      onPress={() => Actions.conversation()}
+      onPress={() => {
+        //NEED TO UPDATE WITH this.props.uid, this.props.name, this.props.profilePic
+        this.props.selectChat(this.props.id.value, this.props.name.first, this.props.picture.medium);
+        Actions.conversation();
+      }}
     >
       <View style={styles.container}>
         <Image
@@ -48,4 +50,8 @@ const styles = {
   },
 };
 
-export { ConversationListItem };
+const mapStateToProps = ({ chat }) => {
+  return { chat };
+};
+
+export default connect(mapStateToProps, { selectChat })(ConversationListItem);

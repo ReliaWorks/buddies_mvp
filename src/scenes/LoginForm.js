@@ -1,39 +1,48 @@
 import React, { Component } from 'react';
 import { Dimensions, View, Image, Text, TouchableHighlight } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import { AccessToken } from 'react-native-fbsdk';
+import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Spinner } from '../components/common';
-import { backgroundImage, legalTextStyle } from '../components/common/styles';
+import { legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
 
+const appName = "wave length";
 const backgroundImageURL = require('../components/common/img/wavelengthLoginBackground.png');
-//const buddiesLogo = require('../components/common/img/buddies_logo.png');
 
 const { width } = Dimensions.get('window');
-const LOGINFORM_MARGIN = 14;
+const LOGINFORM_MARGIN = 15;
 
 class LoginForm extends Component {
-//  <Image source={buddiesLogo} style={{height: 79, width: 102, opacity: 1.0}} />
+  componentWillMount() {
+    if(this.props.loggedIn) Actions.main();
+  }
 
   onButtonPress() {
     this.props.loginUser();
   }
 
+  renderAppName() {
+    return(
+      <View style={styles.nameContainer}>
+        <Text
+          style={{
+            fontFamily: 'Avenir-Book',
+            fontSize: 45,
+            fontWeight: 'bold',
+          }}
+        >
+          {appName}
+        </Text>
+      </View>
+    );
+  }
   renderLoginForm() {
     return (
       <View style={styles.container}>
-        <View style={{alignItems: 'center', flex: 0.1, marginTop: -30}}>
-          <Text
-            style={{
-              fontFamily: 'Avenir-Book',
-              fontSize: 45,
-              fontWeight: 'bold',
-            }}
-          >
-            Buddies
-          </Text>
-        </View>
-        <Image source={backgroundImageURL} style={backgroundImage}>
-          <View style={{ flex: 2, marginTop: 20 }} />
+        {this.renderAppName()}
+        <Image source={backgroundImageURL} style={styles.backgroundImage} />
           <View style={styles.loginButtonContainer}>
             <TouchableHighlight
               onPress={this.onButtonPress.bind(this)}
@@ -42,25 +51,26 @@ class LoginForm extends Component {
               <Text style={styles.fbLoginText}>Log in with Facebook</Text>
             </TouchableHighlight>
           </View>
-        </Image>
-        <View>
+        <View style={styles.termsContainer}>
           <Text style={legalTextStyle}>Terms of Service</Text>
         </View>
       </View>
     );
   }
 
-  render() {
+  renderContent() {
     if(this.props.loading) {
-      console.log("this.props.loading = true");
       return (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <Spinner size="large" />
         </View>
       );
     }
-    console.log("Rendering login form");
     return this.renderLoginForm();
+  }
+
+  render() {
+    return this.renderContent();
   }
 }
 
@@ -73,17 +83,40 @@ const styles = {
     color: 'white',
     fontSize: 16,
     fontFamily: 'Avenir-Book',
+    fontWeight: '700',
     textAlign: 'center',
     justifyContent: 'center',
     marginLeft: 10,
     marginRight: 10,
   },
+  nameContainer: {
+    alignItems: 'center',
+    flex: 3,
+    marginTop: -35,
+    marginBottom: 10
+  },
   loginButtonContainer: {
-    flex: 0.2,
-    height: null,
+    flex: 3,
     width: width - (LOGINFORM_MARGIN * 2),
+    marginTop: 10,
+    marginLeft: LOGINFORM_MARGIN,
+    marginRight: LOGINFORM_MARGIN,
     justifyContent: 'center',
     backgroundColor: 'black',
+  },
+  termsContainer: {
+    flex: 3,
+  },
+  backgroundImage: {
+    flex: 35,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginTop: 10,
+    marginLeft: LOGINFORM_MARGIN,
+    marginRight: LOGINFORM_MARGIN,
+    width: null,
+    height: null,
   }
 };
 

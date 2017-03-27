@@ -27,8 +27,6 @@ class ActivityList extends Component {
   }
 
   render() {
-    console.log('In ActivityList render');
-    console.log(this.props);
     return (
       <ListView
         enableEmptySections
