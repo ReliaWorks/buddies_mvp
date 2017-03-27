@@ -24,6 +24,7 @@ class UserView extends Component {
             location,
             description,
             editable: true,
+            likeable: false,
           }}
         />
       </View>

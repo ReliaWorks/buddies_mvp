@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ActivitySet from './ActivitySet';
 //import AffiliationSet from './AffiliationSet';
 import { ProfileImages } from '../common';
-import { buttonStyle } from '../common/styles';
+import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
 
 //const { height, width } = Dimensions.get('window');
@@ -39,9 +39,27 @@ class BuddyCard extends Component {
     );
   }
 
-  renderActivitiesAffiliations(activities, affiliations) {
+  renderActivitiesAffiliations(activities, affiliations, editable) {
+    //if there are none and this is a browseable profile, then return null
+    if(!activities && !affiliations) return null;
+    // if there are none and this is an editable profile (user viewing their own profile) then
+    // return a call to action to edit your profile
+    if(activities && affiliations) {
+      if(editable && activities.length === 0 && affiliations.length === 0) {
+        return (
+          <TouchableOpacity onPress={() => Actions.userEdit()} style={buttonStyle}>
+            <View style={{ justifyContent: 'center', padding: 75 }}>
+              <Text style={centeredTextStyle}>Update your profile</Text>
+            </View>
+          </TouchableOpacity>
+        );
+      }
+    }
+    // at least some activities or affiliations exist, so render them
     let activitiesAndAffiliations = affiliations;
-    if(activities.length > 0) activitiesAndAffiliations = activities.concat(affiliations);
+    if(activities) {
+      if(activities.length > 0) activitiesAndAffiliations = activities.concat(affiliations);
+    }
     return (
         <ActivitySet value={{activitiesAndAffiliations}} />
     );
@@ -75,7 +93,7 @@ class BuddyCard extends Component {
                 {this.showEditableButton(editable)}
               </View>
               {this.renderLocation(location, locationTextStyle)}
-              {this.renderActivitiesAffiliations(activities, affiliations)}
+              {this.renderActivitiesAffiliations(activities, affiliations, editable)}
               <View style={{ marginTop: 15, borderTopWidth: 0.5 }}>
                 <Text style={localStyles.descriptionText}>{description}</Text>
               </View>

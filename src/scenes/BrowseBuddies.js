@@ -1,41 +1,55 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { Spinner } from '../components/common';
-import userSampleData from '../components/demo-data/Users.js';
 
 class BrowseBuddies extends Component {
+  state = { matches: [] };
+
+  componentWillMount() {
+    axios.get('https://matching-api.appspot.com/match/0du4iTIWosZCGXvMmd0jmUYFoUW2')
+      .then(response => {
+        const keys = Object.keys(response.data);
+        const arr = [];
+
+        keys.forEach((key) => {
+          arr.push(response.data[key]);
+        });
+        this.setState({ matches: arr });
+      });
+  }
+
   render() {
-    if(!userSampleData) {
+    if(this.state.matches.length === 0) {
       return (
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Spinner size="large" />
-        </View>
+        <Spinner size="large" />
       );
     } else {
       return (
-        <Swiper>
-          {userSampleData.map((buddy, key) => {
-            return (
-              <View key={key} style={styles.cardStyle}>
-                <BuddyCard
-                  value={{
-                    firstName: buddy.firstName,
-                    age: buddy.age,
-                    location: buddy.location,
-                    profileImages: buddy.profileImages,
-                    activities: buddy.activities,
-                    affiliations: buddy.affiliations,
-                    description: buddy.description,
-                    likeable: true,
-                  }}
-                />
-              </View>
-            );
-          })}
-        </Swiper>
+      <Swiper>
+        {this.state.matches.map((buddy, key) => {
+          return (
+            <View key={key} style={styles.cardStyle}>
+              <BuddyCard
+                value={{
+                  firstName: buddy.first_name,
+                  age: "36",
+                  location: { city: 'San Francisco, CA', distance: "4 miles" },
+                  profileImages: buddy.profileImages,
+                  activities: buddy.activities,
+                  affiliations: buddy.affiliations,
+                  description: buddy.description,
+                  likeable: true,
+                  editable: false
+                }}
+              />
+            </View>
+          );
+        })}
+      </Swiper>
       );
     }
   }
@@ -48,4 +62,4 @@ const styles = {
   },
 };
 
-export default connect(null)(BrowseBuddies);
+export default connect()(BrowseBuddies);
