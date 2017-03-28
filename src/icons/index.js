@@ -13,7 +13,7 @@ const ICON_CLICKABLE_AREA_WIDTH = 100;
 export const chatIconButton = () => {
   return (
     <TouchableOpacity
-      onPress={() => Actions.matchesConversations()}
+      onPress={() => Actions.matches()}
       style={{width: ICON_CLICKABLE_AREA_WIDTH, height: -1 * ICON_WIDTH, marginLeft: width - ICON_CLICKABLE_AREA_WIDTH, alignItems: 'flex-end'}}
     >
       <MaterialCommunityIcon
@@ -25,6 +25,22 @@ export const chatIconButton = () => {
     </TouchableOpacity>
     );
 };
+export const chatLeftIconButton = () => {
+  return (
+    <TouchableOpacity
+      onPress={() => Actions.matches()}
+      style={{width: ICON_CLICKABLE_AREA_WIDTH}}
+    >
+      <MaterialCommunityIcon
+        name="comment-text-outline"
+        size={ICON_WIDTH}
+        color="black"
+        style={{marginLeft: ICON_PADDING, marginTop: 200, width: ICON_WIDTH }}
+      />
+    </TouchableOpacity>
+    );
+};
+
 export const homeLeftIconButton = () => {
   return (
     <TouchableOpacity

@@ -61,7 +61,7 @@ export default(state = INITIAL_STATE, action) => {
       }
       let description = '';
       if(action.payload.description) description = action.payload.description;
-      return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email };
+      return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email, uid: action.payload.uid };
     }
     case ACTIVITY_SELECTED: {
       const updatedActivities = [...state.activities, action.payload];

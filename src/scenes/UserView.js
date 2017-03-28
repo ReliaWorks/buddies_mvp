@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { currentUserFetch } from '../actions';
 import BuddyCard from '../components/buddycard/BuddyCard';
 
 class UserView extends Component {
-  componentWillMount() {
-    this.props.currentUserFetch();
-  }
-
   render() {
     const { firstName, age, location, profileImages, activities, affiliations, description } = this.props;
 
@@ -36,4 +31,4 @@ const mapStateToProps = ({ currentUser }) => {
   return currentUser;
 };
 
-export default connect(mapStateToProps, { currentUserFetch })(UserView);
+export default connect(mapStateToProps)(UserView);

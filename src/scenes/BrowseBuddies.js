@@ -3,22 +3,35 @@ import axios from 'axios';
 import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
+import firebase from 'firebase';
 import BuddyCard from '../components/buddycard/BuddyCard';
+import { currentUserFetch, connectWithUser } from '../actions';
 import { Spinner } from '../components/common';
 
 class BrowseBuddies extends Component {
-  state = { matches: [] };
+  constructor(props) {
+    super(props);
+
+    this.props.currentUserFetch();
+    this.state = {
+      matches: [],
+    };
+  }
 
   componentWillMount() {
-    axios.get('https://matching-api.appspot.com/match/0du4iTIWosZCGXvMmd0jmUYFoUW2')
+    const { currentUser } = firebase.auth();
+    axios.get(`https://matching-api.appspot.com/match/${currentUser.uid}`)
       .then(response => {
         const keys = Object.keys(response.data);
         const arr = [];
 
         keys.forEach((key) => {
-          arr.push(response.data[key]);
+          const dataWithId = {...response.data[key], uid: key};
+          arr.push(dataWithId);
         });
         this.setState({ matches: arr });
+      }, (error) => {
+        console.log(`API not responding.  Error = ${error}`);
       });
   }
 
@@ -43,14 +56,16 @@ class BrowseBuddies extends Component {
                   affiliations: buddy.affiliations,
                   description: buddy.description,
                   likeable: true,
-                  editable: false
+                  editable: false,
+                  uid: buddy.uid,
                 }}
+                onConnect={() => this.props.connectWithUser(this.props.currentUser.uid, buddy.uid, buddy.first_name, buddy.profileImages[0])}
               />
             </View>
           );
         })}
       </Swiper>
-      );
+    );
     }
   }
 }
@@ -62,4 +77,8 @@ const styles = {
   },
 };
 
-export default connect()(BrowseBuddies);
+const mapStateToProps = ({ currentUser }) => {
+  return { currentUser };
+};
+
+export default connect(mapStateToProps, { currentUserFetch, connectWithUser })(BrowseBuddies);
