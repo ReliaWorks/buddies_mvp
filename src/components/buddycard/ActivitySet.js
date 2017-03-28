@@ -26,10 +26,8 @@ class ActivitySet extends Component {
 const styles = {
   list: {
     justifyContent: 'flex-start',
-//    alignItems: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap',
-//    backgroundColor: 'red',
     marginLeft: MARGIN,
     marginRight: MARGIN,
   },

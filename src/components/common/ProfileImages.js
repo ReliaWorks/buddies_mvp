@@ -37,7 +37,7 @@ const ProfileImages = (props) => {
 
 const styles = {
   profileImageContainer: {
-    flex: 2.02,
+    flex: 0.5,
     borderBottomWidth: 3,
   },
   profileImage: {

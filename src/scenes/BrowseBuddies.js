@@ -42,29 +42,34 @@ class BrowseBuddies extends Component {
       );
     } else {
       return (
-      <Swiper>
-        {this.state.matches.map((buddy, key) => {
-          return (
-            <View key={key} style={styles.cardStyle}>
-              <BuddyCard
-                value={{
-                  firstName: buddy.first_name,
-                  age: "36",
-                  location: { city: 'San Francisco, CA', distance: "4 miles" },
-                  profileImages: buddy.profileImages,
-                  activities: buddy.activities,
-                  affiliations: buddy.affiliations,
-                  description: buddy.description,
-                  likeable: true,
-                  editable: false,
-                  uid: buddy.uid,
-                }}
-                onConnect={() => this.props.connectWithUser(this.props.currentUser.uid, buddy.uid, buddy.first_name, buddy.profileImages[0])}
-              />
-            </View>
-          );
-        })}
-      </Swiper>
+        <Swiper
+          index={this.props.connection.browseCursor}
+          loop={false}
+        >
+          {this.state.matches.map((buddy, key) => {
+            return (
+              <View key={key} style={styles.cardStyle}>
+                <BuddyCard
+                  value={{
+                    firstName: buddy.first_name,
+                    age: "36",
+                    location: { city: 'San Francisco, CA', distance: "4 miles" },
+                    profileImages: buddy.profileImages,
+                    activities: buddy.activities,
+                    affiliations: buddy.affiliations,
+                    description: buddy.description,
+                    likeable: true,
+                    editable: false,
+                    uid: buddy.uid,
+                  }}
+                  onConnect={() => {
+                    this.props.connectWithUser(this.props.currentUser.uid, buddy.uid, buddy.first_name, buddy.profileImages[0], buddy.likeyou);
+                  }}
+                />
+              </View>
+            );
+          })}
+        </Swiper>
     );
     }
   }
@@ -77,8 +82,8 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({ currentUser }) => {
-  return { currentUser };
+const mapStateToProps = ({ currentUser, connection }) => {
+  return { currentUser, connection };
 };
 
 export default connect(mapStateToProps, { currentUserFetch, connectWithUser })(BrowseBuddies);

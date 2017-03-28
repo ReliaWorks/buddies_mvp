@@ -1,12 +1,15 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ActivitySet from './ActivitySet';
 import { ProfileImages } from '../common';
 import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
+
+//const { height } = Dimensions.get('window');
+const BOTTOM_PADDING = 100;
 
 class BuddyCard extends Component {
   showEditableButton(editable) {
@@ -61,7 +64,9 @@ class BuddyCard extends Component {
       if(activities.length > 0) activitiesAndAffiliations = activities.concat(affiliations);
     }
     return (
+      <View style={{marginTop: 15}}>
         <ActivitySet value={{activitiesAndAffiliations}} />
+      </View>
     );
   }
 
@@ -78,23 +83,23 @@ class BuddyCard extends Component {
 
   render() {
     const { firstName, age, editable, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
-    const { locationTextStyle, nameTextStyle, descriptionContainerStyle } = styles;
+    const { locationText, nameText, descriptionContainer } = styles;
 
     return (
         <View style={{flex: 1, alignSelf: 'stretch' }}>
           <ProfileImages value={{profileImages, editable}} />
-          <View style={descriptionContainerStyle}>
+          <View style={descriptionContainer}>
             <ScrollView>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={nameTextStyle}>
+             <View style={{flexDirection: 'row'}}>
+                <Text style={nameText}>
                   {firstName}
                   {this.renderAge(age)}
                 </Text>
                 {this.showEditableButton(editable)}
               </View>
-              {this.renderLocation(location, locationTextStyle)}
+              {this.renderLocation(location, locationText)}
               {this.renderActivitiesAffiliations(activities, affiliations, editable)}
-              <View style={{ marginTop: 15, borderTopWidth: 0.5 }}>
+              <View style={localStyles.descriptionStyle}>
                 <Text style={localStyles.descriptionText}>{description}</Text>
               </View>
             </ScrollView>
@@ -134,6 +139,12 @@ const localStyles = StyleSheet.create({
     fontFamily: 'Avenir-Book',
     alignItems: 'center',
     fontSize: 18,
+  },
+  descriptionStyle: {
+    borderTopWidth: 0.5,
+    marginTop: 15,
+    marginBottom: BOTTOM_PADDING,
+//    flex: 0.7,
   },
   descriptionText: {
     fontSize: 16,

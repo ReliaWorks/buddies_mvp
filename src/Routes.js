@@ -72,7 +72,7 @@ class Routes extends Component {
           <Scene
             key="matches"
             component={Matches}
-            title="Matches"
+            title="Connections"
             leftButton={homeLeftIconButton}
           />
           <Scene
