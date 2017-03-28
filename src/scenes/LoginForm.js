@@ -8,7 +8,7 @@ import { Spinner } from '../components/common';
 import { legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
 
-const appName = "wave length";
+const appName = "wavelength";
 const backgroundImageURL = require('../components/common/img/wavelengthLoginBackground.png');
 
 const { width } = Dimensions.get('window');

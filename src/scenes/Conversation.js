@@ -2,9 +2,12 @@ import _ from 'lodash';
 //Container component responsible for calling to Firebase and loading the 10 most recent messages in a conversation between the currentUser and a given user.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { StyleSheet, Text, View } from 'react-native';
+import { centeredTextStyle } from '../components/common/styles';
+import { Button } from '../components/common';
 
 class Conversation extends Component {
   constructor(props) {
@@ -63,18 +66,30 @@ class Conversation extends Component {
     }
     return null;
   }
+
+  renderHeader() {
+    return(
+      <View style={{flex: 0.15, marginTop: -30}}>
+       <Text style={centeredTextStyle}>{this.props.chat.selectedMatchName}</Text>
+       <Button onPress={() => Actions.pop()}>Go back</Button>
+      </View>
+    );
+  }
+
   render() {
     const { currentUser } = firebase.auth();
-
-    return(
-      <GiftedChat
-        messages={this.state.messages}
-        onSend={this.onSend}
-        user={{
-          _id: currentUser.uid,
-        }}
-        renderFooter={this.renderFooter.bind(this)}
-      />
+    return (
+      <View style={{flex: 1}}>
+        {this.renderHeader()}
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={this.onSend}
+          user={{
+            _id: currentUser.uid,
+          }}
+          renderFooter={this.renderFooter.bind(this)}
+        />
+      </View>
     );
   }
 }

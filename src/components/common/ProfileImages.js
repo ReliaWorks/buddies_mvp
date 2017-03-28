@@ -3,7 +3,7 @@ import { Dimensions, Image, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { Spinner } from './Spinner';
 
-const { height, width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const ProfileImages = (props) => {
   const { profileImages } = props.value;

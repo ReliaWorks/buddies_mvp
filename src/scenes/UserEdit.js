@@ -13,7 +13,7 @@ class UserEdit extends Component {
 
   renderActivities(activities) {
     return(
-      <View style={{ flex: 1, padding: 10 }}>
+      <View style={{ flex: 0.4, padding: 10 }}>
         <Text style={styles.sectionHeader}>Activities</Text>
         <ActivitySet value={{activitiesAndAffiliations: activities}} />
       </View>
@@ -22,7 +22,7 @@ class UserEdit extends Component {
 
   renderAffiliations(affiliations) {
     return(
-      <View style={{ flex: 1, padding: 10 }}>
+      <View style={{ flex: 0.4, padding: 10 }}>
       <Text style={styles.sectionHeader}>Affiliations</Text>
       <AffiliationSet value={{affiliations}} />
       </View>
@@ -31,7 +31,7 @@ class UserEdit extends Component {
 
   renderDescription(description) {
     return (
-      <View style={{ flex: 1, padding: 10 }}>
+      <View style={{ flex: 0.2, padding: 10 }}>
         <Text style={styles.sectionHeader}>About Me</Text>
         <Text style={textStyle}>{description}</Text>
       </View>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActionConst, Actions, Scene, Router } from 'react-native-router-flux';
+import { ActionConst, Scene, Router } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
 import SettingsScene from './scenes/settings';
 import BrowseBuddies from './scenes/BrowseBuddies';
@@ -10,9 +10,10 @@ import DescriptionSetup from './scenes/profile-setup/DescriptionSetup';
 import UserEdit from './scenes/UserEdit';
 import UserView from './scenes/UserView';
 import Matches from './scenes/Matches';
+import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
 import { iconStyle, navBarStyle, navTitleStyle } from './components/common/styles';
-import { chatIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
+import { chatIconButton, chatLeftIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
 class Routes extends Component {
   render() {
@@ -57,10 +58,28 @@ class Routes extends Component {
           <Scene
             key="browse"
             component={BrowseBuddies}
-            title="wave length"
+            title="wavelength"
             leftButton={profileIconButton}
             rightButton={chatIconButton}
             type={ActionConst.RESET}
+          />
+          <Scene
+            key="connection"
+            title="Connection"
+            component={ConnectionContainer}
+            hideNavBar
+          />
+          <Scene
+            key="matches"
+            component={Matches}
+            title="Matches"
+            leftButton={homeLeftIconButton}
+          />
+          <Scene
+            key="conversation"
+            component={Conversation}
+            title="Chat"
+            leftButton={chatLeftIconButton}
           />
         </Scene>
         <Scene key="profileSettings">
@@ -82,21 +101,6 @@ class Routes extends Component {
             key="settings"
             component={SettingsScene}
             title="Settings"
-          />
-        </Scene>
-        <Scene key="matchesConversations">
-          <Scene
-            key="matches"
-            component={Matches}
-            title="Matches"
-            leftButton={homeLeftIconButton}
-//            leftButtonIconStyle={iconStyle}
-            onLeft={() => Actions.main()}
-          />
-          <Scene
-            key="conversation"
-            component={Conversation}
-            title="Chat"
           />
         </Scene>
       </Router>
