@@ -51,7 +51,7 @@ class Conversation extends Component {
   constructBranchId(currentUser, matchUId) {
     //figure out which one is less than and prepend that uid
     if(currentUser.uid < matchUId) return (`${currentUser.uid} - ${matchUId}`);
-    else return (`${matchUId}-${currentUser.uid}`);
+    else return (`${matchUId} - ${currentUser.uid}`);
   }
 
   renderFooter() {

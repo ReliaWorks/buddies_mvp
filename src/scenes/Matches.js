@@ -8,7 +8,7 @@ import sampleData from '../components/demo-data/demoData';
 import { matchesFetch } from '../actions';
 
 class Matches extends Component {
-  constructor() {
+/*  constructor() {
     super();
 
     const conversationsDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -16,6 +16,7 @@ class Matches extends Component {
       dataSource: conversationsDS.cloneWithRows(sampleData),
     };
   }
+  */
 
   componentWillMount() {
     this.props.matchesFetch();
@@ -36,28 +37,12 @@ class Matches extends Component {
       <View style={containerStyle}>
         <View
           style={{
-            flex: 1,
-            padding: 10,
-            alignSelf: 'flex-start'
-          }}
-        >
-          <Text style={textStyle}>Matches</Text>
-          <ListView
-            style={styles.thumbnailContainerStyle}
-            dataSource={this.matchesDataSource}
-            renderRow={(matchData) => <NoConvoMatch {...matchData} />}
-            horizontal
-            enableEmptySections
-          />
-        </View>
-        <View
-          style={{
             flex: 4,
             padding: 10,
             alignSelf: 'flex-start'
           }}
         >
-          <Text style={textStyle}>Conversations</Text>
+          <Text style={textStyle}>Connections</Text>
           <ListView
             style={styles.container}
             dataSource={this.matchesDataSource}
