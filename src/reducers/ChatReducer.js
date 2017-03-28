@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   selectedMatchId: '',
   selectedMatchName: '',
   selectedMatchAvatar: '',
+  lastMsg: '',
 };
 
 export default(state = INITIAL_STATE, action) => {

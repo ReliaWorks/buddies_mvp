@@ -2,12 +2,10 @@ import _ from 'lodash';
 //Container component responsible for calling to Firebase and loading the 10 most recent messages in a conversation between the currentUser and a given user.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { StyleSheet, Text, View } from 'react-native';
-import { centeredTextStyle } from '../components/common/styles';
-import { Button } from '../components/common';
 
 class Conversation extends Component {
   constructor(props) {
@@ -32,12 +30,11 @@ class Conversation extends Component {
   }
 
   onSend(messages = []) {
-    const { currentUser } = firebase.auth();
+    const uid = this.props.currentUser.uid;
     const firstName = this.props.currentUser.firstName;
-    const branchKey = this.constructBranchId(currentUser, this.props.chat.selectedMatchId);
+    const branchKey = this.constructBranchId(uid, this.props.chat.selectedMatchId);
 
-    //avatar: NEEDS TO BE UPDATED to this.props.currentUser.profilePic ...NOT The other guy's match avatar
-    const user = {...messages[0].user, name: firstName, avatar: this.props.chat.selectedMatchAvatar};
+    const user = {...messages[0].user, name: firstName, avatar: this.props.currentUser.profileImages[0]};
     const m1 = {...messages[0], user, createdAt: firebase.database.ServerValue.TIMESTAMP};
     firebase.database().ref(`user_chats/${branchKey}/`).push(m1);
 
@@ -69,9 +66,28 @@ class Conversation extends Component {
 
   renderHeader() {
     return(
-      <View style={{flex: 0.15, marginTop: -30}}>
-       <Text style={centeredTextStyle}>{this.props.chat.selectedMatchName}</Text>
-       <Button onPress={() => Actions.pop()}>Go back</Button>
+      <View
+        style={{
+          flex: 0.1,
+          marginTop: -30,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          borderBottomWidth: 3,
+        }}
+      >
+        <Text style={{marginLeft: 10, alignSelf: 'center'}} onPress={() => Actions.pop()}>
+          Back
+        </Text>
+        <View style={{flexDirection: 'row', alignSelf: 'center' }}>
+        <Image
+          source={{uri: this.props.chat.selectedMatchAvatar}}
+          style={{height: 30, width: 30, borderRadius: 15, marginRight: 10}}
+        />
+        <Text style={styles.headerText}>{this.props.chat.selectedMatchName}</Text>
+        </View>
+        <Text style={{marginRight: 10, alignSelf: 'center' }} onPress={() => Actions.pop()}>
+          ...
+        </Text>
       </View>
     );
   }
@@ -103,6 +119,13 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 14,
     color: '#aaa',
+    fontFamily: 'Avenir-Book'
+  },
+  headerText: {
+    fontSize: 22,
+    color: 'black',
+    fontFamily: 'Avenir-Book',
+    fontWeight: '700',
   },
 });
 

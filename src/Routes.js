@@ -80,6 +80,7 @@ class Routes extends Component {
             component={Conversation}
             title="Chat"
             leftButton={chatLeftIconButton}
+            hideNavBar
           />
         </Scene>
         <Scene key="profileSettings">
