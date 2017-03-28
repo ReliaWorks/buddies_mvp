@@ -11,18 +11,18 @@ class ConversationListItem extends Component {
     <TouchableOpacity
       onPress={() => {
         //NEED TO UPDATE WITH this.props.uid, this.props.name, this.props.profilePic
-        this.props.selectChat(this.props.id.value, this.props.name.first, this.props.picture.medium);
+        this.props.selectChat(this.props.user2Id, 'tbd', this.props.user2Pic);
         Actions.conversation();
       }}
     >
       <View style={styles.container}>
         <Image
           style={convoThumbnailStyle}
-          source={{ uri: this.props.picture.large }}
+          source={{ uri: this.props.user2Pic }}
         />
         <View style={styles.convoContainerStyle}>
           <Text style={textStyle}>
-            {`${this.props.name.first} ${this.props.name.last}`}
+            Need to update
           </Text>
         </View>
       </View>

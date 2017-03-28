@@ -64,4 +64,4 @@ const mapStateToProps = ({ currentUser }) => {
   return currentUser;
 };
 
-export default connect(mapStateToProps, { currentUserFetch})(UserEdit);
+export default connect(mapStateToProps, { currentUserFetch })(UserEdit);
