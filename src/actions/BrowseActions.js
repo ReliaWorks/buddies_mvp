@@ -33,6 +33,7 @@ export const connectWithUser = (currentUserId, uid, name, pic) => {
       .set({
         user1Id: currentUserId,
         user2Id: uid,
+        user2Pic: pic,
         user1Decision: 'connect',
         user2Decision: 'connect', //this is hard-coded. Waiting for Match API update
         matched: true //this is hard-coded. Waiting for Match API update
