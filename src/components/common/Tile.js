@@ -22,8 +22,6 @@ const styles = {
     alignSelf: 'center',
   },
   cardStyle: {
-    borderRadius: 2,
-    borderColor: '#ddd',
     marginLeft: 10,
     marginRight: 10,
     marginTop: 10,

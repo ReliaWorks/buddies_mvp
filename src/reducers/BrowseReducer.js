@@ -6,7 +6,8 @@ import {
 const INITIAL_STATE = {
   selectedMatchId: '',
   selectedMatchName: '',
-  selectedMatchPic: ''
+  selectedMatchPic: '',
+  browseCursor: 0,
 };
 
 export default(state = INITIAL_STATE, action) => {
@@ -15,7 +16,7 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, selectedMatchId: action.payload.uid, selectedMatchName: action.payload.name, selectedMatchPic: action.payload.pic };
     }
     case KEEP_BROWSING: {
-      return { ...state, ...INITIAL_STATE };
+      return { ...state, ...INITIAL_STATE, browseCursor: state.browseCursor + 1 };
     }
     default:
       return state;

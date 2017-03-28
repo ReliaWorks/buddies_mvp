@@ -8,7 +8,7 @@ class UserView extends Component {
     const { firstName, age, location, profileImages, activities, affiliations, description } = this.props;
 
     return (
-      <View style={{flex: 1, padding: 5, elevation: 1}}>
+      <View style={{flex: 1}}>
         <BuddyCard
           value={{
             firstName,

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { ListView, Text, View } from 'react-native';
+import { ListView, View } from 'react-native';
 import { connect } from 'react-redux';
-import { containerStyle, textStyle } from '../components/common/styles/Styles';
-import NoConvoMatch from '../components/common/NoConvoMatch';
+import { containerStyle } from '../components/common/styles/Styles';
+//import NoConvoMatch from '../components/common/NoConvoMatch';
 import ConversationListItem from '../components/common/ConversationListItem';
-import sampleData from '../components/demo-data/demoData';
 import { matchesFetch } from '../actions';
 
 class Matches extends Component {
@@ -42,7 +41,6 @@ class Matches extends Component {
             alignSelf: 'flex-start'
           }}
         >
-          <Text style={textStyle}>Connections</Text>
           <ListView
             style={styles.container}
             dataSource={this.matchesDataSource}

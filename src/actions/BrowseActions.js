@@ -18,11 +18,9 @@ export const currentUserFetch = () => {
   };
 };
 
-function bothUsersConnected(currentUserId, otherUserId) {
-  return true;
-}
-
-export const connectWithUser = (currentUserId, uid, name, pic) => {
+export const connectWithUser = (currentUserId, uid, name, pic, likeyou) => {
+  console.log("In connectWithUser");
+  console.log(likeyou);
   return(dispatch) => {
     dispatch({
       type: CONNECT_WITH_USER,
@@ -34,11 +32,17 @@ export const connectWithUser = (currentUserId, uid, name, pic) => {
         user1Id: currentUserId,
         user2Id: uid,
         user2Pic: pic,
-        user1Decision: 'connect',
-        user2Decision: 'connect', //this is hard-coded. Waiting for Match API update
-        matched: true //this is hard-coded. Waiting for Match API update
+        user1Decision: true,
+        user2Decision: likeyou,
+        matched: likeyou,
       });
-      if(bothUsersConnected(currentUserId, uid)) successfullyConnected(dispatch);
+      console.log("like you =");
+      console.log(likeyou);
+      if(likeyou) {
+        successfullyConnected(dispatch);
+      } else {
+        dispatch({ type: KEEP_BROWSING });
+      }
   };
 };
 

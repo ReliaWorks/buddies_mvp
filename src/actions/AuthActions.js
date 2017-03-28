@@ -24,13 +24,11 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
         fields: { string: 'id,first_name,last_name,location, email, birthday, albums{name}' },
         access_token: { string: token.toString() }
     },
-   },
-   (error, result) => {
+    }, (error, result) => {
       if(error) {
         console.log('Error fetching data: ' + error.toString());
       } else {
         const fbAlbums = result.albums.data;
-
         const profileAlbum = fbAlbums.find((album) => {
            return album.name === 'Profile Pictures';
         });
@@ -105,6 +103,7 @@ export const loginUser = () => {
     const auth = firebase.auth();
     const provider = firebase.auth.FacebookAuthProvider;
 
+    LoginManager.logOut();
     LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends', 'user_photos'])
       .then((result) => {
         if (result.isCancelled) {

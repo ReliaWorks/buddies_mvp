@@ -23,7 +23,7 @@ class DescriptionSetup extends Component {
           <Button
             onPress={() => {
               this.props.profileSaved(uid, description);
-              Actions.main();
+              Actions.profileSetupComplete();
             }}
             title="Next"
             color="#4267B2"
