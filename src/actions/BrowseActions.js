@@ -31,6 +31,7 @@ export const connectWithUser = (currentUserId, uid, name, pic, likeyou) => {
       .set({
         user1Id: currentUserId,
         user2Id: uid,
+        user2Name: name,
         user2Pic: pic,
         user1Decision: true,
         user2Decision: likeyou,

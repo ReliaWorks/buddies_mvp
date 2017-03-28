@@ -11,7 +11,7 @@ class ConversationListItem extends Component {
     <TouchableOpacity
       onPress={() => {
         //NEED TO UPDATE WITH this.props.uid, this.props.name, this.props.profilePic
-        this.props.selectChat(this.props.user2Id, 'tbd', this.props.user2Pic);
+        this.props.selectChat(this.props.user2Id, this.props.user2Name, this.props.user2Pic);
         Actions.conversation();
       }}
     >
