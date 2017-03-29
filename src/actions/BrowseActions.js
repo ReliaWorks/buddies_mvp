@@ -18,30 +18,31 @@ export const currentUserFetch = () => {
   };
 };
 
-export const connectWithUser = (currentUserId, uid, name, pic, likeyou) => {
+export const connectWithUser = (buddy) => {
+  const { currentUser } = firebase.auth();
   return(dispatch) => {
     dispatch({
       type: CONNECT_WITH_USER,
-      payload: { uid, name, pic }
+      payload: { uid: buddy.id, name: buddy.first_name, pic: buddy.profileImages[0] }
     });
 
     const matches = firebase.database();
-    matches.ref(`user_matches/${uid}/${currentUserId}`)
+    matches.ref(`user_matches/${buddy.uid}/${currentUser.uid}`)
       .once('value', snapshot => {
         let otherUserLikesYouToo = false;
         if(snapshot.val()) otherUserLikesYouToo = snapshot.val().liked;
 
-        matches.ref(`user_matches/${currentUserId}/${uid}`)
+        matches.ref(`user_matches/${currentUser.uid}/${buddy.uid}`)
           .set({
-            currentUserId: currentUserId,
-            otherUserId: uid,
-            otherUserName: name,
-            otherUserPic: pic,
+            currentUserId: currentUser.uid,
+            otherUserId: buddy.uid,
+            otherUserName: buddy.first_name,
+            otherUserPic: buddy.profileImages[0],
             liked: true,
             matched: otherUserLikesYouToo,
           });
           if(otherUserLikesYouToo) {
-            successfullyConnected(dispatch, uid, currentUserId);
+            successfullyConnected(dispatch, buddy.id, currentUser.uid);
           } else {
             dispatch({ type: KEEP_BROWSING });
           }

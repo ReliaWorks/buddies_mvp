@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import firebase from 'firebase';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser } from '../actions';
-import { Spinner } from '../components/common';
+import { Deck, NoMoreCards, Spinner } from '../components/common';
 
 class BrowseBuddies extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class BrowseBuddies extends Component {
     this.props.currentUserFetch();
     this.state = {
       matches: [],
+      matchCursor: 0,
     };
   }
 
@@ -42,8 +43,40 @@ class BrowseBuddies extends Component {
       );
     } else {
       return (
+        <Deck
+          data={this.state.matches}
+          onSwipeRight={(buddy) => {
+            this.props.connectWithUser(buddy);
+          }}
+          renderNoMoreCards={() => {
+            return (
+              <NoMoreCards />
+            );
+          }}
+          renderCard={(buddy) => {
+            return (
+                <BuddyCard
+                value={{
+                  firstName: buddy.first_name,
+                  age: "36",
+                  location: { city: 'San Francisco, CA', distance: "4 miles" },
+                  profileImages: buddy.profileImages,
+                  activities: buddy.activities,
+                  affiliations: buddy.affiliations,
+                  description: buddy.description,
+                  likeable: true,
+                  editable: false,
+                  uid: buddy.uid,
+                  id: buddy.uid,
+                }}
+                />
+            );
+          }}
+        />
+      );
+/*      return (
         <Swiper
-          index={this.props.connection.browseCursor}
+          index={this.state.browseCursor}
           loop={false}
         >
           {this.state.matches.map((buddy, key) => {
@@ -71,6 +104,7 @@ class BrowseBuddies extends Component {
           })}
         </Swiper>
     );
+    */
     }
   }
 }
