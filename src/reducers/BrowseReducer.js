@@ -18,7 +18,7 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, selectedMatchId: action.payload.uid, selectedMatchName: action.payload.name, selectedMatchPic: action.payload.pic };
     }
     case KEEP_BROWSING: {
-      return { ...state, ...INITIAL_STATE, browseCursor: state.browseCursor + 1 };
+      return { ...state, ...INITIAL_STATE };
     }
     case LAST_MESSAGES_FETCH: {
       return { ...state, lastMsgs: action.payload };

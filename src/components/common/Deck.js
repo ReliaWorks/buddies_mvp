@@ -138,11 +138,13 @@ const styles = {
   containerStyle: {
     alignSelf: 'stretch',
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   cardStyle: {
     position: 'absolute',
-    width: SCREEN_WIDTH
+    width: SCREEN_WIDTH,
+    flex: 1,
+    padding: 10
   }
 };
 

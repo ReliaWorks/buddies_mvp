@@ -9,7 +9,7 @@ export const matchesFetch = () => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
-    firebase.database().ref(`/user_matches/${currentUser.uid}`)
+    firebase.database().ref(`/user_matches/${currentUser.uid}`).orderByChild('matched').equalTo(true)
       .on('value', snapshot => {
         dispatch({ type: MATCHES_FETCH, payload: snapshot.val()});
       });
