@@ -90,7 +90,6 @@ class Routes extends Component {
             component={UserView}
             title="Profile Settings"
             leftButton={wrenchIconButton}
-            leftButtonIconStyle={iconStyle}
             rightButton={homeRightIconButton}
           />
           <Scene

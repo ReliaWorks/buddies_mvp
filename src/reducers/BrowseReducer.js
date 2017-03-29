@@ -1,6 +1,7 @@
 import {
   CONNECT_WITH_USER,
   KEEP_BROWSING,
+  LAST_MESSAGES_FETCH,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -8,6 +9,7 @@ const INITIAL_STATE = {
   selectedMatchName: '',
   selectedMatchPic: '',
   browseCursor: 0,
+  lastMsgs: {},
 };
 
 export default(state = INITIAL_STATE, action) => {
@@ -17,6 +19,9 @@ export default(state = INITIAL_STATE, action) => {
     }
     case KEEP_BROWSING: {
       return { ...state, ...INITIAL_STATE, browseCursor: state.browseCursor + 1 };
+    }
+    case LAST_MESSAGES_FETCH: {
+      return { ...state, lastMsgs: action.payload };
     }
     default:
       return state;

@@ -44,7 +44,7 @@ export const chatLeftIconButton = () => {
 export const homeLeftIconButton = () => {
   return (
     <TouchableOpacity
-      onPress={() => Actions.main()}
+      onPress={() => Actions.pop()}
       style={{width: ICON_CLICKABLE_AREA_WIDTH}}
     >
       <IonIcon
@@ -56,17 +56,22 @@ export const homeLeftIconButton = () => {
     </TouchableOpacity>
     );
 };
+
 export const homeRightIconButton = () => {
   return (
     <TouchableOpacity
-      onPress={() => Actions.main()}
+      onPress={() => Actions.pop()}
       style={{width: ICON_CLICKABLE_AREA_WIDTH}}
     >
       <IonIcon
         name="ios-home"
         size={ICON_WIDTH}
         color="black"
-        style={{marginTop: -1 * ICON_WIDTH, marginLeft: width - ICON_WIDTH - ICON_PADDING, width: ICON_WIDTH}}
+        style={{
+          marginTop: -1 * ICON_WIDTH,
+          marginLeft: width - ICON_WIDTH - ICON_PADDING,
+          width: ICON_WIDTH,
+        }}
       />
     </TouchableOpacity>
     );
