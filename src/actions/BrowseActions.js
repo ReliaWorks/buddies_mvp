@@ -19,31 +19,33 @@ export const currentUserFetch = () => {
 };
 
 export const connectWithUser = (currentUserId, uid, name, pic, likeyou) => {
-  console.log("In connectWithUser");
-  console.log(likeyou);
   return(dispatch) => {
     dispatch({
       type: CONNECT_WITH_USER,
       payload: { uid, name, pic }
     });
+
     const matches = firebase.database();
-    matches.ref(`user_matches/${currentUserId}/${uid}`)
-      .set({
-        user1Id: currentUserId,
-        user2Id: uid,
-        user2Name: name,
-        user2Pic: pic,
-        user1Decision: true,
-        user2Decision: likeyou,
-        matched: likeyou,
+    matches.ref(`user_matches/${uid}/${currentUserId}`)
+      .once('value', snapshot => {
+        let otherUserLikesYouToo = false;
+        if(snapshot.val()) otherUserLikesYouToo = snapshot.val().liked;
+
+        matches.ref(`user_matches/${currentUserId}/${uid}`)
+          .set({
+            currentUserId: currentUserId,
+            otherUserId: uid,
+            otherUserName: name,
+            otherUserPic: pic,
+            liked: true,
+            matched: otherUserLikesYouToo,
+          });
+          if(otherUserLikesYouToo) {
+            successfullyConnected(dispatch, uid, currentUserId);
+          } else {
+            dispatch({ type: KEEP_BROWSING });
+          }
       });
-      console.log("like you =");
-      console.log(likeyou);
-      if(likeyou) {
-        successfullyConnected(dispatch);
-      } else {
-        dispatch({ type: KEEP_BROWSING });
-      }
   };
 };
 
@@ -51,7 +53,10 @@ export const keepBrowsing = () => {
   return({ type: KEEP_BROWSING });
 };
 
-const successfullyConnected = (dispatch) => {
+const successfullyConnected = (dispatch, uid, currentUserId) => {
+  firebase.database().ref(`user_matches/${uid}/${currentUserId}`)
+    .update({matched: true});
+
   dispatch({
     type: CONNECTION_SUCCESSFUL
   });
