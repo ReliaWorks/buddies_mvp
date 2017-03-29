@@ -7,6 +7,8 @@ import { convoThumbnailStyle, textStyle } from './styles';
 
 class ConversationListItem extends Component {
   render() {
+    let msg = this.props.matchSet.lastMsgs[this.props.user2Id];
+    if(!msg) msg = "Start chatting";
     return (
     <TouchableOpacity
       onPress={() => {
@@ -21,8 +23,8 @@ class ConversationListItem extends Component {
           source={{ uri: this.props.user2Pic }}
         />
         <View style={styles.convoContainerStyle}>
-          <Text style={textStyle}>
-            Need to update
+          <Text style={{ fontFamily: 'Avenir-Book', fontSize: 16}}>
+           {msg}
           </Text>
         </View>
       </View>
@@ -43,15 +45,16 @@ const styles = {
   },
   convoContainerStyle: {
     flexDirection: 'row',
-    marginLeft: 5,
-    marginRight: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 10,
     marginTop: 1,
-    alignItems: 'stretch',
   },
 };
 
-const mapStateToProps = ({ chat }) => {
-  return { chat };
+const mapStateToProps = ({ chat, matchSet }) => {
+  return { chat, matchSet };
 };
 
 export default connect(mapStateToProps, { selectChat })(ConversationListItem);

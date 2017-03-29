@@ -6,6 +6,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { saveLastMessage } from '../actions';
 
 class Conversation extends Component {
   constructor(props) {
@@ -30,9 +31,9 @@ class Conversation extends Component {
   }
 
   onSend(messages = []) {
-    const uid = this.props.currentUser.uid;
+    const { currentUser } = firebase.auth();
     const firstName = this.props.currentUser.firstName;
-    const branchKey = this.constructBranchId(uid, this.props.chat.selectedMatchId);
+    const branchKey = this.constructBranchId(currentUser, this.props.chat.selectedMatchId);
 
     const user = {...messages[0].user, name: firstName, avatar: this.props.currentUser.profileImages[0]};
     const m1 = {...messages[0], user, createdAt: firebase.database.ServerValue.TIMESTAMP};
@@ -133,4 +134,4 @@ const mapStateToProps = ({ currentUser, chat }) => {
   return { currentUser, chat };
 };
 
-export default connect(mapStateToProps)(Conversation);
+export default connect(mapStateToProps, { saveLastMessage })(Conversation);

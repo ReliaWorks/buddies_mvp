@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { containerStyle } from '../components/common/styles/Styles';
 //import NoConvoMatch from '../components/common/NoConvoMatch';
 import ConversationListItem from '../components/common/ConversationListItem';
-import { matchesFetch } from '../actions';
+import { matchesFetch, fetchLastMessages } from '../actions';
 
 class Matches extends Component {
 /*  constructor() {
@@ -19,6 +19,7 @@ class Matches extends Component {
 
   componentWillMount() {
     this.props.matchesFetch();
+    this.props.fetchLastMessages();
     this.createDataSource(this.props);
   }
 
@@ -88,4 +89,4 @@ const mapStateToProps = ({ matchSet }) => {
   return { matches };
 };
 
-export default connect(mapStateToProps, { matchesFetch })(Matches);
+export default connect(mapStateToProps, { matchesFetch, fetchLastMessages })(Matches);
