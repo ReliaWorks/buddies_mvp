@@ -7,20 +7,20 @@ import { convoThumbnailStyle, textStyle } from './styles';
 
 class ConversationListItem extends Component {
   render() {
-    let msg = this.props.matchSet.lastMsgs[this.props.user2Id];
+    let msg = this.props.matchSet.lastMsgs[this.props.otherUserId];
     if(!msg) msg = "Start chatting";
     return (
     <TouchableOpacity
       onPress={() => {
         //NEED TO UPDATE WITH this.props.uid, this.props.name, this.props.profilePic
-        this.props.selectChat(this.props.user2Id, this.props.user2Name, this.props.user2Pic);
+        this.props.selectChat(this.props.otherUserId, this.props.otherUserName, this.props.otherUserPic);
         Actions.conversation();
       }}
     >
       <View style={styles.container}>
         <Image
           style={convoThumbnailStyle}
-          source={{ uri: this.props.user2Pic }}
+          source={{ uri: this.props.otherUserPic }}
         />
         <View style={styles.convoContainerStyle}>
           <Text style={{ fontFamily: 'Avenir-Book', fontSize: 16}}>

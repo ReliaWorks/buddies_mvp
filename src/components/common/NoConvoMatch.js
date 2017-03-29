@@ -9,14 +9,14 @@ class NoConvoMatch extends Component {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.props.selectChat(this.props.user2Id, 'tbd', this.props.user2Pic);
+          this.props.selectChat(this.props.otherUserId, this.props.otherUserName, this.props.otherUserPic);
           Actions.conversation();
         }}
       >
         <View>
           <Image
             style={styles.noConvoThumbnailStyle}
-            source={{ uri: this.props.user2Pic }}
+            source={{ uri: this.props.otherUserPic }}
           />
         </View>
       </TouchableOpacity>
