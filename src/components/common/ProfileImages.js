@@ -42,12 +42,13 @@ const ProfileImages = (props) => {
 const styles = {
   profileImageContainer: {
     flex: 0.5,
+    //flex: 1,
     borderBottomWidth: 3,
   },
   profileImage: {
     alignSelf: 'stretch',
     justifyContent: 'center',
-    height: (height * 0.5), //60% of the screen - navbar height - padding
+    height: (height * 0.5),
     width: null,
   }
 };

@@ -1,11 +1,35 @@
 import firebase from 'firebase';
+import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import {
+  POTENTIALS_FETCH,
   CONNECT_WITH_USER,
   CONNECTION_SUCCESSFUL,
   CURRENT_USER_FETCH_SUCCESS,
   KEEP_BROWSING,
 } from './types';
+
+export const potentialsFetch = () => {
+  return (dispatch) => {
+    const { currentUser } = firebase.auth();
+    const potentials = [];
+
+    axios.get(`https://matching-api.appspot.com/match/${currentUser.uid}`)
+      .then(response => {
+        const keys = Object.keys(response.data);
+        keys.forEach((key) => {
+          const dataWithId = {...response.data[key], uid: key};
+          potentials.push(dataWithId);
+        });
+        dispatch({
+          type: POTENTIALS_FETCH,
+          payload: potentials
+        });
+      }, (error) => {
+        console.log(`API not responding.  Error = ${error}`);
+    });
+  };
+};
 
 export const currentUserFetch = () => {
   const { currentUser } = firebase.auth();
@@ -20,10 +44,11 @@ export const currentUserFetch = () => {
 
 export const connectWithUser = (buddy) => {
   const { currentUser } = firebase.auth();
+
   return(dispatch) => {
     dispatch({
       type: CONNECT_WITH_USER,
-      payload: { uid: buddy.id, name: buddy.first_name, pic: buddy.profileImages[0] }
+      payload: { uid: buddy.uid, name: buddy.name, pic: buddy.pic, index: buddy.index }
     });
 
     const matches = firebase.database();
@@ -36,15 +61,13 @@ export const connectWithUser = (buddy) => {
           .set({
             currentUserId: currentUser.uid,
             otherUserId: buddy.uid,
-            otherUserName: buddy.first_name,
-            otherUserPic: buddy.profileImages[0],
+            otherUserName: buddy.name,
+            otherUserPic: buddy.pic,
             liked: true,
             matched: otherUserLikesYouToo,
           });
           if(otherUserLikesYouToo) {
-            successfullyConnected(dispatch, buddy.id, currentUser.uid);
-          } else {
-            dispatch({ type: KEEP_BROWSING });
+            successfullyConnected(dispatch, buddy.uid, currentUser.uid);
           }
       });
   };

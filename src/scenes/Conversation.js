@@ -21,7 +21,7 @@ class Conversation extends Component {
 
   componentWillMount() {
     const { currentUser } = firebase.auth();
-    const branchKey = this.constructBranchId(currentUser, this.props.chat.selectedMatchId);
+    const branchKey = this.constructBranchId(currentUser, this.props.connection.selectedMatchId);
     const chatRef = firebase.database().ref(`/user_chats/${branchKey}`);
     chatRef.on('value', snapshot => {
       //reverse() returns data in reverse chronological order
@@ -33,7 +33,7 @@ class Conversation extends Component {
   onSend(messages = []) {
     const { currentUser } = firebase.auth();
     const firstName = this.props.currentUser.firstName;
-    const branchKey = this.constructBranchId(currentUser, this.props.chat.selectedMatchId);
+    const branchKey = this.constructBranchId(currentUser, this.props.connection.selectedMatchId);
 
     const user = {...messages[0].user, name: firstName, avatar: this.props.currentUser.profileImages[0]};
     const m1 = {...messages[0], user, createdAt: firebase.database.ServerValue.TIMESTAMP};
@@ -81,10 +81,10 @@ class Conversation extends Component {
         </Text>
         <View style={{flexDirection: 'row', alignSelf: 'center' }}>
         <Image
-          source={{uri: this.props.chat.selectedMatchAvatar}}
+          source={{uri: this.props.connection.selectedMatchPic}}
           style={{height: 30, width: 30, borderRadius: 15, marginRight: 10}}
         />
-        <Text style={styles.headerText}>{this.props.chat.selectedMatchName}</Text>
+        <Text style={styles.headerText}>{this.props.connection.selectedMatchName}</Text>
         </View>
         <Text style={{marginRight: 10, alignSelf: 'center' }} onPress={() => Actions.pop()}>
           ...
@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ currentUser, chat }) => {
-  return { currentUser, chat };
+const mapStateToProps = ({ currentUser, connection }) => {
+  return { currentUser, connection };
 };
 
 export default connect(mapStateToProps, { saveLastMessage })(Conversation);

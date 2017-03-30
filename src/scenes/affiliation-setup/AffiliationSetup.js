@@ -109,7 +109,7 @@ const styles = {
     width: width,
     marginTop: 10,
     justifyContent: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#42D3D3',
   },
   nextButtonText: {
     color: 'white',

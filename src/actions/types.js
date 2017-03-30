@@ -23,4 +23,5 @@ export const CONNECT_WITH_USER = 'connect_with_user';
 export const CONNECTION_SUCCESSFUL = 'connection_successful';
 export const KEEP_BROWSING = 'keep_browsing';
 
+export const POTENTIALS_FETCH = 'potentials_fetch';
 export const MATCHES_FETCH = 'matches_fetch';

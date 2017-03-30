@@ -23,7 +23,7 @@ class Routes extends Component {
         navigationBarStyle={navBarStyle}
         titleStyle={navTitleStyle}
       >
-        <Scene key="root">
+        <Scene key="root" type={ActionConst.RESET}>
           <Scene
             key="login"
             direction="vertical"
@@ -86,7 +86,6 @@ class Routes extends Component {
         <Scene key="profileSettings">
           <Scene
             key="userView"
-            direction="vertical"
             component={UserView}
             title="Profile Settings"
             leftButton={wrenchIconButton}
