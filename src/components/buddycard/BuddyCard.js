@@ -4,7 +4,7 @@ import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ActivitySet from './ActivitySet';
-//import { ProfileImages } from '../common';
+import { ProfileImages } from '../common';
 import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
 
@@ -84,11 +84,12 @@ class BuddyCard extends Component {
   render() {
     const { firstName, age, editable, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
     const { locationText, nameText, descriptionContainer } = styles;
-//    <ProfileImages value={{profileImages, editable}} />
+//    <Image source={{ uri: profileImages[0]}} style={{height: 300, width: width - 20, alignSelf: 'stretch'}} />
 
     return (
         <View style={{flex: 1, alignSelf: 'stretch' }}>
-          <Image source={{ uri: profileImages[0]}} style={{height: 300, width: width - 20, alignSelf: 'stretch'}} />
+          <ProfileImages value={{profileImages, editable}} />
+
           <View style={descriptionContainer}>
             <ScrollView>
              <View style={{flexDirection: 'row'}}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, TouchableOpacity } from 'react-native';
+import { Dimensions, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -59,22 +59,28 @@ export const homeLeftIconButton = () => {
 
 export const homeRightIconButton = () => {
   return (
+    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
     <TouchableOpacity
-      onPress={() => Actions.pop()}
-      style={{width: ICON_CLICKABLE_AREA_WIDTH}}
+      onPress={() => Actions.main()}
+      style={{
+        width: ICON_CLICKABLE_AREA_WIDTH,
+        backgroundColor: 'yellow',
+        borderWidth: 1,
+      }}
     >
       <IonIcon
         name="ios-home"
-        size={ICON_WIDTH}
+        size={25}
         color="black"
         style={{
-          marginTop: -1 * ICON_WIDTH,
-          marginLeft: width - ICON_WIDTH - ICON_PADDING,
-          width: ICON_WIDTH,
+          marginTop: -29,
+          marginLeft: 70,
+          backgroundColor: 'purple'
         }}
       />
     </TouchableOpacity>
-    );
+    </View>
+  );
 };
 
 export const profileIconButton = () => {

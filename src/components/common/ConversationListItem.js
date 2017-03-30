@@ -12,7 +12,6 @@ class ConversationListItem extends Component {
     return (
     <TouchableOpacity
       onPress={() => {
-        //NEED TO UPDATE WITH this.props.uid, this.props.name, this.props.profilePic
         this.props.selectChat(this.props.otherUserId, this.props.otherUserName, this.props.otherUserPic);
         Actions.conversation();
       }}
@@ -23,6 +22,9 @@ class ConversationListItem extends Component {
           source={{ uri: this.props.otherUserPic }}
         />
         <View style={styles.convoContainerStyle}>
+          <Text style={{ fontFamily: 'Avenir-Book', fontSize: 16, fontWeight: '800', marginBottom: 10}}>
+            {this.props.otherUserName}
+          </Text>
           <Text style={{ fontFamily: 'Avenir-Book', fontSize: 16}}>
            {msg}
           </Text>
@@ -44,9 +46,6 @@ const styles = {
 
   },
   convoContainerStyle: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
     marginLeft: 10,
     marginRight: 10,
     marginTop: 1,

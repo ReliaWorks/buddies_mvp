@@ -87,6 +87,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: 20,
+    paddingBottom: 100,
   },
   item: {
     backgroundColor: 'red',
@@ -108,7 +109,7 @@ const styles = {
     width: width,
     marginTop: 10,
     justifyContent: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#42D3D3',
   },
   nextButtonText: {
     color: 'white',

@@ -4,7 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import { AccessToken } from 'react-native-fbsdk';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
-import { Spinner } from '../components/common';
+import { Button, Spinner } from '../components/common';
 import { legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
 
@@ -43,14 +43,12 @@ class LoginForm extends Component {
       <View style={styles.container}>
         {this.renderAppName()}
         <Image source={backgroundImageURL} style={styles.backgroundImage} />
-          <View style={styles.loginButtonContainer}>
-            <TouchableHighlight
-              onPress={this.onButtonPress.bind(this)}
-              color="white"
-            >
-              <Text style={styles.fbLoginText}>Log in with Facebook</Text>
-            </TouchableHighlight>
-          </View>
+        <Button
+          onPress={this.onButtonPress.bind(this)}
+          styles={{buttonStyle: styles.loginButtonContainer, textStyle: styles.fbLoginText }}
+        >
+          Log in with Facebook
+        </Button>
         <View style={styles.termsContainer}>
           <Text style={legalTextStyle}>Terms of Service</Text>
         </View>

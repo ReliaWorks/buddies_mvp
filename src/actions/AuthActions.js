@@ -126,9 +126,14 @@ export const logoutUser = () => {
   return (dispatch) => {
     dispatch({
       type: LOGOUT_USER,
-      payload: null,
     });
-    firebase.auth().signOut();
+    LoginManager.logOut();
+    console.log("Logged out of Facebook");
+    firebase.auth().signOut().then(() => {
+      Actions.root();
+    }, (error) => {
+      console.log(`Error signing out of Firebase ${error}`);
+    });
   };
 };
 

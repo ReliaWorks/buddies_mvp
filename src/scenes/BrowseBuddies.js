@@ -1,52 +1,29 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
-import firebase from 'firebase';
 import BuddyCard from '../components/buddycard/BuddyCard';
-import { currentUserFetch, connectWithUser } from '../actions';
+import { currentUserFetch, connectWithUser, potentialsFetch } from '../actions';
 import { Deck, NoMoreCards, Spinner } from '../components/common';
 
 class BrowseBuddies extends Component {
   constructor(props) {
     super(props);
-
     this.props.currentUserFetch();
-    this.state = {
-      matches: [],
-      matchCursor: 0,
-    };
-  }
-
-  componentWillMount() {
-    const { currentUser } = firebase.auth();
-    axios.get(`https://matching-api.appspot.com/match/${currentUser.uid}`)
-      .then(response => {
-        const keys = Object.keys(response.data);
-        const arr = [];
-
-        keys.forEach((key) => {
-          const dataWithId = {...response.data[key], uid: key};
-          arr.push(dataWithId);
-        });
-        this.setState({ matches: arr });
-      }, (error) => {
-        console.log(`API not responding.  Error = ${error}`);
-      });
+    this.props.potentialsFetch();
   }
 
   render() {
-    if(this.state.matches.length === 0) {
+    if(this.props.connection.potentials.length === 0) {
       return (
-        <Spinner size="large" />
+          <Spinner size="large" />
       );
     } else {
-      return (
+/*      return (
         <Deck
-          data={this.state.matches}
+          data={this.props.connection.potentials}
           onSwipeRight={(buddy) => {
-            this.props.connectWithUser(buddy);
+            this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: buddy.profileImages[0] });
           }}
           renderNoMoreCards={() => {
             return (
@@ -74,12 +51,10 @@ class BrowseBuddies extends Component {
           }}
         />
       );
-/*      return (
-        <Swiper
-          index={this.state.browseCursor}
-          loop={false}
-        >
-          {this.state.matches.map((buddy, key) => {
+      */
+      return (
+        <Swiper>
+          {this.props.connection.potentials.map((buddy, key) => {
             return (
               <View key={key} style={styles.cardStyle}>
                 <BuddyCard
@@ -96,7 +71,7 @@ class BrowseBuddies extends Component {
                     uid: buddy.uid,
                   }}
                   onConnect={() => {
-                    this.props.connectWithUser(this.props.currentUser.uid, buddy.uid, buddy.first_name, buddy.profileImages[0], buddy.likeyou);
+                    this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: buddy.profileImages[0], index: key});
                   }}
                 />
               </View>
@@ -104,9 +79,8 @@ class BrowseBuddies extends Component {
           })}
         </Swiper>
     );
-    */
-    }
   }
+}
 }
 
 const styles = {
@@ -120,4 +94,4 @@ const mapStateToProps = ({ currentUser, connection }) => {
   return { currentUser, connection };
 };
 
-export default connect(mapStateToProps, { currentUserFetch, connectWithUser })(BrowseBuddies);
+export default connect(mapStateToProps, { currentUserFetch, connectWithUser, potentialsFetch })(BrowseBuddies);

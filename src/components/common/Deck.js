@@ -105,7 +105,7 @@ class Deck extends Component {
       if (i === index) {
         return (
           <Animated.View
-            key={data.id}
+            key={data.uid}
             {...this.state.panResponder.panHandlers}
             style={[styles.cardStyle, this.getCardStyle(), styles.primaryCardStyle]}
           >
@@ -116,7 +116,7 @@ class Deck extends Component {
 
       return (
         <Animated.View
-          key={data.id}
+          key={data.uid}
           style={[styles.cardStyle, styles.primaryCardStyle]}
         >
           {this.props.renderCard(data)}

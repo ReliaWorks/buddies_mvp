@@ -15,6 +15,9 @@ class Connection extends Component {
   }
 
   renderProfilePics(currentUserPic, otherUserPic) {
+    console.log("user pics");
+    console.log(currentUserPic);
+    console.log(otherUserPic);
     return(
       <View style={styles.imageView}>
         <Image source={{ uri: currentUserPic }} style={styles.image} />

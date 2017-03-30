@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Linking, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import firebase from 'firebase';
-import { LoginButton } from 'react-native-fbsdk';
-import { centeredTextStyle, legalTextStyle } from '../../components/common/styles';
+import { Dimensions, Linking, Text, TouchableOpacity, View } from 'react-native';
+import { Button } from '../../components/common';
+import { GenderPreference, AgePreference, LocationPreference } from '../../components/preferences';
 import styles from './styles';
 
-const settingsBackground = require('../../components/common/img/settingBackground.png');
+const { width } = Dimensions.get('window');
+const LOGINFORM_MARGIN = 15;
 
 class Settings extends Component {
   openPrivacyPolicy() {
@@ -31,53 +30,120 @@ class Settings extends Component {
     }).catch(err => console.error('An error occurred', err));
   }
 
-  render() {
-    const { containerStyle, labelStyle, linkContainerStyle, logoutContainerStyle, settingsContainerStyle, settingsBackgroundImgStyle, textStyle, textInputStyle } = styles;
-    const { firstName, email, onLogout } = this.props.value;
+  renderHeader() {
+    const { textStyle } = styles;
 
     return (
-      <View contentContainerStyleStyle={containerStyle} style={{flexDirection: 'column', justifyContent: 'flex-end'}}>
-        <View>
-          <Image source={settingsBackground} style={settingsBackgroundImgStyle} />
-        </View>
-        <View style={settingsContainerStyle}>
-          <View>
-            <Text style={labelStyle}>Name</Text>
-            <Text style={textStyle}>{firstName}</Text>
-          </View>
-        </View>
-        <View style={settingsContainerStyle}>
-          <View>
-            <Text style={labelStyle}>Email</Text>
-            <TextInput style={textInputStyle} value={email} />
-          </View>
-        </View>
-        <View style={linkContainerStyle}>
-          <Text style={centeredTextStyle}>
-            Contact Us
-          </Text>
-          <TouchableOpacity onPress={this.openPrivacyPolicy}>
-            <Text style={legalTextStyle}>Privacy Policy</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.openTermsOfService}>
-            <Text style={legalTextStyle}>Terms of Service</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={logoutContainerStyle}>
-          <LoginButton
-            onLogoutFinished={() => {
-              firebase.auth().signOut().then(() => {
-                this.props.onLogout();
-                Actions.root();
-              }, (error) => {
-                console.log(`Error signing out ${error}`);
-              });
-            }}
-          />
-        </View>
+      <View style={{borderTopWidth: 6, marginBottom: 30, flex: 0.5 }}>
+        <Text style={textStyle}>
+          {this.props.value.firstName}
+        </Text>
+        <Text style={styles.headerText}>
+          Match Preferences
+        </Text>
+      </View>
+    );
+  }
+
+  renderPreferences() {
+    return (
+      <View style={{flex: 8, justifyContent: 'space-between', marginTop: 10, marginBottom: 10}}>
+        <GenderPreference />
+        <AgePreference />
+        <LocationPreference />
+      </View>
+    );
+  }
+
+  renderFeedbackButton() {
+    return (
+      <View style={{justifyContent: 'center', flex: 1}}>
+        <Text
+          style={{
+            fontFamily: 'Avenir-Book',
+            fontWeight: '700',
+            fontSize: 16,
+            textAlign: 'center',
+            textDecorationLine: 'underline'
+          }}
+        >
+          Provide Feedback
+        </Text>
+      </View>
+    );
+  }
+  renderLinks() {
+    return (
+      <View style={styles.linkContainerStyle}>
+        <TouchableOpacity onPress={this.openPrivacyPolicy}>
+          <Text style={styles.linkText}>Privacy Policy</Text>
+        </TouchableOpacity>
+        <View style={{borderWidth: 1, borderColor: 'lightgray', height: 25 }}/>
+        <TouchableOpacity onPress={this.openTermsOfService}>
+          <Text style={styles.linkText}>Terms of Service</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  renderLogoutButton() {
+    return (
+      <Button
+        onPress={this.props.onLogout}
+        style={localStyles}
+      >
+        Logout
+      </Button>
+    );
+  }
+/*  renderLogoutButton() {
+    return (
+      <View style={styles.logoutContainerStyle}>
+        <LoginButton
+          onLogoutFinished={() => {
+            firebase.auth().signOut().then(() => {
+              this.props.value.onLogout();
+              Actions.root();
+            }, (error) => {
+              console.log(`Error signing out ${error}`);
+            });
+          }}
+        />
+      </View>
+    );
+  }
+*/
+//  {this.renderLinks()}
+
+  render() {
+    return (
+      <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: '#F8F8F8'}}>
+        {this.renderHeader()}
+        {this.renderPreferences()}
+        {this.renderFeedbackButton()}
+        {this.renderLogoutButton()}
       </View>
     );
   }
 }
+
+const localStyles = {
+  textStyle: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 16,
+    fontFamily: 'Avenir-Book',
+    fontWeight: '700',
+  },
+  buttonStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'black',
+    width: width - (LOGINFORM_MARGIN * 2),
+    marginLeft: LOGINFORM_MARGIN,
+    marginRight: LOGINFORM_MARGIN,
+    marginBottom: 5,
+  }
+};
 
 export default Settings;

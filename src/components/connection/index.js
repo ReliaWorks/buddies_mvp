@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import Connection from './Connection';
 import { connectWithUser, selectChat, keepBrowsing } from '../../actions';
 
 class ConnectionContainer extends Component {
+  componentWillMount() {
+
+  }
+
   render() {
     const { currentUser, connection } = this.props;
     const { selectedMatchId, selectedMatchName, selectedMatchPic } = connection;

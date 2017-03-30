@@ -1,6 +1,7 @@
 import {
   MATCHES_FETCH,
   LAST_MESSAGES_FETCH,
+  KEEP_BROWSING,
 } from '../actions/types';
 
 const INITIAL_STATE = {

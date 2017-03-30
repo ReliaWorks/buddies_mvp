@@ -4,7 +4,7 @@ import { Dimensions, Text, TouchableOpacity } from 'react-native';
 const { width } = Dimensions.get('window');
 const LOGINFORM_MARGIN = 15;
 
-const Button = ({ onPress, children }) => {
+const Button = ({ onPress, children, styles = localStyles }) => {
   const { buttonStyle, textStyle } = styles;
 
   return (
@@ -16,7 +16,7 @@ const Button = ({ onPress, children }) => {
   );
 };
 
-const styles = {
+const localStyles = {
   textStyle: {
     textAlign: 'center',
     color: 'white',
@@ -27,7 +27,7 @@ const styles = {
   buttonStyle: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#42D3D3',
     width: width - (LOGINFORM_MARGIN * 2),
     marginLeft: LOGINFORM_MARGIN,
     marginRight: LOGINFORM_MARGIN,
