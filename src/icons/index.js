@@ -59,13 +59,12 @@ export const homeLeftIconButton = () => {
 
 export const homeRightIconButton = () => {
   return (
-    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
     <TouchableOpacity
-      onPress={() => Actions.main()}
+      onPress={() => Actions.pop()}
       style={{
         width: ICON_CLICKABLE_AREA_WIDTH,
-        backgroundColor: 'yellow',
-        borderWidth: 1,
+        alignSelf: 'flex-end',
+        flex: 1,
       }}
     >
       <IonIcon
@@ -75,11 +74,9 @@ export const homeRightIconButton = () => {
         style={{
           marginTop: -29,
           marginLeft: 70,
-          backgroundColor: 'purple'
         }}
       />
     </TouchableOpacity>
-    </View>
   );
 };
 
