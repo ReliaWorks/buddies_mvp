@@ -51,6 +51,7 @@ class Routes extends Component {
           <Scene
             key="profileSetupComplete"
             component={ProfileSetupComplete}
+            hideNavBar
           />
         </Scene>
         <Scene key="main" type={ActionConst.RESET}>

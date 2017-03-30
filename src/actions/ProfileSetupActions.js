@@ -45,7 +45,7 @@ export const profileSaved = (currentUserId, description) => {
   return () => {
     firebase.database().ref(`user_profiles/${currentUser.uid}/description`)
       .set(description);
-    Actions.main();
+    Actions.profileSetupComplete();
   };
 };
 
