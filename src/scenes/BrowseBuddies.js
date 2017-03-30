@@ -13,12 +13,40 @@ class BrowseBuddies extends Component {
     this.props.potentialsFetch();
   }
 
+  renderMatches() {
+    if(this.props.connection.potentials.length === 0) return <NoMoreCards />;
+    return (
+      <Swiper>
+        {this.props.connection.potentials.map((buddy, key) => {
+          return (
+            <View key={key} style={styles.cardStyle}>
+              <BuddyCard
+                value={{
+                  firstName: buddy.first_name,
+                  age: "36",
+                  location: { city: 'San Francisco, CA', distance: "4 miles" },
+                  profileImages: buddy.profileImages,
+                  activities: buddy.activities,
+                  affiliations: buddy.affiliations,
+                  description: buddy.description,
+                  likeable: true,
+                  editable: false,
+                  uid: buddy.uid,
+                }}
+                onConnect={() => {
+                  this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: buddy.profileImages[0], index: key});
+                }}
+              />
+            </View>
+          );
+        })}
+      </Swiper>
+    );
+  }
+//
   render() {
-    if(this.props.connection.potentials.length === 0) {
-      return (
-          <Spinner size="large" />
-      );
-    } else {
+    if(this.props.connection.loadingPotentials) return <Spinner size="large" />;
+    else return this.renderMatches();
 /*      return (
         <Deck
           data={this.props.connection.potentials}
@@ -52,35 +80,7 @@ class BrowseBuddies extends Component {
         />
       );
       */
-      return (
-        <Swiper>
-          {this.props.connection.potentials.map((buddy, key) => {
-            return (
-              <View key={key} style={styles.cardStyle}>
-                <BuddyCard
-                  value={{
-                    firstName: buddy.first_name,
-                    age: "36",
-                    location: { city: 'San Francisco, CA', distance: "4 miles" },
-                    profileImages: buddy.profileImages,
-                    activities: buddy.activities,
-                    affiliations: buddy.affiliations,
-                    description: buddy.description,
-                    likeable: true,
-                    editable: false,
-                    uid: buddy.uid,
-                  }}
-                  onConnect={() => {
-                    this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: buddy.profileImages[0], index: key});
-                  }}
-                />
-              </View>
-            );
-          })}
-        </Swiper>
-    );
   }
-}
 }
 
 const styles = {

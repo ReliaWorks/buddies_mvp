@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import {
   POTENTIALS_FETCH,
+  POTENTIALS_FETCH_SUCCESS,
   CONNECT_WITH_USER,
   CONNECTION_SUCCESSFUL,
   CURRENT_USER_FETCH_SUCCESS,
@@ -14,6 +15,8 @@ export const potentialsFetch = () => {
     const { currentUser } = firebase.auth();
     const potentials = [];
 
+    dispatch({type: POTENTIALS_FETCH});
+
     axios.get(`https://matching-api.appspot.com/match/${currentUser.uid}`)
       .then(response => {
         const keys = Object.keys(response.data);
@@ -22,7 +25,7 @@ export const potentialsFetch = () => {
           potentials.push(dataWithId);
         });
         dispatch({
-          type: POTENTIALS_FETCH,
+          type: POTENTIALS_FETCH_SUCCESS,
           payload: potentials
         });
       }, (error) => {
