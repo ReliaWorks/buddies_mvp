@@ -4,6 +4,7 @@ import {
   LAST_MESSAGES_FETCH,
   CHAT_SELECTED,
   POTENTIALS_FETCH,
+  POTENTIALS_FETCH_SUCCESS,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -13,12 +14,16 @@ const INITIAL_STATE = {
   lastMsgs: {},
   potentials: [],
   browseCursor: 0,
+  loadingPotentials: false,
 };
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
     case POTENTIALS_FETCH: {
-      return { ...state, potentials: action.payload };
+      return { ...state, loadingPotentials: true };
+    }
+    case POTENTIALS_FETCH_SUCCESS: {
+      return { ...state, potentials: action.payload, loadingPotentials: false };
     }
     case CONNECT_WITH_USER: {
       return { ...state, selectedMatchId: action.payload.uid, selectedMatchName: action.payload.name, selectedMatchPic: action.payload.pic, browseCursor: action.payload.index };

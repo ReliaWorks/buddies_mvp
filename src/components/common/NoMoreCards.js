@@ -5,7 +5,7 @@ const NoMoreCards = () => {
   return (
     <View style={styles.containerStyle}>
       <Text style={styles.text}>
-        No more connections
+        You've matched with everyone
       </Text>
       <Text style={styles.text}>
         Check back later
