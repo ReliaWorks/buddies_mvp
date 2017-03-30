@@ -12,7 +12,7 @@ import UserView from './scenes/UserView';
 import Matches from './scenes/Matches';
 import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
-import { iconStyle, navBarStyle, navTitleStyle } from './components/common/styles';
+import { navBarStyle, navTitleStyle } from './components/common/styles';
 import { chatIconButton, chatLeftIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
 class Routes extends Component {
@@ -52,7 +52,6 @@ class Routes extends Component {
             key="profileSetupComplete"
             component={ProfileSetupComplete}
           />
-
         </Scene>
         <Scene key="main" type={ActionConst.RESET}>
           <Scene
