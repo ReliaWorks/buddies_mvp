@@ -34,7 +34,7 @@ class Settings extends Component {
     const { textStyle } = styles;
 
     return (
-      <View style={{borderTopWidth: 6, marginBottom: 30, flex: 0.5 }}>
+      <View style={{marginBottom: 30, flex: 0.5 }}>
         <Text style={textStyle}>
           {this.props.value.firstName}
         </Text>

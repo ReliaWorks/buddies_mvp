@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ActionConst, Scene, Router } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
-import SettingsScene from './scenes/settings';
+import SettingsContainer from './scenes/settings';
 import BrowseBuddies from './scenes/BrowseBuddies';
 import { ProfileSetupComplete } from './scenes/profile-setup';
 import ActivitySetupScene from './scenes/activity-setup/';
@@ -9,10 +9,11 @@ import AffiliationSetupScene from './scenes/affiliation-setup/';
 import DescriptionSetup from './scenes/profile-setup/DescriptionSetup';
 import UserEdit from './scenes/UserEdit';
 import UserView from './scenes/UserView';
-import Matches from './scenes/Matches';
+import MessageCenterContainer from './scenes/message-center';
 import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
 import { navBarStyle, navTitleStyle } from './components/common/styles';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 import { chatIconButton, chatLeftIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
 class Routes extends Component {
@@ -71,15 +72,15 @@ class Routes extends Component {
           />
           <Scene
             key="matches"
-            component={Matches}
-            title="Connections"
+            component={MessageCenterContainer}
+            title="Conversations"
             leftButton={homeLeftIconButton}
+            type={ActionConst.RESET}
           />
           <Scene
             key="conversation"
             component={Conversation}
             title="Chat"
-            leftButton={chatLeftIconButton}
             hideNavBar
           />
         </Scene>
@@ -98,7 +99,7 @@ class Routes extends Component {
           />
           <Scene
             key="settings"
-            component={SettingsScene}
+            component={SettingsContainer}
             title="Settings"
           />
         </Scene>

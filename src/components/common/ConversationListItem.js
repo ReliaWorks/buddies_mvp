@@ -3,7 +3,8 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { selectChat } from '../../actions';
-import { convoThumbnailStyle, textStyle } from './styles';
+
+const SIDE_MARGIN = 15;
 
 class ConversationListItem extends Component {
   render() {
@@ -18,14 +19,14 @@ class ConversationListItem extends Component {
     >
       <View style={styles.container}>
         <Image
-          style={convoThumbnailStyle}
+          style={styles.convoThumbnailStyle}
           source={{ uri: this.props.otherUserPic }}
         />
         <View style={styles.convoContainerStyle}>
-          <Text style={{ fontFamily: 'Avenir-Book', fontSize: 16, fontWeight: '800', marginBottom: 10}}>
+          <Text style={styles.nameText}>
             {this.props.otherUserName}
           </Text>
-          <Text style={{ fontFamily: 'Avenir-Book', fontSize: 16}}>
+          <Text style={styles.msgText}>
            {msg}
           </Text>
         </View>
@@ -42,14 +43,33 @@ const styles = {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    padding: 10,
-
+    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderColor: '#F8F8F8',
+    marginLeft: SIDE_MARGIN,
+    marginRight: SIDE_MARGIN,
+    marginBottom: SIDE_MARGIN,
   },
   convoContainerStyle: {
     marginLeft: 10,
     marginRight: 10,
     marginTop: 1,
   },
+  nameText: {
+    fontFamily: 'Avenir-Book',
+    fontSize: 16,
+    fontWeight: '800',
+    marginBottom: 10
+  },
+  msgText: {
+    fontFamily: 'Avenir-Book',
+    fontSize: 16
+  },
+  convoThumbnailStyle: {
+    height: 75,
+    width: 75,
+    marginBottom: 10,
+  }
 };
 
 const mapStateToProps = ({ chat, matchSet }) => {

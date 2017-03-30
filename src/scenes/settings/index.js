@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Settings from './Settings';
 import { logoutUser } from '../../actions';
 
-class SettingsScene extends Component {
+class SettingsContainer extends Component {
   render() {
     const { firstName, email } = this.props;
     return (
@@ -23,4 +23,4 @@ const mapStateToProps = (state) => {
   return { firstName, email };
 };
 
-export default connect(mapStateToProps, { logoutUser })(SettingsScene);
+export default connect(mapStateToProps, { logoutUser })(SettingsContainer);

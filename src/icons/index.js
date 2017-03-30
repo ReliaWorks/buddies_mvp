@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions, TouchableOpacity } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,7 +13,7 @@ const ICON_CLICKABLE_AREA_WIDTH = 100;
 export const chatIconButton = () => {
   return (
     <TouchableOpacity
-      onPress={() => Actions.matches()}
+      onPress={() => Actions.matches(ActionConst.RESET)}
       style={{width: ICON_CLICKABLE_AREA_WIDTH, height: -1 * ICON_WIDTH, marginLeft: width - ICON_CLICKABLE_AREA_WIDTH, alignItems: 'flex-end'}}
     >
       <MaterialCommunityIcon
@@ -44,7 +44,7 @@ export const chatLeftIconButton = () => {
 export const homeLeftIconButton = () => {
   return (
     <TouchableOpacity
-      onPress={() => Actions.pop()}
+      onPress={() => Actions.browse()}
       style={{width: ICON_CLICKABLE_AREA_WIDTH}}
     >
       <IonIcon

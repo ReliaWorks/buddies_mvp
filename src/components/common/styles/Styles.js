@@ -23,13 +23,6 @@ export const containerStyle = {
   elevation: 2,
 };
 
-export const convoThumbnailStyle = {
-  height: 75,
-  width: 75,
-  marginLeft: 10,
-  marginBottom: 10
-};
-
 export const editIconContainer = {
   backgroundColor: 'white',
   alignSelf: 'flex-end',
@@ -56,12 +49,16 @@ export const legalTextStyle = {
 
 export const navTitleStyle = {
   fontFamily: 'Avenir-Book',
-  fontSize: 18,
+  fontSize: 22,
   fontWeight: 'bold',
 };
 
 export const navBarStyle = {
   backgroundColor: BRAND_PRIMARY_COLOR,
+  borderBottomWidth: 3,
+  borderStyle: 'solid',
+  borderBottomColor: 'black',
+  flex: 1,
 };
 
 export const spinnerStyle = {
