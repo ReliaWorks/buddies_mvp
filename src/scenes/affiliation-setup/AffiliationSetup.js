@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, ListView, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ListView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SelectableTile } from '../../components/common';
 
 const { width } = Dimensions.get('window');
@@ -29,7 +29,8 @@ class AffiliationSetup extends Component {
 
   renderAffiliationList(affiliationsDS, onSelected) {
     return (
-      <ListView
+      <ScrollView style={{flex: 0.95}}>
+        <ListView
           contentContainerStyle={styles.list}
           dataSource={affiliationsDS}
           renderRow={(rowData) =>
@@ -40,7 +41,8 @@ class AffiliationSetup extends Component {
               onSelect={onSelected}
             />}
           enableEmptySections
-      />
+        />
+      </ScrollView>
     );
   }
 
@@ -83,11 +85,12 @@ const styles = {
     width: 25
   },
   list: {
+    flex: 1,
     alignItems: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: 20,
-    flex: 1,
+    paddingBottom: 100,
   },
   item: {
     backgroundColor: 'red',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, ListView, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ListView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SelectableTile } from '../../components/common';
 
 const { width } = Dimensions.get('window');
@@ -29,7 +29,8 @@ class ActivitySetup extends Component {
 
   renderActivityList(activitiesDS, onSelected) {
     return (
-      <ListView
+      <ScrollView style={{flex: 0.95}}>
+        <ListView
           contentContainerStyle={styles.list}
           dataSource={activitiesDS}
           renderRow={(rowData) =>
@@ -40,7 +41,8 @@ class ActivitySetup extends Component {
               onSelect={onSelected}
             />}
           enableEmptySections
-      />
+        />
+      </ScrollView>
     );
   }
 
@@ -82,7 +84,7 @@ const styles = {
     width: 25
   },
   list: {
-    flex: 0.95,
+    flex: 1,
     alignItems: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
