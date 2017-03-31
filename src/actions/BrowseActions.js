@@ -16,7 +16,6 @@ export const potentialsFetch = () => {
     const potentials = [];
 
     dispatch({type: POTENTIALS_FETCH});
-    
     axios.get(`https://activities-test-a3871.appspot.com/match/${currentUser.uid}`)
       .then(response => {
         const keys = Object.keys(response.data);
@@ -45,7 +44,7 @@ export const currentUserFetch = () => {
   };
 };
 
-export const connectWithUser = (buddy) => {
+export const connectWithUser = (buddy, connectStatus) => {
   const { currentUser } = firebase.auth();
 
   return(dispatch) => {
@@ -66,19 +65,19 @@ export const connectWithUser = (buddy) => {
             otherUserId: buddy.uid,
             otherUserName: buddy.name,
             otherUserPic: buddy.pic,
-            liked: true,
-            matched: otherUserLikesYouToo,
+            liked: connectStatus,
+            matched: (otherUserLikesYouToo && connectStatus),
             lastMsg: '',
           });
-          if(otherUserLikesYouToo) {
+          if(connectStatus && otherUserLikesYouToo) {
             successfullyConnected(dispatch, buddy.uid, currentUser.uid);
-          }
+          } else keepBrowsing(dispatch);
       });
   };
 };
 
 export const keepBrowsing = () => {
-  return({ type: KEEP_BROWSING });
+  return ({ type: KEEP_BROWSING });
 };
 
 const successfullyConnected = (dispatch, uid, currentUserId) => {

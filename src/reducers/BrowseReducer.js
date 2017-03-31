@@ -32,7 +32,6 @@ export default(state = INITIAL_STATE, action) => {
     }
     case KEEP_BROWSING: {
       const lastMatch = state.potentials.splice(state.browseCursor, 1);
-      state.potentials.push(lastMatch[0]);
       return { ...state, potentials: state.potentials, browseCursor: 0 };
     }
     case LOGOUT_USER: {

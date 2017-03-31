@@ -3,7 +3,8 @@
 export default styles = {
   nameText: {
     fontSize: 18,
-    marginLeft: 10,
+    marginLeft: 15,
+    marginRight: 15,
     marginTop: 15,
     fontWeight: 'bold',
     fontFamily: 'Avenir-Book',
@@ -11,7 +12,8 @@ export default styles = {
   locationText: {
     fontSize: 14,
     color: '#707070',
-    marginLeft: 10,
+    marginLeft: 15,
+    marginRight: 15,
     fontWeight: 'bold',
     fontFamily: 'Avenir-Book',
   },
@@ -24,7 +26,5 @@ export default styles = {
   descriptionContainer: {
     flex: 0.5,
     backgroundColor: 'white',
-    marginLeft: 14,
-    marginRight: 14
   }
 };

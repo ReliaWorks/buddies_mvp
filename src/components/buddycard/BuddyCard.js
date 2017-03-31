@@ -8,8 +8,8 @@ import { ProfileImages } from '../common';
 import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
 
-const { width, height } = Dimensions.get('window');
-const BOTTOM_PADDING = 100;
+//const { width, height } = Dimensions.get('window');
+const BOTTOM_PADDING = 120;
 
 class BuddyCard extends Component {
   showEditableButton(editable) {
@@ -28,10 +28,19 @@ class BuddyCard extends Component {
     );
   }
 
-  renderMatchControls(likeable, uid, onConnect) {
+  renderMatchControls(likeable, uid, onConnect, onPass) {
     if(!likeable) return;
     return (
       <View style={localStyles.footer}>
+        <TouchableOpacity
+          onPress={onPass}
+          style={localStyles.connectButton}
+        >
+          <Text style={localStyles.footerText}>Pass</Text>
+        </TouchableOpacity>
+
+        <View style={{width: 2}} />
+
         <TouchableOpacity
           onPress={onConnect}
           style={localStyles.connectButton}
@@ -59,10 +68,10 @@ class BuddyCard extends Component {
       }
     }
     // at least some activities or affiliations exist, so render them
-    let activitiesAndAffiliations = affiliations;
-    if(activities) {
-      if(activities.length > 0) activitiesAndAffiliations = activities.concat(affiliations);
-    }
+    let activitiesAndAffiliations = [];
+    if(activities && !affiliations) {
+      if(activities.length > 0) activitiesAndAffiliations = activities;
+    } else activitiesAndAffiliations = affiliations;
     return (
       <View style={{marginTop: 15}}>
         <ActivitySet value={{activitiesAndAffiliations}} />
@@ -85,11 +94,9 @@ class BuddyCard extends Component {
     const { firstName, age, editable, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
     const { locationText, nameText, descriptionContainer } = styles;
 //    <Image source={{ uri: profileImages[0]}} style={{height: 300, width: width - 20, alignSelf: 'stretch'}} />
-
     return (
         <View style={{flex: 1, alignSelf: 'stretch' }}>
           <ProfileImages value={{profileImages, editable}} />
-
           <View style={descriptionContainer}>
             <ScrollView>
              <View style={{flexDirection: 'row'}}>
@@ -105,7 +112,7 @@ class BuddyCard extends Component {
                 <Text style={localStyles.descriptionText}>{description}</Text>
               </View>
             </ScrollView>
-            {this.renderMatchControls(likeable, uid, this.props.onConnect)}
+            {this.renderMatchControls(likeable, uid, this.props.onConnect, this.props.onPass)}
           </View>
         </View>
     );
@@ -115,23 +122,18 @@ class BuddyCard extends Component {
 const localStyles = StyleSheet.create({
   footer: {
     position: 'absolute',
-    left: 100,
-    right: 100,
-    bottom: 55,
-    backgroundColor: 'white',
+    left: 0,
+    right: 0,
+    bottom: 60,
     borderColor: 'black',
     flexDirection: 'row',
-    height: 50,
-    alignItems: 'center',
+    alignItems: 'stretch',
   },
   connectButton: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    padding: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    borderRadius: 3,
+    height: 50,
     backgroundColor: '#1DABB5',
     opacity: 0.75,
   },
@@ -146,7 +148,6 @@ const localStyles = StyleSheet.create({
     borderTopWidth: 0.5,
     marginTop: 15,
     marginBottom: BOTTOM_PADDING,
-//    flex: 0.7,
   },
   descriptionText: {
     fontSize: 16,

@@ -5,10 +5,6 @@ import Connection from './Connection';
 import { connectWithUser, selectChat, keepBrowsing } from '../../actions';
 
 class ConnectionContainer extends Component {
-  componentWillMount() {
-
-  }
-
   render() {
     const { currentUser, connection } = this.props;
     const { selectedMatchId, selectedMatchName, selectedMatchPic } = connection;

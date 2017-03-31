@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ActionConst, Scene, Router } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
 import SettingsContainer from './scenes/settings';
-import BrowseBuddies from './scenes/BrowseBuddies';
+import BrowseContainer from './scenes/BrowseContainer';
 import { ProfileSetupComplete } from './scenes/profile-setup';
 import ActivitySetupScene from './scenes/activity-setup/';
 import AffiliationSetupScene from './scenes/affiliation-setup/';
@@ -13,8 +13,7 @@ import MessageCenterContainer from './scenes/message-center';
 import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
 import { navBarStyle, navTitleStyle } from './components/common/styles';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import { chatIconButton, chatLeftIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
+import { chatIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
 class Routes extends Component {
   render() {
@@ -58,7 +57,7 @@ class Routes extends Component {
         <Scene key="main" type={ActionConst.RESET}>
           <Scene
             key="browse"
-            component={BrowseBuddies}
+            component={BrowseContainer}
             title="wavelength"
             leftButton={profileIconButton}
             rightButton={chatIconButton}
