@@ -16,8 +16,8 @@ export const potentialsFetch = () => {
     const potentials = [];
 
     dispatch({type: POTENTIALS_FETCH});
-
-    axios.get(`https://matching-api.appspot.com/match/${currentUser.uid}`)
+    
+    axios.get(`https://activities-test-a3871.appspot.com/match/${currentUser.uid}`)
       .then(response => {
         const keys = Object.keys(response.data);
         keys.forEach((key) => {
@@ -68,6 +68,7 @@ export const connectWithUser = (buddy) => {
             otherUserPic: buddy.pic,
             liked: true,
             matched: otherUserLikesYouToo,
+            lastMsg: '',
           });
           if(otherUserLikesYouToo) {
             successfullyConnected(dispatch, buddy.uid, currentUser.uid);

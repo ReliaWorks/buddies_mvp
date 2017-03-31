@@ -30,6 +30,7 @@ const styles = {
     flexWrap: 'wrap',
     marginLeft: MARGIN,
     marginRight: MARGIN,
+    flex: 1,
   },
 };
 

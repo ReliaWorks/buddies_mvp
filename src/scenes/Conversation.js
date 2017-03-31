@@ -23,7 +23,7 @@ class Conversation extends Component {
     const { currentUser } = firebase.auth();
     const branchKey = this.constructBranchId(currentUser, this.props.connection.selectedMatchId);
     const chatRef = firebase.database().ref(`/user_chats/${branchKey}`);
-    chatRef.on('value', snapshot => {
+    chatRef.once('value', snapshot => {
       //reverse() returns data in reverse chronological order
         this.setState({messages: _.map(snapshot.val()).reverse(), loading: false});
     });
@@ -38,10 +38,11 @@ class Conversation extends Component {
     const user = {...messages[0].user, name: firstName, avatar: this.props.currentUser.profileImages[0]};
     const m1 = {...messages[0], user, createdAt: firebase.database.ServerValue.TIMESTAMP};
     firebase.database().ref(`user_chats/${branchKey}/`).push(m1);
+    this.props.saveLastMessage(messages[0], this.props.connection.selectedMatchId);
 
     this.setState((previousState) => {
       return {
-        messages: GiftedChat.append(previousState.messages, m1),
+        messages: GiftedChat.append(previousState.messages, messages),
       };
     });
   }
@@ -76,7 +77,7 @@ class Conversation extends Component {
           borderBottomWidth: 3,
         }}
       >
-        <Text style={{marginLeft: 10, alignSelf: 'center'}} onPress={() => Actions.pop()}>
+        <Text style={{marginLeft: 10, alignSelf: 'center'}} onPress={() => Actions.matches()}>
           Back
         </Text>
         <View style={{flexDirection: 'row', alignSelf: 'center' }}>
@@ -86,7 +87,7 @@ class Conversation extends Component {
         />
         <Text style={styles.headerText}>{this.props.connection.selectedMatchName}</Text>
         </View>
-        <Text style={{marginRight: 10, alignSelf: 'center' }} onPress={() => Actions.pop()}>
+        <Text style={{marginRight: 10, alignSelf: 'center' }}>
           ...
         </Text>
       </View>

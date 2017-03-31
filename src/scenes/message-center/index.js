@@ -5,15 +5,6 @@ import MessageCenter from './MessageCenter';
 import { matchesFetch, fetchLastMessages } from '../../actions';
 
 class MessageCenterContainer extends Component {
-  /*  constructor() {
-      super();
-
-      const conversationsDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-      this.state = {
-        dataSource: conversationsDS.cloneWithRows(sampleData),
-      };
-    }
-    */
   componentWillMount() {
     this.props.matchesFetch();
     this.props.fetchLastMessages();

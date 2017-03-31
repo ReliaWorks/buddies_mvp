@@ -27,7 +27,7 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, loading: false, loggedIn: true };
     }
     case LOGOUT_USER:
-        return { ...state, loading: false, loggedIn: false };
+        return INITIAL_STATE;
     case SELECT_PIC: {
       const selectedPics = Object.assign({}, state.selectedPics);
       if (!selectedPics[action.payload]) selectedPics[action.payload] = true;

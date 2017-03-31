@@ -81,6 +81,8 @@ class Routes extends Component {
             key="conversation"
             component={Conversation}
             title="Chat"
+//            leftButton={chatLeftIconButton}
+            type={ActionConst.RESET}
             hideNavBar
           />
         </Scene>

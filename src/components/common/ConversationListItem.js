@@ -26,7 +26,11 @@ class ConversationListItem extends Component {
           <Text style={styles.nameText}>
             {this.props.otherUserName}
           </Text>
-          <Text style={styles.msgText}>
+          <Text
+            ellipsizeMode="tail"
+            numberOfLines={2}
+            style={styles.msgText}
+          >
            {msg}
           </Text>
         </View>
@@ -52,18 +56,16 @@ const styles = {
   },
   convoContainerStyle: {
     marginLeft: 10,
-    marginRight: 10,
-    marginTop: 1,
+    flex: 1
   },
   nameText: {
     fontFamily: 'Avenir-Book',
     fontSize: 16,
     fontWeight: '800',
-    marginBottom: 10
   },
   msgText: {
     fontFamily: 'Avenir-Book',
-    fontSize: 16
+    fontSize: 16,
   },
   convoThumbnailStyle: {
     height: 75,
@@ -72,8 +74,8 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ chat, matchSet }) => {
-  return { chat, matchSet };
+const mapStateToProps = ({ matchSet }) => {
+  return { matchSet };
 };
 
 export default connect(mapStateToProps, { selectChat })(ConversationListItem);
