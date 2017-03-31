@@ -1,5 +1,6 @@
 import {
   LOGIN_USER,
+  LOGOUT_USER,
   AFFILIATIONS_SAVED,
   CURRENT_USER_FETCH_SUCCESS,
   ACTIVITIES_SAVED,
@@ -91,6 +92,9 @@ export default(state = INITIAL_STATE, action) => {
     }
     case DESCRIPTION_SAVED: {
       return { ...state, description: action.payload };
+    }
+    case LOGOUT_USER: {
+      return INITIAL_STATE;
     }
     default:
       return state;

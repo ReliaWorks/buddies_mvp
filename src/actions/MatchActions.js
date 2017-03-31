@@ -30,7 +30,6 @@ export const fetchLastMessages = () => {
         const otherUserId = keys[1];
         _.map(snapshot.val(), (message, id) => {
           dispatch({ type: LAST_MESSAGES_FETCH, payload: { uid: otherUserId, msg: message.text }});
-//          return { uid: otherUserId, msg: message.text };
         });
       });
   };

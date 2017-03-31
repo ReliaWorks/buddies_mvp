@@ -26,6 +26,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: 'white',
+    flex: 1,
   },
 };
 

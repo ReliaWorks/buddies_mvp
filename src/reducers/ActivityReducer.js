@@ -1,6 +1,7 @@
 import {
   ACTIVITY_CREATE,
-  ALL_ACTIVITIES_FETCH
+  ALL_ACTIVITIES_FETCH,
+  LOGOUT_USER,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -16,6 +17,9 @@ export default (state = INITIAL_STATE, action) => {
     }
     case ALL_ACTIVITIES_FETCH: {
       return { ...state, allActivities: action.payload };
+    }
+    case LOGOUT_USER: {
+      return INITIAL_STATE;
     }
     default:
       return state;

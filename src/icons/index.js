@@ -35,7 +35,7 @@ export const chatLeftIconButton = () => {
         name="comment-text-outline"
         size={ICON_WIDTH}
         color="black"
-        style={{marginLeft: ICON_PADDING, marginTop: 200, width: ICON_WIDTH }}
+        style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_WIDTH }}
       />
     </TouchableOpacity>
     );
