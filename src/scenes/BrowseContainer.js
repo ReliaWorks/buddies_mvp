@@ -6,17 +6,56 @@ import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser, potentialsFetch } from '../actions';
 import { Deck, NoMoreCards, Spinner } from '../components/common';
 
-class BrowseBuddies extends Component {
+class BrowseContainer extends Component {
+  swiper:Object;
+
   constructor(props) {
     super(props);
     this.props.currentUserFetch();
     this.props.potentialsFetch();
+
+    this.state = {
+      currentIndex: 0,
+      viewedAllPotentials: false,
+      numPotentials: 0,
+    };
+  }
+  componentWillMount() {
+    this.setState({currentIndex: 0, numPotentials: this.props.connection.potentials});
+  }
+/*  componentWillReceiveProps(nextProps) {
+    if(this.state.currentIndex > 0) {
+      this.swiper.scrollBy(this.state.currentIndex * -1);
+    }
+  }
+*/
+  _onMomentumScrollEnd(e, state, context) {
+    this.setState({currentIndex: this.state.currentIndex + 1});
+  }
+
+  swipe() {
+    const targetIndex = this.swiper.state.index;
+    if(this.state.currentIndex === this.swiper.state.total - 1)
+      this.setState({viewedAllPotentials: true, currentIndex: 0});
+    else {
+      this.swiper.scrollBy(1);
+      this.setState({currentIndex: targetIndex});
+    }
   }
 
   renderMatches() {
-    if(this.props.connection.potentials.length === 0) return <NoMoreCards />;
+    if(this.props.connection.potentials.length === 0 ||
+        this.state.viewedAllPotentials) {
+      return <NoMoreCards />;
+    }
     return (
-      <Swiper>
+      <Swiper
+        ref={(component) => {
+          this.swiper = component;
+        }}
+        onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)}
+        showPagination
+      >
         {this.props.connection.potentials.map((buddy, key) => {
           return (
             <View key={key} style={styles.cardStyle}>
@@ -34,7 +73,14 @@ class BrowseBuddies extends Component {
                   uid: buddy.uid,
                 }}
                 onConnect={() => {
-                  this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: buddy.profileImages[0], index: key});
+                  this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: buddy.profileImages[0], index: key}, true);
+                  console.log("On Connect");
+                  this.swipe();
+                }}
+                onPass={() => {
+                  this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: buddy.profileImages[0], index: key}, false);
+                  console.log("On Pass");
+                  this.swipe();
                 }}
               />
             </View>
@@ -94,4 +140,4 @@ const mapStateToProps = ({ currentUser, connection }) => {
   return { currentUser, connection };
 };
 
-export default connect(mapStateToProps, { currentUserFetch, connectWithUser, potentialsFetch })(BrowseBuddies);
+export default connect(mapStateToProps, { currentUserFetch, connectWithUser, potentialsFetch })(BrowseContainer);
