@@ -46,6 +46,8 @@ class BrowseContainer extends Component {
     }
   }
 
+//  location: { city: 'San Francisco, CA', distance: "4 miles" },
+
   renderMatches() {
     if(this.props.connection.potentials.length === 0 ||
         this.state.viewedAllPotentials) {
@@ -65,8 +67,7 @@ class BrowseContainer extends Component {
               <BuddyCard
                 value={{
                   firstName: buddy.first_name,
-                  age: "36",
-                  location: { city: 'San Francisco, CA', distance: "4 miles" },
+                  age: "",
                   profileImages: buddy.profileImages,
                   activities: buddy.activities,
                   affiliations: buddy.affiliations,
