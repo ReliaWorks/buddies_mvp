@@ -3,12 +3,14 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
+      "filename" : "wavelengthLoginBackground.png",
       "minimum-system-version" : "7.0",
       "scale" : "2x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
+      "filename" : "wavelengthLoginBackground-1.png",
       "minimum-system-version" : "7.0",
       "subtype" : "retina4",
       "scale" : "2x"

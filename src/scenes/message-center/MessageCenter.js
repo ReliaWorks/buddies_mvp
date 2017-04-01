@@ -23,21 +23,34 @@ class MessageCenter extends Component {
     </View>
     );
   }
-//  {this.renderHeader()}
 
-  render() {
-    return (
-      <View style={{flex: 1}}>
-        <ScrollView style={styles.container}>
-          <ListView
-            style={styles.container}
-            dataSource={this.props.matchesDataSource}
-            renderRow={(data) => <ConversationListItem {...data} />}
-            enableEmptySections
-          />
-        </ScrollView>
+  renderZeroState() {
+    return(
+      <View style={styles.zeroStateContainer}>
+        <Text style={styles.zeroStateText}>
+          Connect with people to start chatting
+        </Text>
       </View>
     );
+  }
+
+  render() {
+    if(this.props.matchesDataSource.getRowCount() === 0)
+      return this.renderZeroState();
+    else {
+      return (
+        <View style={{flex: 1}}>
+          <ScrollView style={styles.container}>
+            <ListView
+              style={styles.container}
+              dataSource={this.props.matchesDataSource}
+              renderRow={(data) => <ConversationListItem {...data} />}
+              enableEmptySections
+            />
+          </ScrollView>
+        </View>
+      );
+    }
   }
 }
 
@@ -70,7 +83,18 @@ const styles = {
     flex: 1,
     marginRight: 10,
     flexDirection: 'row',
-  }
+  },
+  zeroStateContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 80,
+  },
+  zeroStateText: {
+    textAlign: 'center',
+    fontFamily: 'Avenir-Book',
+    fontSize: 22,
+  },
 };
 
 export default MessageCenter;

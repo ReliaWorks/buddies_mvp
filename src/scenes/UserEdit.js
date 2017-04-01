@@ -14,7 +14,10 @@ class UserEdit extends Component {
   renderActivities(activities) {
     return(
       <View style={{ flex: 1, padding: 10 }}>
-        <Text style={styles.sectionHeader}>Activities</Text>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionHeaderText}>Activities</Text>
+          <Text style={styles.comingSoonText}>Coming Soon!</Text>
+        </View>
         <ActivitySet value={{activitiesAndAffiliations: activities}} />
       </View>
     );
@@ -23,7 +26,10 @@ class UserEdit extends Component {
   renderAffiliations(affiliations) {
     return(
       <View style={{ flex: 1, padding: 10 }}>
-      <Text style={styles.sectionHeader}>Affiliations</Text>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionHeaderText}>Affiliations</Text>
+          <Text style={styles.comingSoonText}>Coming Soon!</Text>
+        </View>
       <AffiliationSet value={{affiliations}} />
       </View>
     );
@@ -32,7 +38,10 @@ class UserEdit extends Component {
   renderDescription(description) {
     return (
       <View style={{ flex: 1, padding: 10 }}>
-        <Text style={styles.sectionHeader}>About Me</Text>
+        <View style={styles.sectionContainer}>
+        <Text style={styles.sectionHeaderText}>About Me</Text>
+        <Text style={styles.comingSoonText}>Coming Soon!</Text>
+        </View>
         <Text style={textStyle}>{description}</Text>
       </View>
     );
@@ -52,12 +61,21 @@ class UserEdit extends Component {
 }
 
 const styles = {
-  sectionHeader: {
+  sectionHeaderText: {
     fontFamily: 'Avenir-Book',
     fontSize: 20,
-    alignSelf: 'center',
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
+  sectionContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  comingSoonText: {
+    fontFamily: 'Avenir-Book',
+    fontSize: 14,
+    color: 'red',
+  },
 };
 
 const mapStateToProps = ({ currentUser }) => {

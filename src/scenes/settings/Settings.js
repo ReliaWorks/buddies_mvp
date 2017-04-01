@@ -19,8 +19,8 @@ class Settings extends Component {
     }).catch(err => console.error('An error occurred', err));
   }
 
-  openTermsOfService() {
-    const url = 'http://www.cnn.com';
+  openFeedbackLink() {
+    const url = 'https://docs.google.com/forms/d/e/1FAIpQLSdJHltyOCqdnsafVNCyBOC55MDEx9ixnZ9gIyb3eZRJCMxBIg/viewform?usp=sf_link';
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
         console.log('Can\'t handle url: ' + url);
@@ -66,6 +66,7 @@ class Settings extends Component {
             textAlign: 'center',
             textDecorationLine: 'underline'
           }}
+          onPress={this.openFeedbackLink}
         >
           Provide Feedback
         </Text>
