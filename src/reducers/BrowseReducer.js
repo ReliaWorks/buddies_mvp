@@ -31,8 +31,9 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, selectedMatchId: action.payload.uid, selectedMatchPic: action.payload.avatar, selectedMatchName: action.payload.name };
     }
     case KEEP_BROWSING: {
-      const lastMatch = state.potentials.splice(state.browseCursor, 1);
-      return { ...state, potentials: state.potentials, browseCursor: 0 };
+//      const lastMatch = state.potentials.splice(state.browseCursor, 1);
+//      return { ...state, potentials: state.potentials, browseCursor: 0 };
+      return state;
     }
     case LOGOUT_USER: {
       return INITIAL_STATE;
