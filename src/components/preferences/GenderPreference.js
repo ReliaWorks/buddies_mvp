@@ -7,7 +7,7 @@ const ICON_SIZE = 25;
 
 const renderHeader = () => {
   return(
-    <View style={{borderBottomWidth: 1, borderColor: 'gray', flexDirection: 'row'}}>
+    <View style={localStyles.genderHeaderContainer}>
       <Text style={styles.headerText}>Gender</Text>
       <Text style={styles.comingSoonText}>Coming Soon!</Text>
     </View>
@@ -15,12 +15,10 @@ const renderHeader = () => {
 };
 
 const renderChoices = () => {
-  const { genderText, genderChoiceContainer } = localStyles;
-
-  //      <View style={{backgroundColor: '#dddddd', height: 1}}/>
+  const { genderText, genderChoiceContainer, genderTable } = localStyles;
 
   return(
-    <View style={{justifyContent: 'space-between', flex: 1, alignItems: 'stretch'}}>
+    <View style={genderTable}>
       <View style={genderChoiceContainer}>
         <Text style={genderText}>Men</Text>
       </View>
@@ -55,15 +53,27 @@ const localStyles = {
     fontFamily: 'Avenir-Book',
     fontSize: 14,
   },
+  genderHeaderContainer: {
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    flexDirection: 'row',
+    backgroundColor: 'white',
+  },
   genderChoiceContainer: {
     borderBottomWidth: 0.5,
     borderColor: '#ECECEC',
-    marginRight: 10,
+    backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignSelf: 'stretch',
     alignItems: 'center',
     flex: 1
+  },
+  genderTable: {
+    justifyContent: 'space-between',
+    flex: 1,
+    alignItems: 'stretch',
+    backgroundColor: 'white',
   }
 };
 
