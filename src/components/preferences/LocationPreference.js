@@ -4,7 +4,7 @@ import styles from './styles';
 
 const renderHeader = () => {
   return(
-    <View style={{flexDirection: 'row'}}>
+    <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
       <Text style={styles.headerText}>Distance</Text>
       <Text style={styles.comingSoonText}>Coming Soon!</Text>
     </View>
@@ -14,7 +14,7 @@ const renderHeader = () => {
 const renderChoices = () => {
   return (
     <View style={styles.sliderContainer}>
-      <Slider />
+      <Slider style={styles.slider} />
     </View>
   );
 };

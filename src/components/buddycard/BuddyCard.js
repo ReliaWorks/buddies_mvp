@@ -10,6 +10,7 @@ import styles from './styles.js';
 
 //const { width, height } = Dimensions.get('window');
 const BOTTOM_PADDING = 120;
+const MARGIN = 15;
 
 class BuddyCard extends Component {
   showEditableButton(editable) {
@@ -77,7 +78,7 @@ class BuddyCard extends Component {
       activitiesAndAffiliations = affiliations;
     }
     return (
-      <View style={{marginTop: 15}}>
+      <View style={{marginTop: MARGIN}}>
         <ActivitySet value={{activitiesAndAffiliations}} />
       </View>
     );
@@ -149,14 +150,16 @@ const localStyles = StyleSheet.create({
     fontSize: 18,
   },
   descriptionStyle: {
-    borderTopWidth: 0.5,
-    marginTop: 15,
+    borderTopWidth: 1,
+    marginLeft: MARGIN,
+    marginRight: MARGIN,
+    marginTop: MARGIN,
     marginBottom: BOTTOM_PADDING,
   },
   descriptionText: {
     fontSize: 16,
     marginLeft: 10,
-    marginTop: 15,
+    marginTop: MARGIN,
     fontFamily: 'Avenir-Book',
     backgroundColor: 'white',
   }

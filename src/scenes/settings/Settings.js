@@ -31,11 +31,9 @@ class Settings extends Component {
   }
 
   renderHeader() {
-    const { textStyle } = styles;
-
     return (
       <View style={{marginBottom: 30, flex: 0.5 }}>
-        <Text style={textStyle}>
+        <Text style={styles.textStyle}>
           {this.props.value.firstName}
         </Text>
         <Text style={styles.headerText}>

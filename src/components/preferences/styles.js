@@ -27,8 +27,12 @@ export default styles = {
   },
   sliderContainer: {
     flex: 1,
+    borderColor: '#FF4F7D',
+    backgroundColor: 'white',
+  },
+  slider: {
+    backgroundColor: 'white',
     marginLeft: 20,
-    marginRight: 20,
-    borderColor: '#FF4F7D'
+    marginRight: 20
   }
 };
