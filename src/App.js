@@ -5,20 +5,13 @@ import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import Routes from './Routes';
+import { FIREBASE_CONFIG } from './config';
 
 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
 class App extends Component {
   componentWillMount() {
-      const config = {
-        apiKey: 'AIzaSyC5B1L0NfK0WsZYRtVjVUleo6To9aFuDf8',
-        authDomain: 'activities-test-a3871.firebaseapp.com',
-        databaseURL: 'https://activities-test-a3871.firebaseio.com',
-        storageBucket: 'activities-test-a3871.appspot.com',
-        messagingSenderId: '432468217036'
-      };
-
-      firebase.initializeApp(config);
+      firebase.initializeApp(FIREBASE_CONFIG);
     }
 
   render() {

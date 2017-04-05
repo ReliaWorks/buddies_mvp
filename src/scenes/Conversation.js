@@ -6,59 +6,28 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { saveLastMessage } from '../actions';
+import { fetchConversation, saveMessage } from '../actions';
 
 class Conversation extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loading: true,
-      messages: [],
-      typingText: false,
-    };
     this.onSend = this.onSend.bind(this);
   }
 
   componentWillMount() {
-    const { currentUser } = firebase.auth();
-    const branchKey = this.constructBranchId(currentUser, this.props.connection.selectedMatchId);
-    const chatRef = firebase.database().ref(`/user_chats/${branchKey}`);
-    chatRef.once('value', snapshot => {
-      //reverse() returns data in reverse chronological order
-        this.setState({messages: _.map(snapshot.val()).reverse(), loading: false});
-    });
-    this.setState({loading: false});
+    this.props.fetchConversation(this.props.connection.selectedMatchId);
   }
 
   onSend(messages = []) {
-    const { currentUser } = firebase.auth();
-    const firstName = this.props.currentUser.firstName;
-    const branchKey = this.constructBranchId(currentUser, this.props.connection.selectedMatchId);
-
-    const user = {...messages[0].user, name: firstName, avatar: this.props.currentUser.profileImages[0]};
-    const m1 = {...messages[0], user, createdAt: firebase.database.ServerValue.TIMESTAMP};
-    firebase.database().ref(`user_chats/${branchKey}/`).push(m1);
-    this.props.saveLastMessage(messages[0], this.props.connection.selectedMatchId);
-
-    this.setState((previousState) => {
-      return {
-        messages: GiftedChat.append(previousState.messages, messages),
-      };
-    });
-  }
-
-  constructBranchId(currentUser, matchUId) {
-    //figure out which one is less than and prepend that uid
-    if(currentUser.uid < matchUId) return (`${currentUser.uid} - ${matchUId}`);
-    else return (`${matchUId} - ${currentUser.uid}`);
+    this.props.saveMessage(messages[0], this.props.currentUser, this.props.connection, this.props.chat.chatId, messages);
   }
 
   renderFooter() {
-    if(this.state.typingText) {
+    if(this.props.chat.typingText) {
       return(
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>
-            {this.state.typingText}
+            {this.props.chat.typingText}
           </Text>
         </View>
       );
@@ -100,7 +69,7 @@ class Conversation extends Component {
       <View style={{flex: 1}}>
         {this.renderHeader()}
         <GiftedChat
-          messages={this.state.messages}
+          messages={this.props.chat.messages}
           onSend={this.onSend}
           user={{
             _id: currentUser.uid,
@@ -131,8 +100,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ currentUser, connection }) => {
-  return { currentUser, connection };
+const mapStateToProps = ({ currentUser, connection, chat }) => {
+  return { currentUser, connection, chat };
 };
 
-export default connect(mapStateToProps, { saveLastMessage })(Conversation);
+export default connect(mapStateToProps, { fetchConversation, saveMessage })(Conversation);
