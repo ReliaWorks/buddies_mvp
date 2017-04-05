@@ -18,7 +18,6 @@ class Conversation extends Component {
 
   onSend(messages = []) {
     console.log(messages[0]);
-    debugger;
     this.props.saveMessage(messages[0], this.props.currentUser, this.props.connection, this.props.chat.chatId, messages);
   }
 
