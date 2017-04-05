@@ -17,6 +17,7 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, chatId: action.payload.chatId, loading: false, messages: action.payload.messages };
     }
     case MESSAGE_SENT: {
+      if(action.payload.messages[0]._id === state.messages[0]._id) return state;
       const updatedMsgs = GiftedChat.append(state.messages, action.payload.messages);
       return { ...state, messages: updatedMsgs };
     }

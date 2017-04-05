@@ -11,16 +11,12 @@ import {
   DESCRIPTION_SAVED,
 } from '../actions/types';
 
-import {
-  DEFAULT_PROFILE_PHOTO
-} from '../config'
-
 const INITIAL_STATE = {
   uid: '',
   firstName: '',
   email: '',
   age: '',
-  profileImages: [DEFAULT_PROFILE_PHOTO],
+  profileImages: [],
   activities: {},
   affiliations: {},
   location: {},
@@ -36,7 +32,6 @@ export default(state = INITIAL_STATE, action) => {
     }
     case CURRENT_USER_FETCH_SUCCESS: {
       const profileImages = action.payload.profileImages;
-//    let profileImages = [];
 //      if(action.payload.profileImages) {
 //        profileImages = action.payload.profileImages.map((image) => {
 //          return { url: image.url };

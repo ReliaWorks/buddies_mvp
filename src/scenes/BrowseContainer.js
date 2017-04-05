@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser, potentialsFetch } from '../actions';
 import { Deck, NoMoreCards, Spinner } from '../components/common';
-
-const DEFAULT_PROFILE_PHOTO = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fdefault-user-image.png?alt=media&token=5a29c303-0a94-4640-a917-9283f1ecdb66';
+import { DEFAULT_PROFILE_PHOTO } from '../config';
 
 class BrowseContainer extends Component {
   swiper:Object;
@@ -49,7 +48,6 @@ class BrowseContainer extends Component {
   }
 
 //  location: { city: 'San Francisco, CA', distance: "4 miles" },
-
   renderMatches() {
     if(this.props.connection.potentials.length === 0 ||
         this.state.viewedAllPotentials) {

@@ -3,18 +3,21 @@ import { connect } from 'react-redux';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import Connection from './Connection';
 import { connectWithUser, selectChat, keepBrowsing } from '../../actions';
+import { DEFAULT_PROFILE_PHOTO } from '../../config';
 
 class ConnectionContainer extends Component {
   render() {
     const { currentUser, connection } = this.props;
     const { selectedMatchId, selectedMatchName, selectedMatchPic } = connection;
+    let profileImage = DEFAULT_PROFILE_PHOTO;
+    if(currentUser.profileImages) profileImage = currentUser.profileImages[0];
     return (
       <Connection
         onConnect={(uid, name, pic) => this.props.connectWithUser(uid, name, pic)}
         currentUser={{
           id: currentUser.uid,
           name: currentUser.firstName,
-          pic: currentUser.profileImages[0]
+          pic: profileImage
         }}
         otherUser={{
           id: selectedMatchId,

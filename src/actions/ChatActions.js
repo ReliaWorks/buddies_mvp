@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import firebase from 'firebase';
+import { DEFAULT_PROFILE_PHOTO } from '../config';
 import {
   CHAT_SELECTED,
   CURRENT_CHAT_FETCH,
@@ -49,7 +50,9 @@ export const saveMessage = (msg, currentUser, otherUser, chatId, messages) => {
 
   return (dispatch) => {
     if(chatId) {
-      const user = {...msg.user, name: firstName, avatar: currentUser.profileImages[0]};
+      let profileImage = DEFAULT_PROFILE_PHOTO;
+      if(currentUser.profileImages) profileImage = currentUser.profileImages[0];
+      const user = {...msg.user, name: firstName, avatar: profileImage};
       const m1 = {...msg, user, createdAt: firebase.database.ServerValue.TIMESTAMP};
       firebase.database().ref(`conversations/${chatId}`)
         .push(m1)
