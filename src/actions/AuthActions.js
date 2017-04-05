@@ -14,90 +14,6 @@ import {
   PROFILE_PIC
 } from './types';
 
-function setupUserFirebase(user,ref, accessTokenData, dispatch) {
-  const token = accessTokenData.accessToken;
-
-  const infoRequest = new GraphRequest(
-    '/me',
-    {
-      parameters: {
-        fields: { string: 'id,first_name,last_name,location, email, birthday, albums{name}' },
-        access_token: { string: token.toString() }
-    },
-    }, (error, result) => {
-      if(error) {
-        console.log('Error fetching data: ' + error.toString());
-      } else {
-        const fbAlbums = result.albums.data;
-        const profileAlbum = fbAlbums.find((album) => {
-           return album.name === 'Profile Pictures';
-        });
-
-        const profile = {
-          first_name: result.first_name || '',
-          last_name: result.last_name || '',
-          email: result.email || '',
-          location: result.location || '',
-        };
-
-        ref.ref(`/user_profiles/${user.uid}`).set(profile);
-
-        dispatch({
-          type: PROFILE_INFO,
-          payload: profile
-        });
-
-        AccessToken.getCurrentAccessToken().then(
-          () => {
-            const profilePicRequest = new GraphRequest(
-              `/${profileAlbum.id}`,
-              {
-                parameters: {
-                  fields: { string: 'photos' },
-                  access_token: { string: token.toString() }
-                },
-              },
-              (error1, result1) => {
-                if (error1) {
-                  console.log('Error fetching data: ' + error1.toString());
-                } else{
-                  const profilePics = result1.photos.data;
-                  profilePics.forEach(
-                    (pic) => {
-                      const picRequest = new GraphRequest(
-                        `/${pic.id}`,
-                        {
-                          parameters: {
-                            fields: { string: 'images' },
-                            access_token: { string: token }
-                          },
-                       },
-                       (error2, result3) => {
-                         if(error2) {
-                           console.log('Error fetching data: ' + error2.toString());
-                         } else {
-                            dispatch({
-                             type: PROFILE_PIC,
-                             payload: result3.images[0].source
-                           });
-                         }
-                       }
-                      );
-                      new GraphRequestManager().addRequest(picRequest).start();
-                    }
-                  );
-                }
-              }
-            );
-            new GraphRequestManager().addRequest(profilePicRequest).start();
-          }
-        );
-     }
-   }
-  );
-  new GraphRequestManager().addRequest(infoRequest).start();
-}
-
 export const loginUser = () => {
   return (dispatch) => {
     const auth = firebase.auth();
@@ -136,6 +52,79 @@ export const logoutUser = () => {
     });
   };
 };
+
+function fetchProfilePhotos(result, dispatch, token) {
+  if(result.albums) {
+    const fbAlbums = result.albums.data;
+    const profileAlbum = fbAlbums.find((album) => {
+      return album.name === 'Profile Pictures';
+    });
+
+    AccessToken.getCurrentAccessToken().then(() => {
+      const profilePicRequest = new GraphRequest(`/${profileAlbum.id}`,
+      {
+        parameters: {
+          fields: { string: 'photos' },
+          access_token: { string: token.toString() }
+        },
+      }, (error1, result1) => {
+        if (error1) {
+          console.log('Error fetching data: ' + error1.toString());
+        } else {
+          const profilePics = result1.photos.data;
+          profilePics.forEach((pic) => {
+              const picRequest = new GraphRequest(
+                `/${pic.id}`, {
+                  parameters: {
+                    fields: { string: 'images' },
+                    access_token: { string: token }
+                  },
+               }, (error2, result3) => {
+                 if(error2) {
+                   console.log('Error fetching data: ' + error2.toString());
+                 } else {
+                    dispatch({type: PROFILE_PIC, payload: result3.images[0].source});
+                 }
+               }); new GraphRequestManager().addRequest(picRequest).start();
+          });
+        }
+      }); new GraphRequestManager().addRequest(profilePicRequest).start();
+    });
+  }
+}
+
+function setupUserFirebase(user,ref, accessTokenData, dispatch) {
+  const token = accessTokenData.accessToken;
+  const infoRequest = new GraphRequest(
+    '/me',
+    {
+      parameters: {
+        fields: { string: 'id,first_name,last_name,location, email, birthday, albums{name}' },
+        access_token: { string: token.toString() }
+    },
+    }, (error, result) => {
+      if(error) {
+        console.log('Error fetching data: ' + error.toString());
+      } else {
+        const profile = {
+          first_name: result.first_name || '',
+          last_name: result.last_name || '',
+          email: result.email || '',
+          location: result.location || '',
+        };
+
+        ref.ref(`/user_profiles/${user.uid}`).set(profile);
+
+        dispatch({
+          type: PROFILE_INFO,
+          payload: profile
+        });
+        fetchProfilePhotos(result, dispatch, token);
+      }
+    }
+  ); new GraphRequestManager().addRequest(infoRequest).start();
+}
+
 
 function checkIfUserExists(user, ref, accessTokenData, dispatch) {
   ref.ref(`/user_profiles/${user.uid}`)
