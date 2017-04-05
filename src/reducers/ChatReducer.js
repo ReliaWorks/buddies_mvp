@@ -18,8 +18,6 @@ export default(state = INITIAL_STATE, action) => {
     }
     case MESSAGE_SENT: {
       const updatedMsgs = GiftedChat.append(state.messages, action.payload.messages);
-//      const updatedMsgs = [...state.messages, action.payload.messages];
-      debugger;
       return { ...state, messages: updatedMsgs };
     }
     default:
