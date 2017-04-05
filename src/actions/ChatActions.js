@@ -10,11 +10,11 @@ export const fetchConversation = (otherUserId) => {
   return (dispatch) => {
     const { currentUser } = firebase.auth();
     const chatRef = firebase.database().ref(`/user_chats/${currentUser.uid}/${otherUserId}`);
-    chatRef.once('value', snapshot => {
+    chatRef.on('value', snapshot => {
       if(snapshot.val()) {
         const conversationId = snapshot.val().conversationId;
         firebase.database().ref(`/conversations/${conversationId}`)
-          .once('value', snap => {
+          .on('value', snap => {
             dispatch({
               type: CURRENT_CHAT_FETCH,
               payload: { chatId: conversationId, messages: _.map(snap.val()).reverse() }
@@ -54,7 +54,6 @@ export const saveMessage = (msg, currentUser, otherUser, chatId, messages) => {
       firebase.database().ref(`conversations/${chatId}`)
         .push(m1)
         .then(() => {
-          debugger;
           dispatch({
             type: MESSAGE_SENT,
             payload: { msg, otherUserId: otherUser.selectedMatchId, messages }

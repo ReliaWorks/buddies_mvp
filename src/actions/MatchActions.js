@@ -16,6 +16,23 @@ export const matchesFetch = () => {
   };
 };
 
+const getLastMsg = (otherUserId, conversationId, dispatch) => {
+  firebase.database().ref(`/conversations/${conversationId}`)
+    .on('value', snapshot => {
+      const msgs = _.map(snapshot.val(), (val, id) => {
+        return { ...val, id};
+      });
+      if(msgs.length > 0) {
+        const lastMsg = msgs[msgs.length - 1];
+        const uid = lastMsg.user._id;
+        dispatch({
+          type: LAST_MESSAGES_FETCH,
+          payload: { uid: otherUserId,
+                     msg: { senderId: uid, text: lastMsg.text }}});
+      }
+    });
+};
+
 export const fetchLastMessages = () => {
   const { currentUser } = firebase.auth();
 
@@ -23,9 +40,8 @@ export const fetchLastMessages = () => {
     //query firebase for all user_chats that have uid prefix, then find last item.text and push to end of messages array.
     firebase.database().ref(`/user_chats/${currentUser.uid}`)
       .on('value', snapshot => {
-        debugger;
-        _.map(snapshot.val(), (message, id) => {
-          dispatch({ type: LAST_MESSAGES_FETCH, payload: { uid: otherUserId, msg: message.text }});
+        _.forEach(snapshot.val(), (chat, id) => {
+          getLastMsg(id, chat.conversationId, dispatch);
         });
       });
   };

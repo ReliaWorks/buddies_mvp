@@ -1,5 +1,3 @@
-import _ from 'lodash';
-//Container component responsible for calling to Firebase and loading the 10 most recent messages in a conversation between the currentUser and a given user.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Image, StyleSheet, Text, View } from 'react-native';
