@@ -1,4 +1,4 @@
-import { DEFAULT_PROFILE_PHOTO } from '../config';
+//import { DEFAULT_PROFILE_PHOTO } from '../config';
 import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
@@ -15,7 +15,7 @@ const INITIAL_STATE = {
   newUser: true,
   fbtoken: null,
   loading: false,
-  profile_pics: [DEFAULT_PROFILE_PHOTO],
+  profile_pics: [],
   selectedPics: {},
   loggedIn: false,
 };

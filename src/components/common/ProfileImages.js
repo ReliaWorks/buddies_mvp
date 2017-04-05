@@ -28,7 +28,7 @@ const ProfileImages = (props) => {
   let pics = profileImages;
 
   if(!profileImages) return renderNoPhotos();
-  else if(profileImages.length === 0) {
+  if(profileImages.length === 0) {
     return (
       <View style={{justifyContent: 'center', alignSelf: 'center'}}>
         <Spinner size="large" />

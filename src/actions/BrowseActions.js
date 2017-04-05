@@ -38,7 +38,7 @@ export const currentUserFetch = () => {
 
   return (dispatch) => {
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
-      .on('value', snapshot => {
+      .once('value', snapshot => {
         dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
       });
   };
