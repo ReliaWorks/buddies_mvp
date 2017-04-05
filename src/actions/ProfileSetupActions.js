@@ -13,12 +13,10 @@ import {
 } from './types';
 
 export const addPic = (url) => {
-  return (dispatch) => {
-    dispatch({
+  return {
       type: SELECT_PIC,
       payload: url
-    });
-  };
+    };
 };
 
 export const savePics = (selectedPics) => {

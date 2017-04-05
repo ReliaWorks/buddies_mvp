@@ -7,7 +7,7 @@ import { matchesFetch, fetchLastMessages } from '../../actions';
 class MessageCenterContainer extends Component {
   componentWillMount() {
     this.props.matchesFetch();
-    this.props.fetchLastMessages();
+//    this.props.fetchLastMessages();
     this.createDataSource(this.props);
   }
 

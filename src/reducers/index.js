@@ -7,12 +7,14 @@ import BrowseReducer from './BrowseReducer';
 import MatchReducer from './MatchReducer';
 import ProfileReducer from './ProfileReducer';
 import SettingsReducer from './SettingsReducer';
+import ChatReducer from './ChatReducer';
 
 export default combineReducers({
   auth: AuthReducer,
   activityForm: ActivityFormReducer,
   activities: ActivityReducer,
   affiliations: AffiliationReducer,
+  chat: ChatReducer,
   connection: BrowseReducer,
   currentUser: ProfileReducer,
   settings: SettingsReducer,

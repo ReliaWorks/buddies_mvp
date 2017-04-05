@@ -8,8 +8,9 @@ const SIDE_MARGIN = 15;
 
 class ConversationListItem extends Component {
   render() {
-    let msg = this.props.matchSet.lastMsgs[this.props.otherUserId];
-    if(!msg) msg = "Start chatting";
+//    let msg = this.props.matchSet.lastMsgs[this.props.otherUserId];
+//    if(!msg) msg = "Start chatting";
+    const msg = "TBD";
     return (
     <TouchableOpacity
       onPress={() => {
