@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
+import { DEFAULT_PROFILE_PHOTO } from '../config';
 import {
   SELECT_PIC,
   SAVE_PICS,
@@ -27,6 +28,7 @@ export const savePics = (selectedPics) => {
     profileImages.push(key);
   });
 
+  if(!profileImages || profileImages.length === 0) profileImages.push(DEFAULT_PROFILE_PHOTO);
   return (dispatch) => {
     firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
       .set(profileImages)
