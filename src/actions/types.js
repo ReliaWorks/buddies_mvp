@@ -18,6 +18,8 @@ export const AFFILIATION_UNSELECTED = 'affiliation_unselected';
 
 export const CURRENT_USER_FETCH_SUCCESS = 'current_user_fetch_success';
 export const CHAT_SELECTED = 'chat_selected';
+export const CHAT_PROFILE_FETCH = 'chat_profile_fetch';
+export const CHAT_PROFILE_FETCH_SUCCESS = 'chat_profile_fetch_success';
 export const CURRENT_CHAT_FETCH = 'current_chat_fetch';
 export const LAST_MESSAGES_FETCH = 'fetch_last_messages';
 export const MESSAGE_SENT = 'message_sent';

@@ -12,6 +12,7 @@ import UserView from './scenes/UserView';
 import MessageCenterContainer from './scenes/message-center';
 import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
+import ProfileModal from './components/common/ProfileModal';
 import { navBarStyle, navTitleStyle } from './components/common/styles';
 import { chatIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
@@ -80,10 +81,17 @@ class Routes extends Component {
             key="conversation"
             component={Conversation}
             title="Chat"
-//            leftButton={chatLeftIconButton}
             type={ActionConst.RESET}
             hideNavBar
           />
+          <Scene
+            key="profile"
+            component={ProfileModal}
+            title="Profile"
+//            direction="vertical"
+//            hideNavBar
+          />
+
         </Scene>
         <Scene key="profileSettings">
           <Scene
