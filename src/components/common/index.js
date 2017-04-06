@@ -9,6 +9,7 @@ export * from './Input';
 export * from './Message';
 export * from './NoMoreCards';
 export * from './ProfileImages';
+export * from './ProfileModal';
 export * from './SelectableTile';
 export * from './Spinner';
 export * from './Tile';

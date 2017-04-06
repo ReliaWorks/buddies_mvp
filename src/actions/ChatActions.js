@@ -3,6 +3,8 @@ import firebase from 'firebase';
 import { DEFAULT_PROFILE_PHOTO } from '../config';
 import {
   CHAT_SELECTED,
+  CHAT_PROFILE_FETCH,
+  CHAT_PROFILE_FETCH_SUCCESS,
   CURRENT_CHAT_FETCH,
   MESSAGE_SENT,
 } from './types';
@@ -35,6 +37,19 @@ export const fetchConversation = (otherUserId) => {
           });
       }
     });
+  };
+};
+
+export const chatProfileFetch = (uid) => {
+  console.log(`In chatProfileFetch with uid = ${uid}`);
+  return (dispatch) => {
+    dispatch({type: CHAT_PROFILE_FETCH});
+    firebase.database().ref(`user_profiles/${uid}`)
+      .once('value', snapshot => {
+        console.log("Looking up profile");
+        console.log(snapshot.val());
+        dispatch({ type: CHAT_PROFILE_FETCH_SUCCESS, payload: snapshot.val()});
+      });
   };
 };
 

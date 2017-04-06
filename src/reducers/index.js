@@ -8,6 +8,7 @@ import MatchReducer from './MatchReducer';
 import ProfileReducer from './ProfileReducer';
 import SettingsReducer from './SettingsReducer';
 import ChatReducer from './ChatReducer';
+import SelectedUserProfileReducer from './SelectedUserProfileReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   currentUser: ProfileReducer,
   settings: SettingsReducer,
   matchSet: MatchReducer,
+  selectedUser: SelectedUserProfileReducer,
 });

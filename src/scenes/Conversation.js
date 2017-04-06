@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 import { GiftedChat } from 'react-native-gifted-chat';
@@ -33,6 +33,24 @@ class Conversation extends Component {
     return null;
   }
 
+  renderProfile() {
+    Actions.profile();
+  }
+
+  renderChatPartnerHeader() {
+    return(
+      <TouchableWithoutFeedback onPress={() => this.renderProfile()}>
+        <View style={{flexDirection: 'row', alignSelf: 'center' }}>
+          <Image
+            source={{uri: this.props.connection.selectedMatchPic}}
+            style={{height: 30, width: 30, borderRadius: 15, marginRight: 10}}
+          />
+          <Text style={styles.headerText}>{this.props.connection.selectedMatchName}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
+
   renderHeader() {
     return(
       <View
@@ -44,16 +62,10 @@ class Conversation extends Component {
           borderBottomWidth: 3,
         }}
       >
-        <Text style={{marginLeft: 10, alignSelf: 'center'}} onPress={() => Actions.matches()}>
+        <Text style={{marginLeft: 10, alignSelf: 'center', fontFamily: 'Avenir-Book'}} onPress={() => Actions.matches()}>
           Back
         </Text>
-        <View style={{flexDirection: 'row', alignSelf: 'center' }}>
-        <Image
-          source={{uri: this.props.connection.selectedMatchPic}}
-          style={{height: 30, width: 30, borderRadius: 15, marginRight: 10}}
-        />
-        <Text style={styles.headerText}>{this.props.connection.selectedMatchName}</Text>
-        </View>
+          {this.renderChatPartnerHeader()}
         <Text style={{marginRight: 10, alignSelf: 'center' }}>
           ...
         </Text>
