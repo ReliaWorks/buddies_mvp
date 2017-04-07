@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Buddies</string>
+	<string>Wavelength</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -25,14 +25,14 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb575314036007191</string>
+				<string>fb767252406764869</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>29</string>
+	<string>31</string>
 	<key>FacebookAppID</key>
-	<string>575314036007191</string>
+	<string>767252406764869</string>
 	<key>FacebookDisplayName</key>
 	<string>Wavelength</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

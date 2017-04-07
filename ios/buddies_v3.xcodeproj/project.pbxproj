@@ -1346,7 +1346,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reliaworks.buddiesv3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reliaworks.wavelength;
 				PRODUCT_NAME = buddies_v3;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1374,7 +1374,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reliaworks.buddiesv3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reliaworks.wavelength;
 				PRODUCT_NAME = buddies_v3;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
