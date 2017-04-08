@@ -90,6 +90,7 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, affiliations: action.payload };
     }
     case DESCRIPTION_SAVED: {
+      console.log("In profile reducer description saved");
       return { ...state, description: action.payload };
     }
     case LOGOUT_USER: {

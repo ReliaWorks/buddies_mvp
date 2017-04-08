@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { Tile } from '../common';
 
+const MARGIN = 15;
+
 class AffiliationSet extends Component {
   render() {
     const ds = new ListView.DataSource({
@@ -26,6 +28,8 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: 'white',
+    marginLeft: MARGIN,
+    marginRight: MARGIN,
     flex: 1,
   },
 };
