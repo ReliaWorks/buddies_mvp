@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { descriptionSaved, profileSaved } from '../../actions';
+import { descriptionSaved } from '../../actions';
 
 class DescriptionSetup extends Component {
   constructor(props) {
@@ -15,14 +15,11 @@ class DescriptionSetup extends Component {
   }
 
   render() {
-    const { uid, description } = this.props.currentUser;
-
     return (
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'flex-end', padding: 5}}>
           <Button
             onPress={() => {
-              this.props.profileSaved(uid, description);
               Actions.profileSetupComplete();
             }}
             title="Next"
@@ -70,4 +67,4 @@ const mapStateToProps = ({ currentUser, auth }) => {
   return { currentUser, auth };
 };
 
-export default connect(mapStateToProps, { descriptionSaved, profileSaved })(DescriptionSetup);
+export default connect(mapStateToProps, { descriptionSaved })(DescriptionSetup);

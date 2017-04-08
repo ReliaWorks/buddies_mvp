@@ -7,7 +7,7 @@ import { ProfileSetupComplete } from './scenes/profile-setup';
 import ActivitySetupScene from './scenes/activity-setup/';
 import AffiliationSetupScene from './scenes/affiliation-setup/';
 import DescriptionSetup from './scenes/profile-setup/DescriptionSetup';
-import UserEdit from './scenes/UserEdit';
+import UserEditContainer from './scenes/user-edit/UserEditContainer';
 import UserView from './scenes/UserView';
 import MessageCenterContainer from './scenes/message-center';
 import ConnectionContainer from './components/connection';
@@ -103,7 +103,7 @@ class Routes extends Component {
           />
           <Scene
             key="userEdit"
-            component={UserEdit}
+            component={UserEditContainer}
             title="Edit Profile"
           />
           <Scene

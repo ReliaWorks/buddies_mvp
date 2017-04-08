@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
-import { DEFAULT_PROFILE_PHOTO } from '../config';
 import {
   SELECT_PIC,
   SAVE_PICS,
@@ -39,20 +38,18 @@ export const savePics = (selectedPics) => {
   };
 };
 
-export const profileSaved = (currentUserId, description) => {
+export const descriptionSaved = (text) => {
   const { currentUser } = firebase.auth();
 
-  return () => {
+  console.log(`In descriptionSaved with text = ${text}`);
+  console.log(currentUser.uid);
+  return (dispatch) => {
     firebase.database().ref(`user_profiles/${currentUser.uid}/description`)
-      .set(description);
-    Actions.profileSetupComplete();
-  };
-};
-
-export const descriptionSaved = (text) => {
-  return {
-    type: DESCRIPTION_SAVED,
-    payload: text
+      .set(text)
+      .then(() => {
+        console.log("dispatching to description_saved");
+        dispatch({ type: DESCRIPTION_SAVED, payload: text });
+      });
   };
 };
 

@@ -28,6 +28,7 @@ const styles = {
     justifyContent: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    backgroundColor: 'white',
     marginLeft: MARGIN,
     marginRight: MARGIN,
     flex: 1,
