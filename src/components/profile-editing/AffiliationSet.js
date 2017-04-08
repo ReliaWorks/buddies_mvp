@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ListView } from 'react-native';
-import { Tile } from '../common';
+import EditableTile from './EditableTile';
 
 const MARGIN = 15;
 
@@ -11,11 +11,18 @@ class AffiliationSet extends Component {
     });
     dataSource = ds.cloneWithRows(this.props.value.affiliations);
 
-    return(
+    return (
       <ListView
           contentContainerStyle={styles.list}
           dataSource={dataSource}
-          renderRow={(rowData) => <Tile tileName={rowData.name} tileIcon={rowData.icon} />}
+          renderRow={(rowData) =>
+            <EditableTile
+              tileName={rowData.name}
+              tileIcon={rowData.icon}
+              tileId={rowData.uid}
+              onRemove={this.props.onRemove}
+            />
+          }
           enableEmptySections
       />
     );

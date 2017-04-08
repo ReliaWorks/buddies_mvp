@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   LOGIN_USER,
   LOGOUT_USER,
@@ -47,16 +48,20 @@ export default(state = INITIAL_STATE, action) => {
           return {
             name: activity.name,
             icon: activity.icon,
+            uid: activity.uid,
           };
         });
       }
-      let affiliations = [];
+      const affiliations = [];
       if(action.payload.affiliations) {
-        affiliations = action.payload.affiliations.map((affilliation) => {
-          return {
-            name: affilliation.name,
-            icon: affilliation.icon,
-          };
+        _.forEach(action.payload.affiliations, (affiliation) => {
+          if(affiliation) {
+            affiliations.push({
+              name: affiliation.name,
+              icon: affiliation.icon,
+              uid: affiliation.uid,
+            });
+          }
         });
       }
       let description = '';
@@ -84,13 +89,13 @@ export default(state = INITIAL_STATE, action) => {
       const uid = action.payload.uid;
       const updatedAffiliationList = state.affiliations.filter(
         (item) => item.uid !== uid);
+      console.log(updatedAffiliationList);
       return { ...state, affiliations: updatedAffiliationList };
     }
     case AFFILIATIONS_SAVED: {
       return { ...state, affiliations: action.payload };
     }
     case DESCRIPTION_SAVED: {
-      console.log("In profile reducer description saved");
       return { ...state, description: action.payload };
     }
     case LOGOUT_USER: {

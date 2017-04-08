@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, TextInput, View } from 'react-native';
 import ActivitySet from '../../components/buddycard/ActivitySet';
-import AffiliationSet from '../../components/buddycard/AffiliationSet';
+import AffiliationsEdit from '../../components/profile-editing/AffiliationsEdit';
 //import { textStyle } from '../../components/common/styles';
+
+const MARGIN = 15;
 
 class UserEdit extends Component {
   constructor(props) {
@@ -27,13 +29,7 @@ class UserEdit extends Component {
 
   renderAffiliations(affiliations) {
     return(
-      <View style={{ flex: 1, padding: 10 }}>
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionHeaderText}>Affiliations</Text>
-          <Text style={styles.comingSoonText}>Coming Soon!</Text>
-        </View>
-      <AffiliationSet value={{affiliations}} />
-      </View>
+      <AffiliationsEdit affiliations={affiliations} />
     );
   }
 
@@ -81,12 +77,13 @@ const styles = {
   },
   sectionHeaderText: {
     fontFamily: 'Avenir-Book',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   sectionContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: MARGIN,
     marginBottom: 10,
   },
   comingSoonText: {
@@ -104,7 +101,7 @@ const styles = {
   },
   descriptionInput: {
     height: 300,
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'Avenir-Book',
     marginLeft: 10,
     color: '#000000',
