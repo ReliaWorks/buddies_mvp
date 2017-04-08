@@ -93,12 +93,32 @@ export const affiliationUnselected = (id) => {
   };
 };
 
+export const affiliationRemoved = (id) => {
+  const { currentUser } = firebase.auth();
+
+  return (dispatch) => {
+    firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/${id}`)
+      .remove()
+      .then(() => {
+        dispatch({ type: AFFILIATION_UNSELECTED, payload: {uid: id}});
+//        Actions.userEdit({ type: 'reset' });
+      })
+      .catch((error) => {
+        console.log(`Remove failed error = ${error}`);
+      });
+  };
+};
+
 export const affiliationsSaved = (affiliations) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
+    affiliations.forEach((affiliation) => {
+      console.log("In affiliations forEach");
+      console.log(affiliation);
+      firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/${affiliation.uid}`)
+        .set({name: affiliation.name, icon: affiliation.icon, uid: affiliation.uid});
+    });
     dispatch({ type: AFFILIATIONS_SAVED, payload: affiliations });
-    firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations`)
-      .set(affiliations);
   };
 };

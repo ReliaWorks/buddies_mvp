@@ -161,6 +161,7 @@ const localStyles = StyleSheet.create({
   },
   descriptionText: {
     fontSize: 16,
+    fontWeight: '100',
     marginLeft: 10,
     marginTop: MARGIN,
     fontFamily: 'Avenir-Book',

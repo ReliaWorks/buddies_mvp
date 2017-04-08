@@ -46,8 +46,6 @@ export const chatProfileFetch = (uid) => {
     dispatch({type: CHAT_PROFILE_FETCH});
     firebase.database().ref(`user_profiles/${uid}`)
       .once('value', snapshot => {
-        console.log("Looking up profile");
-        console.log(snapshot.val());
         dispatch({ type: CHAT_PROFILE_FETCH_SUCCESS, payload: snapshot.val()});
       });
   };

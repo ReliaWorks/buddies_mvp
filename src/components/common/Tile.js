@@ -1,14 +1,17 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 
-const Tile = (props) => {
-  const { tileName, tileIcon } = props;
-  const { cardStyle, imageStyle } = styles;
-
+const Tile = ({
+  tileName,
+  tileIcon,
+  cardStyle = styles.cardStyle,
+  imageStyle = styles.imageStyle,
+  titleStyle = styles.title
+  }) => {
   return (
     <View style={cardStyle}>
       <Image style={imageStyle} source={{ uri: tileIcon }} />
-      <Text style={{ alignSelf: 'center', fontSize: 11, fontWeight: '700', textAlign: 'center' }}>
+      <Text style={titleStyle}>
         {tileName}
       </Text>
     </View>
@@ -27,6 +30,12 @@ const styles = {
     marginTop: 10,
     width: 75,
     height: 100,
+  },
+  title: {
+    alignSelf: 'center',
+    fontSize: 11,
+    fontWeight: '700',
+    textAlign: 'center'
   }
 };
 

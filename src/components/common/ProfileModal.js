@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import BuddyCard from '../buddycard/BuddyCard';
 import { chatProfileFetch } from '../../actions';
 import { Spinner } from '../common';
-
-const ICON_WIDTH = 25;
-const MARGIN = 15;
 
 class ProfileModal extends Component {
   componentWillMount() {
