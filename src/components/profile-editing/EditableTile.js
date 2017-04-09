@@ -34,7 +34,7 @@ const EditableTile = ({
     return (
       <View style={cardStyle}>
         <View style={styles.iconContainer}>
-          <View style={{height: ICON_SIZE}}/>
+          <View style={{height: ICON_SIZE}} />
           <Image style={imageStyle} source={{ uri: tileIcon }} />
           {renderCloseIcon(onRemove, tileId, tileName)}
         </View>
@@ -50,9 +50,7 @@ const styles = {
     width: 95,
     height: 95,
     backgroundColor: '#F8F8F8',
-//    backgroundColor: 'yellow',
     justifyContent: 'center',
-//    alignItems: 'center',
   },
   imageStyle: {
     height: 58,
@@ -61,13 +59,8 @@ const styles = {
     alignSelf: 'center',
   },
   cardStyle: {
-//    marginTop: 10,
-//    marginBottom: 10,
-//    width: 95,
-//    width: 110,
-//    height: 100,
-    marginLeft: 5,
-    marginRight: 5,
+    marginLeft: 2,
+    marginRight: 2,
     marginBottom: 15,
     backgroundColor: 'white',
   },

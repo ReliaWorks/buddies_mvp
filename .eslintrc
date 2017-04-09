@@ -17,5 +17,6 @@
       "no-restricted-syntax": 0,
       "react/sort-comp": 0,
       "curly": 0,
+      "eqeqeq": 0,
   }
 }

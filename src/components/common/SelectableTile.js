@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 const SELECTED_COLOR = '#D8FCFC';
-const SELECTED_BORDER_COLOR = '#1DABB5';
 
 class SelectableTile extends Component {
   constructor(props) {
     super(props);
+    const isSelected = this.props.isSelected;
+
     this.state = {
-      tileBackgroundColor: 'white',
+      tileBackgroundColor: (isSelected ? SELECTED_COLOR : 'white'),
       tileBorderColor: '#ECECEC',
-      isSelected: false,
+      isSelected: isSelected,
     };
   }
 
@@ -21,7 +22,6 @@ class SelectableTile extends Component {
     this.setState({
       isSelected,
       tileBackgroundColor: (isSelected ? SELECTED_COLOR : 'white'),
-//      tileBorderColor: (isSelected ? SELECTED_BORDER_COLOR : '#ECECEC'),
     });
     onSelect(tileId, tileName, tileIcon, isSelected);
   }

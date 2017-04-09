@@ -20,26 +20,37 @@ class ActivitySetup extends Component {
               marginTop: 10,
             }}
           >
-          Next
+          {this.props.navLabel}
           </Text>
         </TouchableOpacity>
       </View>
     );
   }
 
-  renderActivityList(activitiesDS, onSelected) {
+  renderActivityRow(rowData) {
+    const activities = this.props.currentActivities;
+    let exists = false;
+    if(activities && activities.length > 0) {
+      exists = activities.find((activity) => {
+        return activity.uid === rowData.uid;
+      });
+    }
+    return(<SelectableTile
+      tileId={rowData.uid}
+      tileName={rowData.name}
+      tileIcon={rowData.icon}
+      onSelect={this.props.onSelected}
+      isSelected={exists}
+    />);
+  }
+
+  renderActivityList(activitiesDS) {
     return (
       <ScrollView style={{flex: 0.95}}>
         <ListView
           contentContainerStyle={styles.list}
           dataSource={activitiesDS}
-          renderRow={(rowData) =>
-            <SelectableTile
-              tileId={rowData.uid}
-              tileName={rowData.name}
-              tileIcon={rowData.icon}
-              onSelect={onSelected}
-            />}
+          renderRow={this.renderActivityRow.bind(this)}
           enableEmptySections
         />
       </ScrollView>
@@ -53,17 +64,17 @@ class ActivitySetup extends Component {
           onPress={onNext}
           color="white"
         >
-          <Text style={styles.nextButtonText}>Next</Text>
+          <Text style={styles.nextButtonText}>{this.props.navLabel}</Text>
         </TouchableOpacity>
       </View>
     );
   }
   render() {
-    const { activitiesDS, onNext, onSelected } = this.props;
+    const { activitiesDS, onNext } = this.props;
     return (
       <View style={{ flex: 1, justifyContent: 'space-between' }}>
         {this.renderSectionHeader(onNext)}
-        {this.renderActivityList(activitiesDS, onSelected)}
+        {this.renderActivityList(activitiesDS)}
         {this.renderNextButton(onNext)}
       </View>
     );

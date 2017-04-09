@@ -20,26 +20,37 @@ class AffiliationSetup extends Component {
               marginTop: 10,
             }}
           >
-          Next
+          {this.props.navLabel}
           </Text>
         </TouchableOpacity>
       </View>
     );
   }
 
-  renderAffiliationList(affiliationsDS, onSelected) {
+  renderAffiliationRow(rowData) {
+    const affs = this.props.currentAffiliations;
+    let exists = false;
+    if(affs && affs.length > 0) {
+      exists = affs.find((aff) => {
+        return aff.uid === rowData.uid;
+      });
+    }
+    return(<SelectableTile
+      tileId={rowData.uid}
+      tileName={rowData.name}
+      tileIcon={rowData.icon}
+      onSelect={this.props.onSelected}
+      isSelected={exists}
+    />);
+  }
+
+  renderAffiliationList(affiliationsDS) {
     return (
       <ScrollView style={{flex: 0.95}}>
         <ListView
           contentContainerStyle={styles.list}
           dataSource={affiliationsDS}
-          renderRow={(rowData) =>
-            <SelectableTile
-              tileId={rowData.uid}
-              tileName={rowData.name}
-              tileIcon={rowData.icon}
-              onSelect={onSelected}
-            />}
+          renderRow={this.renderAffiliationRow.bind(this)}
           enableEmptySections
         />
       </ScrollView>
@@ -53,18 +64,18 @@ class AffiliationSetup extends Component {
           onPress={onNext}
           color="white"
         >
-          <Text style={styles.nextButtonText}>Next</Text>
+          <Text style={styles.nextButtonText}>{this.props.navLabel}</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
   render() {
-    const { affiliationsDS, onNext, onSelected } = this.props;
+    const { affiliationsDS, onNext } = this.props;
     return (
       <View style={{ flex: 1 }}>
         {this.renderSectionHeader(onNext)}
-        {this.renderAffiliationList(affiliationsDS, onSelected)}
+        {this.renderAffiliationList(affiliationsDS)}
         {this.renderNextButton(onNext)}
       </View>
     );

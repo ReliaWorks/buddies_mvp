@@ -9,7 +9,7 @@ import { legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
 
 const appName = "wavelength";
-const backgroundImageURL = require('../components/common/img/wavelengthLoginBackground.png');
+const backgroundImageURL = require("../components/common/img/wavelength.png");
 
 const { width } = Dimensions.get('window');
 const LOGINFORM_MARGIN = 15;
@@ -38,10 +38,11 @@ class LoginForm extends Component {
       </View>
     );
   }
+//  {this.renderAppName()}
+
   renderLoginForm() {
     return (
       <View style={styles.container}>
-        {this.renderAppName()}
         <Image source={backgroundImageURL} style={styles.backgroundImage} />
         <Button
           onPress={this.onButtonPress.bind(this)}
@@ -110,7 +111,7 @@ const styles = {
     alignSelf: 'stretch',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginTop: 10,
+    marginTop: -30,
     marginLeft: LOGINFORM_MARGIN,
     marginRight: LOGINFORM_MARGIN,
     width: null,

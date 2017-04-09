@@ -4,7 +4,7 @@ export default styles = {
     fontSize: 18,
     fontWeight: 'bold',
   },
-  sectionContainer: {
+  title: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,

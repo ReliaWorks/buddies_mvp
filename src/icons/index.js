@@ -60,7 +60,7 @@ export const homeLeftIconButton = () => {
 export const homeRightIconButton = () => {
   return (
     <TouchableOpacity
-      onPress={() => Actions.pop()}
+      onPress={() => Actions.main()}
       style={{
         width: ICON_CLICKABLE_AREA_WIDTH,
         alignSelf: 'flex-end',
@@ -83,7 +83,7 @@ export const homeRightIconButton = () => {
 export const profileIconButton = () => {
   return (
     <TouchableOpacity
-      onPress={() => Actions.profileSettings()}
+      onPress={() => Actions.userView()}
       style={{width: ICON_CLICKABLE_AREA_WIDTH}}
     >
       <Icon

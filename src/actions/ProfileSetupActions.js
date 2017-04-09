@@ -41,13 +41,10 @@ export const savePics = (selectedPics) => {
 export const descriptionSaved = (text) => {
   const { currentUser } = firebase.auth();
 
-  console.log(`In descriptionSaved with text = ${text}`);
-  console.log(currentUser.uid);
   return (dispatch) => {
     firebase.database().ref(`user_profiles/${currentUser.uid}/description`)
       .set(text)
       .then(() => {
-        console.log("dispatching to description_saved");
         dispatch({ type: DESCRIPTION_SAVED, payload: text });
       });
   };
@@ -71,11 +68,20 @@ export const activitiesSaved = (activities, profileImages) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
-    dispatch({ type: ACTIVITIES_SAVED, payload: activities });
     firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
       .set(profileImages);
-    firebase.database().ref(`user_profiles/${currentUser.uid}/activities`)
-      .set(activities);
+    activities.forEach((activity, index) => {
+      firebase.database().ref(`user_profiles/${currentUser.uid}/activities/`)
+        .remove()
+        .then(() => {
+          firebase.database().ref(`user_profiles/${currentUser.uid}/activities/${activity.uid}`)
+            .set({name: activity.name, icon: activity.icon, uid: activity.uid})
+            .then(() => {
+              if(index === activities.length - 1)
+                dispatch({ type: ACTIVITIES_SAVED, payload: activities });
+            });
+        });
+      });
   };
 };
 
@@ -101,7 +107,21 @@ export const affiliationRemoved = (id) => {
       .remove()
       .then(() => {
         dispatch({ type: AFFILIATION_UNSELECTED, payload: {uid: id}});
-//        Actions.userEdit({ type: 'reset' });
+      })
+      .catch((error) => {
+        console.log(`Remove failed error = ${error}`);
+      });
+  };
+};
+
+export const activityRemoved = (id) => {
+  const { currentUser } = firebase.auth();
+
+  return (dispatch) => {
+    firebase.database().ref(`user_profiles/${currentUser.uid}/activities/${id}`)
+      .remove()
+      .then(() => {
+        dispatch({ type: ACTIVITY_UNSELECTED, payload: {uid: id}});
       })
       .catch((error) => {
         console.log(`Remove failed error = ${error}`);
@@ -113,12 +133,17 @@ export const affiliationsSaved = (affiliations) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
-    affiliations.forEach((affiliation) => {
-      console.log("In affiliations forEach");
-      console.log(affiliation);
-      firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/${affiliation.uid}`)
-        .set({name: affiliation.name, icon: affiliation.icon, uid: affiliation.uid});
-    });
-    dispatch({ type: AFFILIATIONS_SAVED, payload: affiliations });
+    affiliations.forEach((affiliation, index) => {
+      firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/`)
+        .remove()
+        .then(() => {
+          firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/${affiliation.uid}`)
+            .set({name: affiliation.name, icon: affiliation.icon, uid: affiliation.uid})
+            .then(() => {
+              if(index === affiliations.length - 1)
+                dispatch({ type: AFFILIATIONS_SAVED, payload: affiliations });
+            });
+        });
+      });
   };
 };
