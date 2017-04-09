@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import AffiliationSetup from './AffiliationSetup';
 import { affiliationsFetch, affiliationsSaved, affiliationSelected, affiliationUnselected } from '../../actions';
 
@@ -24,18 +24,30 @@ class AffiliationSetupScene extends Component {
 
   onAffiliationSelected(uid, name, icon, isSelected) {
     if(isSelected) this.props.affiliationSelected({uid, name, icon});
-    else this.props.affiliationUnselected({uid: uid, name: name, icon: icon});
+    else this.props.affiliationUnselected({uid, name, icon});
   }
 
   render() {
+    let onNextAction = () => {
+      this.props.affiliationsSaved(this.props.currentUser.affiliations);
+      Actions.descriptionSetup();
+    };
+    let navLabel = "Next";
+    if(this.props.source == 'Edit') {
+      onNextAction = () => {
+        this.props.affiliationsSaved(this.props.currentUser.affiliations);
+        Actions.main({ type: ActionConst.RESET });
+        Actions.userEdit();
+      };
+      navLabel = "Done";
+    }
     return (
       <AffiliationSetup
         affiliationsDS={this.dataSource}
-        onNext={() => {
-          this.props.affiliationsSaved(this.props.currentUser.affiliations);
-          Actions.descriptionSetup();
-        }}
+        onNext={onNextAction}
         onSelected={this.onAffiliationSelected.bind(this)}
+        navLabel={navLabel}
+        currentAffiliations={this.props.currentUser.affiliations}
       />
     );
   }

@@ -42,14 +42,16 @@ export default(state = INITIAL_STATE, action) => {
       const age = action.payload.age;
       const location = action.payload.location;
       const email = action.payload.email;
-      let activities = [];
+      const activities = [];
       if(action.payload.activities) {
-        activities = action.payload.activities.map((activity) => {
-          return {
-            name: activity.name,
-            icon: activity.icon,
-            uid: activity.uid,
-          };
+        _.forEach(action.payload.activities, (activity) => {
+          if(activity) {
+            activities.push({
+              name: activity.name,
+              icon: activity.icon,
+              uid: activity.uid,
+            });
+          }
         });
       }
       const affiliations = [];
@@ -89,7 +91,6 @@ export default(state = INITIAL_STATE, action) => {
       const uid = action.payload.uid;
       const updatedAffiliationList = state.affiliations.filter(
         (item) => item.uid !== uid);
-      console.log(updatedAffiliationList);
       return { ...state, affiliations: updatedAffiliationList };
     }
     case AFFILIATIONS_SAVED: {

@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import AffiliationSet from './AffiliationSet';
-import { affiliationRemoved } from '../../actions';
+import { activityRemoved } from '../../actions';
 import { Confirm } from '../common';
 import styles from './styles';
 
@@ -17,17 +17,17 @@ class AffiliationsEdit extends Component {
     };
   }
 
-  addAffiliation() {
+  addActivity() {
     Actions.profileSetup({ type: ActionConst.RESET });
-    Actions.affiliationSetup({ type: ActionConst.RESET, source: 'Edit' });
+    Actions.activitySetup({ source: 'Edit' });
   }
 
-  removeAffiliation(tileId, tileName) {
+  removeActivity(tileId, tileName) {
     this.setState({ showModal: true, tileId, tileName });
   }
 
   confirmDelete() {
-    this.props.affiliationRemoved(this.state.tileId);
+    this.props.activityRemoved(this.state.tileId);
     this.setState({ showModal: false });
   }
 
@@ -36,7 +36,7 @@ class AffiliationsEdit extends Component {
   }
 
   render() {
-    const { affiliations, title } = this.props;
+    const { activities, title } = this.props;
 
     return(
       <View style={localStyles.sectionContainer}>
@@ -44,9 +44,9 @@ class AffiliationsEdit extends Component {
           <Text style={styles.sectionHeaderText}>{title}</Text>
         </View>
       <AffiliationSet
-        value={{affiliations}}
-        onRemove={this.removeAffiliation.bind(this)}
-        onAdd={this.addAffiliation.bind(this)}
+        value={{affiliations: activities}}
+        onRemove={this.removeActivity.bind(this)}
+        onAdd={this.addActivity.bind(this)}
       />
       <Confirm
         visible={this.state.showModal}
@@ -63,13 +63,12 @@ const localStyles = {
   sectionContainer: {
     flex: 1,
     backgroundColor: 'white',
-    paddingBottom: 25,
   }
 };
 
 const mapStateToProps = ({ currentUser }) => {
-  const { affiliations } = currentUser;
-  return { affiliations };
+  const { activities } = currentUser;
+  return { activities };
 };
 
-export default connect(mapStateToProps, { affiliationRemoved })(AffiliationsEdit);
+export default connect(mapStateToProps, { activityRemoved })(AffiliationsEdit);

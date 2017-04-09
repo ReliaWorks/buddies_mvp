@@ -30,23 +30,22 @@ class Routes extends Component {
             direction="vertical"
             component={LoginForm}
             hideNavBar
-            title="Buddies"
           />
         </Scene>
         <Scene key="profileSetup">
           <Scene
             key="activitySetup"
-            title="Select Activities"
+            title="My Activities"
             component={ActivitySetupScene}
           />
           <Scene
             key="affiliationSetup"
-            title="Select Affiliations"
+            title="My Affiliations"
             component={AffiliationSetupScene}
           />
           <Scene
             key="descriptionSetup"
-            title="Profile Setup"
+            title="About Me"
             component={DescriptionSetup}
           />
           <Scene
@@ -88,30 +87,26 @@ class Routes extends Component {
             key="profile"
             component={ProfileModal}
             title="Profile"
-//            direction="vertical"
-//            hideNavBar
-          />
-
-        </Scene>
-        <Scene key="profileSettings">
-          <Scene
-            key="userView"
-            component={UserView}
-            title="Profile Settings"
-            leftButton={wrenchIconButton}
-            rightButton={homeRightIconButton}
-          />
-          <Scene
-            key="userEdit"
-            component={UserEditContainer}
-            title="Edit Profile"
-          />
-          <Scene
-            key="settings"
-            component={SettingsContainer}
-            title="Settings"
           />
         </Scene>
+        <Scene
+          key="userView"
+          component={UserView}
+          title="Profile Settings"
+          leftButton={wrenchIconButton}
+          rightButton={homeRightIconButton}
+          type={ActionConst.RESET}
+        />
+        <Scene
+          key="userEdit"
+          component={UserEditContainer}
+          title="Edit Profile"
+        />
+        <Scene
+          key="settings"
+          component={SettingsContainer}
+          title="Settings"
+        />
       </Router>
     );
   }

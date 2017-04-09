@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import ActivitySetup from './ActivitySetup';
 import { activitiesFetch, activitiesSaved, activitySelected, activityUnselected } from '../../actions';
 
@@ -24,19 +24,32 @@ class ActivitySetupScene extends Component {
 
   onActivitySelected(uid, name, icon, isSelected) {
     if(isSelected) this.props.activitySelected({uid, name, icon});
-    else this.props.activityUnselected({uid: uid, name: name, icon: icon});
+    else this.props.activityUnselected({uid , name, icon});
   }
 
   render() {
+    let onNextAction = () => {
+      this.props.activitiesSaved(this.props.currentUser.activities, this.props.auth.profile_pics);
+      Actions.affiliationSetup();
+    };
+    let navLabel = "Next";
+    if(this.props.source == 'Edit') {
+      onNextAction = () => {
+        this.props.activitiesSaved(this.props.currentUser.activities, this.props.currentUser.profileImages);
+        Actions.main({ type: ActionConst.RESET });
+        Actions.userEdit();
+      };
+      navLabel = "Done";
+    }
+
     return (
       <ActivitySetup
         activities={this.props.activities}
         activitiesDS={this.dataSource}
-        onNext={() => {
-          this.props.activitiesSaved(this.props.currentUser.activities, this.props.auth.profile_pics);
-          Actions.affiliationSetup();
-        }}
+        onNext={onNextAction}
         onSelected={this.onActivitySelected.bind(this)}
+        navLabel={navLabel}
+        currentActivities={this.props.currentUser.activities}
       />
     );
   }
