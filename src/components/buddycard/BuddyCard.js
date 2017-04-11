@@ -72,6 +72,10 @@ class BuddyCard extends Component {
           </TouchableOpacity>
         );
       }
+      if(typeof affiliations === 'object')
+        affiliations = _.values(affiliations);
+      if(typeof activities === 'object')
+        activities = _.values(activities);
       if(activities.length === 0) activitiesAndAffiliations = affiliations;
       activitiesAndAffiliations = [...activities, ...affiliations];
     }
