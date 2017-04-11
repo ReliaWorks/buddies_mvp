@@ -16,7 +16,9 @@ export const potentialsFetch = () => {
     const potentials = [];
 
     dispatch({type: POTENTIALS_FETCH});
-    axios.get(`https://activities-test-a3871.appspot.com/match/${currentUser.uid}`)
+    axios.get(`https://activities-test-a3871.appspot.com/match/${currentUser.uid}`, {
+      headers: { authorization: `TODOChangeTolocalStoregetItemtoken:${currentUser.uid}`}
+    })
       .then(response => {
         const keys = Object.keys(response.data);
         keys.forEach((key) => {
