@@ -53,19 +53,22 @@ class BuddyCard extends Component {
   }
 
   removenulls(arr) {
-    const filteredArr = arr.filter(n => n);
-    return filteredArr;
+    const type = typeof arr;
+    if(type === "array") {
+      const filteredArr = arr.filter(n => n);
+      return filteredArr;
+    }
   }
 
   renderActivitiesAffiliations(activities, affiliations, editable) {
-    activities = this.removenulls(activities);
-    affiliations = this.removenulls(affiliations);
-
     //if there are none and this is a browseable profile, then return null
     if(!activities && !affiliations) return null;
     if(activities.length === 0 && affiliations.length === 0) return null;
     if(!activities && affiliations.length === 0) return null;
     if(activities.length === 0 && !affiliations) return null;
+
+    activities = this.removenulls(activities);
+    affiliations = this.removenulls(affiliations);
 
     let activitiesAndAffiliations = [];
     // if there are none and this is an editable profile (user viewing their own profile) then

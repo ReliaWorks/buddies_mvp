@@ -41,7 +41,6 @@ export const fetchConversation = (otherUserId) => {
 };
 
 export const chatProfileFetch = (uid) => {
-  console.log(`In chatProfileFetch with uid = ${uid}`);
   return (dispatch) => {
     dispatch({type: CHAT_PROFILE_FETCH});
     firebase.database().ref(`user_profiles/${uid}`)
