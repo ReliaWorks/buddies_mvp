@@ -42,7 +42,7 @@ export default(state = INITIAL_STATE, action) => {
       const age = action.payload.age;
       const location = action.payload.location;
       const email = action.payload.email;
-      const activities = [];
+/*      const activities = [];
       if(action.payload.activities) {
         _.forEach(action.payload.activities, (activity) => {
           if(activity) {
@@ -54,7 +54,8 @@ export default(state = INITIAL_STATE, action) => {
           }
         });
       }
-      const affiliations = [];
+*/
+/*      const affiliations = [];
       if(action.payload.affiliations) {
         _.forEach(action.payload.affiliations, (affiliation) => {
           if(affiliation) {
@@ -66,9 +67,10 @@ export default(state = INITIAL_STATE, action) => {
           }
         });
       }
-      let description = '';
+*/
+    let description = '';
       if(action.payload.description) description = action.payload.description;
-      return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email, uid: action.payload.uid };
+      return { ...state, firstName, profileImages, age, location, activities: action.payload.activities, affiliations: action.payload.affiliations, description, email, uid: action.payload.uid };
     }
     case ACTIVITY_SELECTED: {
       const updatedActivities = [...state.activities, action.payload];

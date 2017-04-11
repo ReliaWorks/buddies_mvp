@@ -52,14 +52,6 @@ class BuddyCard extends Component {
     );
   }
 
-  removenulls(arr) {
-    const type = typeof arr;
-    if(type === "array") {
-      const filteredArr = arr.filter(n => n);
-      return filteredArr;
-    }
-  }
-
   renderActivitiesAffiliations(activities, affiliations, editable) {
     //if there are none and this is a browseable profile, then return null
     if(!activities && !affiliations) return null;
@@ -67,10 +59,7 @@ class BuddyCard extends Component {
     if(!activities && affiliations.length === 0) return null;
     if(activities.length === 0 && !affiliations) return null;
 
-    activities = this.removenulls(activities);
-    affiliations = this.removenulls(affiliations);
-
-    let activitiesAndAffiliations = [];
+    let activitiesAndAffiliations = {};
     // if there are none and this is an editable profile (user viewing their own profile) then
     // return a call to action to edit your profile
     if(activities && affiliations) {
@@ -84,7 +73,7 @@ class BuddyCard extends Component {
         );
       }
       if(activities.length === 0) activitiesAndAffiliations = affiliations;
-      else activitiesAndAffiliations = activities.concat(affiliations);
+      activitiesAndAffiliations = { ...activities, ...affiliations };
     }
     // at least some activities or affiliations exist, so render them
     if(activities && !affiliations) {
