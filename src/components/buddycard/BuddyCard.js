@@ -59,7 +59,7 @@ class BuddyCard extends Component {
     if(!activities && affiliations.length === 0) return null;
     if(activities.length === 0 && !affiliations) return null;
 
-    let activitiesAndAffiliations = {};
+    let activitiesAndAffiliations = [];
     // if there are none and this is an editable profile (user viewing their own profile) then
     // return a call to action to edit your profile
     if(activities && affiliations) {
@@ -73,7 +73,7 @@ class BuddyCard extends Component {
         );
       }
       if(activities.length === 0) activitiesAndAffiliations = affiliations;
-      activitiesAndAffiliations = { ...activities, ...affiliations };
+      activitiesAndAffiliations = [...activities, ...affiliations];
     }
     // at least some activities or affiliations exist, so render them
     if(activities && !affiliations) {

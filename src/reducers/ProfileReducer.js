@@ -42,7 +42,7 @@ export default(state = INITIAL_STATE, action) => {
       const age = action.payload.age;
       const location = action.payload.location;
       const email = action.payload.email;
-/*      const activities = [];
+      const activities = [];
       if(action.payload.activities) {
         _.forEach(action.payload.activities, (activity) => {
           if(activity) {
@@ -54,8 +54,8 @@ export default(state = INITIAL_STATE, action) => {
           }
         });
       }
-*/
-/*      const affiliations = [];
+
+      const affiliations = [];
       if(action.payload.affiliations) {
         _.forEach(action.payload.affiliations, (affiliation) => {
           if(affiliation) {
@@ -67,10 +67,10 @@ export default(state = INITIAL_STATE, action) => {
           }
         });
       }
-*/
+
     let description = '';
       if(action.payload.description) description = action.payload.description;
-      return { ...state, firstName, profileImages, age, location, activities: action.payload.activities, affiliations: action.payload.affiliations, description, email, uid: action.payload.uid };
+      return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email, uid: action.payload.uid };
     }
     case ACTIVITY_SELECTED: {
       const updatedActivities = [...state.activities, action.payload];
@@ -83,7 +83,20 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, activities: updatedActivityList };
     }
     case ACTIVITIES_SAVED: {
-      return { ...state, activities: action.payload };
+      const updatedActivities = [];
+      if(action.payload) {
+        _.forEach(action.payload, (activity) => {
+          if(activity) {
+            updatedActivities.push({
+              name: activity.name,
+              icon: activity.icon,
+              uid: activity.uid,
+            });
+          }
+        });
+      }
+
+      return { ...state, activities: updatedActivities };
     }
     case AFFILIATION_SELECTED: {
       const updatedAffiliations = [...state.affiliations, action.payload];
@@ -96,7 +109,20 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, affiliations: updatedAffiliationList };
     }
     case AFFILIATIONS_SAVED: {
-      return { ...state, affiliations: action.payload };
+      const updatedAffiliations = [];
+      if(action.payload) {
+        _.forEach(action.payload, (affiliation) => {
+          if(affiliation) {
+            updatedAffiliations.push({
+              name: affiliation.name,
+              icon: affiliation.icon,
+              uid: affiliation.uid,
+            });
+          }
+        });
+      }
+
+      return { ...state, affiliations: updatedAffiliations };
     }
     case DESCRIPTION_SAVED: {
       return { ...state, description: action.payload };
