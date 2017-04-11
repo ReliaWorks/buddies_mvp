@@ -36,9 +36,6 @@ class BrowseContainer extends Component {
 
   swipe() {
     const targetIndex = this.swiper.state.index;
-//    console.log(`targetIndex = ${targetIndex}`);
-//    console.log(`this.state.currentIndex = ${this.state.currentIndex}`);
-//    console.log(`total = ${this.swiper.state.total}`);
     if(this.state.currentIndex === this.swiper.state.total - 1)
       this.setState({viewedAllPotentials: true, currentIndex: 0});
     else {
