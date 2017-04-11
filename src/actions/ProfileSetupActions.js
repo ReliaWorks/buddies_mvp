@@ -70,18 +70,20 @@ export const activitiesSaved = (activities, profileImages) => {
   return (dispatch) => {
     firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
       .set(profileImages);
-    activities.forEach((activity, index) => {
-      firebase.database().ref(`user_profiles/${currentUser.uid}/activities/`)
-        .remove()
-        .then(() => {
-          firebase.database().ref(`user_profiles/${currentUser.uid}/activities/${activity.uid}`)
-            .set({name: activity.name, icon: activity.icon, uid: activity.uid})
-            .then(() => {
-              if(index === activities.length - 1)
-                dispatch({ type: ACTIVITIES_SAVED, payload: activities });
-            });
-        });
+    if(activities && activities.length > 0) {
+      activities.forEach((activity, index) => {
+        firebase.database().ref(`user_profiles/${currentUser.uid}/activities/`)
+          .remove()
+          .then(() => {
+            firebase.database().ref(`user_profiles/${currentUser.uid}/activities/${activity.uid}`)
+              .set({name: activity.name, icon: activity.icon, uid: activity.uid})
+              .then(() => {
+                if(index === activities.length - 1)
+                  dispatch({ type: ACTIVITIES_SAVED, payload: activities });
+              });
+          });
       });
+    } else dispatch({ type: ACTIVITIES_SAVED, payload: activities });
   };
 };
 
@@ -133,17 +135,19 @@ export const affiliationsSaved = (affiliations) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
-    affiliations.forEach((affiliation, index) => {
-      firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/`)
-        .remove()
-        .then(() => {
-          firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/${affiliation.uid}`)
-            .set({name: affiliation.name, icon: affiliation.icon, uid: affiliation.uid})
-            .then(() => {
-              if(index === affiliations.length - 1)
-                dispatch({ type: AFFILIATIONS_SAVED, payload: affiliations });
-            });
+    if(affiliations && affiliations.length > 0) {
+      affiliations.forEach((affiliation, index) => {
+        firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/`)
+          .remove()
+          .then(() => {
+            firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/${affiliation.uid}`)
+              .set({name: affiliation.name, icon: affiliation.icon, uid: affiliation.uid})
+              .then(() => {
+                if(index === affiliations.length - 1)
+                  dispatch({ type: AFFILIATIONS_SAVED, payload: affiliations });
+              });
+          });
         });
-      });
+    } else dispatch({ type: AFFILIATIONS_SAVED, payload: affiliations });
   };
 };

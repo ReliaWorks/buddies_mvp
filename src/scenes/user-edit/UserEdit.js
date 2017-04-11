@@ -4,10 +4,12 @@ import ActivitiesEdit from '../../components/profile-editing/ActivitiesEdit';
 import AffiliationsEdit from '../../components/profile-editing/AffiliationsEdit';
 
 const MARGIN = 15;
+const DESCRIPTION_PLACEHOLDER = 'Describe yourself';
 
 class UserEdit extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       text: this.props.description,
       height: 300,
@@ -43,6 +45,7 @@ class UserEdit extends Component {
             onContentSizeChange={(event) => {
               this.setState({height: event.nativeEvent.contentSize.height});
             }}
+            placeholder={DESCRIPTION_PLACEHOLDER}
             value={this.state.text}
           />
         </View>
