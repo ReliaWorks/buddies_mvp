@@ -52,9 +52,20 @@ class BuddyCard extends Component {
     );
   }
 
+  removenulls(arr) {
+    const filteredArr = arr.filter(n => n);
+    return filteredArr;
+  }
+
   renderActivitiesAffiliations(activities, affiliations, editable) {
+    activities = this.removenulls(activities);
+    affiliations = this.removenulls(affiliations);
+
     //if there are none and this is a browseable profile, then return null
     if(!activities && !affiliations) return null;
+    if(activities.length === 0 && affiliations.length === 0) return null;
+    if(!activities && affiliations.length === 0) return null;
+    if(activities.length === 0 && !affiliations) return null;
 
     let activitiesAndAffiliations = [];
     // if there are none and this is an editable profile (user viewing their own profile) then
@@ -69,14 +80,13 @@ class BuddyCard extends Component {
           </TouchableOpacity>
         );
       }
-      if(activities.length === 0 && affiliations.length === 0) return null;
-      if(!activities.length) activitiesAndAffiliations = affiliations;
+      if(activities.length === 0) activitiesAndAffiliations = affiliations;
       else activitiesAndAffiliations = activities.concat(affiliations);
     }
     // at least some activities or affiliations exist, so render them
     if(activities && !affiliations) {
       if(activities.length > 0) activitiesAndAffiliations = activities;
-    } else if(!activities && affiliations) {
+    } else if(!activities && affiliations && affiliations.length > 0) {
       activitiesAndAffiliations = affiliations;
     }
     return (
