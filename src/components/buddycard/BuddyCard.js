@@ -55,7 +55,6 @@ class BuddyCard extends Component {
   renderActivitiesAffiliations(activities, affiliations, editable) {
     //if there are none and this is a browseable profile, then return null
     if(!activities && !affiliations) return null;
-    if(_.isEmpty(activities) && _.isEmpty(affiliations)) return null;
 
     let activitiesAndAffiliations = [];
     // if there are none and this is an editable profile (user viewing their own profile) then
@@ -71,7 +70,7 @@ class BuddyCard extends Component {
         );
       }
       if(activities.length === 0 && affiliations.length === 0) return null;
-      if(_.isEmpty(activities)) activitiesAndAffiliations = affiliations;
+      if(!activities.length) activitiesAndAffiliations = affiliations;
       else activitiesAndAffiliations = activities.concat(affiliations);
     }
     // at least some activities or affiliations exist, so render them

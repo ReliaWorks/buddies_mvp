@@ -37,7 +37,7 @@ class Settings extends Component {
           {this.props.value.firstName}
         </Text>
         <Text style={styles.headerText}>
-          Match Preferences
+          Preferences
         </Text>
       </View>
     );
@@ -77,7 +77,7 @@ class Settings extends Component {
         <TouchableOpacity onPress={this.openPrivacyPolicy}>
           <Text style={styles.linkText}>Privacy Policy</Text>
         </TouchableOpacity>
-        <View style={{borderWidth: 1, borderColor: 'lightgray', height: 25 }}/>
+        <View style={{borderWidth: 1, borderColor: 'lightgray', height: 25 }} />
         <TouchableOpacity onPress={this.openTermsOfService}>
           <Text style={styles.linkText}>Terms of Service</Text>
         </TouchableOpacity>
