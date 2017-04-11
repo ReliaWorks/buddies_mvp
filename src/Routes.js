@@ -101,6 +101,8 @@ class Routes extends Component {
           key="userEdit"
           component={UserEditContainer}
           title="Edit Profile"
+          leftButton={profileIconButton}
+          type={ActionConst.RESET}
         />
         <Scene
           key="settings"

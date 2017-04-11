@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ListView, TouchableOpacity, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import EditableTile from './EditableTile';
+import { Spinner } from '../common';
 
 const ICON_SIZE = 50;
 const MARGIN = 15;
@@ -40,7 +41,11 @@ class AffiliationSet extends Component {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    dataSource = ds.cloneWithRows(this.props.value.affiliations);
+
+    let affiliations = this.props.value.affiliations;
+    if(!affiliations) affiliations = [];
+
+    dataSource = ds.cloneWithRows(affiliations);
 
     return (
       <ListView
