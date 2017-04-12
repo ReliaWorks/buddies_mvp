@@ -52,6 +52,7 @@ class ActivitySetup extends Component {
           dataSource={activitiesDS}
           renderRow={this.renderActivityRow.bind(this)}
           enableEmptySections
+          initialListSize={25}
         />
       </ScrollView>
     );

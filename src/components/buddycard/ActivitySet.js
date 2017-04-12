@@ -21,6 +21,7 @@ class ActivitySet extends Component {
           dataSource={dataSource}
           renderRow={(rowData) => <Tile tileName={rowData.name} tileIcon={rowData.icon} />}
           enableEmptySections
+          initialListSize={25}
       />
     );
   }
@@ -34,7 +35,7 @@ const styles = {
     backgroundColor: 'white',
     marginLeft: MARGIN,
     marginRight: MARGIN,
-    flex: 1,
+//    flex: 1,
   },
 };
 
