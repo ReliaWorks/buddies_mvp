@@ -32,6 +32,7 @@ class ActivityList extends Component {
         enableEmptySections
         dataSource={this.dataSource}
         renderRow={this.renderRow}
+        initialListSize={25}
       />
     );
   }

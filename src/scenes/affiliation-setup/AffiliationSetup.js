@@ -52,6 +52,7 @@ class AffiliationSetup extends Component {
           dataSource={affiliationsDS}
           renderRow={this.renderAffiliationRow.bind(this)}
           enableEmptySections
+          initialListSize={25}
         />
       </ScrollView>
     );

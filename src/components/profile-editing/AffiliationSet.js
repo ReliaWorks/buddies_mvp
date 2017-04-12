@@ -61,6 +61,7 @@ class AffiliationSet extends Component {
           }
           renderFooter={() => this.renderAddAffiliationIcon()}
           enableEmptySections
+          initialListSize={25}
       />
     );
   }

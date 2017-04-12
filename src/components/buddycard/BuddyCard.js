@@ -72,12 +72,13 @@ class BuddyCard extends Component {
           </TouchableOpacity>
         );
       }
+      const affs = affiliations;
+      const acts = activities;
       if(typeof affiliations === 'object')
-        affiliations = _.values(affiliations);
+        affs = _.values(affiliations);
       if(typeof activities === 'object')
-        activities = _.values(activities);
-      if(activities.length === 0) activitiesAndAffiliations = affiliations;
-      activitiesAndAffiliations = [...activities, ...affiliations];
+        acts = _.values(activities);
+      activitiesAndAffiliations = [...acts, ...affs];
     }
     // at least some activities or affiliations exist, so render them
     if(activities && !affiliations) {

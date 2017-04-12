@@ -46,6 +46,7 @@ class MessageCenter extends Component {
               dataSource={this.props.matchesDataSource}
               renderRow={(data) => <ConversationListItem {...data} />}
               enableEmptySections
+              initialListSize={25}
             />
           </ScrollView>
         </View>
