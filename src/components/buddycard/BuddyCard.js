@@ -82,7 +82,7 @@ class BuddyCard extends Component {
     }
     // at least some activities or affiliations exist, so render them
     if(activities && !affiliations) {
-      if(activities.length > 0) activitiesAndAffiliations = activities;
+      activitiesAndAffiliations = activities;
     } else if(!activities && affiliations && affiliations.length > 0) {
       activitiesAndAffiliations = affiliations;
     }
