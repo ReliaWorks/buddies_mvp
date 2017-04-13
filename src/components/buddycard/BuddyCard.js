@@ -54,11 +54,17 @@ class BuddyCard extends Component {
 
   renderActivitiesAffiliations(activities, affiliations, editable) {
     //if there are none and this is a browseable profile, then return null
-    if(!activities && !affiliations) return null;
-    if(activities.length === 0 && affiliations.length === 0) return null;
-    if(!activities && affiliations.length === 0) return null;
-    if(activities.length === 0 && !affiliations) return null;
-
+    if(!activities && !affiliations) {
+      if(editable) {
+        return (
+          <TouchableOpacity onPress={() => Actions.userEdit()} style={buttonStyle}>
+            <View style={{ justifyContent: 'center', padding: 75 }}>
+              <Text style={centeredTextStyle}>Update your profile</Text>
+            </View>
+          </TouchableOpacity>
+        );
+      } else return null;
+    }
     let activitiesAndAffiliations = [];
     // if there are none and this is an editable profile (user viewing their own profile) then
     // return a call to action to edit your profile
@@ -72,6 +78,10 @@ class BuddyCard extends Component {
           </TouchableOpacity>
         );
       }
+      if(activities.length === 0 && affiliations.length === 0) return null;
+      if(!activities && affiliations.length === 0) return null;
+      if(activities.length === 0 && !affiliations) return null;
+
       const affs = affiliations;
       const acts = activities;
       if(typeof affiliations === 'object')
@@ -83,7 +93,7 @@ class BuddyCard extends Component {
     // at least some activities or affiliations exist, so render them
     if(activities && !affiliations) {
       activitiesAndAffiliations = activities;
-    } else if(!activities && affiliations && affiliations.length > 0) {
+    } else if(!activities && affiliations) {
       activitiesAndAffiliations = affiliations;
     }
     return (
