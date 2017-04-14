@@ -77,7 +77,7 @@ export const loginUser = () => {
           AccessToken.getCurrentAccessToken()
             .then(accessTokenData => {
               signIntoFirebase(dispatch, auth, provider, accessTokenData);
-              debugger;
+              
               dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
             });
         }

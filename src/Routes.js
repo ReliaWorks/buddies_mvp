@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActionConst, Scene, Router } from 'react-native-router-flux';
+import { ActionConst, Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
 import SettingsContainer from './scenes/settings';
 import BrowseContainer from './scenes/BrowseContainer';
@@ -14,7 +14,7 @@ import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
 import ProfileModal from './components/common/ProfileModal';
 import Splash from './scenes/Splash';
-import { navBarStyle, navTitleStyle } from './components/common/styles';
+import { navBarStyle, navTitleStyle, navBackNextStyle } from './components/common/styles';
 import { chatIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
 class Routes extends Component {
@@ -41,18 +41,42 @@ class Routes extends Component {
           <Scene
             key="activitySetup"
             title="My Activities"
+            type={ActionConst.RESET}
             component={ActivitySetupScene}
+            rightTitle="Next"
+            onRight={() => Actions.affiliationSetup()}
+            rightButtonTextStyle={navBackNextStyle}
+
           />
           <Scene
             key="affiliationSetup"
+            type={ActionConst.RESET}
             title="My Affiliations"
             component={AffiliationSetupScene}
+            rightTitle="Next"
+            onRight={() => Actions.descriptionSetup()}
+            rightButtonTextStyle={navBackNextStyle}
+
+            leftTitle="Back"
+            onLeft={() => Actions.activitySetup()}
+            leftButtonTextStyle={navBackNextStyle}
+
           />
           <Scene
             key="descriptionSetup"
+            type={ActionConst.RESET}
             title="About Me"
             component={DescriptionSetup}
+            rightTitle="Next"
+            onRight={() => Actions.profileSetupComplete()}
+            rightButtonTextStyle={navBackNextStyle}
+
+            leftTitle="Back"
+            onLeft={() => Actions.affiliationSetup()}
+            leftButtonTextStyle={navBackNextStyle}
+
           />
+
           <Scene
             key="profileSetupComplete"
             component={ProfileSetupComplete}

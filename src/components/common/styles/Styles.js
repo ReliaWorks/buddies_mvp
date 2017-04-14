@@ -78,3 +78,9 @@ export const textStyle = {
     color: 'black',
     fontFamily: 'Avenir-Book',
 };
+
+export const navBackNextStyle = {
+  color: "black",
+  fontSize: 15,
+  marginTop: 8
+};
