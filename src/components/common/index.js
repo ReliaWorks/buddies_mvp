@@ -8,6 +8,7 @@ export * from './Header';
 export * from './Input';
 export * from './Message';
 export * from './NoMoreCards';
+export * from './PictureModal';
 export * from './ProfileImages';
 //export * from './ProfileModal';
 export * from './SelectableTile';
