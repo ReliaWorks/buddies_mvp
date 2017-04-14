@@ -74,8 +74,7 @@ class AffiliationSetup extends Component {
   render() {
     const { affiliationsDS, onNext } = this.props;
     return (
-      <View style={{ flex: 1 }}>
-        {this.renderSectionHeader(onNext)}
+      <View style={{ flex: 1 }}>      
         {this.renderAffiliationList(affiliationsDS)}
         {this.renderNextButton(onNext)}
       </View>

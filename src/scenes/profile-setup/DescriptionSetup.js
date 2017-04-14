@@ -17,16 +17,6 @@ class DescriptionSetup extends Component {
   render() {
     return (
       <View>
-        <View style={{flexDirection: 'row', justifyContent: 'flex-end', padding: 5}}>
-          <Button
-            onPress={() => {
-              Actions.profileSetupComplete();
-            }}
-            title="Next"
-            color="#4267B2"
-          />
-        </View>
-        <Text style={styles.textStyle}>About Me</Text>
         <TextInput
           multiline
           placeholder={this.state.placeholder}
@@ -59,6 +49,7 @@ const styles = {
     borderWidth: 1,
     marginLeft: 15,
     marginRight: 15,
+    marginTop: 20,
     padding: 10,
   }
 };

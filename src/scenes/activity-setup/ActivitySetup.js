@@ -73,8 +73,7 @@ class ActivitySetup extends Component {
   render() {
     const { activitiesDS, onNext } = this.props;
     return (
-      <View style={{ flex: 1, justifyContent: 'space-between' }}>
-        {this.renderSectionHeader(onNext)}
+      <View style={{ flex: 1, justifyContent: 'space-between' }}>        
         {this.renderActivityList(activitiesDS)}
         {this.renderNextButton(onNext)}
       </View>

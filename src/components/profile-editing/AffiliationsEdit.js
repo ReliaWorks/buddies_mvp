@@ -18,8 +18,7 @@ class AffiliationsEdit extends Component {
   }
 
   addAffiliation() {
-    Actions.profileSetup({ type: ActionConst.RESET });
-    Actions.affiliationSetup({ type: ActionConst.RESET, source: 'Edit' });
+    Actions.affiliationEdit({ source: 'Edit' });
   }
 
   removeAffiliation(tileId, tileName) {

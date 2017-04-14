@@ -83,7 +83,10 @@ export const activitiesSaved = (activities, profileImages) => {
               });
           });
       });
-    } else dispatch({ type: ACTIVITIES_SAVED, payload: activities });
+    } else {
+      firebase.database().ref(`user_profiles/${currentUser.uid}/activities/`).remove();
+      dispatch({ type: ACTIVITIES_SAVED, payload: activities });
+    }
   };
 };
 
@@ -148,6 +151,9 @@ export const affiliationsSaved = (affiliations) => {
               });
           });
         });
-    } else dispatch({ type: AFFILIATIONS_SAVED, payload: affiliations });
+    } else {
+      firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/`).remove();
+      dispatch({ type: AFFILIATIONS_SAVED, payload: affiliations });
+    }
   };
 };

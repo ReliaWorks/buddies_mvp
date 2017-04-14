@@ -11,6 +11,11 @@ class ActivitySetupScene extends Component {
     this.createDataSource(this.props);
   }
 
+  componentWillUnmount() {
+    console.log("Leaving...");
+    this.props.activitiesSaved(this.props.currentUser.activities, this.props.auth.profile_pics);
+  }
+
   componentWillReceiveProps(nextProps) {
     //nextProps are the next set of props that this component will be rendered with
     //this.props is the old set of props the component was previously rendered with
@@ -29,14 +34,11 @@ class ActivitySetupScene extends Component {
 
   render() {
     let onNextAction = () => {
-      this.props.activitiesSaved(this.props.currentUser.activities, this.props.auth.profile_pics);
       Actions.affiliationSetup();
     };
     let navLabel = "Next";
     if(this.props.source == 'Edit') {
-      onNextAction = () => {
-        this.props.activitiesSaved(this.props.currentUser.activities, this.props.currentUser.profileImages);
-        Actions.main({ type: ActionConst.RESET });
+      onNextAction = () => {      
         Actions.userEdit();
       };
       navLabel = "Done";

@@ -46,7 +46,6 @@ class Routes extends Component {
             rightTitle="Next"
             onRight={() => Actions.affiliationSetup()}
             rightButtonTextStyle={navBackNextStyle}
-
           />
           <Scene
             key="affiliationSetup"
@@ -56,11 +55,9 @@ class Routes extends Component {
             rightTitle="Next"
             onRight={() => Actions.descriptionSetup()}
             rightButtonTextStyle={navBackNextStyle}
-
             leftTitle="Back"
             onLeft={() => Actions.activitySetup()}
             leftButtonTextStyle={navBackNextStyle}
-
           />
           <Scene
             key="descriptionSetup"
@@ -70,13 +67,10 @@ class Routes extends Component {
             rightTitle="Next"
             onRight={() => Actions.profileSetupComplete()}
             rightButtonTextStyle={navBackNextStyle}
-
             leftTitle="Back"
             onLeft={() => Actions.affiliationSetup()}
             leftButtonTextStyle={navBackNextStyle}
-
           />
-
           <Scene
             key="profileSetupComplete"
             component={ProfileSetupComplete}
@@ -132,6 +126,24 @@ class Routes extends Component {
           title="Edit Profile"
           leftButton={profileIconButton}
           type={ActionConst.RESET}
+        />
+        <Scene
+          key="activityEdit"
+          title="Edit Activities"
+          type={ActionConst.RESET}
+          component={ActivitySetupScene}
+          rightTitle="Done"
+          onRight={() => Actions.userEdit()}
+          rightButtonTextStyle={navBackNextStyle}
+        />
+        <Scene
+          key="affiliationEdit"
+          type={ActionConst.RESET}
+          title="Edit Affiliations"
+          component={AffiliationSetupScene}
+          rightTitle="Done"
+          onRight={() => Actions.userEdit()}
+          rightButtonTextStyle={navBackNextStyle}
         />
         <Scene
           key="settings"

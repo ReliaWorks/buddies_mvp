@@ -11,6 +11,10 @@ class AffiliationSetupScene extends Component {
     this.createDataSource(this.props);
   }
 
+  componentWillUnmount() {
+    this.props.affiliationsSaved(this.props.currentUser.affiliations);
+  }
+
   componentWillReceiveProps(nextProps) {
     //nextProps are the next set of props that this component will be rendered with
     //this.props is the old set of props the component was previously rendered with
@@ -29,14 +33,11 @@ class AffiliationSetupScene extends Component {
 
   render() {
     let onNextAction = () => {
-      this.props.affiliationsSaved(this.props.currentUser.affiliations);
       Actions.descriptionSetup();
     };
     let navLabel = "Next";
     if(this.props.source == 'Edit') {
       onNextAction = () => {
-        this.props.affiliationsSaved(this.props.currentUser.affiliations);
-        Actions.main({ type: ActionConst.RESET });
         Actions.userEdit();
       };
       navLabel = "Done";
