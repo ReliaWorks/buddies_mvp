@@ -13,6 +13,7 @@ import MessageCenterContainer from './scenes/message-center';
 import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
 import ProfileModal from './components/common/ProfileModal';
+import Splash from './scenes/Splash';
 import { navBarStyle, navTitleStyle } from './components/common/styles';
 import { chatIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
@@ -26,8 +27,12 @@ class Routes extends Component {
       >
         <Scene key="root" type={ActionConst.RESET}>
           <Scene
+            key="splash"
+            component={Splash}
+            hideNavBar
+          />
+          <Scene
             key="login"
-            direction="vertical"
             component={LoginForm}
             hideNavBar
           />

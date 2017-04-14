@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {
   CHAT_PROFILE_FETCH,
   CHAT_PROFILE_FETCH_SUCCESS,
+  LOGOUT_USER,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -64,6 +65,8 @@ export default(state = INITIAL_STATE, action) => {
       if(action.payload.description) description = action.payload.description;
       return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email, uid: action.payload.uid, loading: false };
     }
+    case LOGOUT_USER:
+      return { INITIAL_STATE };
     default:
       return state;
   }
