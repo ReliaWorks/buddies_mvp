@@ -12,6 +12,7 @@ import UserView from './scenes/UserView';
 import MessageCenterContainer from './scenes/message-center';
 import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
+import { PictureModal } from './components/common';
 import ProfileModal from './components/common/ProfileModal';
 import Splash from './scenes/Splash';
 import { navBarStyle, navTitleStyle, navBackNextStyle } from './components/common/styles';
@@ -85,6 +86,11 @@ class Routes extends Component {
             leftButton={profileIconButton}
             rightButton={chatIconButton}
             type={ActionConst.RESET}
+          />
+          <Scene
+            key="picture"
+            component={PictureModal}
+            hideNavBar
           />
           <Scene
             key="connection"
