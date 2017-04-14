@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions, ActionConst } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import AffiliationSet from './AffiliationSet';
 import { activityRemoved } from '../../actions';
 import { Confirm } from '../common';
