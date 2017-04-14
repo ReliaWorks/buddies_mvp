@@ -147,25 +147,27 @@ class BuddyCard extends Component {
     return (
         <View style={{flex: 1, alignSelf: 'stretch' }}>
           <ProfileImages value={{profileImages, editable}} />
-          <TouchableWithoutFeedback onPress={this.expandDescription.bind(this)}>
             <View style={this.descContainerStyle()}>
               <ScrollView>
-               <View style={{flexDirection: 'row'}}>
-                  <Text style={nameText}>
-                    {firstName}
-                    {this.renderAge(age)}
-                  </Text>
-                  {this.showEditableButton(editable)}
-                </View>
-                {this.renderLocation(location, locationText)}
-                {this.renderActivitiesAffiliations(activities, affiliations, editable)}
-                <View style={localStyles.descriptionStyle}>
-                  <Text style={localStyles.descriptionText}>{description}</Text>
-                </View>
+                <TouchableWithoutFeedback onPress={this.expandDescription.bind(this)}>
+                <View>
+                 <View style={{flexDirection: 'row'}}>
+                    <Text style={nameText}>
+                      {firstName}
+                      {this.renderAge(age)}
+                    </Text>
+                    {this.showEditableButton(editable)}
+                  </View>
+                  {this.renderLocation(location, locationText)}
+                  {this.renderActivitiesAffiliations(activities, affiliations, editable)}
+                  <View style={localStyles.descriptionStyle}>
+                    <Text style={localStyles.descriptionText}>{description}</Text>
+                  </View>
+                  </View>
+                </TouchableWithoutFeedback>
               </ScrollView>
               {this.renderMatchControls(likeable, uid, this.props.onConnect, this.props.onPass)}
             </View>
-          </TouchableWithoutFeedback>
         </View>
     );
   }
