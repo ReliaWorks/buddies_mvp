@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { descriptionSaved } from '../../actions';
+
+const { width } = Dimensions.get('window');
 
 class DescriptionSetup extends Component {
   constructor(props) {
@@ -14,7 +16,21 @@ class DescriptionSetup extends Component {
     };
   }
 
-  render() {
+  renderProgressBar() {
+    if(this.props.source == 'Edit') {
+      return null;
+    }else{
+      return(
+        <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end'}}>
+          <View style={{flex: 1, height: 4, backgroundColor: '#FF4F7D', marginRight: 2}} />
+          <View style={{flex: 1, height: 4, backgroundColor: '#4A90E2', marginRight: 2}} />
+          <View style={{flex: 1, height: 4, backgroundColor: '#42D3D3'}} />
+        </View>
+      );
+    }
+  }
+
+  renderDescription() {
     return (
       <View>
         <TextInput
@@ -30,6 +46,30 @@ class DescriptionSetup extends Component {
           }}
           value={this.props.text}
         />
+      </View>
+    );
+  }
+
+  renderNextButton() {
+    return (
+      <View style={styles.nextButtonContainer}>
+        <TouchableOpacity
+          onPress={() => Actions.profileSetupComplete()}
+          color="white"
+        >
+          <Text style={styles.nextButtonText}>Next</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        {this.renderDescription()}
+        {this.renderProgressBar()}
+        {this.renderNextButton()}
+
       </View>
     );
   }
@@ -51,7 +91,24 @@ const styles = {
     marginRight: 15,
     marginTop: 20,
     padding: 10,
-  }
+  },
+  nextButtonContainer: {
+    flex: 0.1,
+    width: width,
+    marginTop: 10,
+    justifyContent: 'center',
+    backgroundColor: '#42D3D3',
+  },
+  nextButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontFamily: 'Avenir-Book',
+    fontWeight: '700',
+    textAlign: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+  },
 };
 
 const mapStateToProps = ({ currentUser, auth }) => {

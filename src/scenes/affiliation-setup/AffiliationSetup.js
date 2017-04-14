@@ -58,6 +58,20 @@ class AffiliationSetup extends Component {
     );
   }
 
+  renderProgressBar() {
+    if(this.props.source == 'Edit') {
+      return null;
+    }else{
+      return(
+        <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end'}}>
+          <View style={{flex: 1, height: 4, backgroundColor: '#FF4F7D', marginRight: 2}} />
+          <View style={{flex: 1, height: 4, backgroundColor: '#4A90E2', marginRight: 2}} />
+          <View style={{flex: 1, height: 4, backgroundColor: '#888888'}} />
+        </View>
+      );
+    }
+  }
+
   renderNextButton(onNext) {
     return (
       <View style={styles.nextButtonContainer}>
@@ -74,8 +88,9 @@ class AffiliationSetup extends Component {
   render() {
     const { affiliationsDS, onNext } = this.props;
     return (
-      <View style={{ flex: 1 }}>      
+      <View style={{ flex: 1 }}>
         {this.renderAffiliationList(affiliationsDS)}
+        {this.renderProgressBar()}
         {this.renderNextButton(onNext)}
       </View>
     );
