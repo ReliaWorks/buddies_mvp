@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import {
+  ALREADY_AUTHENTICATED,
   LOGIN_USER,
   LOGOUT_USER,
   AFFILIATIONS_SAVED,
@@ -26,6 +27,9 @@ const INITIAL_STATE = {
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case ALREADY_AUTHENTICATED: {
+      return { ...state, uid: action.payload.uid }
+    }
     case LOGIN_USER: {
       let id = '';
       if(action.payload) id = action.payload.uid;

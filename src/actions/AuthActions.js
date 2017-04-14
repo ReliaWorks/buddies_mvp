@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
   AccessToken,
@@ -7,12 +8,60 @@ import {
 } from 'react-native-fbsdk';
 import firebase from 'firebase';
 import {
+  ALREADY_AUTHENTICATED,
+  NOT_ALREADY_AUTHED,
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
   LOGOUT_USER,
   PROFILE_INFO,
   PROFILE_PIC
 } from './types';
+
+export const checkIfAlreadyLoggedIn = () => {
+  return(dispatch) => {
+    let token;
+    let uid;
+
+    AsyncStorage.multiGet(['token', 'uid'])
+      .then((data) => {
+        if(data[0][1]) {
+          token = data[0][1];
+          uid = data[1][1];
+          console.log(`token = ${token}`);
+          console.log(`uid = ${uid}`);
+          const provider = firebase.auth.FacebookAuthProvider;
+          const cred = provider.credential(token);
+          firebase.auth().signInWithCredential(cred)
+            .then((fireData) => {
+              dispatch({
+                type: ALREADY_AUTHENTICATED,
+                payload: {
+                  token,
+                  uid
+                }
+              });
+              Actions.main();
+            })
+            .catch((error) => {
+              console.log(`Error logging in previously authenticated user. Error = ${error}`);
+            });
+        } else {
+          dispatch({
+            type: NOT_ALREADY_AUTHED
+          });
+          Actions.login();
+        }
+      }
+    );
+  };
+};
+
+const saveTokenToStorage = (token, uid) => {
+  AsyncStorage.multiSet([
+    ['token', token],
+    ['uid', uid]
+  ]);
+};
 
 export const loginUser = () => {
   return (dispatch) => {
@@ -28,7 +77,8 @@ export const loginUser = () => {
           AccessToken.getCurrentAccessToken()
             .then(accessTokenData => {
               signIntoFirebase(dispatch, auth, provider, accessTokenData);
-              dispatch({ type: LOGIN_USER });
+              debugger;
+              dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
             });
         }
       }, (error) => {
@@ -40,12 +90,13 @@ export const loginUser = () => {
 
 export const logoutUser = () => {
   return (dispatch) => {
-    dispatch({
-      type: LOGOUT_USER,
-    });
     LoginManager.logOut();
-    console.log("Logged out of Facebook");
     firebase.auth().signOut().then(() => {
+      const keys = ['token', 'uid'];
+      AsyncStorage.multiRemove(keys, (error) => {
+        console.log(`Unable to remove AsyncStorage with error = ${error}`);
+      });
+      dispatch({ type: LOGOUT_USER });
       Actions.root();
     }, (error) => {
       console.log(`Error signing out of Firebase ${error}`);
@@ -143,6 +194,7 @@ const signIntoFirebase = (dispatch, auth, provider, accessTokenData) => {
   const credential = provider.credential(accessTokenData.accessToken);
   auth.signInWithCredential(credential)
     .then(credData => {
+      saveTokenToStorage(accessTokenData.accessToken, credData.uid);
       checkIfUserExists(credData, firebase.database(), accessTokenData, dispatch);
     }).catch(err => {
     console.log(`Error signing into Firebase ${err}`);

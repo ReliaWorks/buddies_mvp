@@ -1,5 +1,7 @@
 //import { DEFAULT_PROFILE_PHOTO } from '../config';
 import {
+  ALREADY_AUTHENTICATED,
+  NOT_ALREADY_AUTHED,
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
   LOGOUT_USER,
@@ -13,7 +15,7 @@ const INITIAL_STATE = {
   email: '',
   first_name: '',
   newUser: true,
-  fbtoken: null,
+  token: null,
   loading: false,
   profile_pics: [],
   selectedPics: {},
@@ -22,6 +24,12 @@ const INITIAL_STATE = {
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case ALREADY_AUTHENTICATED: {
+      return { ...state, token: action.payload.token, loggedIn: true, loading: false };
+    }
+    case NOT_ALREADY_AUTHED: {
+      return { ...state, loading: false, loggedIn: false };
+    }
     case LOGIN_USER:
         return { ...state, loading: true, loggedIn: true };
     case LOGIN_USER_SUCCESS: {
