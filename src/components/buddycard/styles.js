@@ -23,8 +23,4 @@ export default styles = {
     fontFamily: 'Avenir-Book',
     backgroundColor: 'white',
   },
-  descriptionContainer: {
-    flex: 0.5,
-    backgroundColor: 'white',
-  }
 };

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ActivitySet from './ActivitySet';
@@ -13,6 +13,14 @@ const BOTTOM_PADDING = 120;
 const MARGIN = 15;
 
 class BuddyCard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      descriptionExpanded: false,
+    };
+  }
+
   showEditableButton(editable) {
     if(!editable) return;
     return (
@@ -82,8 +90,8 @@ class BuddyCard extends Component {
       if(!activities && affiliations.length === 0) return null;
       if(activities.length === 0 && !affiliations) return null;
 
-      const affs = affiliations;
-      const acts = activities;
+      let affs = affiliations;
+      let acts = activities;
       if(typeof affiliations === 'object')
         affs = _.values(affiliations);
       if(typeof activities === 'object')
@@ -114,30 +122,52 @@ class BuddyCard extends Component {
     return <Text style={locationTextStyle}>{location.city}, {location.distance} away</Text>;
   }
 
+  expandDescription() {
+    LayoutAnimation.easeInEaseOut();
+    this.setState({descriptionExpanded: !this.state.descriptionExpanded});
+  }
+  descContainerStyle() {
+    if(this.state.descriptionExpanded) {
+      return {
+        flex: 1.8,
+        backgroundColor: 'white',
+      };
+    } else {
+      return {
+        flex: 0.5,
+        backgroundColor: 'white',
+      };
+    }
+  }
+
   render() {
     const { firstName, age, editable, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
-    const { locationText, nameText, descriptionContainer } = styles;
+    const { locationText, nameText } = styles;
 //    <Image source={{ uri: profileImages[0]}} style={{height: 300, width: width - 20, alignSelf: 'stretch'}} />
     return (
         <View style={{flex: 1, alignSelf: 'stretch' }}>
           <ProfileImages value={{profileImages, editable}} />
-          <View style={descriptionContainer}>
-            <ScrollView>
-             <View style={{flexDirection: 'row'}}>
-                <Text style={nameText}>
-                  {firstName}
-                  {this.renderAge(age)}
-                </Text>
-                {this.showEditableButton(editable)}
-              </View>
-              {this.renderLocation(location, locationText)}
-              {this.renderActivitiesAffiliations(activities, affiliations, editable)}
-              <View style={localStyles.descriptionStyle}>
-                <Text style={localStyles.descriptionText}>{description}</Text>
-              </View>
-            </ScrollView>
-            {this.renderMatchControls(likeable, uid, this.props.onConnect, this.props.onPass)}
-          </View>
+            <View style={this.descContainerStyle()}>
+              <ScrollView>
+                <TouchableWithoutFeedback onPress={this.expandDescription.bind(this)}>
+                <View>
+                 <View style={{flexDirection: 'row'}}>
+                    <Text style={nameText}>
+                      {firstName}
+                      {this.renderAge(age)}
+                    </Text>
+                    {this.showEditableButton(editable)}
+                  </View>
+                  {this.renderLocation(location, locationText)}
+                  {this.renderActivitiesAffiliations(activities, affiliations, editable)}
+                  <View style={localStyles.descriptionStyle}>
+                    <Text style={localStyles.descriptionText}>{description}</Text>
+                  </View>
+                  </View>
+                </TouchableWithoutFeedback>
+              </ScrollView>
+              {this.renderMatchControls(likeable, uid, this.props.onConnect, this.props.onPass)}
+            </View>
         </View>
     );
   }
@@ -182,7 +212,7 @@ const localStyles = StyleSheet.create({
     marginTop: MARGIN,
     fontFamily: 'Avenir-Book',
     backgroundColor: 'white',
-  }
+  },
 });
 
 export default BuddyCard;
