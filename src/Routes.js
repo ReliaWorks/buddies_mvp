@@ -38,7 +38,7 @@ class Routes extends Component {
             hideNavBar
           />
         </Scene>
-        <Scene initial="true" key="profileSetup">
+        <Scene key="profileSetup">
           <Scene
             key="activitySetup"
             title="My Activities"
