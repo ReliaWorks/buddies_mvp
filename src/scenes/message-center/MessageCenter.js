@@ -6,26 +6,6 @@ import ConversationListItem from '../../components/common/ConversationListItem';
 const MARGIN = 15;
 
 class MessageCenter extends Component {
-  renderHeader() {
-    return(
-      <View
-        style={{
-          flex: 0.1,
-          marginTop: -30,
-          flexDirection: 'row',
-          borderBottomWidth: 3,
-        }}
-      >
-        <Text style={{marginLeft: 10, alignSelf: 'center'}} onPress={() => Actions.pop()}>
-          Home
-        </Text>
-        <View style={{flexDirection: 'row', alignSelf: 'center' }}>
-        <Text style={styles.headerText}>Connections</Text>
-        </View>
-    </View>
-    );
-  }
-
   renderZeroState() {
     return(
       <View style={styles.zeroStateContainer}>
@@ -39,13 +19,13 @@ class MessageCenter extends Component {
   renderConversations() {
     return (
       <View style={{flex: 0.7}}>
-        <Text style={{...styles.headerText, marginLeft: MARGIN, marginRight: MARGIN}}>Conversations</Text>
+        <Text style={{...styles.headerText, marginLeft: MARGIN, marginRight: MARGIN, marginBottom: -10}}>Conversations</Text>
           <ListView
             style={styles.container}
             dataSource={this.props.matchesDataSource}
             renderRow={(data) => <ConversationListItem {...data} />}
             enableEmptySections
-            initialListSize={25}
+            initialListSize={20}
           />
       </View>
     );
@@ -56,7 +36,7 @@ class MessageCenter extends Component {
       <View style={{flex: 0.30, marginTop: MARGIN, marginLeft: MARGIN }}>
         <Text style={styles.headerText}>New Connections</Text>
         <ListView
-          style={styles.thumbnailContainerStyle}
+          style={styles.container}
           dataSource={this.props.matchesDataSource}
           renderRow={(data) => <NoConvoMatch {...data} />}
           enableEmptySections
@@ -94,15 +74,17 @@ const styles = {
     justifyContent: 'space-around'
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     color: 'black',
     fontFamily: 'Avenir-Book',
     fontWeight: '700',
   },
   noConvoThumbnailStyle: {
+    flex: 1,
     height: 75,
     width: 75,
-    marginRight: 10
+    marginRight: 10,
+    flexDirection: 'row',
   },
   imageStyle: {
     height: 300,

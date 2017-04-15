@@ -69,7 +69,8 @@ class ProfileImages extends Component {
                 marginBottom: 3}}
             />
           }
-          activeDot={<View
+          activeDot={
+            <View
             style={{
               backgroundColor: '#FF4F7D',
               width: 10,
@@ -79,7 +80,7 @@ class ProfileImages extends Component {
               marginBottom: 3}}
             />}
           paginationStyle={{
-            bottom: 545,
+            bottom: height - 120,
             paddingLeft: 7,
             paddingRight: 7,
           }}

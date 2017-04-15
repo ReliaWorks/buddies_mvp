@@ -6,7 +6,6 @@ import { selectChat } from '../../actions';
 
 class NoConvoMatch extends Component {
   render() {
-    debugger;
     return (
       <TouchableOpacity
         onPress={() => {
@@ -19,7 +18,7 @@ class NoConvoMatch extends Component {
             style={styles.noConvoThumbnailStyle}
             source={{ uri: this.props.otherUserPic }}
           />
-          <Text style={{textAlign: 'center', marginTop: 7}}>{this.props.otherUserName}</Text>
+          <Text style={{textAlign: 'center', marginTop: 10, fontSize: 14}}>{this.props.otherUserName}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -27,9 +26,9 @@ class NoConvoMatch extends Component {
 }
 const styles = {
   noConvoThumbnailStyle: {
-    height: 75,
-    width: 75,
-    borderRadius: 37,
+    height: 70,
+    width: 70,
+    borderRadius: 35,
     marginLeft: 7,
     marginRight: 7,
   },
