@@ -28,7 +28,11 @@ const getLastMsg = (otherUserId, conversationId, dispatch) => {
         dispatch({
           type: LAST_MESSAGES_FETCH,
           payload: { uid: otherUserId,
-                     msg: { senderId: uid, text: lastMsg.text }}});
+                     msg: {
+                      senderId: uid,
+                      text: lastMsg.text,
+                      timestamp: lastMsg.createdAt 
+                    }}});
       }
     });
 };

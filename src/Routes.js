@@ -18,6 +18,8 @@ import Splash from './scenes/Splash';
 import { navBarStyle, navTitleStyle, navBackNextStyle } from './components/common/styles';
 import { chatIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
+const MSG_CENTER_TITLE_IMAGE = require("./components/common/img/MsgCenter.png");
+
 class Routes extends Component {
   render() {
     return (

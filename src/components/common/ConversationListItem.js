@@ -2,17 +2,33 @@ import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import Moment from 'moment';
 import { selectChat } from '../../actions';
 
-const SIDE_MARGIN = 15;
+
+const MARGIN = 15;
 
 class ConversationListItem extends Component {
+  renderNameAndTimestamp(name, createdAt) {
+    return (
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={styles.nameText}>
+          {name}
+        </Text>
+        <Text style={styles.dateText}>{Moment(createdAt).fromNow()}</Text>
+      </View>
+    );
+  }
   render() {
     const msgContainer = this.props.matchSet.lastMsgs[this.props.otherUserId];
     let msg = '';
+    let createdAt = '';
     if(!msgContainer) msg = "Start chatting";
-    else msg = msgContainer.text;
-    
+    else {
+      msg = msgContainer.text;
+      createdAt = msgContainer.timestamp;
+    }
+
     return (
     <TouchableOpacity
       onPress={() => {
@@ -26,9 +42,7 @@ class ConversationListItem extends Component {
           source={{ uri: this.props.otherUserPic }}
         />
         <View style={styles.convoContainerStyle}>
-          <Text style={styles.nameText}>
-            {this.props.otherUserName}
-          </Text>
+          {this.renderNameAndTimestamp(this.props.otherUserName, createdAt)}
           <Text
             ellipsizeMode="tail"
             numberOfLines={2}
@@ -45,35 +59,46 @@ class ConversationListItem extends Component {
 
 const styles = {
   container: {
-    alignSelf: 'stretch',
-    alignItems: 'center',
-    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    flex: 1,
     backgroundColor: 'white',
     borderBottomWidth: 1,
     borderColor: '#F8F8F8',
-    marginLeft: SIDE_MARGIN,
-    marginRight: SIDE_MARGIN,
-    marginBottom: SIDE_MARGIN,
+    marginLeft: MARGIN,
+    marginRight: MARGIN,
+    paddingBottom: MARGIN / 2,
+    paddingTop: MARGIN / 2,
   },
   convoContainerStyle: {
-    marginLeft: 10,
-    flex: 1
+    marginLeft: MARGIN,
+    flex: 1,
   },
   nameText: {
     fontFamily: 'Avenir-Book',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '800',
+    marginTop: MARGIN,
+  },
+  dateText: {
+    fontFamily: 'Avenir-Book',
+    fontSize: 12,
+//    fontWeight: '900',
+    color: 'black',
+//    color: '#ECECEC',
+    marginTop: MARGIN,
+    paddingRight: MARGIN,
   },
   msgText: {
     fontFamily: 'Avenir-Book',
-    fontSize: 16,
+    fontSize: 14,
   },
   convoThumbnailStyle: {
-    height: 75,
-    width: 75,
-    marginBottom: 10,
+    height: 68,
+    width: 68,
+    marginBottom: MARGIN / 2,
+    marginTop: MARGIN / 2,
   }
 };
 
