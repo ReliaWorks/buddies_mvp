@@ -46,7 +46,7 @@ class ActivitySetup extends Component {
 
   renderActivityList(activitiesDS) {
     return (
-      <ScrollView style={{flex: 1, marginTop: 10}}>
+      <ScrollView style={{flex: 1, marginTop: 10, marginLeft: 10}}>
         <ListView
           contentContainerStyle={styles.list}
           dataSource={activitiesDS}
@@ -114,7 +114,6 @@ const styles = {
     alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: 'green'
   },
   item: {
     backgroundColor: 'red',

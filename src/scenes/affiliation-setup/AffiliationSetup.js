@@ -46,7 +46,7 @@ class AffiliationSetup extends Component {
 
   renderAffiliationList(affiliationsDS) {
     return (
-      <ScrollView style={{flex: 0.95}}>
+      <ScrollView style={{flex: 1, marginTop: 10, marginLeft: 10}}>
         <ListView
           contentContainerStyle={styles.list}
           dataSource={affiliationsDS}
@@ -63,7 +63,7 @@ class AffiliationSetup extends Component {
       return null;
     }else{
       return(
-        <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end'}}>
+        <View style={{height: 4, flexDirection: 'row', alignItems: 'flex-end'}}>
           <View style={{flex: 1, height: 4, backgroundColor: '#FF4F7D', marginRight: 2}} />
           <View style={{flex: 1, height: 4, backgroundColor: '#4A90E2', marginRight: 2}} />
           <View style={{flex: 1, height: 4, backgroundColor: '#888888'}} />
@@ -112,11 +112,10 @@ const styles = {
   },
   list: {
     flex: 1,
-    alignItems: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    padding: 20,
-    paddingBottom: 100,
   },
   item: {
     backgroundColor: 'red',
@@ -134,9 +133,9 @@ const styles = {
     width: 120,
   },
   nextButtonContainer: {
-    flex: 0.1,
+    height: 40,
     width: width,
-    marginTop: 10,
+    marginTop: 0,
     justifyContent: 'center',
     backgroundColor: '#42D3D3',
   },

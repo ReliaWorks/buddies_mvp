@@ -74,7 +74,6 @@ class DescriptionSetup extends Component {
     );
   }
 }
-
 const styles = {
   textStyle: {
     alignSelf: 'center',
@@ -93,9 +92,9 @@ const styles = {
     padding: 10,
   },
   nextButtonContainer: {
-    flex: 0.1,
+    height: 40,
     width: width,
-    marginTop: 10,
+    marginTop: 0,
     justifyContent: 'center',
     backgroundColor: '#42D3D3',
   },
