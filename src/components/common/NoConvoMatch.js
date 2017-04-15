@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { selectChat } from '../../actions';
 
 class NoConvoMatch extends Component {
   render() {
+    debugger;
     return (
       <TouchableOpacity
         onPress={() => {
@@ -18,6 +19,7 @@ class NoConvoMatch extends Component {
             style={styles.noConvoThumbnailStyle}
             source={{ uri: this.props.otherUserPic }}
           />
+          <Text style={{textAlign: 'center', marginTop: 7}}>{this.props.otherUserName}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -27,7 +29,9 @@ const styles = {
   noConvoThumbnailStyle: {
     height: 75,
     width: 75,
-    marginRight: 10
+    borderRadius: 37,
+    marginLeft: 7,
+    marginRight: 7,
   },
 };
 

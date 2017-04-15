@@ -101,7 +101,6 @@ class Routes extends Component {
           <Scene
             key="matches"
             component={MessageCenterContainer}
-            title="Conversations"
             leftButton={homeLeftIconButton}
             type={ActionConst.RESET}
           />

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { ListView, ScrollView, Text, View } from 'react-native';
-//import NoConvoMatch from '../components/common/NoConvoMatch';
+import NoConvoMatch from '../../components/common/NoConvoMatch';
 import ConversationListItem from '../../components/common/ConversationListItem';
+
+const MARGIN = 15;
 
 class MessageCenter extends Component {
   renderHeader() {
@@ -34,20 +36,47 @@ class MessageCenter extends Component {
     );
   }
 
+  renderConversations() {
+    return (
+      <View style={{flex: 0.7}}>
+        <Text style={{...styles.headerText, marginLeft: MARGIN, marginRight: MARGIN}}>Conversations</Text>
+          <ListView
+            style={styles.container}
+            dataSource={this.props.matchesDataSource}
+            renderRow={(data) => <ConversationListItem {...data} />}
+            enableEmptySections
+            initialListSize={25}
+          />
+      </View>
+    );
+  }
+
+  renderNewConnections() {
+    return (
+      <View style={{flex: 0.30, marginTop: MARGIN, marginLeft: MARGIN }}>
+        <Text style={styles.headerText}>New Connections</Text>
+        <ListView
+          style={styles.thumbnailContainerStyle}
+          dataSource={this.props.matchesDataSource}
+          renderRow={(data) => <NoConvoMatch {...data} />}
+          enableEmptySections
+          initialListSize={25}
+          horizontal
+        />
+      </View>
+    );
+  }
+
   render() {
     if(this.props.matchesDataSource.getRowCount() === 0)
       return this.renderZeroState();
     else {
       return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, marginBottom: MARGIN}}>
           <ScrollView style={styles.container}>
-            <ListView
-              style={styles.container}
-              dataSource={this.props.matchesDataSource}
-              renderRow={(data) => <ConversationListItem {...data} />}
-              enableEmptySections
-              initialListSize={25}
-            />
+            {this.renderNewConnections()}
+            <View style={{borderBottomWidth: 1, margin: MARGIN }} />
+            {this.renderConversations()}
           </ScrollView>
         </View>
       );
@@ -65,7 +94,7 @@ const styles = {
     justifyContent: 'space-around'
   },
   headerText: {
-    fontSize: 22,
+    fontSize: 20,
     color: 'black',
     fontFamily: 'Avenir-Book',
     fontWeight: '700',
@@ -82,7 +111,8 @@ const styles = {
   },
   thumbnailContainerStyle: {
     flex: 1,
-    marginRight: 10,
+    marginRight: 15,
+    marginTop: 15,
     flexDirection: 'row',
   },
   zeroStateContainer: {

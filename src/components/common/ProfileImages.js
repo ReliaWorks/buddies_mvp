@@ -51,12 +51,39 @@ class ProfileImages extends Component {
         </View>
       );
     }
-    if(profileImages.length > 10) {
-      pics = profileImages.slice(0, 9);
+    if(profileImages.length > 6) {
+      pics = profileImages.slice(0, 5);
     }
     return (
       <View style={profileImageContainer}>
-        <Swiper horizontal={false}>
+        <Swiper
+          horizontal={false}
+          dot={
+            <View
+              style={{
+                backgroundColor: 'white',
+                width: 10,
+                height: 10,
+                borderRadius: 5,
+                marginTop: 3,
+                marginBottom: 3}}
+            />
+          }
+          activeDot={<View
+            style={{
+              backgroundColor: '#FF4F7D',
+              width: 10,
+              height: 10,
+              borderRadius: 5,
+              marginTop: 3,
+              marginBottom: 3}}
+            />}
+          paginationStyle={{
+            bottom: 545,
+            paddingLeft: 7,
+            paddingRight: 7,
+          }}
+        >
           { pics.map((img, key) => {
             return (
               <View key={key}>
