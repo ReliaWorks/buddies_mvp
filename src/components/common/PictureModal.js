@@ -27,8 +27,7 @@ const renderCloseIcon = (onClose) => {
   );
 };
 
-const PictureModal = ({ onClose, img, visible}) => {
-  debugger;
+const PictureModal = ({ onClose, img, visible}) => {  
   return (
     <Modal
       visible={visible}

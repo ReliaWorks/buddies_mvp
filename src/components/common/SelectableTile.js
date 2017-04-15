@@ -27,8 +27,17 @@ class SelectableTile extends Component {
   }
 
   render() {
-    const { tileName, tileIcon } = this.props;
-    const { activityTextLabel, imageStyle } = styles;
+    const { tileName, tileIcon, source } = this.props;
+    const { activityTextLabel, imageStyle} = styles;
+
+    let width = 101;
+    let height = 101;
+
+    if (source == 'affiliations') {
+      imageStyle.marginTop = 15;
+      width = 131;
+      height = 131;
+    }
 
     return (
       <TouchableOpacity onPress={this.onTilePress.bind(this)}>
@@ -39,8 +48,8 @@ class SelectableTile extends Component {
             backgroundColor: this.state.tileBackgroundColor,
             marginRight: 10,
             marginBottom: 10,
-            width: 101,
-            height: 101,
+            width: width,
+            height: height,
           }}
         >
           <Image style={imageStyle} source={{ uri: tileIcon }} />

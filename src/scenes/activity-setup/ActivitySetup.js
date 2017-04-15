@@ -71,7 +71,9 @@ class ActivitySetup extends Component {
     );
   }
   renderProgressBar() {
-    if(this.props.source == 'Edit') {
+    console.log("props",this.props);
+
+    if(this.props.navLabel == 'Done') {
       return null;
     }else{
       return(

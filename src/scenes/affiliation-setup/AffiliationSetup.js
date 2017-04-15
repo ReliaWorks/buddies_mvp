@@ -41,6 +41,7 @@ class AffiliationSetup extends Component {
       tileIcon={rowData.icon}
       onSelect={this.props.onSelected}
       isSelected={exists}
+      source="affiliations"
     />);
   }
 
@@ -59,7 +60,7 @@ class AffiliationSetup extends Component {
   }
 
   renderProgressBar() {
-    if(this.props.source == 'Edit') {
+    if(this.props.navLabel == 'Done') {
       return null;
     }else{
       return(
@@ -116,6 +117,7 @@ const styles = {
     alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
+
   },
   item: {
     backgroundColor: 'red',
