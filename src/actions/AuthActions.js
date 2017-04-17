@@ -44,6 +44,10 @@ export const checkIfAlreadyLoggedIn = () => {
             })
             .catch((error) => {
               console.log(`Error logging in previously authenticated user. Error = ${error}`);
+              dispatch({
+                type: NOT_ALREADY_AUTHED
+              });
+              Actions.login();
             });
         } else {
           dispatch({
@@ -77,7 +81,7 @@ export const loginUser = () => {
           AccessToken.getCurrentAccessToken()
             .then(accessTokenData => {
               signIntoFirebase(dispatch, auth, provider, accessTokenData);
-              
+
               dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
             });
         }
