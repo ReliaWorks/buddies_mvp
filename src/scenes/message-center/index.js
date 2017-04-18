@@ -3,11 +3,11 @@ import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import MessageCenter from './MessageCenter';
 import { matchesFetch, fetchLastMessages } from '../../actions';
+import { Spinner } from '../../components/common';
 
 class MessageCenterContainer extends Component {
   componentWillMount() {
     this.props.matchesFetch();
-//    this.props.fetchLastMessages();
     this.createDataSource(this.props);
   }
 
@@ -15,22 +15,31 @@ class MessageCenterContainer extends Component {
     this.createDataSource(nextProps);
   }
 
-  createDataSource({ matches }) {
-    const matchesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    this.matchesDataSource = matchesDS.cloneWithRows({ ...matches });
+  createDataSource({ sortedMatches, matchesWithoutChat }) {
+    const matchesWithChatDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.matchesWithChatDataSource = matchesWithChatDS.cloneWithRows({ ...sortedMatches });
+    const matchesWithoutChatDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.matchesWithoutChatDataSource = matchesWithoutChatDS.cloneWithRows({ ...matchesWithoutChat });
   }
 
   render() {
-    return (
-      <MessageCenter
-        matchesDataSource={this.matchesDataSource}
-      />
-    );
+    if(this.props.loading) {
+      console.log("Message Center loading is TRUE");
+      return(<Spinner size="large" />);
+    } else {
+      console.log("Message Center not loading");
+      return (
+        <MessageCenter
+          matchesWithChatDataSource={this.matchesWithChatDataSource}
+          matchesWithoutChatDataSource={this.matchesWithoutChatDataSource}
+        />
+      );
+    }
   }
 }
 const mapStateToProps = ({ matchSet }) => {
-  const { matches } = matchSet;
-  return { matches };
+  const { matches, matchesWithoutChat, loading, sortedMatches } = matchSet;
+  return { matches, matchesWithoutChat, loading, sortedMatches };
 };
 
 export default connect(mapStateToProps, { matchesFetch, fetchLastMessages })(MessageCenterContainer);

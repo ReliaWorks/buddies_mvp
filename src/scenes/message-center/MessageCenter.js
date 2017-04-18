@@ -22,7 +22,7 @@ class MessageCenter extends Component {
         <Text style={{...styles.headerText, marginLeft: MARGIN, marginRight: MARGIN, marginBottom: -10}}>Conversations</Text>
           <ListView
             style={styles.container}
-            dataSource={this.props.matchesDataSource}
+            dataSource={this.props.matchesWithChatDataSource}
             renderRow={(data) => <ConversationListItem {...data} />}
             enableEmptySections
             initialListSize={20}
@@ -37,7 +37,7 @@ class MessageCenter extends Component {
         <Text style={styles.headerText}>New Connections</Text>
         <ListView
           style={styles.container}
-          dataSource={this.props.matchesDataSource}
+          dataSource={this.props.matchesWithoutChatDataSource}
           renderRow={(data) => <NoConvoMatch {...data} />}
           enableEmptySections
           initialListSize={25}
@@ -48,7 +48,7 @@ class MessageCenter extends Component {
   }
 
   render() {
-    if(this.props.matchesDataSource.getRowCount() === 0)
+    if(this.props.matchesWithChatDataSource.getRowCount() === 0)
       return this.renderZeroState();
     else {
       return (
