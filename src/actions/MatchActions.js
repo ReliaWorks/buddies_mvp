@@ -12,6 +12,7 @@ export const matchesFetch = () => {
     firebase.database().ref(`/user_matches/${currentUser.uid}`).orderByChild('matched').equalTo(true)
       .on('value', snapshot => {
         dispatch({ type: MATCHES_FETCH, payload: snapshot.val()});
+        fetchLastMessages(dispatch);
       });
   };
 };
@@ -31,22 +32,38 @@ const getLastMsg = (otherUserId, conversationId, dispatch) => {
                      msg: {
                       senderId: uid,
                       text: lastMsg.text,
-                      timestamp: lastMsg.createdAt 
+                      timestamp: lastMsg.createdAt
                     }}});
       }
     });
 };
 
+function fetchLastMessages(dispatch) {
+  const { currentUser } = firebase.auth();
+
+  firebase.database().ref(`/user_chats/${currentUser.uid}`)
+    .on('value', snapshot => {
+      _.forEach(snapshot.val(), (chat, id) => {
+        getLastMsg(id, chat.conversationId, dispatch);
+      });
+    });
+}
+
+/*
 export const fetchLastMessages = () => {
   const { currentUser } = firebase.auth();
 
+  console.log(`Current user uid = ${currentUser.uid}`);
   return (dispatch) => {
-    //query firebase for all user_chats that have uid prefix, then find last item.text and push to end of messages array.
     firebase.database().ref(`/user_chats/${currentUser.uid}`)
       .on('value', snapshot => {
+        console.log("In fetchLastMessages. Just before forEach");
         _.forEach(snapshot.val(), (chat, id) => {
+          console.log(`Chat = ${chat} id = ${id}`);
+          console.log(chat);
           getLastMsg(id, chat.conversationId, dispatch);
         });
       });
   };
 };
+*/

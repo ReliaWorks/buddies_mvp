@@ -11,6 +11,7 @@ import {
   AFFILIATION_SELECTED,
   AFFILIATION_UNSELECTED,
   DESCRIPTION_SAVED,
+  SET_CURRENT_LOCATION,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -21,7 +22,8 @@ const INITIAL_STATE = {
   profileImages: [],
   activities: {},
   affiliations: {},
-  location: {},
+  location: {}, // location: { city: 'San Francisco, CA', distance: '4 miles' };
+  geolocation: {},
   description: '',
 };
 
@@ -130,6 +132,9 @@ export default(state = INITIAL_STATE, action) => {
     }
     case DESCRIPTION_SAVED: {
       return { ...state, description: action.payload };
+    }
+    case SET_CURRENT_LOCATION: {
+      return { ...state, geolocation: action.payload };
     }
     case LOGOUT_USER: {
       return INITIAL_STATE;

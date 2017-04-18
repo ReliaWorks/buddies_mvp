@@ -30,6 +30,7 @@ class BrowseContainer extends Component {
     }
   }
 */
+  
   _onMomentumScrollEnd(e, state, context) {
     this.setState({currentIndex: this.state.currentIndex + 1});
   }

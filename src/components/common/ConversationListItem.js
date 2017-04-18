@@ -15,7 +15,7 @@ class ConversationListItem extends Component {
         <Text style={styles.nameText}>
           {name}
         </Text>
-        <Text style={styles.dateText}>{Moment(createdAt).fromNow()}</Text>
+        <Text style={styles.dateText}>{createdAt}</Text>
       </View>
     );
   }
@@ -26,7 +26,7 @@ class ConversationListItem extends Component {
     if(!msgContainer) msg = "Start chatting";
     else {
       msg = msgContainer.text;
-      createdAt = msgContainer.timestamp;
+      createdAt = Moment(msgContainer.timestamp).fromNow();
     }
 
     return (
