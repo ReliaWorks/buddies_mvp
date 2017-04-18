@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Dimensions, Image, Text, TouchableWithoutFeedback, TouchableOpacity, View } from 'react-native';
 import Swiper from 'react-native-swiper';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 import { Spinner } from './Spinner';
 import { PictureModal } from './PictureModal';
-import { textStyle } from './styles';
+import { textStyle, buttonStyle } from './styles';
 
 const { height, width } = Dimensions.get('window');
 
@@ -38,8 +39,41 @@ class ProfileImages extends Component {
     this.setState({ showModal: false });
   }
 
+  showEditableButton(editable) {
+    if(!editable) return;
+    return (
+      <View
+        style={{
+          backgroundColor: 'black',
+          marginBottom: 30,
+          marginRight: 0
+        }}
+      >
+        <TouchableOpacity onPress={() => Actions.userEdit()} style={buttonStyle}>
+          <Icon
+            name="edit"
+            size={25}
+            color="white"
+            style={{padding: 4}}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  renderPhoto(img, editable) {
+    return (
+      <Image
+        source={{ uri: img }}
+        style={styles.profileImage}
+      >
+        {this.showEditableButton(editable)}
+      </Image>
+    );
+  }
+
   render() {
-    const { profileImages } = this.props.value;
+    const { profileImages, editable } = this.props.value;
     const { profileImageContainer, profileImage } = styles;
     let pics = profileImages;
 
@@ -93,10 +127,7 @@ class ProfileImages extends Component {
                     this.setState({ showModal: true, currentImg: img });
                   }}
                 >
-                  <Image
-                    source={{ uri: img }}
-                    style={profileImage}
-                  />
+                  {this.renderPhoto(img, editable)}
                 </TouchableWithoutFeedback>
               </View>
             );
@@ -119,8 +150,9 @@ const styles = {
     borderBottomWidth: 3,
   },
   profileImage: {
-    alignSelf: 'stretch',
-    justifyContent: 'center',
+//    alignSelf: 'stretch',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
     height: (height * 0.5),
     width: null,
   }

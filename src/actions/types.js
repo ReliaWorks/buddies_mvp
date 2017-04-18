@@ -31,5 +31,7 @@ export const KEEP_BROWSING = 'keep_browsing';
 
 export const POTENTIALS_FETCH = 'potentials_fetch';
 export const POTENTIALS_FETCH_SUCCESS = 'potentials_fetch_success';
+export const MATCHES_FETCH_START = 'matches_fetch_start';
 export const MATCHES_FETCH = 'matches_fetch';
+export const MATCHES_FETCH_SUCCESS = 'matches_fetch_success';
 export const SET_CURRENT_LOCATION = 'set_location';
