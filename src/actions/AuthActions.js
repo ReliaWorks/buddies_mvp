@@ -22,6 +22,21 @@ export const checkIfAlreadyLoggedIn = () => {
     let token;
     let uid;
 
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        console.log(`User ${user.uid} is logged in.`);
+        dispatch({
+          type: ALREADY_AUTHENTICATED,
+          payload: {
+            token: user.refreshToken,
+            uid: user.uid
+          }
+        });
+        Actions.main();
+      } else {
+        console.log(`User is not logged in`);
+      }
+    });
     AsyncStorage.multiGet(['token', 'uid'])
       .then((data) => {
         if(data[0][1]) {
@@ -43,20 +58,15 @@ export const checkIfAlreadyLoggedIn = () => {
               Actions.main();
             })
             .catch((error) => {
-              console.log(`Error logging in previously authenticated user. Error = ${error}`);
-              dispatch({
-                type: NOT_ALREADY_AUTHED
-              });
-              Actions.login();
+              console.log(`Error logging in previously authenticated user. Error = ${error.code}: ${error.message}`);
             });
-        } else {
-          dispatch({
-            type: NOT_ALREADY_AUTHED
-          });
-          Actions.login();
         }
-      }
-    );
+        dispatch({type: NOT_ALREADY_AUTHED});
+        Actions.login();
+      })
+      .catch(err => {
+        console.log(`AsyncStorage.multiGet error = ${err}`);
+      });
   };
 };
 
@@ -81,8 +91,6 @@ export const loginUser = () => {
           AccessToken.getCurrentAccessToken()
             .then(accessTokenData => {
               signIntoFirebase(dispatch, auth, provider, accessTokenData);
-
-              dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
             });
         }
       }, (error) => {
@@ -195,12 +203,29 @@ function checkIfUserExists(user, ref, accessTokenData, dispatch) {
 }
 
 const signIntoFirebase = (dispatch, auth, provider, accessTokenData) => {
-  const credential = provider.credential(accessTokenData.accessToken);
-  auth.signInWithCredential(credential)
-    .then(credData => {
-      saveTokenToStorage(accessTokenData.accessToken, credData.uid);
-      checkIfUserExists(credData, firebase.database(), accessTokenData, dispatch);
-    }).catch(err => {
-    console.log(`Error signing into Firebase ${err}`);
+  auth.onAuthStateChanged(user => {
+    if(user) {
+      console.log(`User ${user.uid} is logged in.`);
+      dispatch({
+        type: ALREADY_AUTHENTICATED,
+        payload: {
+          token: user.refreshToken,
+          uid: user.uid
+        }
+      });
+      Actions.main();
+    } else {
+      console.log(`User is not logged in`);
+      const credential = provider.credential(accessTokenData.accessToken);
+      auth.signInWithCredential(credential)
+        .then(credData => {
+          saveTokenToStorage(accessTokenData.accessToken, credData.uid);
+          checkIfUserExists(credData, firebase.database(), accessTokenData, dispatch);
+          dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
+        }).catch(err => {
+          alert("Unable to log in. Try again later.");
+          console.log(`Error signing into Firebase ${err.code}: ${err.message}`);
+      });
+    }
   });
 };

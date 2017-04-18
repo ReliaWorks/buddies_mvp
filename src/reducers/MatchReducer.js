@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   MATCHES_FETCH,
   LAST_MESSAGES_FETCH,
@@ -7,16 +8,23 @@ import {
 
 const INITIAL_STATE = {
   matches: {},
-  lastMsgs: {}
+  lastMsgs: {},
+  matchesWithConv: {},
+  matchesWithNoConv: {}
 };
 
 export default(state = INITIAL_STATE, action) => {
   switch(action.type) {
-    case MATCHES_FETCH:
+    case MATCHES_FETCH: {
       return {...state, matches: action.payload};
+    }
     case LAST_MESSAGES_FETCH: {
+      console.log("State.Matches = ");
+      console.log(state.matches);
+      console.log("LastMsgs = ");
+      console.log(state.lastMsgs);
       const updatedMsgs = {...state.lastMsgs, [action.payload.uid]: action.payload.msg};
-      return {...state, lastMsgs: updatedMsgs };
+      return {...state, lastMsgs: updatedMsgs};
     }
     case MESSAGE_SENT: {
       const msg = action.payload.msg;

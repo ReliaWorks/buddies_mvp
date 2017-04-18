@@ -8,6 +8,7 @@ import {
   CONNECTION_SUCCESSFUL,
   CURRENT_USER_FETCH_SUCCESS,
   KEEP_BROWSING,
+  SET_CURRENT_LOCATION,
 } from './types';
 
 export const potentialsFetch = () => {
@@ -38,7 +39,14 @@ export const potentialsFetch = () => {
 export const currentUserFetch = () => {
   const { currentUser } = firebase.auth();
 
+  console.log("Entering currentUserFetch");
   return (dispatch) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const initialPosition = JSON.stringify(position);
+        dispatch({ type: SET_CURRENT_LOCATION, payload: { initialPosition }});
+      }
+    );
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
       .once('value', snapshot => {
         dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
