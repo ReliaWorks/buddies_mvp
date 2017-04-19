@@ -12,6 +12,7 @@ import {
   AFFILIATION_UNSELECTED,
   DESCRIPTION_SAVED,
   SET_CURRENT_LOCATION,
+  SET_CURRENT_GEOLOCATION,
   PICTURE_SAVED,
 } from '../actions/types';
 
@@ -143,8 +144,11 @@ export default(state = INITIAL_STATE, action) => {
       }
       return { ...state, profileImages: updatedImages };
     }
-    case SET_CURRENT_LOCATION: {
+    case SET_CURRENT_GEOLOCATION: {
       return { ...state, geolocation: action.payload };
+    }
+    case SET_CURRENT_LOCATION: {
+      return { ...state, location: action.payload };
     }
     case LOGOUT_USER: {
       return INITIAL_STATE;
