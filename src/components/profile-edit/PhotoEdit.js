@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Text, View, Button, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { textStyle } from '../../components/common/styles';
-import { TRASH_ICON } from './strings';
+import { TRASH_ICON } from '../../scenes/profile-setup/strings';
 import { addPic, savePics } from '../../actions';
 
-class PhotoSetup extends Component {
+class PhotoEdit extends Component {
   renderOtherPics(profile_pics) {
     return (
       <View style={{ flexDirection: 'row' }}>
@@ -61,7 +61,7 @@ class PhotoSetup extends Component {
         <Button
           onPress={() => this.props.savePics(selectedPics)}
           style={textStyle}
-          title="Next"
+          title="Save"
           color="#4267B2"
         />
       </View>
@@ -69,9 +69,10 @@ class PhotoSetup extends Component {
   }
 
   render() {
-    const { profile_pics, selectedPics } = this.props;
-    const firstProfileImage = profile_pics[0];
-    const otherProfileImages = profile_pics.slice(1);
+    const { selectedPics } = this.props.auth;
+    const { profileImages } = this.props.currentUser;
+    const firstProfileImage = profileImages[0];
+    const otherProfileImages = profileImages.slice(1);
 
     return (
       <View>
@@ -115,8 +116,8 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({ auth }) => {
-  return auth;
+const mapStateToProps = ({ auth, currentUser }) => {
+  return { auth, currentUser };
 };
 
-export default connect(mapStateToProps, { addPic, savePics })(PhotoSetup);
+export default connect(mapStateToProps, { addPic, savePics })(PhotoEdit);

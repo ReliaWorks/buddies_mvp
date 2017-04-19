@@ -70,7 +70,12 @@ class MessageCenter extends Component {
 
   render() {
     if(this.props.matchesWithChatDataSource.getRowCount() === 0)
-      return this.renderZeroState();
+      return (
+        <View style={{flex: 1}}>
+          {this.renderHeader()}
+          {this.renderZeroState()}
+        </View>
+      );
     else {
       return (
         <View style={{flex: 1, marginBottom: MARGIN}}>

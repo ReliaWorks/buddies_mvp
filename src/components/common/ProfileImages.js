@@ -49,7 +49,7 @@ class ProfileImages extends Component {
           marginRight: 0
         }}
       >
-        <TouchableOpacity onPress={() => Actions.userEdit()} style={buttonStyle}>
+        <TouchableOpacity onPress={() => Actions.photoEdit()} style={buttonStyle}>
           <Icon
             name="edit"
             size={25}
