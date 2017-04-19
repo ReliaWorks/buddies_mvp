@@ -48,8 +48,8 @@ export const getCityStateCountry = (position, dispatch) => {
   .then(response => {
     location = response.data || location;
 
-    dispatch({ type: SET_CURRENT_LOCATION, payload: { location }});
-    console.log('api response',location);
+    dispatch({ type: SET_CURRENT_LOCATION, payload: location });
+    console.log('api response', location);
   })
   .catch(error => {
     console.log(error);
@@ -63,9 +63,8 @@ export const currentUserFetch = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const initialPosition = JSON.stringify(position);
-        console.log('position',position);
         getCityStateCountry(position.coords, dispatch);
-        dispatch({ type: SET_CURRENT_GEOLOCATION, payload: { initialPosition }});
+        dispatch({ type: SET_CURRENT_GEOLOCATION, payload: initialPosition });
       }
     );
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)

@@ -71,6 +71,7 @@ class BrowseContainer extends Component {
                   profileImages: buddy.profileImages,
                   activities: buddy.activities,
                   affiliations: buddy.affiliations,
+                  location: buddy.location,
                   description: buddy.description,
                   likeable: true,
                   editable: false,

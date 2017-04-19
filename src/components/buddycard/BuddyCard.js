@@ -119,8 +119,9 @@ class BuddyCard extends Component {
 
   renderLocation(location, locationTextStyle) {
     if(_.isEmpty(location)) return;
-    return <Text style={locationTextStyle}>{location.city}, {location.distance} away</Text>;
+    return <Text style={locationTextStyle}>{location.city}, {location.state}</Text>;
   }
+// {location.distance} away
 
   expandDescription() {
     LayoutAnimation.easeInEaseOut();

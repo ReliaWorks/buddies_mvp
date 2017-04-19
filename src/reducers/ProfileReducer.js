@@ -48,7 +48,7 @@ export default(state = INITIAL_STATE, action) => {
 //      }
       const firstName = action.payload.first_name;
       const age = action.payload.age;
-      const location = action.payload.location;
+//      const location = action.payload.location;
       const email = action.payload.email;
       const activities = [];
       if(action.payload.activities) {
@@ -78,7 +78,7 @@ export default(state = INITIAL_STATE, action) => {
 
       let description = '';
       if(action.payload.description) description = action.payload.description;
-      return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email, uid: action.payload.uid };
+      return { ...state, firstName, profileImages, age, activities, affiliations, description, email, uid: action.payload.uid };
     }
     case ACTIVITY_SELECTED: {
       const updatedActivities = [...state.activities, action.payload];
