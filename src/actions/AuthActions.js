@@ -7,6 +7,7 @@ import {
   GraphRequestManager
 } from 'react-native-fbsdk';
 import firebase from 'firebase';
+import { savePics } from './ProfileSetupActions';
 import {
   ALREADY_AUTHENTICATED,
   NOT_ALREADY_AUTHED,
@@ -14,7 +15,7 @@ import {
   LOGIN_USER_SUCCESS,
   LOGOUT_USER,
   PROFILE_INFO,
-  PROFILE_PIC
+  PICTURE_SAVED,
 } from './types';
 
 export const checkIfAlreadyLoggedIn = () => {
@@ -146,10 +147,11 @@ function fetchProfilePhotos(result, dispatch, token) {
                  if(error2) {
                    console.log('Error fetching data: ' + error2.toString());
                  } else {
-                    dispatch({type: PROFILE_PIC, payload: result3.images[0].source});
+                    dispatch({type: PICTURE_SAVED, payload: result3.images[0].source});
                  }
                }); new GraphRequestManager().addRequest(picRequest).start();
           });
+          savePics(profilePics);
         }
       }); new GraphRequestManager().addRequest(profilePicRequest).start();
     });
@@ -175,9 +177,7 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
           email: result.email || '',
           location: result.location || '',
         };
-
         ref.ref(`/user_profiles/${user.uid}`).set(profile);
-
         dispatch({
           type: PROFILE_INFO,
           payload: profile

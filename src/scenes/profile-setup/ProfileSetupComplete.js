@@ -5,6 +5,10 @@ import { textStyle } from '../../components/common/styles';
 import { Button } from '../../components/common';
 
 class ProfileSetupComplete extends Component {
+  startBrowsing() {
+    Actions.main();
+  }
+
   render() {
     const localTextStyle = {...textStyle, textAlign: 'left', marginLeft: 30, marginRight: 30};
     return(
@@ -26,7 +30,7 @@ class ProfileSetupComplete extends Component {
           </Text>
         </View>
         <View style={{flex: 0.18, marginBottom: 200}}>
-        <Button onPress={() => Actions.main()}>Find an activity partner!</Button>
+        <Button onPress={this.startBrowsing}>Find an activity partner!</Button>
         </View>
       </View>
     );

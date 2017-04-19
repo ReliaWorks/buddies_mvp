@@ -12,8 +12,6 @@ class BrowseContainer extends Component {
 
   constructor(props) {
     super(props);
-    this.props.currentUserFetch();
-    this.props.potentialsFetch();
 
     this.state = {
       currentIndex: 0,
@@ -22,6 +20,8 @@ class BrowseContainer extends Component {
     };
   }
   componentWillMount() {
+    this.props.currentUserFetch();
+    this.props.potentialsFetch();
     this.setState({currentIndex: 0, numPotentials: this.props.connection.potentials});
   }
 /*  componentWillReceiveProps(nextProps) {
@@ -30,7 +30,7 @@ class BrowseContainer extends Component {
     }
   }
 */
-  
+
   _onMomentumScrollEnd(e, state, context) {
     this.setState({currentIndex: this.state.currentIndex + 1});
   }

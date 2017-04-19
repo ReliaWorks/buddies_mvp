@@ -4,11 +4,9 @@ import { Actions, ActionConst } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ICON_WIDTH, ICON_PADDING, ICON_CLICKABLE_AREA_WIDTH } from '../config.js';
 
 const { width } = Dimensions.get('window');
-const ICON_WIDTH = 25;
-const ICON_PADDING = 6;
-const ICON_CLICKABLE_AREA_WIDTH = 100;
 
 export const chatIconButton = () => {
   return (

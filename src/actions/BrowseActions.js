@@ -12,6 +12,7 @@ import {
 } from './types';
 
 export const potentialsFetch = () => {
+  console.log('Entering potentialsFetch');
   return (dispatch) => {
     const { currentUser } = firebase.auth();
     const potentials = [];
@@ -33,13 +34,13 @@ export const potentialsFetch = () => {
       }, (error) => {
         console.log(`API not responding.  Error = ${error}`);
     });
+    console.log("Exiting potentials fetch");
   };
 };
 
 export const currentUserFetch = () => {
   const { currentUser } = firebase.auth();
 
-  console.log("Entering currentUserFetch");
   return (dispatch) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {

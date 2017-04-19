@@ -12,6 +12,7 @@ import {
   AFFILIATION_UNSELECTED,
   DESCRIPTION_SAVED,
   SET_CURRENT_LOCATION,
+  PICTURE_SAVED,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -30,7 +31,7 @@ const INITIAL_STATE = {
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ALREADY_AUTHENTICATED: {
-      return { ...state, uid: action.payload.uid }
+      return { ...state, uid: action.payload.uid };
     }
     case LOGIN_USER: {
       let id = '';
@@ -74,7 +75,7 @@ export default(state = INITIAL_STATE, action) => {
         });
       }
 
-    let description = '';
+      let description = '';
       if(action.payload.description) description = action.payload.description;
       return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email, uid: action.payload.uid };
     }
@@ -132,6 +133,15 @@ export default(state = INITIAL_STATE, action) => {
     }
     case DESCRIPTION_SAVED: {
       return { ...state, description: action.payload };
+    }
+    case PICTURE_SAVED: {
+      let updatedImages = [];
+      if(state.profileImages) {
+        updatedImages = [...state.profileImages, action.payload];
+      } else {
+        updatedImages.push(action.payload);
+      }
+      return { ...state, profileImages: updatedImages };
     }
     case SET_CURRENT_LOCATION: {
       return { ...state, geolocation: action.payload };
