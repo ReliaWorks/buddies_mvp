@@ -6,7 +6,6 @@ import BuddyCard from '../components/buddycard/BuddyCard';
 class UserView extends Component {
   render() {
     const { firstName, age, location, profileImages, activities, affiliations, description } = this.props;
-
     return (
       <View style={{flex: 1}}>
         <BuddyCard
