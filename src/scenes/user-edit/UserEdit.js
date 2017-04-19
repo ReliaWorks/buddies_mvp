@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, TextInput, View } from 'react-native';
-import ActivitiesEdit from '../../components/profile-editing/ActivitiesEdit';
-import AffiliationsEdit from '../../components/profile-editing/AffiliationsEdit';
+import ActivitiesEdit from '../../components/profile-edit/ActivitiesEdit';
+import AffiliationsEdit from '../../components/profile-edit/AffiliationsEdit';
 
 const MARGIN = 15;
 const DESCRIPTION_PLACEHOLDER = 'Describe yourself';

@@ -24,10 +24,8 @@ class MessageCenterContainer extends Component {
 
   render() {
     if(this.props.loading) {
-      console.log("Message Center loading is TRUE");
       return(<Spinner size="large" />);
     } else {
-      console.log("Message Center not loading");
       return (
         <MessageCenter
           matchesWithChatDataSource={this.matchesWithChatDataSource}
