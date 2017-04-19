@@ -8,6 +8,7 @@ import {
   CONNECTION_SUCCESSFUL,
   CURRENT_USER_FETCH_SUCCESS,
   KEEP_BROWSING,
+  SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
 } from './types';
 
@@ -38,6 +39,23 @@ export const potentialsFetch = () => {
   };
 };
 
+export const getCityStateCountry = (position, dispatch) => {
+  let location = { city: '', state: '', country: ''};
+
+  if (!(position && position.latitude && position.longitude)) return;
+
+  axios.get(`https://activities-test-a3871.appspot.com/location/${position.latitude}:${position.longitude}`)
+  .then(response => {
+    location = response.data || location;
+
+    dispatch({ type: SET_CURRENT_LOCATION, payload: { location }});
+    console.log('api response',location);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+};
+
 export const currentUserFetch = () => {
   const { currentUser } = firebase.auth();
 
@@ -45,7 +63,9 @@ export const currentUserFetch = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const initialPosition = JSON.stringify(position);
-        dispatch({ type: SET_CURRENT_LOCATION, payload: { initialPosition }});
+        console.log('position',position);
+        getCityStateCountry(position.coords, dispatch);
+        dispatch({ type: SET_CURRENT_GEOLOCATION, payload: { initialPosition }});
       }
     );
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
