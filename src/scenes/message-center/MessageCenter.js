@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
-import { ListView, ScrollView, Text, View } from 'react-native';
+import { Image, ListView, ScrollView, Text, View } from 'react-native';
 import NoConvoMatch from '../../components/common/NoConvoMatch';
 import ConversationListItem from '../../components/common/ConversationListItem';
+import { homeLeftIconButton } from '../../icons';
+import { ICON_CLICKABLE_AREA_WIDTH } from '../../config';
 
 const MARGIN = 15;
+const MSG_CENTER_TITLE_IMAGE = require("../../components/common/img/MsgCenter.png");
 
 class MessageCenter extends Component {
+  renderHeader() {
+    return(
+      <View
+        style={{
+          flex: 0.1,
+          marginTop: -60,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          borderBottomWidth: 3,
+        }}
+      >
+        {homeLeftIconButton()}
+        <Image source={MSG_CENTER_TITLE_IMAGE} style={{width: 25, height: 25, marginTop: 30}} />
+        <View style={{width: ICON_CLICKABLE_AREA_WIDTH}} />
+      </View>
+     );
+   }
+
   renderZeroState() {
     return(
       <View style={styles.zeroStateContainer}>
@@ -53,6 +74,7 @@ class MessageCenter extends Component {
     else {
       return (
         <View style={{flex: 1, marginBottom: MARGIN}}>
+          {this.renderHeader()}
           <ScrollView style={styles.container}>
             {this.renderNewConnections()}
             <View style={{borderBottomWidth: 1, margin: MARGIN }} />

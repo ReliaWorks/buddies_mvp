@@ -17,6 +17,7 @@ export const ACTIVITY_UNSELECTED = 'activity_unselected';
 export const AFFILIATIONS_SAVED = 'affiliations_saved';
 export const AFFILIATION_SELECTED = 'affiliation_selected';
 export const AFFILIATION_UNSELECTED = 'affiliation_unselected';
+export const PICTURE_SAVED = 'pic_saved';
 
 export const CURRENT_USER_FETCH_SUCCESS = 'current_user_fetch_success';
 export const CHAT_SELECTED = 'chat_selected';

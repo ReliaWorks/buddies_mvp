@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions, ActionConst } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import ActivitySetup from './ActivitySetup';
 import { activitiesFetch, activitiesSaved, activitySelected, activityUnselected } from '../../actions';
 
@@ -12,8 +12,7 @@ class ActivitySetupScene extends Component {
   }
 
   componentWillUnmount() {
-    console.log("Leaving...");
-    this.props.activitiesSaved(this.props.currentUser.activities, this.props.auth.profile_pics);
+    this.props.activitiesSaved(this.props.currentUser.activities, this.props.currentUser.profileImages);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,7 +37,7 @@ class ActivitySetupScene extends Component {
     };
     let navLabel = "Next";
     if(this.props.source == 'Edit') {
-      onNextAction = () => {      
+      onNextAction = () => {
         Actions.userEdit();
       };
       navLabel = "Done";

@@ -18,8 +18,6 @@ import Splash from './scenes/Splash';
 import { navBarStyle, navTitleStyle, navBackNextStyle } from './components/common/styles';
 import { chatIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
-const MSG_CENTER_TITLE_IMAGE = require("./components/common/img/MsgCenter.png");
-
 class Routes extends Component {
   render() {
     return (
@@ -78,6 +76,7 @@ class Routes extends Component {
             key="profileSetupComplete"
             component={ProfileSetupComplete}
             hideNavBar
+            type={ActionConst.RESET}
           />
         </Scene>
         <Scene key="main" type={ActionConst.RESET}>
@@ -105,6 +104,7 @@ class Routes extends Component {
             component={MessageCenterContainer}
             leftButton={homeLeftIconButton}
             type={ActionConst.RESET}
+            hideNavBar
           />
           <Scene
             key="conversation"

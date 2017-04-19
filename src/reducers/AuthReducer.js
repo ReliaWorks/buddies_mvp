@@ -17,7 +17,6 @@ const INITIAL_STATE = {
   newUser: true,
   token: null,
   loading: false,
-  profile_pics: [],
   selectedPics: {},
   loggedIn: false,
 };
@@ -44,11 +43,12 @@ export default(state = INITIAL_STATE, action) => {
     }
     case PROFILE_INFO:
       return { ...state, user: action.payload, email: action.payload.email, first_name: action.payload.first_name, };
-    case PROFILE_PIC: {
+/*    case PROFILE_PIC: {
       const pics = state.profile_pics.slice();
       pics.push(action.payload);
       return {...state, profile_pics: pics};
     }
+*/
     default:
       return state;
   }
