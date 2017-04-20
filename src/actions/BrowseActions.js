@@ -39,7 +39,15 @@ export const potentialsFetch = () => {
   };
 };
 
-export const getCityStateCountry = (position, dispatch) => {
+export const setLocation = (uid, location) => {
+  firebase.database().ref(`user_profiles/${uid}/location`).set(location);
+};
+
+export const setGeolocation = (uid, geoLocation) => {
+  firebase.database().ref(`user_profiles/${uid}/geoLocation`).set(geoLocation);
+};
+
+export const getCityStateCountry = (uid, position, dispatch) => {
   let location = { city: '', state: '', country: ''};
 
   if (!(position && position.latitude && position.longitude)) return;
@@ -49,6 +57,8 @@ export const getCityStateCountry = (position, dispatch) => {
     location = response.data || location;
 
     dispatch({ type: SET_CURRENT_LOCATION, payload: location });
+    setLocation(uid, location);
+
     console.log('api response', location);
   })
   .catch(error => {
@@ -63,8 +73,9 @@ export const currentUserFetch = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const initialPosition = JSON.stringify(position);
-        getCityStateCountry(position.coords, dispatch);
+        getCityStateCountry(currentUser.uid, position.coords, dispatch);
         dispatch({ type: SET_CURRENT_GEOLOCATION, payload: initialPosition });
+        setGeolocation(currentUser.uid, position);
       }
     );
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
