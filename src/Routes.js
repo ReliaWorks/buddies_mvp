@@ -105,7 +105,6 @@ class Routes extends Component {
             component={MessageCenterContainer}
             leftButton={homeLeftIconButton}
             type={ActionConst.RESET}
-            hideNavBar
           />
           <Scene
             key="conversation"

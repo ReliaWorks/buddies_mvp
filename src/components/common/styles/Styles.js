@@ -2,6 +2,8 @@
 
 const BRAND_PRIMARY_COLOR = 'white';
 
+export const MARGIN = 15;
+
 export const iconStyle = {
   width: 20,
   height: 20,
