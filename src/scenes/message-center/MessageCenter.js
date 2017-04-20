@@ -27,17 +27,20 @@ class MessageCenter extends Component {
      );
    }
 
-  renderZeroState() {
+  renderZeroState(msg) {
     return(
       <View style={styles.zeroStateContainer}>
         <Text style={styles.zeroStateText}>
-          Connect with people to start chatting
+          {msg}
         </Text>
       </View>
     );
   }
 
   renderConversations() {
+    if(this.props.matchesWithChatDataSource.getRowCount() === 0)
+      return this.renderZeroState("Chat with new connections");
+
     return (
       <View style={{flex: 0.7}}>
         <Text style={{...styles.headerText, marginLeft: MARGIN, marginRight: MARGIN, marginBottom: -10}}>Conversations</Text>
@@ -53,6 +56,9 @@ class MessageCenter extends Component {
   }
 
   renderNewConnections() {
+    if(this.props.matchesWithoutChatDataSource.getRowCount() === 0)
+      return null;
+
     return (
       <View style={{flex: 0.30, marginTop: MARGIN, marginLeft: MARGIN }}>
         <Text style={styles.headerText}>New Connections</Text>
@@ -69,17 +75,12 @@ class MessageCenter extends Component {
   }
 
   render() {
-    if(this.props.matchesWithChatDataSource.getRowCount() === 0)
-      return (
-        <View style={{flex: 1}}>
-          {this.renderHeader()}
-          {this.renderZeroState()}
-        </View>
-      );
+    if(this.props.matchesWithChatDataSource.getRowCount() === 0 &&
+       this.props.matchesWithoutChatDataSource.getRowCount() === 0)
+       return this.renderZeroState("Connect with people to start chatting");
     else {
       return (
         <View style={{flex: 1, marginBottom: MARGIN}}>
-          {this.renderHeader()}
           <ScrollView style={styles.container}>
             {this.renderNewConnections()}
             <View style={{borderBottomWidth: 1, margin: MARGIN }} />

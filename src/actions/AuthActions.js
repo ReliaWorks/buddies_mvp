@@ -33,7 +33,6 @@ export const checkIfAlreadyLoggedIn = () => {
             uid: user.uid
           }
         });
-        Actions.main();
       } else {
         console.log(`User is not logged in`);
         return;
@@ -104,16 +103,15 @@ export const loginUser = () => {
 
 export const logoutUser = () => {
   return (dispatch) => {
+    const keys = ['token', 'uid'];
+    AsyncStorage.multiRemove(keys, (error) => {
+      console.log(`Unable to remove AsyncStorage with error = ${error}`);
+    });
     LoginManager.logOut();
     firebase.auth().signOut()
       .then(() => {
-        const keys = ['token', 'uid'];
-        AsyncStorage.multiRemove(keys, (error) => {
-          console.log(`Unable to remove AsyncStorage with error = ${error}`);
-        }).then(() => {
-          dispatch({ type: LOGOUT_USER });
-          Actions.root();
-        });
+        dispatch({ type: LOGOUT_USER });
+        Actions.root();
       }, (error) => {
         console.log(`Error signing out of Firebase ${error}`);
     });
@@ -206,29 +204,14 @@ function checkIfUserExists(user, ref, accessTokenData, dispatch) {
 }
 
 const signIntoFirebase = (dispatch, auth, provider, accessTokenData) => {
-  auth.onAuthStateChanged(user => {
-    if(user) {
-      console.log(`User ${user.uid} is logged in.`);
-      dispatch({
-        type: ALREADY_AUTHENTICATED,
-        payload: {
-          token: user.refreshToken,
-          uid: user.uid
-        }
-      });
-      Actions.main();
-    } else {
-      console.log(`User is not logged in`);
-      const credential = provider.credential(accessTokenData.accessToken);
-      auth.signInWithCredential(credential)
-        .then(credData => {
-          saveTokenToStorage(accessTokenData.accessToken, credData.uid);
-          checkIfUserExists(credData, firebase.database(), accessTokenData, dispatch);
-          dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
-        }).catch(err => {
-          alert("Unable to log in. Try again later.");
-          console.log(`Error signing into Firebase ${err.code}: ${err.message}`);
-      });
-    }
+  const credential = provider.credential(accessTokenData.accessToken);
+  auth.signInWithCredential(credential)
+    .then(credData => {
+      saveTokenToStorage(accessTokenData.accessToken, credData.uid);
+      checkIfUserExists(credData, firebase.database(), accessTokenData, dispatch);
+      dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
+    }).catch(err => {
+      alert("Unable to log in. Try again later.");
+      console.log(`Error signing into Firebase ${err.code}: ${err.message}`);
   });
 };

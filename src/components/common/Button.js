@@ -25,10 +25,10 @@ const localStyles = {
     fontWeight: '700',
   },
   buttonStyle: {
-    flex: 1,
     justifyContent: 'center',
     backgroundColor: '#42D3D3',
     width: width - (LOGINFORM_MARGIN * 2),
+    height: 60,
     marginLeft: LOGINFORM_MARGIN,
     marginRight: LOGINFORM_MARGIN,
     marginBottom: 5,
