@@ -66,7 +66,7 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email, uid: action.payload.uid, loading: false };
     }
     case LOGOUT_USER:
-      return { INITIAL_STATE };
+      return INITIAL_STATE;
     default:
       return state;
   }

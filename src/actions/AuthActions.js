@@ -36,6 +36,7 @@ export const checkIfAlreadyLoggedIn = () => {
         Actions.main();
       } else {
         console.log(`User is not logged in`);
+        return;
       }
     });
     AsyncStorage.multiGet(['token', 'uid'])
@@ -104,15 +105,17 @@ export const loginUser = () => {
 export const logoutUser = () => {
   return (dispatch) => {
     LoginManager.logOut();
-    firebase.auth().signOut().then(() => {
-      const keys = ['token', 'uid'];
-      AsyncStorage.multiRemove(keys, (error) => {
-        console.log(`Unable to remove AsyncStorage with error = ${error}`);
-      });
-      dispatch({ type: LOGOUT_USER });
-      Actions.root();
-    }, (error) => {
-      console.log(`Error signing out of Firebase ${error}`);
+    firebase.auth().signOut()
+      .then(() => {
+        const keys = ['token', 'uid'];
+        AsyncStorage.multiRemove(keys, (error) => {
+          console.log(`Unable to remove AsyncStorage with error = ${error}`);
+        }).then(() => {
+          dispatch({ type: LOGOUT_USER });
+          Actions.root();
+        });
+      }, (error) => {
+        console.log(`Error signing out of Firebase ${error}`);
     });
   };
 };

@@ -4,7 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { descriptionSaved } from '../../actions';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 class DescriptionSetup extends Component {
   constructor(props) {
@@ -69,7 +69,6 @@ class DescriptionSetup extends Component {
         {this.renderDescription()}
         {this.renderProgressBar()}
         {this.renderNextButton()}
-
       </View>
     );
   }
@@ -82,7 +81,7 @@ const styles = {
     fontFamily: 'Avenir-Book',
   },
   descriptionInput: {
-    height: 300,
+    height: height - 300,
     fontSize: 18,
     borderColor: 'gray',
     borderWidth: 1,

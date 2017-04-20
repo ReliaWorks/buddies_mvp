@@ -35,7 +35,9 @@ class ProfileModal extends Component {
   />
 */
   render() {
-    if(this.props.selectedUser.loading) {
+    const { loading, firstName, age, profileImages, location, activities, affiliations, description, uid } = this.props.selectedUser;
+
+    if(loading) {
       return(<Spinner size="large" />);
     }
     return (
@@ -43,15 +45,16 @@ class ProfileModal extends Component {
         {this.renderCloseIcon()}
         <BuddyCard
           value={{
-            firstName: this.props.selectedUser.firstName,
-            age: this.props.selectedUser.age,
-            profileImages: this.props.selectedUser.profileImages,
-            activities: this.props.selectedUser.activities,
-            affiliations: this.props.selectedUser.affiliations,
-            description: this.props.selectedUser.description,
+            firstName,
+            age,
+            profileImages,
+            location,
+            activities,
+            affiliations,
+            description,
             likeable: false,
             editable: false,
-            uid: this.props.selectedUser.uid,
+            uid,
           }}
         />
       </View>

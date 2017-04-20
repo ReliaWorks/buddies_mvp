@@ -18,9 +18,8 @@ export default (state = INITIAL_STATE, action) => {
     case ALL_ACTIVITIES_FETCH: {
       return { ...state, allActivities: action.payload };
     }
-    case LOGOUT_USER: {
+    case LOGOUT_USER: 
       return INITIAL_STATE;
-    }
     default:
       return state;
   }
