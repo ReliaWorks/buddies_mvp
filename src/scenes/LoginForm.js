@@ -66,6 +66,8 @@ class LoginForm extends Component {
   }
 }
 
+// Valid Source Sans Pro FontFamily names are: 'SourceSansPro-Regular', 'Source Sans Pro', 'SourceSansPro-It'
+
 const styles = {
   container: {
    flex: 1,
@@ -74,7 +76,7 @@ const styles = {
   fbLoginText: {
     color: 'white',
     fontSize: 16,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontWeight: '700',
     textAlign: 'center',
     justifyContent: 'center',
