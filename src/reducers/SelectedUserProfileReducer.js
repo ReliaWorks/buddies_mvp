@@ -24,12 +24,15 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, loading: true };
     }
     case CHAT_PROFILE_FETCH_SUCCESS: {
-      const profileImages = action.payload.profileImages;
-//      if(action.payload.profileImages) {
-//        profileImages = action.payload.profileImages.map((image) => {
-//          return { url: image.url };
-//        });
-//      }
+      const photos = action.payload.profileImages;
+      const profileImages = [];
+      if(photos) {
+        _.map(photos, (img, key) => {
+          if(img.status === ACTIVE) {
+            profileImages.push({url: img.url, key: key});
+          }
+        });
+      }
 
       const activities = [];
       if(action.payload.activities) {

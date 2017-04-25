@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import firebase from 'firebase';
 import {
-  MATCHES_FETCH_START,
   MATCHES_FETCH,
   MATCHES_FETCH_SUCCESS,
   LAST_MESSAGES_FETCH,
@@ -11,11 +10,13 @@ export const matchesFetch = () => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
-    dispatch({ type: MATCHES_FETCH_START });
     firebase.database().ref(`/user_matches/${currentUser.uid}`).orderByChild('matched').equalTo(true)
-      .on('value', snapshot => {
+      .once('value', snapshot => {
         dispatch({ type: MATCHES_FETCH, payload: snapshot.val()});
         fetchLastMessages(dispatch);
+      })
+      .then(() => {
+        dispatch({ type: MATCHES_FETCH_SUCCESS });
       });
   };
 };
@@ -49,8 +50,5 @@ function fetchLastMessages(dispatch) {
       _.forEach(snapshot.val(), (chat, id) => {
         getLastMsg(id, chat.conversationId, dispatch);
       });
-    })
-    .then(() => {
-      dispatch({ type: MATCHES_FETCH_SUCCESS });
     });
 }

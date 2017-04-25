@@ -1,44 +1,35 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, ScrollView, TouchableOpacity, View } from 'react-native';
-import { connect } from 'react-redux';
 import { MARGIN } from '../common/styles';
 import { Button } from '../common';
+import EditablePhoto from './EditablePhoto';
 import { TRASH_ICON } from '../../scenes/profile-setup/strings';
-import { addPic, savePics } from '../../actions';
 
 const { width } = Dimensions.get('window');
-//const MARGIN = 10;
+const MAX_NUM_PHOTOS = 5 + 3;
 
 class PhotoEdit extends Component {
-  renderOtherPics(otherImages) {
-    const { profileImages } = this.props.currentUser;
+  renderPics() {
+    const { profileImages, onRemove } = this.props;
     const firstProfileImage = profileImages[0];
+    const otherImages = profileImages.slice(1, MAX_NUM_PHOTOS - 1);
 
     return (
       <View style={{flex: 0.75, marginBottom: 5}}>
       <ScrollView>
         <View style={{width: width}}>
-          {this.renderPrimaryPic(firstProfileImage)}
+          {this.renderPrimaryPic(firstProfileImage.url)}
           <View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', alignSelf: 'center'}}>
-        {otherImages.map((url, key) => {
-          return (
-            <View key={key} style={{ marginRight: 5, marginTop: 5 }}>
-              <Image
-                style={styles.smallImageStyle}
-                source={{ uri: url }}
-              >
-              <View style={styles.editIconContainer}>
-                <TouchableOpacity onPress={() => this.props.addPic(url)}>
-                  <Image
-                    style={styles.iconStyle}
-                    source={TRASH_ICON}
-                  />
-                </TouchableOpacity>
-              </View>
-              </Image>
-            </View>
-        );
-        })}
+            {otherImages.map((img) => {
+              return (
+                <EditablePhoto
+                  url={img.url}
+                  photo={img}
+                  key={img.key}
+                  onRemove={onRemove}
+                />
+              );
+            })}
         </View>
       </View>
       </ScrollView>
@@ -53,14 +44,14 @@ class PhotoEdit extends Component {
           style={styles.mainImageStyle}
           source={{ uri: url }}
         >
-          <View style={styles.editIconContainer}>
-            <TouchableOpacity onPress={() => this.props.addPic(url)}>
-              <Image
-                style={styles.iconStyle}
-                source={TRASH_ICON}
-              />
-            </TouchableOpacity>
-          </View>
+        <View style={styles.removeIconContainer}>
+          <TouchableOpacity>
+            <Image
+              style={styles.iconStyle}
+              source={TRASH_ICON}
+            />
+          </TouchableOpacity>
+        </View>
         </Image>
       </View>
     );
@@ -77,12 +68,9 @@ class PhotoEdit extends Component {
   }
 
   render() {
-    const { profileImages } = this.props.currentUser;
-    const otherProfileImages = profileImages.slice(1, 10);
-
     return (
       <View style={{flex: 1}}>
-        {this.renderOtherPics(otherProfileImages)}
+        {this.renderPics()}
         {this.renderSaveButton(this.props.onSave)}
       </View>
     );
@@ -90,7 +78,7 @@ class PhotoEdit extends Component {
 }
 
 const styles = {
-  editIconContainer: {
+  removeIconContainer: {
     backgroundColor: 'white',
     alignSelf: 'flex-end',
     marginRight: 2,
@@ -121,8 +109,4 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({ auth, currentUser }) => {
-  return { auth, currentUser };
-};
-
-export default connect(mapStateToProps, { addPic, savePics })(PhotoEdit);
+export default PhotoEdit;

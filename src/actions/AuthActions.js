@@ -152,7 +152,6 @@ function fetchProfilePhotos(result, dispatch, token) {
                  }
                }); new GraphRequestManager().addRequest(picRequest).start();
           });
-          savePics(profilePics);
         }
       }); new GraphRequestManager().addRequest(profilePicRequest).start();
     });

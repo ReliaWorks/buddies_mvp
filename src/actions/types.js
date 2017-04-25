@@ -6,9 +6,7 @@ export const NOT_ALREADY_AUTHED = 'not_already_authed';
 export const ALL_ACTIVITIES_FETCH = 'all_activities_fetch';
 export const ALL_AFFILIATIONS_FETCH = 'all_affiliations_fetch';
 export const PROFILE_INFO = 'profile_info';
-export const PROFILE_PIC = 'profile_pic';
 export const SELECT_PIC = 'select_pic';
-export const SAVE_PICS = 'save_pics';
 export const DESCRIPTION_SAVED = 'description_saved';
 export const ACTIVITY_CREATE = 'activity_create';
 export const ACTIVITIES_SAVED = 'activities_saved';
@@ -17,6 +15,8 @@ export const ACTIVITY_UNSELECTED = 'activity_unselected';
 export const AFFILIATIONS_SAVED = 'affiliations_saved';
 export const AFFILIATION_SELECTED = 'affiliation_selected';
 export const AFFILIATION_UNSELECTED = 'affiliation_unselected';
+export const PHOTOS_SAVED = 'photos_saved';
+export const PHOTO_REMOVED = 'photo_removed';
 export const PICTURE_SAVED = 'pic_saved';
 
 export const CURRENT_USER_FETCH_SUCCESS = 'current_user_fetch_success';
@@ -32,7 +32,6 @@ export const KEEP_BROWSING = 'keep_browsing';
 
 export const POTENTIALS_FETCH = 'potentials_fetch';
 export const POTENTIALS_FETCH_SUCCESS = 'potentials_fetch_success';
-export const MATCHES_FETCH_START = 'matches_fetch_start';
 export const MATCHES_FETCH = 'matches_fetch';
 export const MATCHES_FETCH_SUCCESS = 'matches_fetch_success';
 export const SET_CURRENT_GEOLOCATION = 'set_geolocation';

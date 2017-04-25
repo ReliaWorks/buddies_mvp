@@ -108,7 +108,6 @@ export const connectWithUser = (buddy, connectStatus) => {
             otherUserPic: buddy.pic,
             liked: connectStatus,
             matched: (otherUserLikesYouToo && connectStatus),
-            lastMsg: '',
           });
           if(connectStatus && otherUserLikesYouToo) {
             successfullyConnected(dispatch, buddy.uid, currentUser.uid);

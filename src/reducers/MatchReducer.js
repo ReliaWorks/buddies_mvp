@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import {
-  MATCHES_FETCH_START,
   MATCHES_FETCH,
   MATCHES_FETCH_SUCCESS,
   LAST_MESSAGES_FETCH,
@@ -10,6 +9,7 @@ import {
 
 const INITIAL_STATE = {
   matches: {},
+  numMatches: null,
   lastMsgs: {},
   matchesWithChat: {},
   sortedMatches: [],
@@ -19,20 +19,14 @@ const INITIAL_STATE = {
 
 export default(state = INITIAL_STATE, action) => {
   switch(action.type) {
-    case MATCHES_FETCH_START: {
-      return {...state, loading: true};      
-    }
-    case MATCHES_FETCH_SUCCESS:
-      return {...state, loading: false};
     case MATCHES_FETCH: {
-      return {...state, matches: action.payload, matchesWithoutChat: action.payload};
+      return {...state, matches: action.payload, matchesWithoutChat: action.payload, loading: true};
+    }
+    case MATCHES_FETCH_SUCCESS: {
+      return {...state, loading: false};
     }
     case LAST_MESSAGES_FETCH: {
-      /* 3 cases:
-       * 1) msg exists but no match (unmatched)
-       * 2) msg exists and match exists
-       * 3) no msg exists and match exists
-       */
+      if(!action.payload.uid || !state.matches) return state;
       let match = state.matches[action.payload.uid];
       let matchesWithChat = {...state.matchesWithChat};
       let matchesWithoutChat = {...state.matchesWithoutChat};
@@ -45,13 +39,10 @@ export default(state = INITIAL_STATE, action) => {
       const sortedMatches = _.sortBy(matchesWithChat, (item) => {
         return item.lastMsg.timestamp;
       });
-      return {...state, lastMsgs: updatedMsgs, matchesWithChat: matchesWithChat, matchesWithoutChat: matchesWithoutChat, sortedMatches: sortedMatches.reverse() };
+      return {...state, lastMsgs: updatedMsgs, matchesWithChat, matchesWithoutChat, sortedMatches: sortedMatches.reverse(), loading: false};
     }
     case MESSAGE_SENT: {
-      const msg = action.payload.msg;
-      const uid = action.payload.otherUserId;
-      const text = msg.text;
-      const updatedMsgs = {...state.lastMsgs, [uid]: text};
+      const updatedMsgs = {...state.lastMsgs, [action.payload.otherUserId]: action.payload.msg.text};
       return { ...state, lastMsgs: updatedMsgs};
     }
     case LOGOUT_USER: {

@@ -1,8 +1,6 @@
 import firebase from 'firebase';
-import { Actions } from 'react-native-router-flux';
+//import { Actions } from 'react-native-router-flux';
 import {
-  SELECT_PIC,
-  SAVE_PICS,
   DESCRIPTION_SAVED,
   ACTIVITY_SELECTED,
   ACTIVITY_UNSELECTED,
@@ -10,33 +8,9 @@ import {
   AFFILIATIONS_SAVED,
   AFFILIATION_SELECTED,
   AFFILIATION_UNSELECTED,
+  PHOTOS_SAVED,
 } from './types';
-
-export const addPic = (url) => {
-  return {
-      type: SELECT_PIC,
-      payload: url
-    };
-};
-
-export const savePics = (selectedPics) => {
-  const { currentUser } = firebase.auth();
-
-  const profileImages = [];
-  Object.keys(selectedPics).forEach(key => {
-    profileImages.push(key);
-  });
-
-//  if(!profileImages || profileImages.length === 0) profileImages.push(DEFAULT_PROFILE_PHOTO);
-  return (dispatch) => {
-    firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
-      .set(profileImages)
-      .then(() => {
-        dispatch({ type: SAVE_PICS });
-        Actions.activitySetup();
-      });
-  };
-};
+import { ACTIVE } from '../config';
 
 export const descriptionSaved = (text) => {
   const { currentUser } = firebase.auth();
@@ -64,12 +38,31 @@ export const activityUnselected = (id) => {
   };
 };
 
+function photosSaved(photos, dispatch) {
+  const { currentUser } = firebase.auth();
+
+  const photoObj = {};
+  const photoSet = [];
+  let i = 0;
+  photos.forEach((photo) => {
+    photoObj.url = photo;
+    photoObj.status = ACTIVE;
+    firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
+      .push(photoObj)
+      .then((snap) => {
+        photoSet[snap.key] = photoObj.url;
+        i++;
+        if(i === photos.length - 1)
+          dispatch({ type: PHOTOS_SAVED, payload: photoSet });
+      });
+  });
+}
+
 export const activitiesSaved = (activities, profileImages) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
-    firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
-      .set(profileImages);
+    photosSaved(profileImages, dispatch);
     if(activities && activities.length > 0) {
       activities.forEach((activity, index) => {
         firebase.database().ref(`user_profiles/${currentUser.uid}/activities/`)

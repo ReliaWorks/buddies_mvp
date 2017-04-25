@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
@@ -5,7 +6,7 @@ import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser, potentialsFetch } from '../actions';
 import { Deck, NoMoreCards, Spinner } from '../components/common';
-import { DEFAULT_PROFILE_PHOTO } from '../config';
+import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../config';
 
 class BrowseContainer extends Component {
   swiper:Object;
@@ -45,6 +46,17 @@ class BrowseContainer extends Component {
     }
   }
 
+  convertProfileImagesObjectToArray(profileImages) {
+    const images = [];
+    if(profileImages) {
+      _.map(profileImages, (img, key) => {
+        if(img.status === ACTIVE) {
+          images.push({url: img.url, key: key});
+        }
+      });
+    }
+    return images;
+  }
 //  location: { city: 'San Francisco, CA', distance: "4 miles" },
   renderMatches() {
     if(this.props.connection.potentials.length === 0 ||
@@ -61,14 +73,15 @@ class BrowseContainer extends Component {
       >
         {this.props.connection.potentials.map((buddy, key) => {
           let profileImage = DEFAULT_PROFILE_PHOTO;
-          if(buddy.profileImages) profileImage = buddy.profileImages[0];
+          const images = this.convertProfileImagesObjectToArray(buddy.profileImages);
+          if(images) profileImage = images[0];
           return (
             <View key={key} style={styles.cardStyle}>
               <BuddyCard
                 value={{
                   firstName: buddy.first_name,
                   age: "",
-                  profileImages: buddy.profileImages,
+                  profileImages: images,
                   activities: buddy.activities,
                   affiliations: buddy.affiliations,
                   location: buddy.location,

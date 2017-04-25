@@ -1,13 +1,16 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Dimensions, Image, Text, TouchableWithoutFeedback, TouchableOpacity, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
+//import ImagePicker from 'react-native-image-picker';
 import { Spinner } from './Spinner';
 import { PictureModal } from './PictureModal';
 import { textStyle, buttonStyle } from './styles';
 
 const { height, width } = Dimensions.get('window');
+const MAX_NUM_PHOTOS = 5;
 
 class ProfileImages extends Component {
   constructor(props) {
@@ -61,33 +64,33 @@ class ProfileImages extends Component {
     );
   }
 
-  renderPhoto(img, editable) {
+  renderPhoto(key, img, editable) {
     return (
-      <Image
-        source={{ uri: img }}
-        style={styles.profileImage}
-      >
-        {this.showEditableButton(editable)}
-      </Image>
+      <View key={key}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            this.setState({ showModal: true, currentImg: img });
+          }}
+        >
+          <Image
+            source={{ uri: img }}
+            style={styles.profileImage}
+          >
+            {this.showEditableButton(editable)}
+          </Image>
+        </TouchableWithoutFeedback>
+      </View>
     );
   }
 
   render() {
     const { profileImages, editable } = this.props.value;
-    const { profileImageContainer, profileImage } = styles;
+    const { profileImageContainer } = styles;
     let pics = profileImages;
 
-    if(!profileImages) return this.renderNoPhotos();
-    if(profileImages.length === 0) {
-      return (
-        <View style={{justifyContent: 'center', alignSelf: 'center'}}>
-          <Spinner size="large" />
-        </View>
-      );
-    }
-    if(profileImages.length > 6) {
-      pics = profileImages.slice(0, 5);
-    }
+    if(!profileImages || profileImages.length === 0) return this.renderNoPhotos();
+    if(profileImages.length >= MAX_NUM_PHOTOS)
+      pics = profileImages.slice(0, MAX_NUM_PHOTOS);
     return (
       <View style={profileImageContainer}>
         <Swiper
@@ -112,25 +115,16 @@ class ProfileImages extends Component {
               borderRadius: 5,
               marginTop: 3,
               marginBottom: 3}}
-            />}
+            />
+          }
           paginationStyle={{
             bottom: height - 120,
             paddingLeft: 7,
             paddingRight: 7,
           }}
         >
-          { pics.map((img, key) => {
-            return (
-              <View key={key}>
-                <TouchableWithoutFeedback
-                  onPress={() => {
-                    this.setState({ showModal: true, currentImg: img });
-                  }}
-                >
-                  {this.renderPhoto(img, editable)}
-                </TouchableWithoutFeedback>
-              </View>
-            );
+          { pics.map((pic) => {
+              return this.renderPhoto(pic.key, pic.url, editable);
           })}
         </Swiper>
         <PictureModal
@@ -146,11 +140,9 @@ class ProfileImages extends Component {
 const styles = {
   profileImageContainer: {
     flex: 0.5,
-    //flex: 1,
     borderBottomWidth: 3,
   },
   profileImage: {
-//    alignSelf: 'stretch',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     height: (height * 0.5),

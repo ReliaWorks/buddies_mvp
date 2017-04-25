@@ -1,14 +1,32 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+import PhotoEdit from '../components/profile-edit/PhotoEdit';
+import { photoRemoved } from '../actions';
 
 class PhotoEditContainer extends Component {
+  onImageSave() {
+    Actions.pop();
+  }
+
+  onImageRemove(photo) {
+    console.log(`In PhotoEditContainer photo = `, photo);
+    this.props.photoRemoved(photo);
+  }
+
   render() {
-    return(
-      <View>
-        <Text>Hello World</Text>
-      </View>
+    return (
+      <PhotoEdit
+        profileImages={this.props.currentUser.profileImages}
+        onSave={this.onImageSave}
+        onRemove={this.onImageRemove.bind(this)}
+      />
     );
   }
 }
 
-export default PhotoEditContainer;
+const mapStateToProps = ({ currentUser }) => {
+  return { currentUser };
+};
+
+export default connect(mapStateToProps, { photoRemoved })(PhotoEditContainer);

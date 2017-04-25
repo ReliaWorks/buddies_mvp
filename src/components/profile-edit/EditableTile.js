@@ -1,26 +1,7 @@
 import React from 'react';
-import { Image, Text, TouchableHighlight, View } from 'react-native';
-//import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-//import Icon from 'react-native-vector-icons/IonIcons';
-import Icon from 'react-native-vector-icons/Octicons';
-
-
-const ICON_SIZE = 17;
-
-const renderCloseIcon = (onRemove, tileId, tileName) => {
-  return (
-    <TouchableHighlight
-      onPress={() => onRemove(tileId, tileName)}
-      style={{alignSelf: 'flex-end'}}
-    >
-      <Icon
-        name="x"
-        size={ICON_SIZE}
-        color="#FF4F70"
-      />
-    </TouchableHighlight>
-  );
-};
+import { Image, Text, View } from 'react-native';
+import { renderCloseIcon } from '../../icons';
+import { CLOSE_ICON_SIZE } from '../../config';
 
 const EditableTile = ({
   tileName,
@@ -34,7 +15,7 @@ const EditableTile = ({
     return (
       <View style={cardStyle}>
         <View style={styles.iconContainer}>
-          <View style={{height: ICON_SIZE}} />
+          <View style={{height: CLOSE_ICON_SIZE}} />
           <Image style={imageStyle} source={{ uri: tileIcon }} />
           {renderCloseIcon(onRemove, tileId, tileName)}
         </View>

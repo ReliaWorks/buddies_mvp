@@ -10,3 +10,6 @@ export const DEFAULT_PROFILE_PHOTO = 'https://firebasestorage.googleapis.com/v0/
 export const ICON_WIDTH = 25;
 export const ICON_PADDING = 6;
 export const ICON_CLICKABLE_AREA_WIDTH = 100;
+export const CLOSE_ICON_SIZE = 20;
+export const ACTIVE = 1;
+export const INACTIVE = 0;

@@ -13,8 +13,11 @@ import {
   DESCRIPTION_SAVED,
   SET_CURRENT_LOCATION,
   SET_CURRENT_GEOLOCATION,
+  PHOTOS_SAVED,
+  PHOTO_REMOVED,
   PICTURE_SAVED,
 } from '../actions/types';
+import { ACTIVE } from '../config';
 
 const INITIAL_STATE = {
   uid: '',
@@ -40,15 +43,17 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, uid: id };
     }
     case CURRENT_USER_FETCH_SUCCESS: {
-      const profileImages = action.payload.profileImages;
-//      if(action.payload.profileImages) {
-//        profileImages = action.payload.profileImages.map((image) => {
-//          return { url: image.url };
-//        });
-//      }
+      const photos = action.payload.profileImages;
+      const profileImages = [];
+      if(photos) {
+        _.map(photos, (img, key) => {
+          if(img.status === ACTIVE) {
+            profileImages.push({url: img.url, key: key});
+          }
+        });
+      }
       const firstName = action.payload.first_name;
       const age = action.payload.age;
-//      const location = action.payload.location;
       const email = action.payload.email;
       const activities = [];
       if(action.payload.activities) {
@@ -134,6 +139,19 @@ export default(state = INITIAL_STATE, action) => {
     }
     case DESCRIPTION_SAVED: {
       return { ...state, description: action.payload };
+    }
+    case PHOTOS_SAVED: {
+      let photos = state.profileImages;
+      if(action.payload)
+        photos = action.payload;
+      return { ...state, profileImages: photos };
+    }
+    case PHOTO_REMOVED: {
+//      const profileImages = state.profileImages;
+//      if(action.payload.key)
+//        delete profileImages[action.payload.key];
+//      return {...state, profileImages};
+      return state;
     }
     case PICTURE_SAVED: {
       let updatedImages = [];
