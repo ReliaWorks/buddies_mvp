@@ -6,6 +6,7 @@ import { homeLeftIconButton } from '../../icons';
 import { ICON_CLICKABLE_AREA_WIDTH } from '../../config';
 
 const MARGIN = 15;
+const ZERO_CONVOS = `You have no messages but you have new connections waiting for you to say hi!`;
 const MSG_CENTER_TITLE_IMAGE = require("../../components/common/img/MsgCenter.png");
 
 class MessageCenter extends Component {
@@ -37,13 +38,12 @@ class MessageCenter extends Component {
     );
   }
 
-  renderConversations() {
+  renderConversations(firstName) {
     if(this.props.matchesWithChatDataSource.getRowCount() === 0)
-      return this.renderZeroState("Chat with new connections");
+      return this.renderZeroState(`Hey ${firstName},\n\n${ZERO_CONVOS}`);
 
     return (
-      <View style={{flex: 0.7}}>
-        <Text style={{...styles.headerText, marginLeft: MARGIN, marginRight: MARGIN, marginBottom: -10}}>Conversations</Text>
+      <View style={{flex: 1}}>
           <ListView
             style={styles.container}
             dataSource={this.props.matchesWithChatDataSource}
@@ -84,7 +84,7 @@ class MessageCenter extends Component {
           <ScrollView style={styles.container}>
             {this.renderNewConnections()}
             <View style={{borderBottomWidth: 1, margin: MARGIN }} />
-            {this.renderConversations()}
+            {this.renderConversations(this.props.firstName)}
           </ScrollView>
         </View>
       );
@@ -102,8 +102,8 @@ const styles = {
     justifyContent: 'space-around'
   },
   headerText: {
-    fontSize: 18,
-    color: 'black',
+    fontSize: 16,
+    color: '#00A3B7',
     fontFamily: 'Avenir-Book',
     fontWeight: '700',
   },
@@ -129,12 +129,16 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 80,
+    alignSelf: 'center',
+    padding: MARGIN * 3,
+//    backgroundColor: 'yellow',
   },
   zeroStateText: {
-    textAlign: 'center',
+    textAlign: 'left',
     fontFamily: 'Avenir-Book',
-    fontSize: 22,
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#00A3B7'
   },
 };
 

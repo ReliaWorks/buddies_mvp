@@ -30,14 +30,16 @@ class MessageCenterContainer extends Component {
         <MessageCenter
           matchesWithChatDataSource={this.matchesWithChatDataSource}
           matchesWithoutChatDataSource={this.matchesWithoutChatDataSource}
+          firstName={this.props.firstName}
         />
       );
     }
   }
 }
-const mapStateToProps = ({ matchSet }) => {
-  const { matches, matchesWithoutChat, loading, sortedMatches } = matchSet;
-  return { matches, matchesWithoutChat, loading, sortedMatches };
+const mapStateToProps = ({ matchSet, currentUser }) => {
+  const { matches, matchesWithoutChat, loading, sortedMatches, numMatches } = matchSet;
+  const { firstName } = currentUser;
+  return { matches, matchesWithoutChat, loading, sortedMatches, numMatches, firstName };
 };
 
 export default connect(mapStateToProps, { matchesFetch, fetchLastMessages })(MessageCenterContainer);

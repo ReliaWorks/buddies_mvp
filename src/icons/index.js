@@ -1,10 +1,11 @@
 import React from 'react';
-import { Dimensions, TouchableOpacity } from 'react-native';
+import { Dimensions, TouchableOpacity, TouchableHighlight } from 'react-native';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import CloseIcon from 'react-native-vector-icons/Octicons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ICON_WIDTH, ICON_PADDING, ICON_CLICKABLE_AREA_WIDTH } from '../config.js';
+import { CLOSE_ICON_SIZE, ICON_WIDTH, ICON_PADDING, ICON_CLICKABLE_AREA_WIDTH } from '../config.js';
 
 const { width } = Dimensions.get('window');
 
@@ -107,4 +108,19 @@ export const wrenchIconButton = () => {
       />
     </TouchableOpacity>
     );
+};
+
+export const renderCloseIcon = (onRemove, tileId, tileName) => {
+  return (
+    <TouchableHighlight
+      onPress={() => onRemove(tileId, tileName)}
+      style={{alignSelf: 'flex-end'}}
+    >
+      <CloseIcon
+        name="x"
+        size={CLOSE_ICON_SIZE}
+        color="#FF4F70"
+      />
+    </TouchableHighlight>
+  );
 };
