@@ -71,7 +71,7 @@ const styles = {
     backgroundColor: '#F8F8F8'
   },
   sectionHeaderText: {
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -82,7 +82,7 @@ const styles = {
     marginBottom: 10,
   },
   comingSoonText: {
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 14,
     color: 'red',
   },
@@ -97,7 +97,7 @@ const styles = {
   descriptionInput: {
     height: 300,
     fontSize: 16,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     marginLeft: 10,
     color: '#000000',
     fontWeight: '100',

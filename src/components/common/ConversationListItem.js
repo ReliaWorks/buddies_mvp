@@ -76,20 +76,20 @@ const styles = {
     flex: 1,
   },
   nameText: {
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 14,
     fontWeight: '800',
     marginTop: MARGIN,
   },
   dateText: {
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 12,
     color: '#707070',
     marginTop: MARGIN,
     paddingRight: MARGIN,
   },
   msgText: {
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 14,
   },
   convoThumbnailStyle: {

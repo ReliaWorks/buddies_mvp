@@ -81,7 +81,7 @@ const styles = {
     alignSelf: 'center',
     fontSize: 14,
     fontWeight: '100',
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     textAlign: 'center',
     paddingTop: 10,
   }

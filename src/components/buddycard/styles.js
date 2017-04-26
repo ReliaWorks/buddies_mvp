@@ -7,7 +7,7 @@ export default styles = {
     marginRight: 15,
     marginTop: 15,
     fontWeight: 'bold',
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
   },
   locationText: {
     fontSize: 14,
@@ -15,12 +15,12 @@ export default styles = {
     marginLeft: 15,
     marginRight: 15,
     fontWeight: 'bold',
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
   },
   textStyle: {
     fontSize: 18,
     marginLeft: 10,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     backgroundColor: 'white',
   },
 };

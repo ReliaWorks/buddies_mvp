@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     color: '#b2b2b2',
     fontWeight: 'bold',
     fontSize: 16,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     backgroundColor: 'transparent',
     textAlign: 'center',
   },

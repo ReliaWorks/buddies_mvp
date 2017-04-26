@@ -22,7 +22,7 @@ const styles = {
   },
   text: {
     textAlign: 'center',
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 22
   },
 };

@@ -104,7 +104,7 @@ const styles = {
   headerText: {
     fontSize: 16,
     color: '#00A3B7',
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontWeight: '700',
   },
   noConvoThumbnailStyle: {
@@ -135,7 +135,7 @@ const styles = {
   },
   zeroStateText: {
     textAlign: 'left',
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 16,
     fontWeight: '700',
     color: '#00A3B7'

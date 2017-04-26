@@ -147,11 +147,13 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, profileImages: photos };
     }
     case PHOTO_REMOVED: {
-//      const profileImages = state.profileImages;
-//      if(action.payload.key)
-//        delete profileImages[action.payload.key];
-//      return {...state, profileImages};
-      return state;
+      let profileImages = state.profileImages;
+      if(action.payload) {
+        profileImages = profileImages.filter((image) => {
+          return(image.key !== action.payload.key);
+        });
+      }
+      return {...state, profileImages};
     }
     case PICTURE_SAVED: {
       let updatedImages = [];

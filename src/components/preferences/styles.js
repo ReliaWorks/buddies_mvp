@@ -1,6 +1,6 @@
 export default styles = {
   headerText: {
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 14,
     fontWeight: '900',
     marginLeft: 20,
@@ -8,7 +8,7 @@ export default styles = {
     marginTop: 10,
   },
   comingSoonText: {
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 14,
     marginLeft: 20,
     marginBottom: 5,

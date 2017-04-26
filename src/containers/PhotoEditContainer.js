@@ -10,7 +10,6 @@ class PhotoEditContainer extends Component {
   }
 
   onImageRemove(photo) {
-    console.log(`In PhotoEditContainer photo = `, photo);
     this.props.photoRemoved(photo);
   }
 

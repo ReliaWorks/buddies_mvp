@@ -72,9 +72,9 @@ class BrowseContainer extends Component {
         showPagination
       >
         {this.props.connection.potentials.map((buddy, key) => {
-          let profileImage = DEFAULT_PROFILE_PHOTO;
+          let profileImage = {url: DEFAULT_PROFILE_PHOTO, key: null};
           const images = this.convertProfileImagesObjectToArray(buddy.profileImages);
-          if(images) profileImage = images[0];
+          if(images && images[0]) profileImage = images[0];
           return (
             <View key={key} style={styles.cardStyle}>
               <BuddyCard

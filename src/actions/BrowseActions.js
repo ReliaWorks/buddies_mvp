@@ -91,7 +91,7 @@ export const connectWithUser = (buddy, connectStatus) => {
   return(dispatch) => {
     dispatch({
       type: CONNECT_WITH_USER,
-      payload: { uid: buddy.uid, name: buddy.name, pic: buddy.pic, index: buddy.index }
+      payload: { uid: buddy.uid, name: buddy.name, pic: buddy.pic.url, index: buddy.index }
     });
 
     const matches = firebase.database();
@@ -105,7 +105,7 @@ export const connectWithUser = (buddy, connectStatus) => {
             currentUserId: currentUser.uid,
             otherUserId: buddy.uid,
             otherUserName: buddy.name,
-            otherUserPic: buddy.pic,
+            otherUserPic: buddy.pic.url,
             liked: connectStatus,
             matched: (otherUserLikesYouToo && connectStatus),
           });

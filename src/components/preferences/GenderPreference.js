@@ -50,7 +50,7 @@ const GenderPreference = () => {
 const localStyles = {
   genderText: {
     marginLeft: 20,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 14,
   },
   genderHeaderContainer: {

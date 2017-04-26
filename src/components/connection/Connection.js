@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   headerStyle: {
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 30,
   },
   image: {

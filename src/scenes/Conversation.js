@@ -62,7 +62,7 @@ class Conversation extends Component {
           borderBottomWidth: 3,
         }}
       >
-        <Text style={{marginLeft: 10, alignSelf: 'center', fontFamily: 'Avenir-Book'}} onPress={() => Actions.matches()}>
+        <Text style={{marginLeft: 10, alignSelf: 'center', fontFamily: 'Source Sans Pro'}} onPress={() => Actions.matches()}>
           Back
         </Text>
           {this.renderChatPartnerHeader()}
@@ -75,6 +75,9 @@ class Conversation extends Component {
 
   render() {
     const { currentUser } = firebase.auth();
+    let profileImage = '';
+    if(this.props.currentUser.profilesImages)
+      profileImage = this.props.currentUser.profileImages[0].url;
     return (
       <View style={{flex: 1}}>
         {this.renderHeader()}
@@ -83,6 +86,7 @@ class Conversation extends Component {
           onSend={this.onSend}
           user={{
             _id: currentUser.uid,
+            avatar: profileImage,
           }}
           renderFooter={this.renderFooter.bind(this)}
         />
@@ -100,12 +104,12 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 14,
     color: '#aaa',
-    fontFamily: 'Avenir-Book'
+    fontFamily: 'Source Sans Pro'
   },
   headerText: {
     fontSize: 22,
     color: 'black',
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontWeight: '700',
   },
 });

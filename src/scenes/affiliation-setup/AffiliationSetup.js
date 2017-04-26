@@ -15,7 +15,7 @@ class AffiliationSetup extends Component {
               flex: 1,
               fontSize: 16,
               fontWeight: 'bold',
-              fontFamily: 'Avenir-Book',
+              fontFamily: 'Source Sans Pro',
               marginRight: LOGINFORM_MARGIN * 2,
               marginTop: 10,
             }}
@@ -144,7 +144,7 @@ const styles = {
   nextButtonText: {
     color: 'white',
     fontSize: 16,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontWeight: '700',
     textAlign: 'center',
     justifyContent: 'center',

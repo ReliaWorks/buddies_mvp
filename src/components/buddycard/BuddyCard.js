@@ -195,7 +195,7 @@ const localStyles = StyleSheet.create({
   footerText: {
     color: 'white',
     fontWeight: 'bold',
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     alignItems: 'center',
     fontSize: 18,
   },
@@ -211,7 +211,7 @@ const localStyles = StyleSheet.create({
     fontWeight: '100',
     marginLeft: 10,
     marginTop: MARGIN,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     backgroundColor: 'white',
   },
 });

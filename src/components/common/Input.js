@@ -31,7 +31,7 @@ const styles = {
   labelStyle: {
     fontSize: 18,
     paddingLeft: 20,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     flex: 1
   },
   containerStyle: {
