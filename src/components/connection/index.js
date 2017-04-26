@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import Connection from './Connection';
 import { connectWithUser, selectChat, keepBrowsing } from '../../actions';
-import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../../config';
+import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../../constants';
 
 class ConnectionContainer extends Component {
   convertProfileImagesObjectToArray(profileImages) {

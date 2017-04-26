@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { renderCloseIcon } from '../../icons';
-import { CLOSE_ICON_SIZE } from '../../config';
+import { CLOSE_ICON_SIZE } from '../../constants';
 
 const EditableTile = ({
   tileName,

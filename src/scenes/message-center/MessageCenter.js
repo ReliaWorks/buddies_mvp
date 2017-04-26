@@ -3,7 +3,7 @@ import { Image, ListView, ScrollView, Text, View } from 'react-native';
 import NoConvoMatch from '../../components/common/NoConvoMatch';
 import ConversationListItem from '../../components/common/ConversationListItem';
 import { homeLeftIconButton } from '../../icons';
-import { ICON_CLICKABLE_AREA_WIDTH } from '../../config';
+import { ICON_CLICKABLE_AREA_WIDTH } from '../../constants';
 
 const MARGIN = 15;
 const ZERO_CONVOS = `You have no messages but you have new connections waiting for you to say hi!`;

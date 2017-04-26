@@ -17,7 +17,7 @@ import {
   PHOTO_REMOVED,
   PICTURE_SAVED,
 } from '../actions/types';
-import { ACTIVE } from '../config';
+import { ACTIVE } from '../constants';
 
 const INITIAL_STATE = {
   uid: '',

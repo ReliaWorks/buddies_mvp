@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import {
   PHOTO_REMOVED
 } from './types';
-import { INACTIVE } from '../config';
+import { INACTIVE } from '../constants';
 
 export const photoRemoved = (photo) => {
   const { currentUser } = firebase.auth();

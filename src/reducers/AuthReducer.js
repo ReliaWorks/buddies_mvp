@@ -1,4 +1,3 @@
-//import { DEFAULT_PROFILE_PHOTO } from '../config';
 import {
   ALREADY_AUTHENTICATED,
   NOT_ALREADY_AUTHED,
