@@ -18,7 +18,7 @@ class PhotoEdit extends Component {
       <View style={{flex: 0.75, marginBottom: 5}}>
       <ScrollView>
         <View style={{width: width}}>
-          {this.renderPrimaryPic(firstProfileImage.url)}
+          {this.renderPrimaryPic(firstProfileImage, onRemove)}
           <View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', alignSelf: 'center'}}>
             {otherImages.map((img) => {
               return (
@@ -37,15 +37,15 @@ class PhotoEdit extends Component {
     );
   }
 
-  renderPrimaryPic(url) {
+  renderPrimaryPic(firstProfileImage, onRemove) {
     return(
       <View style={{ marginLeft: MARGIN, marginTop: MARGIN, height: 300, width: width - (MARGIN * 2) }}>
         <Image
           style={styles.mainImageStyle}
-          source={{ uri: url }}
+          source={{ uri: firstProfileImage.url }}
         >
         <View style={styles.removeIconContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => onRemove(firstProfileImage)}>
             <Image
               style={styles.iconStyle}
               source={TRASH_ICON}

@@ -78,7 +78,7 @@ const styles = {
     alignSelf: 'center',
     fontSize: 18,
     marginBottom: 10,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
   },
   descriptionInput: {
     height: height - 300,
@@ -100,7 +100,7 @@ const styles = {
   nextButtonText: {
     color: 'white',
     fontSize: 16,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontWeight: '700',
     textAlign: 'center',
     justifyContent: 'center',

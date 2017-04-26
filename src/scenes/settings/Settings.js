@@ -58,7 +58,7 @@ class Settings extends Component {
       <View style={{justifyContent: 'center', flex: 1}}>
         <Text
           style={{
-            fontFamily: 'Avenir-Book',
+            fontFamily: 'Source Sans Pro',
             fontWeight: '700',
             fontSize: 16,
             textAlign: 'center',
@@ -131,7 +131,7 @@ const localStyles = {
     textAlign: 'center',
     color: 'white',
     fontSize: 16,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontWeight: '700',
   },
   buttonStyle: {

@@ -4,7 +4,7 @@ import { TRASH_ICON } from '../../scenes/profile-setup/strings';
 
 class EditablePhoto extends Component {
   onRemove() {
-    this.props.onRemove(this.props.id);
+    this.props.onRemove(this.props.photo);
   }
   render() {
     return (

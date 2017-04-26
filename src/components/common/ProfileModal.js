@@ -22,7 +22,7 @@ class ProfileModal extends Component {
           borderBottomWidth: 3,
         }}
       >
-        <Text style={{fontFamily: 'Avenir-Book'}}>Return to chat</Text>
+        <Text style={{fontFamily: 'Source Sans Pro'}}>Return to chat</Text>
       </View>
       </TouchableOpacity>
     );

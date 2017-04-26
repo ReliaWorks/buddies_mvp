@@ -27,7 +27,7 @@ const styles = {
   },
   textStyle: {
     fontSize: 30,
-    fontFamily: 'Avenir-Book',    
+    fontFamily: 'Source Sans Pro',    
   }
 };
 

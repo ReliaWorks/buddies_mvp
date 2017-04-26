@@ -51,7 +51,7 @@ const Confirm = ({ children, visible, onAccept, onDecline }) => {
 const styles = {
   confirmTextStyle: {
     fontSize: 18,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     textAlign: 'center',
   },
   containerStyle: {
@@ -64,7 +64,7 @@ const styles = {
     textAlign: 'center',
     color: 'white',
     fontSize: 16,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontWeight: '700',
   },
   buttonStyle: {

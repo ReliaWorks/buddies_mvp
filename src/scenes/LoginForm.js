@@ -21,7 +21,7 @@ class LoginForm extends Component {
       <View style={styles.nameContainer}>
         <Text
           style={{
-            fontFamily: 'Avenir-Book',
+            fontFamily: 'Source Sans Pro',
             fontSize: 45,
             fontWeight: 'bold',
           }}

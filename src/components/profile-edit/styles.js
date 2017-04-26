@@ -1,6 +1,6 @@
 export default styles = {
   sectionHeaderText: {
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -11,7 +11,7 @@ export default styles = {
     marginBottom: 10,
   },
   comingSoonText: {
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 14,
     color: 'red',
   },

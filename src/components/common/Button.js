@@ -21,7 +21,7 @@ const localStyles = {
     textAlign: 'center',
     color: 'white',
     fontSize: 16,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontWeight: '700',
   },
   buttonStyle: {

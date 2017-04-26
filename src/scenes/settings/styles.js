@@ -1,19 +1,19 @@
 export default styles = {
   labelStyle: {
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 18,
     marginLeft: 20,
     opacity: 0.6,
   },
   linkText: {
     textAlign: 'center',
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 14,
     fontWeight: '700',
   },
   headerText: {
     textAlign: 'center',
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     fontSize: 16,
     fontWeight: 'bold',
     marginTop: 10,
@@ -31,7 +31,7 @@ export default styles = {
     height: 40,
     width: 315,
     opacity: 1,
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
     marginLeft: 30,
   },
   linkContainerStyle: {

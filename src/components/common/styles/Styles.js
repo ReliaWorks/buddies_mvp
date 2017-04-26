@@ -35,14 +35,14 @@ export const editIconContainer = {
 
 export const headerTextStyle = {
   fontSize: 22,
-  fontFamily: 'Avenir-Book',
+  fontFamily: 'Source Sans Pro',
   padding: 10
 };
 
 export const legalTextStyle = {
   alignSelf: 'center',
   color: 'black',
-  fontFamily: 'Avenir-Book',
+  fontFamily: 'Source Sans Pro',
   fontSize: 12,
   textAlign: 'center',
   marginTop: 5,
@@ -50,7 +50,7 @@ export const legalTextStyle = {
 };
 
 export const navTitleStyle = {
-  fontFamily: 'Avenir-Book',
+  fontFamily: 'Source Sans Pro',
   fontSize: 22,
   fontWeight: 'bold',
 };
@@ -69,7 +69,7 @@ export const spinnerStyle = {
 
 export const centeredTextStyle = {
   fontSize: 20,
-  fontFamily: 'Avenir-Book',
+  fontFamily: 'Source Sans Pro',
   textAlign: 'center',
   marginTop: 10,
   marginBottom: 10,
@@ -78,7 +78,7 @@ export const centeredTextStyle = {
 export const textStyle = {
     fontSize: 16,
     color: 'black',
-    fontFamily: 'Avenir-Book',
+    fontFamily: 'Source Sans Pro',
 };
 
 export const navBackNextStyle = {

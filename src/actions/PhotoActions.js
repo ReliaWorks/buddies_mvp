@@ -2,10 +2,16 @@ import firebase from 'firebase';
 import {
   PHOTO_REMOVED
 } from './types';
+import { INACTIVE } from '../config';
 
 export const photoRemoved = (photo) => {
+  const { currentUser } = firebase.auth();
+
   return (dispatch) => {
-    console.log("In PhotoActions: photoRemoved");
-    dispatch({ type: PHOTO_REMOVED, payload: photo });
+    firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages/${photo.key}`)
+      .set({status: INACTIVE, url: photo.url})
+      .then(() => {
+        dispatch({ type: PHOTO_REMOVED, payload: photo });
+      });
   };
 };
