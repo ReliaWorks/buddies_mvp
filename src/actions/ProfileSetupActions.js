@@ -10,7 +10,7 @@ import {
   AFFILIATION_UNSELECTED,
   PHOTOS_SAVED,
 } from './types';
-import { ACTIVE } from '../config';
+import { ACTIVE } from '../constants';
 
 export const descriptionSaved = (text) => {
   const { currentUser } = firebase.auth();

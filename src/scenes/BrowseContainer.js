@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser, potentialsFetch } from '../actions';
 import { Deck, NoMoreCards, Spinner } from '../components/common';
-import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../config';
+import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
 class BrowseContainer extends Component {
   swiper:Object;

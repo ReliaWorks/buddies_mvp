@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import firebase from 'firebase';
-import { DEFAULT_PROFILE_PHOTO } from '../config';
+import { DEFAULT_PROFILE_PHOTO } from '../constants';
 import {
   CHAT_SELECTED,
   CHAT_PROFILE_FETCH,
