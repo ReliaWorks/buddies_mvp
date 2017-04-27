@@ -42,7 +42,7 @@ class Routes extends Component {
         <Scene key="profileSetup">
           <Scene
             key="activitySetup"
-            title="My Activities"
+            title="Select Activities"
             type={ActionConst.RESET}
             component={ActivitySetupScene}
             rightTitle="Next"
@@ -52,7 +52,7 @@ class Routes extends Component {
           <Scene
             key="affiliationSetup"
             type={ActionConst.RESET}
-            title="My Affiliations"
+            title="Select Affiliations"
             component={AffiliationSetupScene}
             rightTitle="Next"
             onRight={() => Actions.descriptionSetup()}

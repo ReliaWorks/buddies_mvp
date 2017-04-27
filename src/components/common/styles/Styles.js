@@ -84,5 +84,7 @@ export const textStyle = {
 export const navBackNextStyle = {
   color: "black",
   fontSize: 15,
-  marginTop: 8
+  marginTop: 8,
+  marginLeft: 4,
+  marginRight: 5,
 };
