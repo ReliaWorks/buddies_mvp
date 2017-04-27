@@ -24,7 +24,7 @@ class DescriptionSetup extends Component {
         <View style={{height: 4, flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#42D3D3'}}>
           <View style={{flex: 1, height: 4, backgroundColor: '#FF4F7D', marginRight: 2}} />
           <View style={{flex: 1, height: 4, backgroundColor: '#4A90E2', marginRight: 2}} />
-          <View style={{flex: 1, height: 4, backgroundColor: '#42D3D3'}} />
+          <View style={{flex: 1, height: 4, backgroundColor: 'black'}} />
         </View>
       );
     }
