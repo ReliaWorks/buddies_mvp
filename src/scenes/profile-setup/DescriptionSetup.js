@@ -21,7 +21,7 @@ class DescriptionSetup extends Component {
       return null;
     }else{
       return(
-        <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end'}}>
+        <View style={{height: 4, flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#42D3D3'}}>
           <View style={{flex: 1, height: 4, backgroundColor: '#FF4F7D', marginRight: 2}} />
           <View style={{flex: 1, height: 4, backgroundColor: '#4A90E2', marginRight: 2}} />
           <View style={{flex: 1, height: 4, backgroundColor: '#42D3D3'}} />
@@ -32,7 +32,7 @@ class DescriptionSetup extends Component {
 
   renderDescription() {
     return (
-      <View>
+      <View style={{ flex: 1, backgroundColor: '#F8F8F8' }}>
         <TextInput
           multiline
           placeholder={this.state.placeholder}
@@ -81,17 +81,16 @@ const styles = {
     fontFamily: 'Source Sans Pro',
   },
   descriptionInput: {
-    height: height - 300,
+    height: height - 143,
     fontSize: 18,
-    borderColor: 'gray',
-    borderWidth: 1,
+    backgroundColor: 'white',
     marginLeft: 15,
     marginRight: 15,
-    marginTop: 20,
+    marginTop: 16,
     padding: 10,
   },
   nextButtonContainer: {
-    height: 40,
+    height: 50,
     width: width,
     marginTop: 0,
     justifyContent: 'center',

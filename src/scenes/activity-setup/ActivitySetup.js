@@ -46,7 +46,7 @@ class ActivitySetup extends Component {
 
   renderActivityList(activitiesDS) {
     return (
-      <ScrollView style={{flex: 1, marginTop: 10, marginLeft: 10}}>
+      <ScrollView style={{flex: 1, marginTop: 16, marginLeft: 11}}>
         <ListView
           contentContainerStyle={styles.list}
           dataSource={activitiesDS}
@@ -77,7 +77,7 @@ class ActivitySetup extends Component {
       return null;
     }else{
       return(
-        <View style={{height: 4, flexDirection: 'row', alignItems: 'flex-end'}}>
+        <View style={{height: 4, flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#42D3D3'}}>
           <View style={{flex: 1, height: 4, backgroundColor: '#FF4F7D', marginRight: 2}} />
           <View style={{flex: 1, height: 4, backgroundColor: '#888888', marginRight: 2}} />
           <View style={{flex: 1, height: 4, backgroundColor: '#888888'}} />
@@ -133,7 +133,7 @@ const styles = {
     width: 120,
   },
   nextButtonContainer: {
-    height: 40,
+    height: 50,
     width: width,
     marginTop: 0,
     justifyContent: 'center',

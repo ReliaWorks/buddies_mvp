@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 const SELECTED_COLOR = '#D8FCFC';
+const TILE_BACKGROUNDCOLOR = 'white';
 
 class SelectableTile extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class SelectableTile extends Component {
     const isSelected = this.props.isSelected;
 
     this.state = {
-      tileBackgroundColor: (isSelected ? SELECTED_COLOR : 'white'),
+      tileBackgroundColor: (isSelected ? SELECTED_COLOR : TILE_BACKGROUNDCOLOR),
       tileBorderColor: '#ECECEC',
       isSelected: isSelected,
     };
@@ -30,14 +31,15 @@ class SelectableTile extends Component {
     const { tileName, tileIcon, source } = this.props;
     const { activityTextLabel, imageStyle} = styles;
 
-    let width = 101;
-    let height = 101;
-
-    if (source == 'affiliations') {
-      imageStyle.marginTop = 15;
-      width = 131;
-      height = 131;
+    let width = 108;
+    let height = 108;
+    let imageMarginTop = 5;
+    if (source === 'affiliations') {
+      imageMarginTop = 35;
+      width = 168;
+      height = 168;
     }
+    imageStyle.marginTop = imageMarginTop;
 
     return (
       <TouchableOpacity onPress={this.onTilePress.bind(this)}>
@@ -47,7 +49,7 @@ class SelectableTile extends Component {
             borderColor: this.state.tileBorderColor,
             backgroundColor: this.state.tileBackgroundColor,
             marginRight: 10,
-            marginBottom: 10,
+            marginBottom: 12,
             width: width,
             height: height,
           }}
