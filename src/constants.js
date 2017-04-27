@@ -5,3 +5,6 @@ export const ICON_CLICKABLE_AREA_WIDTH = 100;
 export const CLOSE_ICON_SIZE = 20;
 export const ACTIVE = 1;
 export const INACTIVE = 0;
+export const NEXT_BUTTON_CONTAINER_HEIGHT = 60;
+export const PROGRESS_BAR_HEIGHT = 4;
+export const DESC_HEADER_HEIGHT = 78;
