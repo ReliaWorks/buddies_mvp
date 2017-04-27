@@ -65,6 +65,7 @@ class ProfileImages extends Component {
   }
 
   renderPhoto(key, img, editable) {
+    console.log(`img = `, img);
     return (
       <View key={key}>
         <TouchableWithoutFeedback
@@ -89,8 +90,8 @@ class ProfileImages extends Component {
     let pics = profileImages;
 
     if(!profileImages || profileImages.length === 0) return this.renderNoPhotos();
-    if(profileImages.length >= MAX_NUM_PHOTOS)
-      pics = profileImages.slice(0, MAX_NUM_PHOTOS);
+    if(profileImages.length > MAX_NUM_PHOTOS)
+      pics = profileImages.slice(0, MAX_NUM_PHOTOS - 1);
     return (
       <View style={profileImageContainer}>
         <Swiper

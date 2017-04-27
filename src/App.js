@@ -5,7 +5,6 @@ import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import Routes from './Routes';
-//import LoginForm from './scenes/LoginForm';
 import { FIREBASE_CONFIG } from './config';
 
 class App extends Component {
