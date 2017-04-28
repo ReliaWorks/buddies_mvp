@@ -7,6 +7,12 @@ import CloseIcon from 'react-native-vector-icons/Octicons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { CLOSE_ICON_SIZE, ICON_WIDTH, ICON_PADDING, ICON_CLICKABLE_AREA_WIDTH } from '../constants';
 
+/* Custom Icons */
+import { createIconSetFromFontello } from 'react-native-vector-icons';
+import fontelloConfig from '../assets/icons/fontello-5-of-app-icons/config.json';
+const CustomIcon = createIconSetFromFontello(fontelloConfig);
+
+
 const { width } = Dimensions.get('window');
 
 export const chatIconButton = () => {
@@ -15,8 +21,8 @@ export const chatIconButton = () => {
       onPress={() => Actions.matches(ActionConst.RESET)}
       style={{width: ICON_CLICKABLE_AREA_WIDTH, height: -1 * ICON_WIDTH, marginLeft: width - ICON_CLICKABLE_AREA_WIDTH, alignItems: 'flex-end'}}
     >
-      <MaterialCommunityIcon
-        name="comment-text-outline"
+      <CustomIcon
+        name="message_icon"
         size={ICON_WIDTH}
         color="black"
         style={{marginTop: -1 * ICON_WIDTH, width: ICON_WIDTH, marginRight: ICON_PADDING}}
@@ -30,8 +36,8 @@ export const chatLeftIconButton = () => {
       onPress={() => Actions.matches()}
       style={{width: ICON_CLICKABLE_AREA_WIDTH}}
     >
-      <MaterialCommunityIcon
-        name="comment-text-outline"
+      <CustomIcon
+        name="message_icon"
         size={ICON_WIDTH}
         color="black"
         style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_WIDTH }}
@@ -46,8 +52,8 @@ export const homeLeftIconButton = () => {
       onPress={() => Actions.browse()}
       style={{width: ICON_CLICKABLE_AREA_WIDTH}}
     >
-      <IonIcon
-        name="ios-home"
+      <CustomIcon
+        name="home_icon"
         size={25}
         color="black"
         style={{marginLeft: 6, marginTop: 29, width: ICON_WIDTH}}
@@ -66,8 +72,8 @@ export const homeRightIconButton = () => {
         flex: 1,
       }}
     >
-      <IonIcon
-        name="ios-home"
+      <CustomIcon
+        name="home_icon"
         size={25}
         color="black"
         style={{
@@ -85,8 +91,8 @@ export const profileIconButton = () => {
       onPress={() => Actions.userView()}
       style={{width: ICON_CLICKABLE_AREA_WIDTH}}
     >
-      <Icon
-        name="user-o"
+      <CustomIcon
+        name="profile_icon"
         size={ICON_WIDTH}
         color="black"
         style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_WIDTH}}
