@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Dimensions, ListView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SelectableTile } from '../../components/common';
+import { NEXT_BUTTON_CONTAINER_HEIGHT, PROGRESS_BAR_HEIGHT } from '../../constants';
 
 const { width } = Dimensions.get('window');
-const LOGINFORM_MARGIN = 15;
 
 class ActivitySetup extends Component {
-  renderSectionHeader(onNext) {
+/*  renderSectionHeader(onNext) {
     return(
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={onNext}>
@@ -26,7 +26,7 @@ class ActivitySetup extends Component {
       </View>
     );
   }
-
+*/
   renderActivityRow(rowData) {
     const activities = this.props.currentActivities;
     let exists = false;
@@ -46,7 +46,7 @@ class ActivitySetup extends Component {
 
   renderActivityList(activitiesDS) {
     return (
-      <ScrollView style={{flex: 1, marginTop: 16, marginLeft: 11}}>
+      <ScrollView style={{flex: 1, marginTop: 5, marginLeft: 11}}>
         <ListView
           contentContainerStyle={styles.list}
           dataSource={activitiesDS}
@@ -60,24 +60,22 @@ class ActivitySetup extends Component {
 
   renderNextButton(onNext) {
     return (
-      <View style={styles.nextButtonContainer}>
-        <TouchableOpacity
-          onPress={onNext}
-          color="white"
-        >
-          <Text style={styles.nextButtonText}>{this.props.navLabel}</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        onPress={onNext}
+        color="white"
+      >
+        <View style={styles.nextButtonContainer}>
+            <Text style={styles.nextButtonText}>{this.props.navLabel}</Text>
+        </View>
+      </TouchableOpacity>
     );
   }
   renderProgressBar() {
-    console.log("props",this.props);
-
     if(this.props.navLabel == 'Done') {
       return null;
     }else{
       return(
-        <View style={{height: 4, flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#42D3D3'}}>
+        <View style={styles.progressBarContainer}>
           <View style={{flex: 1, height: 4, backgroundColor: '#FF4F7D', marginRight: 2}} />
           <View style={{flex: 1, height: 4, backgroundColor: '#888888', marginRight: 2}} />
           <View style={{flex: 1, height: 4, backgroundColor: '#888888'}} />
@@ -133,10 +131,16 @@ const styles = {
     width: 120,
   },
   nextButtonContainer: {
-    height: 50,
+    height: NEXT_BUTTON_CONTAINER_HEIGHT,
     width: width,
     marginTop: 0,
     justifyContent: 'center',
+    backgroundColor: '#42D3D3',
+  },
+  progressBarContainer: {
+    height: PROGRESS_BAR_HEIGHT,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
     backgroundColor: '#42D3D3',
   },
   nextButtonText: {

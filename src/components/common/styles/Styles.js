@@ -56,11 +56,10 @@ export const navTitleStyle = {
 };
 
 export const navBarStyle = {
-  backgroundColor: BRAND_PRIMARY_COLOR,
-  borderBottomWidth: 3,
-  borderStyle: 'solid',
-  borderBottomColor: 'black',
   flex: 1,
+  backgroundColor: 'white',
+  borderBottomColor: 'transparent',
+//  borderBottomWidth: 65,
 };
 
 export const spinnerStyle = {

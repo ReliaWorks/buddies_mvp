@@ -3,6 +3,7 @@ import { Text, TextInput, View, TouchableOpacity, Dimensions } from 'react-nativ
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { descriptionSaved } from '../../actions';
+import { NEXT_BUTTON_CONTAINER_HEIGHT, PROGRESS_BAR_HEIGHT, DESC_HEADER_HEIGHT } from '../../constants';
 
 const { width, height } = Dimensions.get('window');
 
@@ -21,10 +22,10 @@ class DescriptionSetup extends Component {
       return null;
     }else{
       return(
-        <View style={{height: 4, flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#42D3D3'}}>
-          <View style={{flex: 1, height: 4, backgroundColor: '#FF4F7D', marginRight: 2}} />
-          <View style={{flex: 1, height: 4, backgroundColor: '#4A90E2', marginRight: 2}} />
-          <View style={{flex: 1, height: 4, backgroundColor: '#42D3D3'}} />
+        <View style={{height: PROGRESS_BAR_HEIGHT, flexDirection: 'row', alignItems: 'flex-end', backgroundColor: '#42D3D3'}}>
+          <View style={{flex: 1, height: PROGRESS_BAR_HEIGHT, backgroundColor: '#FF4F7D', marginRight: 2}} />
+          <View style={{flex: 1, height: PROGRESS_BAR_HEIGHT, backgroundColor: '#4A90E2', marginRight: 2}} />
+          <View style={{flex: 1, height: PROGRESS_BAR_HEIGHT, backgroundColor: 'black'}} />
         </View>
       );
     }
@@ -81,7 +82,7 @@ const styles = {
     fontFamily: 'Source Sans Pro',
   },
   descriptionInput: {
-    height: height - 143,
+    height: height - NEXT_BUTTON_CONTAINER_HEIGHT - PROGRESS_BAR_HEIGHT - DESC_HEADER_HEIGHT,
     fontSize: 18,
     backgroundColor: 'white',
     marginLeft: 15,
@@ -90,7 +91,7 @@ const styles = {
     padding: 10,
   },
   nextButtonContainer: {
-    height: 50,
+    height: NEXT_BUTTON_CONTAINER_HEIGHT,
     width: width,
     marginTop: 0,
     justifyContent: 'center',
