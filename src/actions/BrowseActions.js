@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import axios from 'axios';
+import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
   POTENTIALS_FETCH,
@@ -10,6 +11,7 @@ import {
   KEEP_BROWSING,
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
+  LOCATION_MAP_STORAGE_KEY,
 } from './types';
 
 export const potentialsFetch = () => {
@@ -47,23 +49,52 @@ export const setGeolocation = (uid, geoLocation) => {
   firebase.database().ref(`user_profiles/${uid}/geoLocation`).set(geoLocation);
 };
 
-export const getCityStateCountry = (uid, position, dispatch) => {
-  let location = { city: '', state: '', country: ''};
+export const setLocationLocalStorage = (position, location) => {
+  AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
+    .then((result) => {
+      const value = result || {};
+      value[position.latitude + '' + position.longitude] = location;
+      AsyncStorage.setItem(LOCATION_MAP_STORAGE_KEY, JSON.stringify(value));
+    });
+};
 
-  if (!(position && position.latitude && position.longitude)) return;
-
+export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch) => {
   axios.get(`https://activities-test-a3871.appspot.com/location/${position.latitude}:${position.longitude}`)
   .then(response => {
-    location = response.data || location;
-
-    dispatch({ type: SET_CURRENT_LOCATION, payload: location });
-    setLocation(uid, location);
-
-    console.log('api response', location);
+    dispatch({ type: SET_CURRENT_LOCATION, payload: response.data });
+    setLocationLocalStorage(position,response.data);
+    setLocation(uid, response.data);
   })
   .catch(error => {
     console.log(error);
   });
+};
+
+export const getCityStateCountry = (uid, position, dispatch) => {
+  let location = { city: '', state: '', country: ''};
+
+  if (!(position && position.latitude && position.longitude)) return;
+  console.log('Check local');
+  AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
+    .then((val) => {
+      const value = JSON.parse(val);
+      console.log('from storage', value);
+      location = value[position.latitude + '' + position.longitude];
+      console.log('location from storage:', location);
+      if (value && location) {
+        dispatch({ type: SET_CURRENT_LOCATION, payload: location });
+        setLocation(uid, location);
+        console.log('storage set value', location);
+      }else{
+        console.log('Not in storage');
+        getCityStateCountryMapAPI(uid, position, location, dispatch);
+      }
+    })
+    .catch(() => {
+      //Not in local storage. Check from service
+      console.log('Not in storage');
+      getCityStateCountryMapAPI(uid, position, location, dispatch);
+    });
 };
 
 export const currentUserFetch = () => {
