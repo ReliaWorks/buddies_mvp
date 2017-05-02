@@ -4,10 +4,20 @@ import { connect } from 'react-redux';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import AffiliationSetup from './AffiliationSetup';
 import { affiliationsFetch, affiliationsSaved, affiliationSelected, affiliationUnselected } from '../../actions';
+import _ from 'lodash'
 
 class AffiliationSetupScene extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      dataSource: [],
+      searchText: ''
+    }
+  }
+
   componentWillMount() {
     this.props.affiliationsFetch();
+    this.affiliationsDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.createDataSource(this.props);
   }
 
@@ -22,13 +32,25 @@ class AffiliationSetupScene extends Component {
   }
 
   createDataSource({ affiliations }) {
-    const affiliationsDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    this.dataSource = affiliationsDS.cloneWithRows({ ...affiliations });
+    //const affiliationsDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+    const searchText = this.state.searchText
+
+    this.setState({
+      dataSource: this.affiliationsDS.cloneWithRows({ ...(this._filterAffiliations(affiliations, searchText)) })
+    });
   }
 
   onAffiliationSelected(uid, name, icon, isSelected) {
     if(isSelected) this.props.affiliationSelected({uid, name, icon});
     else this.props.affiliationUnselected({uid, name, icon});
+  }
+
+  onSearchBarChangeText(searchText) {
+    this.setState({
+      searchText: searchText,
+      dataSource : this.affiliationsDS.cloneWithRows({ ...this._filterAffiliations(this.props.affiliations, searchText) })
+    });
   }
 
   render() {
@@ -44,13 +66,24 @@ class AffiliationSetupScene extends Component {
     }
     return (
       <AffiliationSetup
-        affiliationsDS={this.dataSource}
+        affiliationsDS={this.state.dataSource}
         onNext={onNextAction}
         onSelected={this.onAffiliationSelected.bind(this)}
         navLabel={navLabel}
         currentAffiliations={this.props.currentUser.affiliations}
+        onSearchBarChangeText={this.onSearchBarChangeText.bind(this)}
       />
     );
+  }
+
+  _filterAffiliations(affiliations, searchText) {
+    if (searchText) {
+      return _.pickBy(affiliations, function(value, key) {
+        return value.name.toLowerCase().includes(searchText.toLowerCase())
+      });
+    } else {
+      return affiliations
+    }
   }
 }
 

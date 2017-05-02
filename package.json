@@ -47,7 +47,7 @@
   "rnpm": {
     "assets": [
       "./src/assets/fonts",
-	  "./src/assets/icons/fontello-5-of-app-icons/font"
+	    "./src/assets/icons/fontello-5-of-app-icons/font"
     ]
   }
 }

@@ -4,10 +4,20 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ActivitySetup from './ActivitySetup';
 import { activitiesFetch, activitiesSaved, activitySelected, activityUnselected } from '../../actions';
+import _ from 'lodash'
 
 class ActivitySetupScene extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      dataSource: [],
+      searchText: ''
+    }
+  }
+
   componentWillMount() {
     this.props.activitiesFetch();
+    this.activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.createDataSource(this.props);
   }
 
@@ -22,13 +32,27 @@ class ActivitySetupScene extends Component {
   }
 
   createDataSource({ activities }) {
-    const activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    this.dataSource = activitiesDS.cloneWithRows({ ...activities });
+    // const activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    // this.dataSource = activitiesDS.cloneWithRows({ ...activities });
+
+    const searchText = this.state.searchText
+
+    this.setState({
+      dataSource: this.activitiesDS.cloneWithRows({ ...(this._filterActivities(activities, searchText)) })
+    });
   }
 
   onActivitySelected(uid, name, icon, isSelected) {
     if(isSelected) this.props.activitySelected({uid, name, icon});
     else this.props.activityUnselected({uid , name, icon});
+  }
+
+  onSearchBarChangeText(searchText) {
+    console.log(searchText);
+    this.setState({
+      searchText: searchText,
+      dataSource : this.activitiesDS.cloneWithRows({ ...this._filterActivities(this.props.activities, searchText) })
+    });
   }
 
   render() {
@@ -46,13 +70,24 @@ class ActivitySetupScene extends Component {
     return (
       <ActivitySetup
         activities={this.props.activities}
-        activitiesDS={this.dataSource}
+        activitiesDS={this.state.dataSource}
         onNext={onNextAction}
         onSelected={this.onActivitySelected.bind(this)}
         navLabel={navLabel}
         currentActivities={this.props.currentUser.activities}
+        onSearchBarChangeText={this.onSearchBarChangeText.bind(this)}
       />
     );
+  }
+
+  _filterActivities(activities, searchText) {
+    if (searchText) {
+      return _.pickBy(activities, function(value, key) {
+        return value.name.toLowerCase().includes(searchText.toLowerCase())
+      });
+    } else {
+      return activities
+    }
   }
 }
 
