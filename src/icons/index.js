@@ -8,10 +8,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import { CLOSE_ICON_SIZE, ICON_WIDTH, ICON_PADDING, ICON_CLICKABLE_AREA_WIDTH } from '../constants';
 
 /* Custom Icons */
-import { createIconSetFromFontello } from 'react-native-vector-icons';
-import fontelloConfig from '../assets/icons/fontello-5-of-app-icons/config.json';
-const CustomIcon = createIconSetFromFontello(fontelloConfig);
-
+import CustomIcon from '../assets/icons';
 
 const { width } = Dimensions.get('window');
 
