@@ -143,8 +143,6 @@ export default(state = INITIAL_STATE, action) => {
     }
     case PHOTOS_SAVED: {
       let photos = state.profileImages;
-      //debugger;
-      console.log('payload:', action.payload);
       if(action.payload)
         photos = action.payload;
       return { ...state, profileImages: photos };

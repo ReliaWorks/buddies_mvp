@@ -136,7 +136,13 @@ function fetchProfilePhotos(result, dispatch, token) {
         if (error1) {
           console.log('Error fetching data: ' + error1.toString());
         } else {
-          const profilePics = result1.photos.data;
+          let profilePics = result1.photos.data || [];
+
+          if (profilePics && profilePics.length > 10) profilePics = profilePics.slice(0,10);
+
+          profilePics.sort((o1,o2) => o2.id - o1.id);
+
+          console.log('profilePics',profilePics);
           profilePics.forEach((pic) => {
               const picRequest = new GraphRequest(
                 `/${pic.id}`, {
@@ -177,6 +183,9 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
           email: result.email || '',
           location: result.location || '',
         };
+
+        console.log('from facebook',result);
+
         ref.ref(`/user_profiles/${user.uid}`).set(profile);
         dispatch({
           type: PROFILE_INFO,
