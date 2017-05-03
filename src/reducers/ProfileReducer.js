@@ -28,7 +28,7 @@ const INITIAL_STATE = {
   profileImages: [],
   activities: {},
   affiliations: {},
-  location: {}, // location: { city: 'San Francisco, CA', distance: '4 miles' };
+  location: {}, 
   geolocation: {},
   description: '',
 };

@@ -4,6 +4,7 @@ import {
   CHAT_PROFILE_FETCH_SUCCESS,
   LOGOUT_USER,
 } from '../actions/types';
+import { ACTIVE } from '../constants';
 
 const INITIAL_STATE = {
   uid: '',
