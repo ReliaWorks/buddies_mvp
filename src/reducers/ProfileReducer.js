@@ -142,7 +142,7 @@ export default(state = INITIAL_STATE, action) => {
     }
     case PHOTOS_SAVED: {
       let photos = state.profileImages;
-      debugger;
+      
       if(action.payload)
         photos = action.payload;
       return { ...state, profileImages: photos };
