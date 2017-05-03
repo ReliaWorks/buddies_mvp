@@ -53,6 +53,13 @@ export const setLocationLocalStorage = (position, location) => {
   AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
     .then((result) => {
       const value = result || {};
+      const keys = Object.keys(value);
+      //Keeps cache at a max of 20 items
+      if (keys.length > 20) {
+        const firstKey = keys[0];
+        delete value[firstKey];
+      }
+
       value[position.latitude + '' + position.longitude] = location;
       AsyncStorage.setItem(LOCATION_MAP_STORAGE_KEY, JSON.stringify(value));
     });
@@ -75,24 +82,19 @@ export const getCityStateCountry = (uid, position, dispatch) => {
 
   if (!(position && position.latitude && position.longitude)) return;
   console.log('Check local');
+
   AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
     .then((val) => {
       const value = JSON.parse(val);
-      console.log('from storage', value);
       location = value[position.latitude + '' + position.longitude];
-      console.log('location from storage:', location);
       if (value && location) {
         dispatch({ type: SET_CURRENT_LOCATION, payload: location });
         setLocation(uid, location);
-        console.log('storage set value', location);
       }else{
-        console.log('Not in storage');
         getCityStateCountryMapAPI(uid, position, location, dispatch);
       }
     })
     .catch(() => {
-      //Not in local storage. Check from service
-      console.log('Not in storage');
       getCityStateCountryMapAPI(uid, position, location, dispatch);
     });
 };
