@@ -1,14 +1,30 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { MARGIN } from '../common/styles';
 import { Button } from '../common';
 import EditablePhoto from './EditablePhoto';
 import { TRASH_ICON } from '../../scenes/profile-setup/strings';
+import CameraRollPicker from 'react-native-camera-roll-picker';
+import CustomIcon from '../../assets/icons'
+import AddPhotosModal from './AddPhotosModal'
 
 const { width } = Dimensions.get('window');
 const MAX_NUM_PHOTOS = 5 + 3;
 
 class PhotoEdit extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      modalVisible: false
+    }
+  }
+  closeModal(){
+    this.setState({modalVisible: false})
+  }
+  getSelectedImages(images) {
+    this.props.onImagesSelected(images)
+  }
+
   renderPics() {
     const { profileImages, onRemove } = this.props;
     const firstProfileImage = profileImages[0];
@@ -30,6 +46,20 @@ class PhotoEdit extends Component {
                 />
               );
             })}
+            <TouchableOpacity
+              style={styles.camera}
+              onPress={() => this.setState({modalVisible: true})}>
+              <CustomIcon
+                name="camera_icon"
+                size={44}
+                color="#42D3D3"
+              />
+            </TouchableOpacity>
+
+            <AddPhotosModal
+              visible={this.state.modalVisible}
+              close={this.closeModal.bind(this)}
+              getSelectedImages={this.getSelectedImages.bind(this)}/>
         </View>
       </View>
       </ScrollView>
@@ -107,6 +137,25 @@ const styles = {
     justifyContent: 'flex-end',
     borderRadius: 10,
   },
+  camera: {
+    height: 115,
+    width: 115,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#dddddd',
+    borderRadius: 10,
+    marginRight: 5,
+    marginTop: 5
+  },
+  cameraIcon: {
+    justifyContent: 'center',
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    borderColor: 'black',
+    padding: 2,
+  }
 };
 
 export default PhotoEdit;

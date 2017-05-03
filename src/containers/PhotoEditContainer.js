@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import PhotoEdit from '../components/profile-edit/PhotoEdit';
-import { photoRemoved } from '../actions';
+import { photoRemoved, photosSelected } from '../actions';
 
 class PhotoEditContainer extends Component {
   onImageSave() {
@@ -13,12 +13,17 @@ class PhotoEditContainer extends Component {
     this.props.photoRemoved(photo);
   }
 
+  onImagesSelected(images){
+    this.props.photosSelected(images)
+  }
+
   render() {
     return (
       <PhotoEdit
         profileImages={this.props.currentUser.profileImages}
         onSave={this.onImageSave}
         onRemove={this.onImageRemove.bind(this)}
+        onImagesSelected={this.onImagesSelected.bind(this)}
       />
     );
   }
@@ -28,4 +33,4 @@ const mapStateToProps = ({ currentUser }) => {
   return { currentUser };
 };
 
-export default connect(mapStateToProps, { photoRemoved })(PhotoEditContainer);
+export default connect(mapStateToProps, { photoRemoved, photosSelected })(PhotoEditContainer);

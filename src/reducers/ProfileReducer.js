@@ -16,6 +16,7 @@ import {
   PHOTOS_SAVED,
   PHOTO_REMOVED,
   PICTURE_SAVED,
+  PHOTOS_SELECTED
 } from '../actions/types';
 import { ACTIVE } from '../constants';
 
@@ -142,7 +143,8 @@ export default(state = INITIAL_STATE, action) => {
     }
     case PHOTOS_SAVED: {
       let photos = state.profileImages;
-      debugger;
+      //debugger;
+      console.log('payload:', action.payload);
       if(action.payload)
         photos = action.payload;
       return { ...state, profileImages: photos };
@@ -164,6 +166,12 @@ export default(state = INITIAL_STATE, action) => {
         updatedImages.push(action.payload);
       }
       return { ...state, profileImages: updatedImages };
+    }
+    case PHOTOS_SELECTED: {
+
+      const profileImages = [...state.profileImages, ...action.payload]
+      console.log('pp:', profileImages);
+      return { ...state, profileImages };
     }
     case SET_CURRENT_GEOLOCATION: {
       return { ...state, geolocation: action.payload };
