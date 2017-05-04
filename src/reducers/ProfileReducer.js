@@ -16,7 +16,8 @@ import {
   PHOTOS_SAVED,
   PHOTO_REMOVED,
   PICTURE_SAVED,
-  PHOTOS_SELECTED
+  PHOTOS_SELECTED,
+  PHOTO_UPLOADED,
 } from '../actions/types';
 import { ACTIVE } from '../constants';
 
@@ -26,9 +27,10 @@ const INITIAL_STATE = {
   email: '',
   age: '',
   profileImages: [],
+  profileImagesUploadProgress: [],
   activities: {},
   affiliations: {},
-  location: {}, 
+  location: {},
   geolocation: {},
   description: '',
 };
@@ -165,9 +167,18 @@ export default(state = INITIAL_STATE, action) => {
       }
       return { ...state, profileImages: updatedImages };
     }
+    // case PHOTOS_SELECTED: {
+    //   const profileImages = [...state.profileImages, ...action.payload];
+    //   return { ...state, profileImages };
+    // }
     case PHOTOS_SELECTED: {
-      const profileImages = [...state.profileImages, ...action.payload];
-      return { ...state, profileImages };
+      const profileImagesUploadProgress = action.payload;
+      return { ...state, profileImagesUploadProgress };
+    }
+    case PHOTO_UPLOADED: {
+      const profileImagesUploadProgress = state.profileImagesUploadProgress.filter( item => item !== action.payload.localUrl )
+      const profileImages = [...state.profileImages, action.payload.photo];
+      return { ...state, profileImages, profileImagesUploadProgress };
     }
     case SET_CURRENT_GEOLOCATION: {
       return { ...state, geolocation: action.payload };

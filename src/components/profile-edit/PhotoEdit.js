@@ -5,8 +5,9 @@ import { Button } from '../common';
 import EditablePhoto from './EditablePhoto';
 import { TRASH_ICON } from '../../scenes/profile-setup/strings';
 import CameraRollPicker from 'react-native-camera-roll-picker';
-import CustomIcon from '../../assets/icons'
-import AddPhotosModal from './AddPhotosModal'
+import CustomIcon from '../../assets/icons';
+import AddPhotosModal from './AddPhotosModal';
+import UploadingPhoto from './UploadingPhoto';
 
 const { width } = Dimensions.get('window');
 const MAX_NUM_PHOTOS = 5 + 3;
@@ -35,6 +36,7 @@ class PhotoEdit extends Component {
       <ScrollView>
         <View style={{width: width}}>
           {this.renderPrimaryPic(firstProfileImage, onRemove)}
+
           <View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', alignSelf: 'center'}}>
             {otherImages.map((img) => {
               return (
@@ -43,6 +45,15 @@ class PhotoEdit extends Component {
                   photo={img}
                   key={img.key}
                   onRemove={onRemove}
+                />
+              );
+            })}
+            {this.props.uploadingPhotos.map((img) => {
+              const key = img + new Date().getTime()
+              return (
+                <UploadingPhoto
+                  url={img}
+                  key={key}
                 />
               );
             })}

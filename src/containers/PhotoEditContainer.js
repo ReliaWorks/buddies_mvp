@@ -24,6 +24,7 @@ class PhotoEditContainer extends Component {
         onSave={this.onImageSave}
         onRemove={this.onImageRemove.bind(this)}
         onImagesSelected={this.onImagesSelected.bind(this)}
+        uploadingPhotos={this.props.currentUser.profileImagesUploadProgress}
       />
     );
   }
