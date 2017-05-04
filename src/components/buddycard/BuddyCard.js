@@ -145,6 +145,8 @@ class BuddyCard extends Component {
     const { firstName, age, editable, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
     const { locationText, nameText } = styles;
 //    <Image source={{ uri: profileImages[0]}} style={{height: 300, width: width - 20, alignSelf: 'stretch'}} />
+
+    console.log("First name = ", firstName);
     return (
         <View style={{flex: 1, alignSelf: 'stretch' }}>
           <ProfileImages value={{profileImages, editable}} />

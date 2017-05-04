@@ -28,7 +28,7 @@ const INITIAL_STATE = {
   profileImages: [],
   activities: {},
   affiliations: {},
-  location: {}, // location: { city: 'San Francisco, CA', distance: '4 miles' };
+  location: {}, 
   geolocation: {},
   description: '',
 };
@@ -148,13 +148,13 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, profileImages: photos };
     }
     case PHOTO_REMOVED: {
-      let profileImages = state.profileImages;
+      let updatedProfileImages = state.profileImages;
       if(action.payload) {
-        profileImages = profileImages.filter((image) => {
+        updatedProfileImages = state.profileImages.filter((image) => {
           return(image.key !== action.payload.key);
         });
       }
-      return {...state, profileImages};
+      return {...state, profileImages: updatedProfileImages};
     }
     case PICTURE_SAVED: {
       let updatedImages = [];
@@ -166,9 +166,7 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, profileImages: updatedImages };
     }
     case PHOTOS_SELECTED: {
-
-      const profileImages = [...state.profileImages, ...action.payload]
-      console.log('pp:', profileImages);
+      const profileImages = [...state.profileImages, ...action.payload];
       return { ...state, profileImages };
     }
     case SET_CURRENT_GEOLOCATION: {
