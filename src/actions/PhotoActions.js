@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
+import ImageResizer from 'react-native-image-resizer';
 import {
   PHOTO_REMOVED,
   PHOTOS_SELECTED,
@@ -55,14 +56,20 @@ export const photosSelected = (photos) => {
   }
 }
 
-const uploadImage = (uid, uri, mime = 'application/octet-stream') => {
+//const uploadImage = (uid, uri, mime = 'application/octet-stream') => {
+const uploadImage = (uid, uri, mime = 'application/image/jpg') => {
   return new Promise((resolve, reject) => {
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
+
     const sessionId = new Date().getTime()
     let uploadBlob = null
     const imageRef = firebase.storage().ref('profileImages').child(`${uid}`).child(`${sessionId}`)
 
-    fs.readFile(uploadUri, 'base64')
+    ImageResizer.createResizedImage(uploadUri, 640, 640, 'JPEG', 40,) // rotation, outputPath)
+      .then((resizedImageUri) => {
+        // resizeImageUri is the URI of the new image that can now be displayed, uploaded...
+        return fs.readFile(resizedImageUri, 'base64')
+      })
       .then((data) => {
         return Blob.build(data, { type: `${mime};BASE64` })
       })
@@ -79,6 +86,31 @@ const uploadImage = (uid, uri, mime = 'application/octet-stream') => {
       })
       .catch((error) => {
         reject(error)
-    })
+      })
+
+
+
+    // const sessionId = new Date().getTime()
+    // let uploadBlob = null
+    // const imageRef = firebase.storage().ref('profileImages').child(`${uid}`).child(`${sessionId}`)
+    //
+    // fs.readFile(uploadUri, 'base64')
+    //   .then((data) => {
+    //     return Blob.build(data, { type: `${mime};BASE64` })
+    //   })
+    //   .then((blob) => {
+    //     uploadBlob = blob
+    //     return imageRef.put(blob, { contentType: mime })
+    //   })
+    //   .then(() => {
+    //     uploadBlob.close()
+    //     return imageRef.getDownloadURL()
+    //   })
+    //   .then((url) => {
+    //     resolve(url)
+    //   })
+    //   .catch((error) => {
+    //     reject(error)
+    //   })
   })
 }
