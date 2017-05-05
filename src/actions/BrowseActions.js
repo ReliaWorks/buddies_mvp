@@ -12,7 +12,10 @@ import {
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
   LOCATION_MAP_STORAGE_KEY,
+  API_SECRET_KEY
 } from './types';
+
+const jsSHA = require("jssha");
 
 export const potentialsFetch = () => {
   console.log('Entering potentialsFetch');
@@ -20,9 +23,14 @@ export const potentialsFetch = () => {
     const { currentUser } = firebase.auth();
     const potentials = [];
 
+    const shaObj = new jsSHA("SHA-256", "TEXT");
+    shaObj.update(API_SECRET_KEY + currentUser.uid);
+    const hash = shaObj.getHash("HEX");
+    console.log("API hash", hash);
+
     dispatch({type: POTENTIALS_FETCH});
     axios.get(`https://activities-test-a3871.appspot.com/match/${currentUser.uid}`, {
-      headers: { authorization: `TODOChangeTolocalStoregetItemtoken:${currentUser.uid}`}
+      headers: { authorization: `${hash}:${currentUser.uid}`}
     })
       .then(response => {
         const keys = Object.keys(response.data);
@@ -66,7 +74,14 @@ export const setLocationLocalStorage = (position, location) => {
 };
 
 export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch) => {
-  axios.get(`https://activities-test-a3871.appspot.com/location/${position.latitude}:${position.longitude}`)
+  const shaObj = new jsSHA("SHA-256", "TEXT");
+  shaObj.update(API_SECRET_KEY + uid);
+  const hash = shaObj.getHash("HEX");
+  console.log("MAP hash", hash);
+
+  axios.get(`https://activities-test-a3871.appspot.com/location/${position.latitude}:${position.longitude}`,{
+    headers: { authorization: `${hash}:${uid}`}
+  })
   .then(response => {
     dispatch({ type: SET_CURRENT_LOCATION, payload: response.data });
     setLocationLocalStorage(position,response.data);

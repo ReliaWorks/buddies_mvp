@@ -11,6 +11,7 @@
     "firebase": "^3.6.9",
     "firebase-token-generator": "^2.0.0",
     "firebaseui": "^1.0.0",
+    "jssha": "^2.2.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "native-base": "^2.0.11",
