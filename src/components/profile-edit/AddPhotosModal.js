@@ -58,7 +58,7 @@ export default class AddPhotosModal extends Component {
     )
   }
 
-  renderCameraRoll(){
+  renderCameraRoll() {
     return (
       <View style={styles.cameraRollContainer}>
         <Text style={styles.selectedImagesInfo}>{this.state.images.length} images selected</Text>
@@ -66,37 +66,39 @@ export default class AddPhotosModal extends Component {
           selected={this.state.images}
           callback={(images, current) => this.setState({images: images})} />
       </View>
-    )
+    );
   }
 
   renderFacebook() {
-    return <Text>images from facebook (to be developped)</Text>
+    return <Text>images from facebook (to be developped)</Text>;
   }
 
   renderCameraRollAction() {
     return (
       <View>
-        <Button  onPress={() => {
-          this.props.getSelectedImages(this.state.images)
-          this.props.close()
-        }}>
+        <Button
+          onPress={() => {
+            this.props.getSelectedImages(this.state.images);
+            this.props.close();
+          }}
+        >
           <Text>Add selected image(s)</Text>
         </Button>
       </View>
-    )
+    );
   }
 
   renderFacebookAction() {
     return (
       <View>
       </View>
-    )
+    );
   }
 
   renderDefaultAction() {
     return (
       <View>
-        <Button  onPress={() => this.setState({imagesComponent: 'camera'})}>
+        <Button onPress={() => this.setState({imagesComponent: 'camera'})}>
           <Text>Camera Roll</Text>
         </Button>
 
@@ -104,7 +106,7 @@ export default class AddPhotosModal extends Component {
           <Text>Facebook</Text>
         </Button>
       </View>
-    )
+    );
   }
 }
 
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   imagesComponent: {
-    flex:1,
+    flex: 1,
     marginTop: 18,
   },
   cameraRollContainer: {
@@ -125,4 +127,4 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 5,
   }
-})
+});

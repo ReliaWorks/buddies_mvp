@@ -33,13 +33,11 @@ const styles = {
     alignSelf: 'flex-end',
     marginRight: 2,
     marginBottom: 2,
-    borderRadius: 2,
   },
   iconStyle: {
     justifyContent: 'center',
     height: 20,
     width: 20,
-    borderRadius: 10,
     borderColor: 'black',
     padding: 2,
   },
@@ -47,7 +45,6 @@ const styles = {
     height: 115,
     width: 115,
     justifyContent: 'flex-end',
-    borderRadius: 10,
   },
 };
 

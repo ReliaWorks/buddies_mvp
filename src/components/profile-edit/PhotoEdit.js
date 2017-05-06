@@ -14,16 +14,16 @@ const MAX_NUM_PHOTOS = 5 + 3;
 
 class PhotoEdit extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       modalVisible: false
-    }
+    };
   }
-  closeModal(){
-    this.setState({modalVisible: false})
+  closeModal() {
+    this.setState({modalVisible: false});
   }
   getSelectedImages(images) {
-    this.props.onImagesSelected(images)
+    this.props.onImagesSelected(images);
   }
 
   renderPics() {
@@ -49,7 +49,7 @@ class PhotoEdit extends Component {
               );
             })}
             {this.props.uploadingPhotos.map((img) => {
-              const key = img + new Date().getTime()
+              const key = img + new Date().getTime();
               return (
                 <UploadingPhoto
                   url={img}
@@ -59,7 +59,8 @@ class PhotoEdit extends Component {
             })}
             <TouchableOpacity
               style={styles.camera}
-              onPress={() => this.setState({modalVisible: true})}>
+              onPress={() => this.setState({modalVisible: true})}
+            >
               <CustomIcon
                 name="camera_icon"
                 size={44}
@@ -70,7 +71,8 @@ class PhotoEdit extends Component {
             <AddPhotosModal
               visible={this.state.modalVisible}
               close={this.closeModal.bind(this)}
-              getSelectedImages={this.getSelectedImages.bind(this)}/>
+              getSelectedImages={this.getSelectedImages.bind(this)}
+            />
         </View>
       </View>
       </ScrollView>
@@ -124,13 +126,11 @@ const styles = {
     alignSelf: 'flex-end',
     marginRight: 2,
     marginBottom: 2,
-    borderRadius: 2,
   },
   iconStyle: {
     justifyContent: 'center',
     height: 20,
     width: 20,
-    borderRadius: 10,
     borderColor: 'black',
     padding: 2,
   },
@@ -140,13 +140,11 @@ const styles = {
     height: 300,
     width: null,
     padding: 5,
-    borderRadius: 10,
   },
   smallImageStyle: {
     height: 115,
     width: 115,
     justifyContent: 'flex-end',
-    borderRadius: 10,
   },
   camera: {
     height: 115,
@@ -155,7 +153,6 @@ const styles = {
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#dddddd',
-    borderRadius: 10,
     marginRight: 5,
     marginTop: 5
   },
