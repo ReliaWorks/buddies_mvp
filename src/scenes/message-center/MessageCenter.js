@@ -69,6 +69,7 @@ class MessageCenter extends Component {
           enableEmptySections
           initialListSize={25}
           horizontal
+          showsHorizontalScrollIndicator={false}
         />
       </View>
     );
