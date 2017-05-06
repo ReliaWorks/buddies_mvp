@@ -13,8 +13,8 @@ class PhotoEditContainer extends Component {
     this.props.photoRemoved(photo);
   }
 
-  onImagesSelected(images){
-    this.props.photosSelected(images)
+  onImagesSelected(images) {
+    this.props.photosSelected(images);
   }
 
   render() {
