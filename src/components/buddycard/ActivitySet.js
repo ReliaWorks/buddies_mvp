@@ -35,7 +35,6 @@ const styles = {
     backgroundColor: 'white',
     marginLeft: MARGIN,
     marginRight: MARGIN,
-//    flex: 1,
   },
 };
 
