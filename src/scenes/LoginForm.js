@@ -50,6 +50,25 @@ class LoginForm extends Component {
     );
   }
 
+  renderLoginForm2() {
+    return (
+      <View style={styles.solidContainer}>
+        <View style={{justifyContent: 'center', flex: 35}}>
+        <Text style={styles.nameText}>Wavelength</Text>
+        </View>
+        <Button
+          onPress={this.onButtonPress.bind(this)}
+          styles={{buttonStyle: styles.loginButtonContainer, textStyle: styles.fbLoginText }}
+        >
+          Log in with Facebook
+        </Button>
+        <View style={styles.termsContainer}>
+          <Text style={legalTextStyle}>Terms of Service</Text>
+        </View>
+      </View>
+    );
+  }
+
   renderContent() {
     if(this.props.loading) {
       return (
@@ -58,7 +77,7 @@ class LoginForm extends Component {
         </View>
       );
     }
-    return this.renderLoginForm();
+    return this.renderLoginForm2();
   }
 
   render() {
@@ -72,6 +91,21 @@ const styles = {
   container: {
    flex: 1,
     justifyContent: 'flex-end'
+  },
+  solidContainer: {
+   flex: 1,
+   backgroundColor: '#FF4F7D',
+   justifyContent: 'flex-end'
+  },
+  nameText: {
+    color: 'white',
+    fontSize: 35,
+    fontFamily: 'Source Sans Pro',
+    fontWeight: '700',
+    textAlign: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
+    marginRight: 10,
   },
   fbLoginText: {
     color: 'white',
@@ -90,7 +124,7 @@ const styles = {
     marginBottom: 10
   },
   loginButtonContainer: {
-    flex: 3,
+    flex: 4,
     width: width - (LOGINFORM_MARGIN * 2),
     marginTop: 10,
     marginLeft: LOGINFORM_MARGIN,

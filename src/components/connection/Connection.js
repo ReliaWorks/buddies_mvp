@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   headerStyle: {
-    fontFamily: 'Source Sans Pro',
-    fontSize: 30,
+    fontFamily: 'SourceSansPro-Bold',
+    fontSize: 35,
   },
   image: {
     height: 140,

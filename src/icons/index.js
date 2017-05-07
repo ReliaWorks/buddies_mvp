@@ -57,7 +57,7 @@ export const homeLeftIconButton = () => {
     >
       <CustomIcon
         name="home_icon"
-        size={ICON_SIZE}
+        size={20}
         color="black"
         style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_SIZE}}
       />
@@ -76,7 +76,7 @@ export const homeRightIconButton = () => {
     >
       <CustomIcon
         name="home_icon"
-        size={ICON_SIZE}
+        size={20}
         color="black"
         style={{
           marginTop: -1 * ICON_SIZE,
@@ -112,7 +112,11 @@ export const wrenchIconButton = () => {
         name="ios-settings"
         size={ICON_SIZE}
         color="black"
-        style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_SIZE}}
+        style={{
+          marginLeft: ICON_PADDING,
+          marginTop: 29,
+          width: ICON_SIZE,
+        }}
       />
     </TouchableOpacity>
     );

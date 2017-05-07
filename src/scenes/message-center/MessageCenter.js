@@ -84,7 +84,7 @@ class MessageCenter extends Component {
         <View style={{flex: 1, marginBottom: MARGIN}}>
           <ScrollView style={styles.container}>
             {this.renderNewConnections()}
-            <View style={{borderBottomWidth: 1, margin: MARGIN }} />
+            <View style={{borderBottomWidth: 1, marginTop: MARGIN}} />
             {this.renderConversations(this.props.firstName)}
           </ScrollView>
         </View>
@@ -104,9 +104,9 @@ const styles = {
   },
   headerText: {
     fontSize: 16,
-    color: '#00A3B7',
+//    color: '#00A3B7',
     fontFamily: 'Source Sans Pro',
-    fontWeight: '700',
+    fontWeight: '500',
   },
   noConvoThumbnailStyle: {
     flex: 1,
@@ -132,7 +132,6 @@ const styles = {
     alignItems: 'center',
     alignSelf: 'center',
     padding: MARGIN * 3,
-//    backgroundColor: 'yellow',
   },
   zeroStateText: {
     textAlign: 'left',

@@ -14,8 +14,8 @@ export default styles = {
     color: '#707070',
     marginLeft: 15,
     marginRight: 15,
-    fontWeight: 'bold',
     fontFamily: 'Source Sans Pro',
+    marginBottom: 10,
   },
   textStyle: {
     fontSize: 18,

@@ -5,9 +5,9 @@ import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 //import ImagePicker from 'react-native-image-picker';
-import { Spinner } from './Spinner';
 import { PictureModal } from './PictureModal';
 import { textStyle, buttonStyle } from './styles';
+import { ICON_SIZE } from '../../constants';
 
 const { height, width } = Dimensions.get('window');
 const MAX_NUM_PHOTOS = 5;
@@ -49,13 +49,12 @@ class ProfileImages extends Component {
         style={{
           backgroundColor: 'black',
           marginBottom: 30,
-          marginRight: 0
         }}
       >
         <TouchableOpacity onPress={() => Actions.photoEdit()} style={buttonStyle}>
           <Icon
             name="edit"
-            size={25}
+            size={ICON_SIZE}
             color="white"
             style={{padding: 4}}
           />
@@ -65,7 +64,6 @@ class ProfileImages extends Component {
   }
 
   renderPhoto(key, img, editable) {
-    console.log(`img = `, img);
     return (
       <View key={key}>
         <TouchableWithoutFeedback
