@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import { Dimensions, Image, Text, TouchableWithoutFeedback, TouchableOpacity, View } from 'react-native';
 import Swiper from 'react-native-swiper';
@@ -130,6 +129,7 @@ class ProfileImages extends Component {
           visible={this.state.showModal}
           onClose={this.onClose.bind(this)}
           img={this.state.currentImg}
+          imgSet={profileImages}
         />
       </View>
     );

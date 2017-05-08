@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import {
   MATCHES_FETCH,
+  MATCHES_FETCH_START,
   MATCHES_FETCH_SUCCESS,
   LAST_MESSAGES_FETCH,
   MESSAGE_SENT,

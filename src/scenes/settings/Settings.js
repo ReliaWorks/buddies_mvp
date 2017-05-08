@@ -5,7 +5,7 @@ import { GenderPreference, AgePreference, LocationPreference } from '../../compo
 import styles from './styles';
 
 const { width } = Dimensions.get('window');
-const LOGINFORM_MARGIN = 15;
+const MARGIN = 15;
 
 class Settings extends Component {
   openPrivacyPolicy() {
@@ -30,12 +30,13 @@ class Settings extends Component {
     }).catch(err => console.error('An error occurred', err));
   }
 
+/*  <Text style={styles.textStyle}>
+    {this.props.value.firstName}
+  </Text>
+*/
   renderHeader() {
     return (
-      <View style={{marginBottom: 30, flex: 0.5 }}>
-        <Text style={styles.textStyle}>
-          {this.props.value.firstName}
-        </Text>
+      <View style={{marginBottom: MARGIN, marginTop: MARGIN, flex: 0.3 }}>
         <Text style={styles.headerText}>
           Preferences
         </Text>
@@ -138,9 +139,9 @@ const localStyles = {
     flex: 1,
     justifyContent: 'center',
     backgroundColor: 'black',
-    width: width - (LOGINFORM_MARGIN * 2),
-    marginLeft: LOGINFORM_MARGIN,
-    marginRight: LOGINFORM_MARGIN,
+    width: width - (MARGIN * 2),
+    marginLeft: MARGIN,
+    marginRight: MARGIN,
     marginBottom: 5,
   }
 };

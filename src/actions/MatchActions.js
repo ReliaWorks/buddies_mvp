@@ -21,6 +21,18 @@ export const matchesFetch = () => {
   };
 };
 
+function fetchLastMessages(dispatch) {
+  const { currentUser } = firebase.auth();
+
+  firebase.database().ref(`/user_chats/${currentUser.uid}`)
+    .once('value', snapshot => {
+      _.forEach(snapshot.val(), (chat, id) => {
+        console.log(`chat = ${chat.conversationId} and id = ${id}`);
+        getLastMsg(id, chat.conversationId, dispatch);
+      });
+    });
+}
+
 const getLastMsg = (otherUserId, conversationId, dispatch) => {
   firebase.database().ref(`/conversations/${conversationId}`)
     .on('value', snapshot => {
@@ -41,14 +53,3 @@ const getLastMsg = (otherUserId, conversationId, dispatch) => {
       }
     });
 };
-
-function fetchLastMessages(dispatch) {
-  const { currentUser } = firebase.auth();
-
-  firebase.database().ref(`/user_chats/${currentUser.uid}`)
-    .once('value', snapshot => {
-      _.forEach(snapshot.val(), (chat, id) => {
-        getLastMsg(id, chat.conversationId, dispatch);
-      });
-    });
-}
