@@ -1,11 +1,11 @@
 import React from 'react';
 import { Dimensions, TouchableOpacity, TouchableHighlight } from 'react-native';
 import { Actions, ActionConst } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/FontAwesome';
+//import Icon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import CloseIcon from 'react-native-vector-icons/Octicons';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { CLOSE_ICON_SIZE, ICON_WIDTH, ICON_PADDING, ICON_CLICKABLE_AREA_WIDTH } from '../constants';
+//import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { CLOSE_ICON_SIZE, ICON_SIZE, ICON_PADDING, ICON_CLICKABLE_AREA_WIDTH } from '../constants';
 
 /* Custom Icons */
 import CustomIcon from '../assets/icons';
@@ -16,13 +16,19 @@ export const chatIconButton = () => {
   return (
     <TouchableOpacity
       onPress={() => Actions.matches(ActionConst.RESET)}
-      style={{width: ICON_CLICKABLE_AREA_WIDTH, height: -1 * ICON_WIDTH, marginLeft: width - ICON_CLICKABLE_AREA_WIDTH, alignItems: 'flex-end'}}
+      style={{
+        marginLeft: width - ICON_CLICKABLE_AREA_WIDTH,
+        alignItems: 'flex-end',
+      }}
     >
       <CustomIcon
         name="message_icon"
-        size={ICON_WIDTH}
+        size={ICON_SIZE}
         color="black"
-        style={{marginTop: -1 * ICON_WIDTH, width: ICON_WIDTH, marginRight: ICON_PADDING}}
+        style={{
+          marginTop: -1 * ICON_SIZE,
+          paddingRight: ICON_PADDING,
+        }}
       />
     </TouchableOpacity>
     );
@@ -35,9 +41,9 @@ export const chatLeftIconButton = () => {
     >
       <CustomIcon
         name="message_icon"
-        size={ICON_WIDTH}
+        size={ICON_SIZE}
         color="black"
-        style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_WIDTH }}
+        style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_SIZE }}
       />
     </TouchableOpacity>
     );
@@ -51,9 +57,9 @@ export const homeLeftIconButton = () => {
     >
       <CustomIcon
         name="home_icon"
-        size={25}
+        size={20}
         color="black"
-        style={{marginLeft: 6, marginTop: 29, width: ICON_WIDTH}}
+        style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_SIZE}}
       />
     </TouchableOpacity>
     );
@@ -64,18 +70,17 @@ export const homeRightIconButton = () => {
     <TouchableOpacity
       onPress={() => Actions.main()}
       style={{
-        width: ICON_CLICKABLE_AREA_WIDTH,
-        alignSelf: 'flex-end',
-        flex: 1,
+        marginLeft: width - ICON_CLICKABLE_AREA_WIDTH,
+        alignItems: 'flex-end',
       }}
     >
       <CustomIcon
         name="home_icon"
-        size={25}
+        size={20}
         color="black"
         style={{
-          marginTop: -29,
-          marginLeft: 70,
+          marginTop: -1 * ICON_SIZE,
+          paddingRight: ICON_PADDING,
         }}
       />
     </TouchableOpacity>
@@ -90,9 +95,9 @@ export const profileIconButton = () => {
     >
       <CustomIcon
         name="profile_icon"
-        size={ICON_WIDTH}
+        size={ICON_SIZE}
         color="black"
-        style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_WIDTH}}
+        style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_SIZE}}
       />
     </TouchableOpacity>
     );
@@ -105,9 +110,13 @@ export const wrenchIconButton = () => {
     >
       <IonIcon
         name="ios-settings"
-        size={ICON_WIDTH}
+        size={ICON_SIZE}
         color="black"
-        style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_WIDTH}}
+        style={{
+          marginLeft: ICON_PADDING,
+          marginTop: 29,
+          width: ICON_SIZE,
+        }}
       />
     </TouchableOpacity>
     );

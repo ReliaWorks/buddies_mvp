@@ -9,7 +9,7 @@ import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
 
 //const { width, height } = Dimensions.get('window');
-const BOTTOM_PADDING = 120;
+const BOTTOM_PADDING = 100;
 const MARGIN = 15;
 
 class BuddyCard extends Component {
@@ -105,7 +105,7 @@ class BuddyCard extends Component {
       activitiesAndAffiliations = affiliations;
     }
     return (
-      <View style={{marginTop: MARGIN}}>
+      <View>
         <ActivitySet value={{activitiesAndAffiliations}} />
       </View>
     );
@@ -121,12 +121,12 @@ class BuddyCard extends Component {
     if(_.isEmpty(location)) return;
     return <Text style={locationTextStyle}>{location.city}, {location.state}</Text>;
   }
-// {location.distance} away
 
   expandDescription() {
     LayoutAnimation.easeInEaseOut();
     this.setState({descriptionExpanded: !this.state.descriptionExpanded});
   }
+
   descContainerStyle() {
     if(this.state.descriptionExpanded) {
       return {
@@ -139,6 +139,14 @@ class BuddyCard extends Component {
         backgroundColor: 'white',
       };
     }
+  }
+
+  renderDescription(description, firstName) {
+    return (
+      <View style={localStyles.descriptionStyle}>
+        <Text style={localStyles.descriptionText}>{description}</Text>
+      </View>
+    );
   }
 
   render() {
@@ -163,9 +171,7 @@ class BuddyCard extends Component {
                   </View>
                   {this.renderLocation(location, locationText)}
                   {this.renderActivitiesAffiliations(activities, affiliations, editable)}
-                  <View style={localStyles.descriptionStyle}>
-                    <Text style={localStyles.descriptionText}>{description}</Text>
-                  </View>
+                  {this.renderDescription(description, firstName)}
                   </View>
                 </TouchableWithoutFeedback>
               </ScrollView>
@@ -203,15 +209,15 @@ const localStyles = StyleSheet.create({
   },
   descriptionStyle: {
     borderTopWidth: 1,
+    borderColor: '#D5D5D5',
     marginLeft: MARGIN,
     marginRight: MARGIN,
-    marginTop: MARGIN,
+//    marginTop: MARGIN,
     marginBottom: BOTTOM_PADDING,
   },
   descriptionText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '100',
-    marginLeft: 10,
     marginTop: MARGIN,
     fontFamily: 'Source Sans Pro',
     backgroundColor: 'white',

@@ -18,10 +18,10 @@ import {
 } from './types';
 import { INACTIVE, ACTIVE } from '../constants';
 
-const Blob = RNFetchBlob.polyfill.Blob
-const fs = RNFetchBlob.fs
-window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
-window.Blob = Blob
+const Blob = RNFetchBlob.polyfill.Blob;
+const fs = RNFetchBlob.fs;
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+window.Blob = Blob;
 
 export const photoRemoved = (photo) => {
   const { currentUser } = firebase.auth();
@@ -57,13 +57,13 @@ export const photosSelected = (photos, from) => {
                   photo: { key: newImageRef.key, url: uri },
                   localUrl: photoUri
                 }
-              })
-            })
+              });
+            });
         })
-        .catch( error => console.log(error))
-    })
-  }
-}
+        .catch(error => console.log(error));
+    });
+  };
+};
 
 const uploadImage = (uid, uri, mime = 'image/jpg', from) => {
   return new Promise((resolve, reject) => {
@@ -83,18 +83,18 @@ const uploadImage = (uid, uri, mime = 'image/jpg', from) => {
 
       resizeOrNotPromise
       .then((data) => {
-        return Blob.build(data, { type: `${mime};BASE64` })
+        return Blob.build(data, { type: `${mime};BASE64` });
       })
       .then((blob) => {
-        uploadBlob = blob
-        return imageRef.put(blob, { contentType: mime })
+        uploadBlob = blob;
+        return imageRef.put(blob, { contentType: mime });
       })
       .then(() => {
-        uploadBlob.close()
-        return imageRef.getDownloadURL()
+        uploadBlob.close();
+        return imageRef.getDownloadURL();
       })
       .then((url) => {
-        resolve(url)
+        resolve(url);
       })
       .catch((error) => {
         reject(error)

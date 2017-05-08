@@ -30,29 +30,29 @@ class ConversationListItem extends Component {
     }
 
     return (
-    <TouchableOpacity
-      onPress={() => {
-        this.props.selectChat(this.props.otherUserId, this.props.otherUserName, this.props.otherUserPic);
-        Actions.conversation();
-      }}
-    >
-      <View style={styles.container}>
-        <Image
-          style={styles.convoThumbnailStyle}
-          source={{ uri: this.props.otherUserPic }}
-        />
-        <View style={styles.convoContainerStyle}>
-          {this.renderNameAndTimestamp(this.props.otherUserName, createdAt)}
-          <Text
-            ellipsizeMode="tail"
-            numberOfLines={2}
-            style={styles.msgText}
-          >
-           {msg}
-          </Text>
+      <TouchableOpacity
+        onPress={() => {
+          this.props.selectChat(this.props.otherUserId, this.props.otherUserName, this.props.otherUserPic);
+          Actions.conversation();
+        }}
+      >
+        <View style={styles.container}>
+          <Image
+            style={styles.convoThumbnailStyle}
+            source={{ uri: this.props.otherUserPic }}
+          />
+          <View style={styles.convoContainerStyle}>
+            {this.renderNameAndTimestamp(this.props.otherUserName, createdAt)}
+            <Text
+              ellipsizeMode="tail"
+              numberOfLines={2}
+              style={styles.msgText}
+            >
+             {msg}
+            </Text>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
     );
   }
 }
@@ -78,7 +78,7 @@ const styles = {
   nameText: {
     fontFamily: 'Source Sans Pro',
     fontSize: 14,
-    fontWeight: '800',
+    fontWeight: '700',
     marginTop: MARGIN,
   },
   dateText: {

@@ -51,7 +51,7 @@ export const legalTextStyle = {
 
 export const navTitleStyle = {
   fontFamily: 'Source Sans Pro',
-  fontSize: 22,
+  fontSize: 18,
   fontWeight: 'bold',
 };
 
