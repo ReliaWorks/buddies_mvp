@@ -18,6 +18,9 @@ import {
   PICTURE_SAVED,
   PHOTOS_SELECTED,
   PHOTO_UPLOADED,
+  //FACEBOOK_PHOTO_FETCHED,
+  FACEBOOK_ALBUMS_FETCHED,
+  FACEBOOK_ALBUM_PHOTOS_FETCHED,
 } from '../actions/types';
 import { ACTIVE } from '../constants';
 
@@ -28,6 +31,9 @@ const INITIAL_STATE = {
   age: '',
   profileImages: [],
   profileImagesUploadProgress: [],
+  //selectableFacebookPhotos: [],
+  facebookAlbums: [],
+  facebookAlbumPhotos: [],
   activities: {},
   affiliations: {},
   location: {},
@@ -180,6 +186,15 @@ export default(state = INITIAL_STATE, action) => {
       const profileImages = [...state.profileImages, action.payload.photo];
       return { ...state, profileImages, profileImagesUploadProgress };
     }
+    // case FACEBOOK_PHOTO_FETCHED:
+    //   const selectableFacebookPhotos = [...selectableFacebookPhotos, action.payload];
+    //   return { ...state, selectableFacebookPhotos };
+    case FACEBOOK_ALBUMS_FETCHED:
+      const facebookAlbums = action.payload;
+      return { ...state, facebookAlbums };
+    case FACEBOOK_ALBUM_PHOTOS_FETCHED:
+      const facebookAlbumPhotos = action.payload;
+      return { ...state, facebookAlbumPhotos };
     case SET_CURRENT_GEOLOCATION: {
       return { ...state, geolocation: action.payload };
     }

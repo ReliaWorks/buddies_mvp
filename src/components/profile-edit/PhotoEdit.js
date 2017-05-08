@@ -70,7 +70,12 @@ class PhotoEdit extends Component {
             <AddPhotosModal
               visible={this.state.modalVisible}
               close={this.closeModal.bind(this)}
-              getSelectedImages={this.getSelectedImages.bind(this)}/>
+              getSelectedImages={this.getSelectedImages.bind(this)}
+              onFetchFacebookAlbums={this.props.onFetchFacebookAlbums}
+              facebookAlbums={this.props.facebookAlbums}
+              onFetchFacebookAlbumPhotos={this.props.onFetchFacebookAlbumPhotos}
+              facebookAlbumPhotos={this.props.facebookAlbumPhotos}
+            />
         </View>
       </View>
       </ScrollView>
