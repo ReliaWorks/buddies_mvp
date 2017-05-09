@@ -31,12 +31,12 @@ class Routes extends Component {
           <Scene
             key="splash"
             component={Splash}
-            hideNavBar
           />
           <Scene
             key="login"
             component={LoginForm}
-            hideNavBar
+            navigationBarStyle={{backgroundColor: '#FF4F7D'}}
+            type={ActionConst.RESET}
           />
         </Scene>
         <Scene key="profileSetup">
