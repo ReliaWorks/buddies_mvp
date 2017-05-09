@@ -7,7 +7,7 @@ import { Spinner } from '../../components/common';
 
 class MessageCenterContainer extends Component {
   componentWillMount() {
-    this.props.matchesFetch();
+    this.props.matchesFetch();    
     this.createDataSource(this.props);
   }
 

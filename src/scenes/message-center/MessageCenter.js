@@ -42,8 +42,7 @@ class MessageCenter extends Component {
 
   renderConversations(firstName) {
     if(this.props.matchesWithChatDataSource.getRowCount() === 0)
-      return this.renderZeroState(`Hey ${firstName},\n\n${ZERO_CONVOS}`);
-
+      return this.renderZeroState(`Hey ${firstName},\n\n${ZERO_CONVOS}`);      
     return (
       <View style={{flex: 1}}>
           <ListView

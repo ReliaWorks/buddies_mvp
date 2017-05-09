@@ -7,7 +7,34 @@ import {
   CHAT_PROFILE_FETCH_SUCCESS,
   CURRENT_CHAT_FETCH,
   MESSAGE_SENT,
+  CONVERSATION_SEEN,
 } from './types';
+
+export const updateConversationStatus = (uid, otherUserId, lastMsg) => {
+  return (dispatch) => {
+    const db = firebase.database();
+    if (lastMsg && lastMsg.senderId && lastMsg.senderId == otherUserId && !lastMsg.seen) {
+      db.ref(`/user_chats/${uid}/${otherUserId}`).on('value', snapshot => {
+        if(snapshot.val()) {
+          const conversationId = snapshot.val().conversationId;
+            db.ref(`/conversations/${conversationId}`)
+            .on('value', snap => {
+              const messages = snap.val();
+              if (messages) {
+                const keys = Object.keys(messages);
+                const lastKey = keys[keys.length - 1];
+                db.ref(`/conversations/${conversationId}/${lastKey}/seen`).set(true);
+                dispatch({
+                  type: CONVERSATION_SEEN,
+                  payload: {}
+                });
+              }
+            });
+        }
+      });
+    }
+  };
+};
 
 export const fetchConversation = (otherUserId) => {
   return (dispatch) => {
@@ -64,7 +91,7 @@ export const saveMessage = (msg, currentUser, otherUser, chatId, messages) => {
     if(chatId) {
       let profileImage = DEFAULT_PROFILE_PHOTO;
       if(currentUser.profileImages) profileImage = currentUser.profileImages[0].url;
-      const user = {...msg.user, name: firstName, avatar: profileImage};
+      const user = {...msg.user, seen: false, name: firstName, avatar: profileImage};
       const m1 = {...msg, user, createdAt: firebase.database.ServerValue.TIMESTAMP};
       firebase.database().ref(`conversations/${chatId}`)
         .push(m1)
