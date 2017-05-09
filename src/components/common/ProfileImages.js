@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 //import ImagePicker from 'react-native-image-picker';
 import { PictureModal } from './PictureModal';
 import { textStyle, buttonStyle } from './styles';
-import { ICON_SIZE } from '../../constants';
+import { ICON_SIZE, DEFAULT_PROFILE_PHOTO } from '../../constants';
 
 const { height, width } = Dimensions.get('window');
 const MAX_NUM_PHOTOS = 5;
@@ -17,12 +17,13 @@ class ProfileImages extends Component {
 
     this.state = {
       showModal: false,
-      currentImg: 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fdefault-user-image.png?alt=media&token=5a29c303-0a94-4640-a917-9283f1ecdb66',
+      currentImg: DEFAULT_PROFILE_PHOTO,
     };
   }
 
   renderNoPhotos() {
-    return (
+    return this.renderPhoto('1', DEFAULT_PROFILE_PHOTO, this.props.editable);
+/*    return (
       <View
         style={{
           justifyContent: 'center',
@@ -35,6 +36,7 @@ class ProfileImages extends Component {
         <Text style={textStyle}>No photos</Text>
       </View>
     );
+    */
   }
 
   onClose() {
@@ -64,7 +66,7 @@ class ProfileImages extends Component {
 
   renderPhoto(key, img, editable) {
     return (
-      <View key={key}>
+      <View key={key} style={styles.profileImageContainer}>
         <TouchableWithoutFeedback
           onPress={() => {
             this.setState({ showModal: true, currentImg: img });
@@ -86,7 +88,8 @@ class ProfileImages extends Component {
     const { profileImageContainer } = styles;
     let pics = profileImages;
 
-    if(!profileImages || profileImages.length === 0) return this.renderNoPhotos();
+    if(!profileImages || profileImages.length === 0)
+      return this.renderNoPhotos();
     if(profileImages.length > MAX_NUM_PHOTOS)
       pics = profileImages.slice(0, MAX_NUM_PHOTOS - 1);
     return (
@@ -139,7 +142,7 @@ class ProfileImages extends Component {
 const styles = {
   profileImageContainer: {
     flex: 0.5,
-    borderBottomWidth: 3,
+    borderBottomWidth: 4,
   },
   profileImage: {
     justifyContent: 'flex-end',
