@@ -9,7 +9,7 @@ import { textStyle, buttonStyle } from './styles';
 import { ICON_SIZE, DEFAULT_PROFILE_PHOTO } from '../../constants';
 
 const { height, width } = Dimensions.get('window');
-const MAX_NUM_PHOTOS = 5;
+const MAX_NUM_PHOTOS = 7;
 
 class ProfileImages extends Component {
   constructor(props) {
@@ -90,8 +90,8 @@ class ProfileImages extends Component {
 
     if(!profileImages || profileImages.length === 0)
       return this.renderNoPhotos();
-    if(profileImages.length > MAX_NUM_PHOTOS)
-      pics = profileImages.slice(0, MAX_NUM_PHOTOS - 1);
+    if(profileImages.length >= MAX_NUM_PHOTOS)
+      pics = profileImages.slice(0, MAX_NUM_PHOTOS);
     return (
       <View style={profileImageContainer}>
         <Swiper
@@ -119,7 +119,7 @@ class ProfileImages extends Component {
             />
           }
           paginationStyle={{
-            bottom: height - 120,
+            bottom: height - 150,
             paddingLeft: 7,
             paddingRight: 7,
           }}
