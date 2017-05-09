@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { Image, ListView, ScrollView, Text, View } from 'react-native';
+import { ListView, ScrollView, Text, View } from 'react-native';
 import NoConvoMatch from '../../components/common/NoConvoMatch';
 import ConversationListItem from '../../components/common/ConversationListItem';
-import { homeLeftIconButton } from '../../icons';
-import { ICON_CLICKABLE_AREA_WIDTH } from '../../constants';
+import { Spinner } from '../../components/common';
+//import { homeLeftIconButton } from '../../icons';
+//import { ICON_CLICKABLE_AREA_WIDTH } from '../../constants';
 
 const MARGIN = 15;
 const ZERO_CONVOS = `You have no messages but you have new connections waiting for you to say hi!`;
-const MSG_CENTER_TITLE_IMAGE = require("../../components/common/img/MsgCenter.png");
+//const MSG_CENTER_TITLE_IMAGE = require("../../assets/img/MsgCenter.png");
 
 class MessageCenter extends Component {
+  /*
   renderHeader() {
     return(
       <View
@@ -26,7 +28,7 @@ class MessageCenter extends Component {
         <View style={{width: ICON_CLICKABLE_AREA_WIDTH}} />
       </View>
      );
-   }
+   }*/
 
   renderZeroState(msg) {
     return(
@@ -79,7 +81,10 @@ class MessageCenter extends Component {
     if(this.props.matchesWithChatDataSource.getRowCount() === 0 &&
        this.props.matchesWithoutChatDataSource.getRowCount() === 0)
        return this.renderZeroState("Connect with people to start chatting");
-    else {
+    else if(this.props.loading) {
+      console.log("In MessageCenter, rendering spinner");
+      return <Spinner size="large" />;
+    } else {
       return (
         <View style={{flex: 1, marginBottom: MARGIN}}>
           <ScrollView style={styles.container}>

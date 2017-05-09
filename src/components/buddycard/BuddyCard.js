@@ -141,7 +141,7 @@ class BuddyCard extends Component {
     }
   }
 
-  renderDescription(description, firstName) {
+  renderDescription(description) {
     return (
       <View style={localStyles.descriptionStyle}>
         <Text style={localStyles.descriptionText}>{description}</Text>
@@ -171,7 +171,7 @@ class BuddyCard extends Component {
                   </View>
                   {this.renderLocation(location, locationText)}
                   {this.renderActivitiesAffiliations(activities, affiliations, editable)}
-                  {this.renderDescription(description, firstName)}
+                  {this.renderDescription(description)}
                   </View>
                 </TouchableWithoutFeedback>
               </ScrollView>

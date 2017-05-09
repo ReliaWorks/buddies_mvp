@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>54</string>
+	<string>59</string>
 	<key>FacebookAppID</key>
 	<string>575314036007191</string>
 	<key>FacebookDisplayName</key>
@@ -113,6 +113,7 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>fontello.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
+		<string>SourceSansPro-Bold.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
