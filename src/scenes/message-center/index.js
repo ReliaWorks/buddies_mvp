@@ -23,18 +23,14 @@ class MessageCenterContainer extends Component {
   }
 
   render() {
-    if(this.props.loading) {
-      console.log("In MessageCenterContainer, rendering spinner");
-      return(<Spinner size="large" />);
-    } else {
-      return (
-        <MessageCenter
-          matchesWithChatDataSource={this.matchesWithChatDataSource}
-          matchesWithoutChatDataSource={this.matchesWithoutChatDataSource}
-          firstName={this.props.firstName}
-        />
-      );
-    }
+    return (
+      <MessageCenter
+        matchesWithChatDataSource={this.matchesWithChatDataSource}
+        matchesWithoutChatDataSource={this.matchesWithoutChatDataSource}
+        firstName={this.props.firstName}
+        loading={this.props.loading}
+      />
+    );
   }
 }
 const mapStateToProps = ({ matchSet, currentUser }) => {

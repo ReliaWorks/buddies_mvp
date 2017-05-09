@@ -77,12 +77,12 @@ class MessageCenter extends Component {
   }
 
   render() {
-    if(this.props.matchesWithChatDataSource.getRowCount() === 0 &&
-       this.props.matchesWithoutChatDataSource.getRowCount() === 0)
-       return this.renderZeroState("Connect with people to start chatting");
-    else if(this.props.loading) {
-      console.log("In MessageCenter, rendering spinner");
+    console.log(`In Message Center loading = ${this.props.loading }`);
+    if(this.props.loading) {
       return <Spinner size="large" />;
+    } else if(this.props.matchesWithChatDataSource.getRowCount() === 0 &&
+       this.props.matchesWithoutChatDataSource.getRowCount() === 0) {
+       return this.renderZeroState("Connect with people to start chatting");
     } else {
       return (
         <View style={{flex: 1, marginBottom: MARGIN}}>
