@@ -1133,11 +1133,7 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-<<<<<<< HEAD
 					ProductGroup = 5A7787BB1EBE78BF002438DF /* Products */;
-=======
-					ProductGroup = B6F6E7641EBBC56C004E7F93 /* Products */;
->>>>>>> ReliaWorks/qa
 					ProjectRef = 3D77713E525A4877A56262A6 /* RNFetchBlob.xcodeproj */;
 				},
 				{

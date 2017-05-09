@@ -22,8 +22,8 @@ class PhotoEdit extends Component {
   closeModal() {
     this.setState({modalVisible: false});
   }
-  getSelectedImages(images) {
-    this.props.onImagesSelected(images);
+  getSelectedImages(images, from) {
+    this.props.onImagesSelected(images, from);
   }
 
   renderPics() {

@@ -38,10 +38,11 @@ export const photoRemoved = (photo) => {
 // this action fires when user select images from camera roll (or potentially facebook at future)
 export const photosSelected = (photos, from) => {
   return (dispatch) => {
+    console.log('from:', from);
     const { currentUser } = firebase.auth();
 
     photos.forEach( photo => {
-      const photoUri = from === 'camera' ? photo.uri : photo.path;
+      const photoUri = from === 'cameraRoll' ? photo.uri : photo.path;
 
       dispatch({ type: PHOTOS_SELECTED, payload: photos.map( photo => photoUri ) })
 
@@ -74,7 +75,7 @@ const uploadImage = (uid, uri, mime = 'image/jpg', from) => {
     const imageRef = firebase.storage().ref('profileImages').child(`${uid}`).child(`${sessionId}`)
 
     // control if it is required to resize the image. required for images from camera, not required images from facebook
-    const resizeOrNotPromise = from === 'camera'
+    const resizeOrNotPromise = from === 'cameraRoll'
       ? ImageResizer.createResizedImage(uploadUri, 640, 640, 'JPEG', 40,) // rotation, outputPath)
         .then((resizedImageUri) => {
           return fs.readFile(resizedImageUri, 'base64')
