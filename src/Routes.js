@@ -105,6 +105,10 @@ class Routes extends Component {
             component={MessageCenterContainer}
             leftButton={homeLeftIconButton}
             type={ActionConst.RESET}
+            navigationBarStyle={{
+              borderBottomWidth: 3,
+              borderBottomColor: 'black',
+            }}
           />
           <Scene
             key="conversation"
@@ -133,11 +137,19 @@ class Routes extends Component {
           title="Edit Profile"
           leftButton={profileIconButton}
           type={ActionConst.RESET}
+          navigationBarStyle={{
+            borderBottomWidth: 3,
+            borderBottomColor: 'black',
+          }}
         />
         <Scene
           key="photoEdit"
           component={PhotoEditContainer}
           title="Photo Edit"
+          navigationBarStyle={{
+            borderBottomWidth: 3,
+            borderBottomColor: 'black',
+          }}
         />
         <Scene
           key="activityEdit"
@@ -161,6 +173,10 @@ class Routes extends Component {
           key="settings"
           component={SettingsContainer}
           title="Settings"
+          navigationBarStyle={{
+            borderBottomWidth: 3,
+            borderBottomColor: 'black',
+          }}
         />
       </Router>
     );

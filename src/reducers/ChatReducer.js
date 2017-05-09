@@ -2,7 +2,8 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import {
   CURRENT_CHAT_FETCH,
   MESSAGE_SENT,
-  LOGOUT_USER
+  LOGOUT_USER,
+  CONVERSATION_SEEN
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -16,6 +17,9 @@ export default(state = INITIAL_STATE, action) => {
   switch(action.type) {
     case CURRENT_CHAT_FETCH: {
       return { ...state, chatId: action.payload.chatId, loading: false, messages: action.payload.messages };
+    }
+    case CONVERSATION_SEEN: {
+      return { ...state };
     }
     case MESSAGE_SENT: {
       if(action.payload.messages[0]._id === state.messages[0]._id) return state;
