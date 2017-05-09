@@ -21,7 +21,10 @@ const INITIAL_STATE = {
 export default(state = INITIAL_STATE, action) => {
   switch(action.type) {
     case MATCHES_FETCH: {
-      return {...state, matches: action.payload, matchesWithoutChat: action.payload, loading: true};
+      return {...state, matches: action.payload, matchesWithoutChat: action.payload};
+    }
+    case MATCHES_FETCH_START: {
+      return {...state, loading: true};
     }
     case MATCHES_FETCH_SUCCESS: {
       return {...state, loading: false};
@@ -40,7 +43,7 @@ export default(state = INITIAL_STATE, action) => {
       const sortedMatches = _.sortBy(matchesWithChat, (item) => {
         return item.lastMsg.timestamp;
       });
-      return {...state, lastMsgs: updatedMsgs, matchesWithChat, matchesWithoutChat, sortedMatches: sortedMatches.reverse(), loading: false};
+      return {...state, lastMsgs: updatedMsgs, matchesWithChat, matchesWithoutChat, sortedMatches: sortedMatches.reverse()};
     }
     case MESSAGE_SENT: {
       const updatedMsgs = {...state.lastMsgs, [action.payload.otherUserId]: action.payload.msg.text};
