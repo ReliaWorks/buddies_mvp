@@ -113,14 +113,7 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>fontello.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		<string>SourceSansPro-Bold.ttf</string>
->>>>>>> upstream/qa
-=======
-		<string>SourceSansPro-Bold.ttf</string>
->>>>>>> upstream/qa
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
