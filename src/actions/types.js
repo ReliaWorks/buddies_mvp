@@ -20,6 +20,9 @@ export const PHOTO_REMOVED = 'photo_removed';
 export const PICTURE_SAVED = 'pic_saved';
 export const PHOTOS_SELECTED = 'photos_selected';
 export const PHOTO_UPLOADED = 'photo_uploaded';
+//export const FACEBOOK_PHOTO_FETCHED = 'facebook_photo_fetched';
+export const FACEBOOK_ALBUMS_FETCHED = 'facebook_albums_fetched';
+export const FACEBOOK_ALBUM_PHOTOS_FETCHED = 'facebook_album_fetched';
 
 export const CURRENT_USER_FETCH_SUCCESS = 'current_user_fetch_success';
 export const CHAT_SELECTED = 'chat_selected';

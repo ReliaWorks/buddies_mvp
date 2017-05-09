@@ -63,6 +63,7 @@
 	<string>Use photos to pre-populate user profile</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SourceSansPro-Bold.ttf</string>
 		<string>Andale Mono.ttf</string>
 		<string>Arial Black.ttf</string>
 		<string>Arial.ttf</string>

@@ -22,8 +22,8 @@ class PhotoEdit extends Component {
   closeModal() {
     this.setState({modalVisible: false});
   }
-  getSelectedImages(images) {
-    this.props.onImagesSelected(images);
+  getSelectedImages(images, from) {
+    this.props.onImagesSelected(images, from);
   }
 
   renderPics() {
@@ -72,6 +72,10 @@ class PhotoEdit extends Component {
               visible={this.state.modalVisible}
               close={this.closeModal.bind(this)}
               getSelectedImages={this.getSelectedImages.bind(this)}
+              onFetchFacebookAlbums={this.props.onFetchFacebookAlbums}
+              facebookAlbums={this.props.facebookAlbums}
+              onFetchFacebookAlbumPhotos={this.props.onFetchFacebookAlbumPhotos}
+              facebookAlbumPhotos={this.props.facebookAlbumPhotos}
             />
         </View>
       </View>

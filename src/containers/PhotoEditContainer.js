@@ -2,19 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import PhotoEdit from '../components/profile-edit/PhotoEdit';
-import { photoRemoved, photosSelected } from '../actions';
+import { photoRemoved, photosSelected, fetchFacebookAlbums, fetchFacebookAlbumPhotos } from '../actions';
 
 class PhotoEditContainer extends Component {
   onImageSave() {
     Actions.pop();
   }
-
   onImageRemove(photo) {
     this.props.photoRemoved(photo);
   }
-
-  onImagesSelected(images) {
-    this.props.photosSelected(images);
+  onImagesSelected(images, from='cameraRoll'){
+    this.props.photosSelected(images, from)
+  }
+  onFetchFacebookAlbums(){
+     this.props.fetchFacebookAlbums()
+  }
+  onFetchFacebookAlbumPhotos(albumId){
+     this.props.fetchFacebookAlbumPhotos(albumId)
   }
 
   render() {
@@ -25,6 +29,10 @@ class PhotoEditContainer extends Component {
         onRemove={this.onImageRemove.bind(this)}
         onImagesSelected={this.onImagesSelected.bind(this)}
         uploadingPhotos={this.props.currentUser.profileImagesUploadProgress}
+        onFetchFacebookAlbums={this.onFetchFacebookAlbums.bind(this)}
+        facebookAlbums={this.props.currentUser.facebookAlbums}
+        onFetchFacebookAlbumPhotos={this.onFetchFacebookAlbumPhotos.bind(this)}
+        facebookAlbumPhotos={this.props.currentUser.facebookAlbumPhotos}
       />
     );
   }
@@ -33,5 +41,5 @@ class PhotoEditContainer extends Component {
 const mapStateToProps = ({ currentUser }) => {
   return { currentUser };
 };
-
-export default connect(mapStateToProps, { photoRemoved, photosSelected })(PhotoEditContainer);
+/*fetchFacebookPhotos*/
+export default connect(mapStateToProps, { photoRemoved, photosSelected, fetchFacebookAlbums, fetchFacebookAlbumPhotos })(PhotoEditContainer);
