@@ -59,7 +59,8 @@ const getLastMsg = (otherUserId, conversationId, dispatch) => {
                        msg: {
                         senderId: uid,
                         text: lastMsg.text,
-                        timestamp: lastMsg.createdAt
+                        timestamp: lastMsg.createdAt,
+                        seen: lastMsg.seen === true
                       }}});
         }
       });
