@@ -6,7 +6,7 @@ import { legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
 
 const appName = "wavelength";
-const backgroundImageURL = require("../components/common/img/wavelength.png");
+const backgroundImageURL = require("../assets/img/wavelength.png");
 
 const { width } = Dimensions.get('window');
 const LOGINFORM_MARGIN = 15;
