@@ -24,6 +24,7 @@ class MessageCenterContainer extends Component {
 
   render() {
     if(this.props.loading) {
+      console.log("In MessageCenterContainer, rendering spinner");
       return(<Spinner size="large" />);
     } else {
       return (
