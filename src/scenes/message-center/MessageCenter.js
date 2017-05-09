@@ -8,7 +8,7 @@ import { Spinner } from '../../components/common';
 
 const MARGIN = 15;
 const ZERO_CONVOS = `You have no messages but you have new connections waiting for you to say hi!`;
-//const MSG_CENTER_TITLE_IMAGE = require("../../components/common/img/MsgCenter.png");
+//const MSG_CENTER_TITLE_IMAGE = require("../../assets/img/MsgCenter.png");
 
 class MessageCenter extends Component {
   /*

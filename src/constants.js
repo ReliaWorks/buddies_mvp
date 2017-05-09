@@ -1,4 +1,5 @@
-export const DEFAULT_PROFILE_PHOTO = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fdefault-user-image.png?alt=media&token=5a29c303-0a94-4640-a917-9283f1ecdb66';
+//export const DEFAULT_PROFILE_PHOTO = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fdefault-user-image.png?alt=media&token=5a29c303-0a94-4640-a917-9283f1ecdb66';
+export const DEFAULT_PROFILE_PHOTO = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2FTurntable.png?alt=media&token=1c1febe2-f199-4e25-9964-ba2ae9d94217';
 export const ICON_SIZE = 25;
 export const ICON_PADDING = 15;
 export const ICON_CLICKABLE_AREA_WIDTH = 100;
