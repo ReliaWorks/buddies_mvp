@@ -42,7 +42,7 @@ class MessageCenter extends Component {
 
   renderConversations(firstName) {
     if(this.props.matchesWithChatDataSource.getRowCount() === 0)
-      return this.renderZeroState(`Hey ${firstName},\n\n${ZERO_CONVOS}`);      
+      return this.renderZeroState(`Hey ${firstName},\n\n${ZERO_CONVOS}`);
     return (
       <View style={{flex: 1}}>
           <ListView
@@ -77,7 +77,6 @@ class MessageCenter extends Component {
   }
 
   render() {
-    console.log(`In Message Center loading = ${this.props.loading }`);
     if(this.props.loading) {
       return <Spinner size="large" />;
     } else if(this.props.matchesWithChatDataSource.getRowCount() === 0 &&
