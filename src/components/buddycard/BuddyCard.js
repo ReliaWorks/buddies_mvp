@@ -7,6 +7,7 @@ import ActivitySet from './ActivitySet';
 import { ProfileImages } from '../common';
 import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
+import CustomIcon from '../../assets/icons';
 
 //const { width, height } = Dimensions.get('window');
 const BOTTOM_PADDING = 100;
@@ -26,8 +27,8 @@ class BuddyCard extends Component {
     return (
       <View>
         <TouchableOpacity onPress={() => Actions.userEdit()} style={buttonStyle}>
-          <Icon
-            name="edit"
+          <CustomIcon
+            name="edit_icon"
             size={20}
             color="black"
             style={{padding: 4, marginTop: 10}}
