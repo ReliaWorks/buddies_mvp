@@ -33,12 +33,8 @@ class ConversationListItem extends Component {
 
     let msg = '';
     let createdAt = '';
-<<<<<<< HEAD
     const itemSeen = msgContainer.seen;
     console.log('itemSeen',itemSeen);
-=======
-    const itemSeen = msgContainer.senderId != this.props.otherUserId || msgContainer.seen;
->>>>>>> origin/qa
     if(!msgContainer) msg = "Start chatting";
     else {
       msg = msgContainer.text;
