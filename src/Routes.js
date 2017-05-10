@@ -114,12 +114,13 @@ class Routes extends Component {
             key="matches"
             component={MessageCenterContainer}
             leftButton={homeLeftIconButton}
-            navigationBarBackgroundImage={{
+/*            navigationBarBackgroundImage={{
               uri: MSG_CENTER_URL,
               width: width,
               height: 60,
             }}
 //            title="Chat"
+*/
             navigationBarStyle={{
               borderBottomWidth: 3,
               borderBottomColor: 'black',
