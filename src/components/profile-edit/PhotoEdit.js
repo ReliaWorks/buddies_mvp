@@ -64,7 +64,6 @@ class PhotoEdit extends Component {
               <CustomIcon
                 name="camera_icon"
                 size={44}
-                color="#42D3D3"
               />
             </TouchableOpacity>
 
@@ -93,10 +92,12 @@ class PhotoEdit extends Component {
         >
         <View style={styles.removeIconContainer}>
           <TouchableOpacity onPress={() => onRemove(firstProfileImage)}>
-            <Image
+            <CustomIcon name='add_circle_icon' size={20}
+              style={{ backgroundColor: 'transparent', transform: [{ rotate: '45deg'}] }} />
+            {/*<Image
               style={styles.iconStyle}
               source={TRASH_ICON}
-            />
+            />*/}
           </TouchableOpacity>
         </View>
         </Image>
@@ -126,7 +127,7 @@ class PhotoEdit extends Component {
 
 const styles = {
   removeIconContainer: {
-    backgroundColor: 'white',
+    //backgroundColor: 'white',
     alignSelf: 'flex-end',
     marginRight: 2,
     marginBottom: 2,
@@ -158,7 +159,8 @@ const styles = {
     borderWidth: 1,
     borderColor: '#dddddd',
     marginRight: 5,
-    marginTop: 5
+    marginTop: 5,
+    backgroundColor: 'transparent'
   },
   cameraIcon: {
     justifyContent: 'center',

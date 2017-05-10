@@ -89,7 +89,7 @@ class LoginForm extends Component {
 
 const styles = {
   container: {
-   flex: 1,
+    flex: 1,
     justifyContent: 'flex-end'
   },
   solidContainer: {
@@ -121,7 +121,7 @@ const styles = {
     alignItems: 'center',
     flex: 3,
     marginTop: -35,
-    marginBottom: 10
+    marginBottom: 10,
   },
   loginButtonContainer: {
     flex: 4,

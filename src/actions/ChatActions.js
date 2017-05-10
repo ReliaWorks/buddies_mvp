@@ -22,7 +22,7 @@ export const fetchConversation = (otherUserId) => {
               type: CURRENT_CHAT_FETCH,
               payload: { chatId: conversationId, messages: _.map(snap.val()).reverse() }
             });
-            //Updates notifications          
+            //Updates notifications
             firebase.database().ref(`/notifications/conversations/${conversationId}/seen/${currentUser.uid}`).set(true);
           });
       } else {

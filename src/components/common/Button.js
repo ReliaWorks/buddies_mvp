@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, Text, TouchableOpacity } from 'react-native';
 
 const { width } = Dimensions.get('window');
-const LOGINFORM_MARGIN = 15;
+const MARGIN = 15;
 
 const Button = ({ onPress, children, styles = localStyles }) => {
   const { buttonStyle, textStyle } = styles;
@@ -27,10 +27,10 @@ const localStyles = {
   buttonStyle: {
     justifyContent: 'center',
     backgroundColor: '#42D3D3',
-    width: width - (LOGINFORM_MARGIN * 2),
+    width: width - (MARGIN * 2),
     height: 60,
-    marginLeft: LOGINFORM_MARGIN,
-    marginRight: LOGINFORM_MARGIN,
+    marginLeft: MARGIN,
+    marginRight: MARGIN,
     marginBottom: 5,
   }
 };

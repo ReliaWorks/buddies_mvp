@@ -50,12 +50,10 @@
 		4F49AC29FAC04D7A8EEEA0B9 /* SanFranciscoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D029D7702F54FB993CF1ABD /* SanFranciscoBold.ttf */; };
 		54E0DA68467C4969818E0F3B /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EBC798EA36BE41568440E551 /* EvilIcons.ttf */; };
 		58DD24D41F1E4A76B724891F /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A3EC8F46A4340C294DD6797 /* Rubik-Regular.ttf */; };
+		5A36D2691EC364C200A30A2B /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6F6E7EE1EBEA26A004E7F93 /* SourceSansPro-Semibold.ttf */; };
+		5A36D26A1EC364C200A30A2B /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6F6E79A1EBE88AD004E7F93 /* SourceSansPro-Bold.ttf */; };
+		5A36D26B1EC364C300A30A2B /* SourceSansPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2A6376FC2164E5D8FFF5ADD /* SourceSansPro-Light.ttf */; };
 		5A76F5F11EB8F57700C04A07 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A76F5D51EB8F52F00C04A07 /* libRCTCameraRoll.a */; };
-		5A7787C61EBE7A1E002438DF /* ImageCropPickerSDK in Resources */ = {isa = PBXBuildFile; fileRef = 5A7787C51EBE7A1E002438DF /* ImageCropPickerSDK */; };
-		5A7787C81EBE7AB1002438DF /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A7787C71EBE7AB1002438DF /* RSKImageCropper.framework */; };
-		5A7787C91EBE7AB1002438DF /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5A7787C71EBE7AB1002438DF /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5A7787CC1EBE7ABE002438DF /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A7787CB1EBE7ABE002438DF /* QBImagePicker.framework */; };
-		5A7787CD1EBE7ABE002438DF /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5A7787CB1EBE7ABE002438DF /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5A7788101EBE94CE002438DF /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5C40563C39CC4D3E9288D98C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1F8452B6E1E4AFE97CF3E2F /* Octicons.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
@@ -63,6 +61,7 @@
 		6131FAC79F5546D0A7434252 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77A7CC84F56B48888C005E96 /* Foundation.ttf */; };
 		632CE3CDD92644829C5C3FC3 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D8C3B56478C45D9831C47D7 /* MaterialCommunityIcons.ttf */; };
 		68340E2E08FE46278BACC5BE /* Andale Mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C771D8C668442C29FE8BD66 /* Andale Mono.ttf */; };
+		689C628C42CE459A9F0561CD /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 091FC796CD734C718D019EF9 /* icomoon.ttf */; };
 		6B0FD75A8E7E47EBBC8E19A0 /* Rubik-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1699F24FE86B4BC5B73DF03F /* Rubik-Light.ttf */; };
 		74E2909CDF73476FB3D78647 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5545E9248E6B4C3387123929 /* libimageCropPicker.a */; };
 		778055C0FD8749CA953EFF12 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DEDED7AAE2844A2594B7B104 /* Entypo.ttf */; };
@@ -96,6 +95,12 @@
 		B6C504C91E4E6ED900BA91B1 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6C504C31E4E683300BA91B1 /* FBSDKShareKit.framework */; };
 		B6C504CA1E4E6EDC00BA91B1 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6C504BD1E4E680400BA91B1 /* Bolts.framework */; };
 		B6C504CB1E4E6EE300BA91B1 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F7D7631E4D70AE00C7F3A2 /* libRCTFBSDK.a */; };
+		B6D7BDF11EC270FF0066E9B9 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6D7BDEF1EC270FF0066E9B9 /* QBImagePicker.framework */; };
+		B6D7BDF21EC270FF0066E9B9 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6D7BDF01EC270FF0066E9B9 /* RSKImageCropper.framework */; };
+		B6D7BDF41EC2711B0066E9B9 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6D7BDF31EC2711B0066E9B9 /* RSKImageCropper.framework */; };
+		B6D7BDF51EC2711B0066E9B9 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6D7BDF31EC2711B0066E9B9 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B6D7BDF71EC2711C0066E9B9 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6D7BDF61EC2711B0066E9B9 /* QBImagePicker.framework */; };
+		B6D7BDF81EC2711C0066E9B9 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6D7BDF61EC2711B0066E9B9 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B6F6E79B1EBE88AD004E7F93 /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6F6E79A1EBE88AD004E7F93 /* SourceSansPro-Bold.ttf */; };
 		B6F6E7EF1EBEA26A004E7F93 /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6F6E7EE1EBEA26A004E7F93 /* SourceSansPro-Semibold.ttf */; };
 		B8ED810F0CFC4A4DA8F6898D /* Rubik-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0FA62AC8A3D64350BF3563E4 /* Rubik-Black.ttf */; };
@@ -104,7 +109,6 @@
 		C02798793FE14D0FBC971311 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8DAA66FA0684AF4934AA607 /* Foundation.ttf */; };
 		C6D5B9D6996C479EA1C37B18 /* Comic Sans MS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61C787DB99234100B70EC720 /* Comic Sans MS.ttf */; };
 		CA1AEECBA67C4FEE9F78352C /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED1DBCC713AA42E893E4A8F4 /* fontello.ttf */; };
-		D3447E18726A415793D20426 /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44CD666342C24C549AEA0D1C /* SourceSansPro-Bold.ttf */; };
 		DA04C2761D754F44B580A952 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE4C9F9332244D1991FBB0E2 /* Octicons.ttf */; };
 		DC0478AC34904801ACAEBB81 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4FAADA44795407AA81F52F7 /* SimpleLineIcons.ttf */; };
 		E293890CD42949DEA2E1C5C4 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEACB1B56AE94221BB37B22E /* MaterialIcons.ttf */; };
@@ -373,14 +377,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		5A7787CA1EBE7AB2002438DF /* Embed Frameworks */ = {
+		B6D7BDF91EC2711C0066E9B9 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5A7787C91EBE7AB1002438DF /* RSKImageCropper.framework in Embed Frameworks */,
-				5A7787CD1EBE7ABE002438DF /* QBImagePicker.framework in Embed Frameworks */,
+				B6D7BDF51EC2711B0066E9B9 /* RSKImageCropper.framework in Embed Frameworks */,
+				B6D7BDF81EC2711C0066E9B9 /* QBImagePicker.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,6 +402,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* buddies_v3Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = buddies_v3Tests.m; sourceTree = "<group>"; };
 		02F1A13927DB41818FAB0179 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		091FC796CD734C718D019EF9 /* icomoon.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = icomoon.ttf; path = "../src/assets/icons/icomoon-app-icons/fonts/icomoon.ttf"; sourceTree = "<group>"; };
 		0FA62AC8A3D64350BF3563E4 /* Rubik-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Black.ttf"; path = "../node_modules/native-base/Fonts/Rubik-Black.ttf"; sourceTree = "<group>"; };
 		10E8B14B396D4359BBB4EBD4 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -436,9 +441,6 @@
 		5545E9248E6B4C3387123929 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
 		5A2FD6301AD2488C9728D0B0 /* fontello.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = fontello.ttf; path = "../src/assets/icons/fontello-4/font/fontello.ttf"; sourceTree = "<group>"; };
 		5A76F5CD1EB8F52F00C04A07 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
-		5A7787C51EBE7A1E002438DF /* ImageCropPickerSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ImageCropPickerSDK; sourceTree = "<group>"; };
-		5A7787C71EBE7AB1002438DF /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A7787CB1EBE7ABE002438DF /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		600FBD0D3D2B40C5A6A808C2 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		61C787DB99234100B70EC720 /* Comic Sans MS.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Comic Sans MS.ttf"; path = "../node_modules/native-base/Fonts/Comic Sans MS.ttf"; sourceTree = "<group>"; };
@@ -477,6 +479,10 @@
 		B6C504BF1E4E681200BA91B1 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		B6C504C11E4E682400BA91B1 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		B6C504C31E4E683300BA91B1 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		B6D7BDEF1EC270FF0066E9B9 /* QBImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = "<group>"; };
+		B6D7BDF01EC270FF0066E9B9 /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = "<group>"; };
+		B6D7BDF31EC2711B0066E9B9 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6D7BDF61EC2711B0066E9B9 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6F6E79A1EBE88AD004E7F93 /* SourceSansPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-Bold.ttf"; path = "../src/assets/fonts/SourceSansPro-Bold.ttf"; sourceTree = "<group>"; };
 		B6F6E7EE1EBEA26A004E7F93 /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-Semibold.ttf"; path = "../src/assets/fonts/SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
 		BA8090D6B7924BC991A1CE0D /* SourceSansPro-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SourceSansPro-Italic.ttf"; path = "../src/assets/fonts/SourceSansPro-Italic.ttf"; sourceTree = "<group>"; };
@@ -530,8 +536,10 @@
 				B6C504C81E4E6ED700BA91B1 /* FBSDKLoginKit.framework in Frameworks */,
 				B6C504C91E4E6ED900BA91B1 /* FBSDKShareKit.framework in Frameworks */,
 				B6C504CA1E4E6EDC00BA91B1 /* Bolts.framework in Frameworks */,
+				B6D7BDF21EC270FF0066E9B9 /* RSKImageCropper.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
+				B6D7BDF41EC2711B0066E9B9 /* RSKImageCropper.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
@@ -543,12 +551,12 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				FA1294685C33482591A7EF6C /* libRNVectorIcons.a in Frameworks */,
 				84F88D6643D94024BECD2B71 /* libRNRandomBytes.a in Frameworks */,
-				5A7787C81EBE7AB1002438DF /* RSKImageCropper.framework in Frameworks */,
-				5A7787CC1EBE7ABE002438DF /* QBImagePicker.framework in Frameworks */,
 				F3693EB8354D49A09FCC689F /* libRNImagePicker.a in Frameworks */,
 				EF5A33ECD57D4BA4B03DE4B9 /* libRNFetchBlob.a in Frameworks */,
 				1338FC298EB04DB6958FB793 /* libRCTImageResizer.a in Frameworks */,
 				74E2909CDF73476FB3D78647 /* libimageCropPicker.a in Frameworks */,
+				B6D7BDF11EC270FF0066E9B9 /* QBImagePicker.framework in Frameworks */,
+				B6D7BDF71EC2711C0066E9B9 /* QBImagePicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,6 +665,7 @@
 		13AE508B22414452A53B19EA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B6D7BDEE1EC270FF0066E9B9 /* ImageCropPickerSDK */,
 				B6F6E7EE1EBEA26A004E7F93 /* SourceSansPro-Semibold.ttf */,
 				B6F6E79A1EBE88AD004E7F93 /* SourceSansPro-Bold.ttf */,
 				B6B0DDCA1EA8853700AA2E2E /* Entypo.ttf */,
@@ -731,6 +740,7 @@
 				ED1DBCC713AA42E893E4A8F4 /* fontello.ttf */,
 				2853ED16ACFE4107B72A145E /* SimpleLineIcons.ttf */,
 				44CD666342C24C549AEA0D1C /* SourceSansPro-Bold.ttf */,
+				091FC796CD734C718D019EF9 /* icomoon.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -854,9 +864,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				5A7787CB1EBE7ABE002438DF /* QBImagePicker.framework */,
-				5A7787C71EBE7AB1002438DF /* RSKImageCropper.framework */,
-				5A7787C51EBE7A1E002438DF /* ImageCropPickerSDK */,
+				B6D7BDF61EC2711B0066E9B9 /* QBImagePicker.framework */,
+				B6D7BDF31EC2711B0066E9B9 /* RSKImageCropper.framework */,
 				B60DBB041E4D23590016B42E /* Frameworks */,
 				13B07FAE1A68108700A75B9A /* buddies_v3 */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -923,6 +932,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B6D7BDEE1EC270FF0066E9B9 /* ImageCropPickerSDK */ = {
+			isa = PBXGroup;
+			children = (
+				B6D7BDEF1EC270FF0066E9B9 /* QBImagePicker.framework */,
+				B6D7BDF01EC270FF0066E9B9 /* RSKImageCropper.framework */,
+			);
+			path = ImageCropPickerSDK;
+			sourceTree = "<group>";
+		};
 		B6F7D75C1E4D70AE00C7F3A2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -960,7 +978,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				5A7787CA1EBE7AB2002438DF /* Embed Frameworks */,
+				B6D7BDF91EC2711C0066E9B9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1397,13 +1415,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A36D2691EC364C200A30A2B /* SourceSansPro-Semibold.ttf in Resources */,
+				5A36D26A1EC364C200A30A2B /* SourceSansPro-Bold.ttf in Resources */,
+				5A36D26B1EC364C300A30A2B /* SourceSansPro-Light.ttf in Resources */,
 				5A7788101EBE94CE002438DF /* (null) in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				B6B0DDD51EA8853700AA2E2E /* Foundation.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				68340E2E08FE46278BACC5BE /* Andale Mono.ttf in Resources */,
 				7BAA259F0FE848598F132508 /* Arial Black.ttf in Resources */,
-				5A7787C61EBE7A1E002438DF /* ImageCropPickerSDK in Resources */,
 				82AEB05B9C564B869B7DB83D /* Arial.ttf in Resources */,
 				C6D5B9D6996C479EA1C37B18 /* Comic Sans MS.ttf in Resources */,
 				BC387914502C412DA19F2D5F /* Courier New.ttf in Resources */,
@@ -1440,12 +1460,10 @@
 				E4F57A4EC5DF463BBB513116 /* SF-UI-Text-Regular.otf in Resources */,
 				88E060B9B54A4F5B9BA337DC /* Skia.ttf in Resources */,
 				8F84F434360F44B79F3E79D3 /* Times New Roman.ttf in Resources */,
-				B6F6E7EF1EBEA26A004E7F93 /* SourceSansPro-Semibold.ttf in Resources */,
 				B6B0DDD61EA8853700AA2E2E /* Ionicons.ttf in Resources */,
 				44310DCD58764F16A2A74306 /* Zocial.ttf in Resources */,
 				B6B0DDD31EA8853700AA2E2E /* Entypo.ttf in Resources */,
 				778055C0FD8749CA953EFF12 /* Entypo.ttf in Resources */,
-				B6F6E79B1EBE88AD004E7F93 /* SourceSansPro-Bold.ttf in Resources */,
 				54E0DA68467C4969818E0F3B /* EvilIcons.ttf in Resources */,
 				A614097AEA474C76A48E5584 /* FontAwesome.ttf in Resources */,
 				6131FAC79F5546D0A7434252 /* Foundation.ttf in Resources */,
@@ -1462,7 +1480,7 @@
 				F52478753DEE439F81E56762 /* SimpleLineIcons.ttf in Resources */,
 				CA1AEECBA67C4FEE9F78352C /* fontello.ttf in Resources */,
 				93DEB9B284794CA4B9CDC8C2 /* SimpleLineIcons.ttf in Resources */,
-				D3447E18726A415793D20426 /* SourceSansPro-Bold.ttf in Resources */,
+				689C628C42CE459A9F0561CD /* icomoon.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1657,7 +1675,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = YHT6SM4AXZ;
-				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDK/**";
+				FRAMEWORK_SEARCH_PATHS = (
+					"~/Documents/FacebookSDK/**",
+					"$(PROJECT_DIR)/ImageCropPickerSDK",
+				);
 				INFOPLIST_FILE = buddies_v3/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1685,7 +1706,10 @@
 				CODE_SIGN_ENTITLEMENTS = buddies_v3/buddies_v3.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YHT6SM4AXZ;
-				FRAMEWORK_SEARCH_PATHS = "~/Documents/FacebookSDK/**";
+				FRAMEWORK_SEARCH_PATHS = (
+					"~/Documents/FacebookSDK/**",
+					"$(PROJECT_DIR)/ImageCropPickerSDK",
+				);
 				INFOPLIST_FILE = buddies_v3/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (

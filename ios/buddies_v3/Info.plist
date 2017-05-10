@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>60</string>
+	<string>62</string>
 	<key>FacebookAppID</key>
 	<string>575314036007191</string>
 	<key>FacebookDisplayName</key>
@@ -63,7 +63,9 @@
 	<string>Use photos to pre-populate user profile</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SourceSansPro-Light.ttf</string>
 		<string>SourceSansPro-Bold.ttf</string>
+		<string>SourceSansPro-Semibold.ttf</string>
 		<string>Andale Mono.ttf</string>
 		<string>Arial Black.ttf</string>
 		<string>Arial.ttf</string>
@@ -113,7 +115,7 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>fontello.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
-		<string>SourceSansPro-Bold.ttf</string>
+		<string>icomoon.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

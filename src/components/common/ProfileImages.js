@@ -7,6 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import { PictureModal } from './PictureModal';
 import { textStyle, buttonStyle } from './styles';
 import { ICON_SIZE, DEFAULT_PROFILE_PHOTO } from '../../constants';
+import CustomIcon from '../../assets/icons';
 
 const { height, width } = Dimensions.get('window');
 const MAX_NUM_PHOTOS = 7;
@@ -53,11 +54,11 @@ class ProfileImages extends Component {
         }}
       >
         <TouchableOpacity onPress={() => Actions.photoEdit()} style={buttonStyle}>
-          <Icon
-            name="edit"
+          <CustomIcon
+            name="edit_icon"
             size={ICON_SIZE}
             color="white"
-            style={{padding: 4}}
+            style={{ padding: 4 }}
           />
         </TouchableOpacity>
       </View>

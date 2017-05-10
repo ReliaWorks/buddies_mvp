@@ -76,6 +76,7 @@ export default class AddPhotosModal extends Component {
       <View style={styles.cameraRollContainer}>
         <Text style={styles.selectedImagesInfo}>{this.state.images.length} images selected</Text>
         <CameraRollPicker
+          initialListSize={1}
           selected={this.state.images}
           callback={(images, current) => this.setState({images: images})} />
       </View>
@@ -227,7 +228,6 @@ const styles = StyleSheet.create({
   },
   selectedImagesInfo: {
     fontFamily: 'SourceSansPro-Bold',
-    fontWeight: 'bold',
     textAlign: 'center',
     backgroundColor: 'antiquewhite',
     padding: 5,
