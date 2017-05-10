@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { Button } from '../../components/common';
 
+const { width, height } = Dimensions.get('window');
 const CONNECTION_HEADER_TEXT = "You're connected!";
 
 class Connection extends Component {
@@ -18,7 +19,15 @@ class Connection extends Component {
     return(
       <View style={styles.imageView}>
         <Image source={{ uri: currentUserPic }} style={styles.image} />
-        <Image source={{ uri: otherUserPic }} style={styles.image} />
+        <Image source={{ uri: otherUserPic }}
+          style={{
+            height: 140,
+            width: 140,
+            borderRadius: 70,
+            marginLeft: -20,
+            zIndex: 1,
+          }}
+        />
       </View>
     );
   }
@@ -46,12 +55,13 @@ const styles = StyleSheet.create({
   headerView: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 0.4,
+    flex: 0.2,
   },
   imageView: {
-    flex: 0.4,
+    flex: 0.45,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    marginTop: height * 0.1,
   },
   buttonsView: {
     flex: 0.2,
@@ -65,7 +75,8 @@ const styles = StyleSheet.create({
   image: {
     height: 140,
     width: 140,
-    borderRadius: 20
+    borderRadius: 70,
+    zIndex: 2,
   }
 });
 
