@@ -42,7 +42,7 @@ class MessageCenter extends Component {
 
   renderConversations(firstName) {
     if(this.props.matchesWithChatDataSource.getRowCount() === 0)
-      return this.renderZeroState(`Hey ${firstName},\n\n${ZERO_CONVOS}`);      
+      return this.renderZeroState(`Hey ${firstName},\n\n${ZERO_CONVOS}`);
     return (
       <View style={{flex: 1}}>
           <ListView
@@ -59,7 +59,7 @@ class MessageCenter extends Component {
   renderNewConnections() {
     if(this.props.matchesWithoutChatDataSource.getRowCount() === 0)
       return null;
-
+console.log('this.props.matchesWithoutChatDataSource',this.props.matchesWithoutChatDataSource);
     return (
       <View style={{flex: 0.30, marginTop: MARGIN, marginLeft: MARGIN }}>
         <Text style={styles.headerText}>New Connections</Text>

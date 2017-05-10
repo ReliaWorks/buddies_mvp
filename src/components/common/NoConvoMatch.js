@@ -5,7 +5,20 @@ import { connect } from 'react-redux';
 import { selectChat } from '../../actions';
 
 class NoConvoMatch extends Component {
+
+  renderUnseenMark(seen) {
+    if (seen)
+      return null;
+    else
+      return (
+        <View style={styles.newMessage} />
+      );
+  }
+
   render() {
+    const itemSeen = false;
+    console.log('props',this.props);
+
     return (
       <TouchableOpacity
         onPress={() => {
@@ -14,6 +27,7 @@ class NoConvoMatch extends Component {
         }}
       >
         <View>
+          {this.renderUnseenMark(itemSeen)}
           <Image
             style={styles.noConvoThumbnailStyle}
             source={{ uri: this.props.otherUserPic }}
@@ -31,6 +45,18 @@ const styles = {
     borderRadius: 35,
     marginLeft: 7,
     marginRight: 7,
+  },
+  newMessage: {
+    position: 'absolute',
+    width: 10,
+    height: 10,
+    borderRadius: 100 / 2,
+    backgroundColor: '#FF4F7D',
+    top: 30,
+    left: 0,
+    zIndex: 99,
+    borderWidth: 1,
+    borderColor: 'white',
   },
 };
 

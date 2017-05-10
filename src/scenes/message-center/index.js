@@ -7,7 +7,7 @@ import { Spinner } from '../../components/common';
 
 class MessageCenterContainer extends Component {
   componentWillMount() {
-    this.props.matchesFetch();    
+    this.props.matchesFetch();
     this.createDataSource(this.props);
   }
 
@@ -20,6 +20,7 @@ class MessageCenterContainer extends Component {
     this.matchesWithChatDataSource = matchesWithChatDS.cloneWithRows({ ...sortedMatches });
     const matchesWithoutChatDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.matchesWithoutChatDataSource = matchesWithoutChatDS.cloneWithRows({ ...matchesWithoutChat });
+    console.log('MMMMMatchesWithoutChatDataSource',matchesWithoutChat);
   }
 
   render() {
