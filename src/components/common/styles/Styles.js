@@ -1,7 +1,3 @@
-//import { Dimensions } from 'react-native';
-
-const BRAND_PRIMARY_COLOR = 'white';
-
 export const MARGIN = 15;
 
 export const iconStyle = {

@@ -23,7 +23,7 @@ export const updateConversationStatus = (uid, otherUserId, lastMsg) => {
               if (messages) {
                 const keys = Object.keys(messages);
                 const lastKey = keys[keys.length - 1];
-                db.ref(`/conversations/${conversationId}/${lastKey}/seen`).set(true);
+                //db.ref(`/conversations/${conversationId}/${lastKey}/seen`).set(true);
                 dispatch({
                   type: CONVERSATION_SEEN,
                   payload: {}
