@@ -1,26 +1,36 @@
-import React, {Component} from 'react';
-import { createIconSetFromFontello } from 'react-native-vector-icons';
-import fontelloConfig from './fontello-app-icons/config.json';
+import React, { Component } from 'react';
+import { Image, View } from 'react-native'
+// import { createIconSetFromFontello } from 'react-native-vector-icons';
+// import fontelloConfig from './fontello-app-icons/config.json';
+
+import { createIconSetFromIcoMoon } from 'react-native-vector-icons';
+import icoMoonConfig from './icomoon-app-icons/selection.json';
+
+const IcoMoonIcon = createIconSetFromIcoMoon(icoMoonConfig);
 
 export default class CustomIcon extends Component {
 
   render() {
     const {name} = this.props
-    let config;
 
-    const FontelloIcon = createIconSetFromFontello(fontelloConfig);
-    return <FontelloIcon {...this.props} />
+    if (name === 'camera_icon') {
+      //convert size to width/height for png's
+      let styles = [this.props.style]
+      if (this.props.size) {
+        styles = [{ width: this.props.size, height: this.props.size }, ...styles];
+      }
+      return (
+        <Image style={styles}
+          source={require('./png-app-icons/camera_icon.png')}
+          resizeMode='contain'/>
+        )
+    }
 
-    // if ( ['profile_icon', 'message_icon', 'home_icon', 'camera_icon', 'edit_icon'].indexOf(name) > -1) {
-    //   const FontelloIcon = createIconSetFromFontello(fontelloConfig1);
-    //   return <FontelloIcon {...this.props} />
-    // } else if (['add_icon', 'notification', 'delete_icon', 'add_circle_icon'].indexOf(name) > -1){
-    //   console.log('else iffff');
-    //
-    // } else {
-    //   throw new Error('there is no Custom Icon with name:' + name);
-    //   return null
-    // }
+    return <IcoMoonIcon name={name} {...this.props} />
 
+
+
+    // const FontelloIcon = createIconSetFromFontello(fontelloConfig);
+    // return <FontelloIcon {...this.props} />
   }
 }

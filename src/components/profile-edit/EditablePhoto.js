@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { TRASH_ICON } from '../../scenes/profile-setup/strings';
+import CustomIcon from '../../assets/icons';
 
 class EditablePhoto extends Component {
   onRemove() {
@@ -15,10 +16,14 @@ class EditablePhoto extends Component {
         >
         <View style={styles.removeIconContainer}>
           <TouchableOpacity onPress={this.onRemove.bind(this)}>
-            <Image
+
+            <CustomIcon name='add_circle_icon' size={20}
+              style={{backgroundColor:'transparent', color: 'black', transform: [{ rotate: '45deg'}] }} />
+            
+            {/*<Image
               style={styles.iconStyle}
               source={TRASH_ICON}
-            />
+            />*/}
           </TouchableOpacity>
         </View>
         </Image>
@@ -29,7 +34,7 @@ class EditablePhoto extends Component {
 
 const styles = {
   removeIconContainer: {
-    backgroundColor: 'white',
+    //backgroundColor: 'white',
     alignSelf: 'flex-end',
     marginRight: 2,
     marginBottom: 2,
