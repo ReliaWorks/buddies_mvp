@@ -30,12 +30,10 @@ class ConversationListItem extends Component {
   }
   render() {
     const msgContainer = this.props.matchSet.lastMsgs[this.props.otherUserId];
-    console.log('msgContainer.senderId', msgContainer.senderId);
 
     let msg = '';
     let createdAt = '';
     const itemSeen = msgContainer.senderId != this.props.otherUserId || msgContainer.seen;
-    console.log('itemSeen',itemSeen);
     if(!msgContainer) msg = "Start chatting";
     else {
       msg = msgContainer.text;
@@ -100,7 +98,7 @@ const styles = {
     fontFamily: 'Source Sans Pro',
     fontSize: 12,
     color: '#707070',
-    marginTop: MARGIN,
+    marginTop: MARGIN / 2,
     paddingRight: MARGIN,
   },
   msgText: {
