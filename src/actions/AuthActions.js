@@ -17,6 +17,7 @@ import {
   PROFILE_INFO,
   PICTURE_SAVED,
 } from './types';
+import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 
 export const checkIfAlreadyLoggedIn = () => {
   return(dispatch) => {
@@ -26,6 +27,18 @@ export const checkIfAlreadyLoggedIn = () => {
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
         console.log(`User ${user.uid} is logged in.`);
+
+        FCM.requestPermissions(); // for iOS
+        FCM.getFCMToken().then(token => {
+          console.log('notificationToken:', token)
+
+          const updates = {};
+          updates['/user_profiles/' + user.uid + '/notificationToken'] = token;
+
+          firebase.database().ref().update(updates);
+        });
+
+
         dispatch({
           type: ALREADY_AUTHENTICATED,
           payload: {
