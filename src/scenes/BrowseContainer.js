@@ -5,13 +5,8 @@ import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import Animation from 'lottie-react-native';
 import BuddyCard from '../components/buddycard/BuddyCard';
-<<<<<<< HEAD
 import { currentUserFetch, connectWithUser, potentialsFetch, checkNotifications } from '../actions';
-import { Deck, NoMoreCards, Spinner } from '../components/common';
-=======
-import { currentUserFetch, connectWithUser, potentialsFetch } from '../actions';
 import { Deck, NoMoreCards, Spinner, TypingDots } from '../components/common';
->>>>>>> origin/qa
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
 //const anim = require('../assets/animations/glow_loading.json');
