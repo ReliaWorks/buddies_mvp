@@ -3,11 +3,10 @@ import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import MessageCenter from './MessageCenter';
 import { matchesFetch, fetchLastMessages } from '../../actions';
-import { Spinner } from '../../components/common';
 
 class MessageCenterContainer extends Component {
   componentWillMount() {
-    this.props.matchesFetch();    
+    this.props.matchesFetch();
     this.createDataSource(this.props);
   }
 

@@ -1,16 +1,12 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Animated, Dimensions, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
-import Animation from 'lottie-react-native';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser, potentialsFetch } from '../actions';
-import { Deck, NoMoreCards, Spinner } from '../components/common';
+import { Deck, NoMoreCards, Spinner, TypingDots } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
-
-//import anim from '../assets/animations/soda_loader.json';
-const anim = require('../assets/animations/typingdot/data.json');
 
 class BrowseContainer extends Component {
   swiper:Object;
@@ -115,22 +111,11 @@ class BrowseContainer extends Component {
     );
   }
 //
+  animationRef(animation) { this.animation = animation; }
+
   render() {
     if(this.props.connection.loadingPotentials)
-      return (
-        <View style={styles.container}>
-          <Animation
-            ref={animation => { this.animation = animation; }}
-            style={{
-              width: 350,
-              height: 200,
-              marginBottom: 250
-            }}
-            loop
-            source={anim}
-          />
-      </View>
-      );
+      return <TypingDots animationRef={this.animationRef} />;
     else return this.renderMatches();
 /*      return (
         <Deck
@@ -173,17 +158,6 @@ const styles = {
     flex: 1,
     elevation: 1,
   },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    color: '#ffffff'
-  }
 };
 
 const mapStateToProps = ({ currentUser, connection }) => {
