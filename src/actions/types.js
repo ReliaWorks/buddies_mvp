@@ -34,6 +34,7 @@ export const MESSAGE_SENT = 'message_sent';
 export const CONNECT_WITH_USER = 'connect_with_user';
 export const CONNECTION_SUCCESSFUL = 'connection_successful';
 export const KEEP_BROWSING = 'keep_browsing';
+export const SET_NEW_NOTIFICATION = 'set_new_notification';
 
 export const POTENTIALS_FETCH = 'potentials_fetch';
 export const POTENTIALS_FETCH_SUCCESS = 'potentials_fetch_success';

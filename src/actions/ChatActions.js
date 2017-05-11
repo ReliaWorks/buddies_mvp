@@ -25,6 +25,7 @@ export const fetchConversation = (otherUserId) => {
             //Updates notifications
             firebase.database().ref(`/notifications/conversations/${conversationId}/seen/${currentUser.uid}`).set(true);
             firebase.database().ref(`/user_matches/${currentUser.uid}/${otherUserId}/seen/`).set(true);
+            firebase.database().ref(`/notifications/new/${currentUser.uid}`).set(false);
           });
       } else {
         //Conversation doesn't exist and create one
@@ -77,6 +78,7 @@ export const saveMessage = (msg, currentUser, otherUser, chatId, messages) => {
             payload: { msg, otherUserId: otherUser.selectedMatchId, messages }
           });
           firebase.database().ref(`/notifications/conversations/${chatId}/seen/${otherUser.selectedMatchId}`).set(false);
+          firebase.database().ref(`/notifications/new/${otherUser.selectedMatchId}`).set(true);
         });
     }
   };
