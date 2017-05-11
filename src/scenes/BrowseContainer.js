@@ -3,15 +3,12 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
-import Animation from 'lottie-react-native';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser, potentialsFetch, checkNotifications } from '../actions';
 import { Deck, NoMoreCards, Spinner, TypingDots } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
 //const anim = require('../assets/animations/glow_loading.json');
-
-const anim = require('../assets/animations/typingdots/data.json');
 
 class BrowseContainer extends Component {
   swiper:Object;

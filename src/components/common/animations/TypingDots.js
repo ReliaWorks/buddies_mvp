@@ -4,16 +4,12 @@ import Animation from 'lottie-react-native';
 
 const anim = require('../../../assets/animations/typingdots/data.json');
 
-const TypingDots = ({ animationRef }) => {
+const TypingDots = ({ animationRef, styles = localStyles }) => {
   return (
     <View style={styles.container}>
       <Animation
         ref={animation => { animationRef(animation); }}
-        style={{
-          width: 350,
-          height: 200,
-          marginBottom: 200,
-        }}
+        style={styles.dots}
         loop
         source={anim}
       />
@@ -21,12 +17,17 @@ const TypingDots = ({ animationRef }) => {
   );
 };
 
-const styles = {
+const localStyles = {
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 200,
   },
+  dots: {
+    width: 350,
+    height: 200,
+  }
 };
 
 
