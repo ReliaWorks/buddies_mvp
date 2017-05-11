@@ -10,3 +10,6 @@ export const INACTIVE = 0;
 export const NEXT_BUTTON_CONTAINER_HEIGHT = 60;
 export const PROGRESS_BAR_HEIGHT = 4;
 export const DESC_HEADER_HEIGHT = 78;
+
+export const ACTIVITY_SETUP_SCENE_TITLE = 'What sounds fun to you?';
+export const AFFILIATION_SETUP_SCENE_TITLE = 'Which clubs interest you?';

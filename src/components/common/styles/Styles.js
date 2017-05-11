@@ -1,4 +1,8 @@
+import { Dimensions } from 'react-native';
+
 export const MARGIN = 15;
+
+const { width, height } = Dimensions.get('window');
 
 export const iconStyle = {
   width: 20,
@@ -6,9 +10,9 @@ export const iconStyle = {
 };
 
 export const buttonStyle = {
-    borderRadius: 5,
-    marginLeft: 5,
-    marginRight: 5
+  borderRadius: 5,
+  marginLeft: 5,
+  marginRight: 5
 };
 
 export const containerStyle = {
@@ -46,9 +50,9 @@ export const legalTextStyle = {
 };
 
 export const navTitleStyle = {
-  fontFamily: 'Source Sans Pro',
+  fontFamily: 'SourceSansPro-SemiBold',
   fontSize: 18,
-  fontWeight: 'bold',
+  width: width - 50,
 };
 
 export const navBarStyle = {
@@ -80,6 +84,6 @@ export const navBackNextStyle = {
   color: "black",
   fontSize: 15,
   marginTop: 8,
-  marginLeft: 4,
+//  marginLeft: 4,
   marginRight: 5,
 };
