@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Animated, Dimensions, Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import Animation from 'lottie-react-native';
@@ -9,7 +9,8 @@ import { currentUserFetch, connectWithUser, potentialsFetch } from '../actions';
 import { Deck, NoMoreCards, Spinner } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
-import anim from '../assets/animations/soda_loader.json';
+//import anim from '../assets/animations/soda_loader.json';
+const anim = require('../assets/animations/typingdot/data.json');
 
 class BrowseContainer extends Component {
   swiper:Object;
@@ -35,8 +36,7 @@ class BrowseContainer extends Component {
   }
 */
   componentDidMount() {
-//    debugger;
-//    this.animation.play();
+    if(this.animation) this.animation.play();
   }
 
   _onMomentumScrollEnd(e, state, context) {
@@ -120,12 +120,11 @@ class BrowseContainer extends Component {
       return (
         <View style={styles.container}>
           <Animation
-            ref={animation => {
-              this.animation = animation;
-            }}
+            ref={animation => { this.animation = animation; }}
             style={{
-              width: 80,
-              height: 80
+              width: 350,
+              height: 200,
+              marginBottom: 250
             }}
             loop
             source={anim}
@@ -172,13 +171,12 @@ class BrowseContainer extends Component {
 const styles = {
   cardStyle: {
     flex: 1,
-    elevation: 1
+    elevation: 1,
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#A6207E'
   },
   welcome: {
     fontSize: 20,
