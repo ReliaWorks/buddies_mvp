@@ -101,9 +101,9 @@ class ProfileImages extends Component {
             <View
               style={{
                 backgroundColor: 'white',
-                width: 10,
-                height: 10,
-                borderRadius: 5,
+                width: 8,
+                height: 8,
+                borderRadius: 4,
                 marginTop: 3,
                 marginBottom: 3}}
             />
@@ -112,17 +112,15 @@ class ProfileImages extends Component {
             <View
             style={{
               backgroundColor: '#FF4F7D',
-              width: 10,
-              height: 10,
-              borderRadius: 5,
+              width: 8,
+              height: 8,
+              borderRadius: 4,
               marginTop: 3,
               marginBottom: 3}}
             />
           }
           paginationStyle={{
             bottom: height - 150,
-            paddingLeft: 7,
-            paddingRight: 7,
           }}
         >
           { pics.map((pic) => {

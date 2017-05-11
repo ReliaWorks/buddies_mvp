@@ -29,7 +29,7 @@ class ActivitySet extends Component {
 
 const styles = {
   list: {
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: 'white',

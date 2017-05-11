@@ -21,11 +21,8 @@ import Splash from './scenes/Splash';
 import { navBarStyle, navTitleStyle, navBackNextStyle } from './components/common/styles';
 import { homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
-const MSG_CENTER_IMG = require('./assets/img/MsgCenter.png');
-
-const MSG_CENTER_URL = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fapp_icons%2Fmessage%20icon.png?alt=media&token=afa34c63-4288-4f9f-a4d1-090acc830b20';
-
-const { height, width } = Dimensions.get('window');
+//const MSG_CENTER_IMG = require('./assets/img/MsgCenter.png');
+//const MSG_CENTER_URL = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fapp_icons%2Fmessage%20icon.png?alt=media&token=afa34c63-4288-4f9f-a4d1-090acc830b20';
 
 class Routes extends Component {
   render() {
@@ -115,12 +112,13 @@ class Routes extends Component {
             key="matches"
             component={MessageCenterContainer}
             leftButton={homeLeftIconButton}
-            navigationBarBackgroundImage={{
+/*            navigationBarBackgroundImage={{
               uri: MSG_CENTER_URL,
               width: width,
               height: 60,
             }}
 //            title="Chat"
+*/
             navigationBarStyle={{
               borderBottomWidth: 3,
               borderBottomColor: 'black',

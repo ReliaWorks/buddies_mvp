@@ -3,10 +3,20 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
+import Animation from 'lottie-react-native';
 import BuddyCard from '../components/buddycard/BuddyCard';
+<<<<<<< HEAD
 import { currentUserFetch, connectWithUser, potentialsFetch, checkNotifications } from '../actions';
 import { Deck, NoMoreCards, Spinner } from '../components/common';
+=======
+import { currentUserFetch, connectWithUser, potentialsFetch } from '../actions';
+import { Deck, NoMoreCards, Spinner, TypingDots } from '../components/common';
+>>>>>>> origin/qa
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
+
+//const anim = require('../assets/animations/glow_loading.json');
+
+const anim = require('../assets/animations/typingdots/data.json');
 
 class BrowseContainer extends Component {
   swiper:Object;
@@ -32,7 +42,10 @@ class BrowseContainer extends Component {
     }
   }
 */
-
+/*  componentDidMount() {
+    if(this.animation) this.animation.play();
+  }
+*/
   _onMomentumScrollEnd(e, state, context) {
     this.setState({currentIndex: this.state.currentIndex + 1});
   }
@@ -109,8 +122,15 @@ class BrowseContainer extends Component {
     );
   }
 //
+  animationRef(animation) {
+    this.animation = animation;
+    if(this.animation)
+      this.animation.play();
+  }
+
   render() {
-    if(this.props.connection.loadingPotentials) return <Spinner size="large" />;
+    if(this.props.connection.loadingPotentials)
+      return <TypingDots animationRef={this.animationRef} />;
     else return this.renderMatches();
 /*      return (
         <Deck
@@ -151,7 +171,6 @@ class BrowseContainer extends Component {
 const styles = {
   cardStyle: {
     flex: 1,
-    elevation: 1
   },
 };
 

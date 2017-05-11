@@ -14,4 +14,5 @@ export * from './ProfileImages';
 export * from './SelectableTile';
 export * from './Spinner';
 export * from './Tile';
+export * from './animations/TypingDots';
 //export * from './NoConvoMatch';
