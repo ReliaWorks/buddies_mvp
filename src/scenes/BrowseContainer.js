@@ -4,8 +4,8 @@ import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
-import { currentUserFetch, connectWithUser, potentialsFetch } from '../actions';
-import { Deck, NoMoreCards, TypingDots } from '../components/common';
+import { currentUserFetch, connectWithUser, potentialsFetch, checkNotifications } from '../actions';
+import { Deck, NoMoreCards, Spinner, TypingDots } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
 //const anim = require('../assets/animations/glow_loading.json');
@@ -25,6 +25,7 @@ class BrowseContainer extends Component {
   componentWillMount() {
     this.props.currentUserFetch();
     this.props.potentialsFetch();
+    this.props.checkNotifications();
     this.setState({currentIndex: 0, numPotentials: this.props.connection.potentials});
   }
 /*  componentWillReceiveProps(nextProps) {
@@ -169,4 +170,4 @@ const mapStateToProps = ({ currentUser, connection }) => {
   return { currentUser, connection };
 };
 
-export default connect(mapStateToProps, { currentUserFetch, connectWithUser, potentialsFetch })(BrowseContainer);
+export default connect(mapStateToProps, { currentUserFetch, connectWithUser, potentialsFetch, checkNotifications })(BrowseContainer);

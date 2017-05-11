@@ -12,10 +12,23 @@ import {
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
   LOCATION_MAP_STORAGE_KEY,
-  API_SECRET_KEY
+  API_SECRET_KEY,
+  SET_NEW_NOTIFICATION
 } from './types';
 
 const jsSHA = require("jssha");
+
+export const checkNotifications = () => {
+  return (dispatch) => {
+    const { currentUser } = firebase.auth();
+    firebase.database().ref(`/notifications/new/${currentUser.uid}`)
+      .on('value', snapshot => {
+        if (snapshot.val()) {
+          dispatch({ type: SET_NEW_NOTIFICATION, payload: { notification: true } });
+        }
+    });
+  };
+};
 
 export const potentialsFetch = () => {
   console.log('Entering potentialsFetch');
@@ -171,6 +184,8 @@ export const keepBrowsing = () => {
 const successfullyConnected = (dispatch, uid, currentUserId) => {
   firebase.database().ref(`user_matches/${uid}/${currentUserId}`)
     .update({matched: true});
+
+  firebase.database().ref(`/notifications/new/${uid}`).set(true);
 
   dispatch({
     type: CONNECTION_SUCCESSFUL

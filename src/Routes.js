@@ -16,9 +16,10 @@ import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
 import { PictureModal } from './components/common';
 import ProfileModal from './components/common/ProfileModal';
+import ChatComponentIconButton from './components/common/ChatComponentIconButton';
 import Splash from './scenes/Splash';
 import { navBarStyle, navTitleStyle, navBackNextStyle } from './components/common/styles';
-import { chatIconButton, homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
+import { homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 
 //const MSG_CENTER_IMG = require('./assets/img/MsgCenter.png');
 //const MSG_CENTER_URL = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fapp_icons%2Fmessage%20icon.png?alt=media&token=afa34c63-4288-4f9f-a4d1-090acc830b20';
@@ -93,7 +94,7 @@ class Routes extends Component {
             component={BrowseContainer}
             title="wavelength"
             leftButton={profileIconButton}
-            rightButton={chatIconButton}
+            rightButton={ChatComponentIconButton}
             type={ActionConst.RESET}
           />
           <Scene
