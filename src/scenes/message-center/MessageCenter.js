@@ -79,7 +79,11 @@ class MessageCenter extends Component {
     );
   }
 
-  animationRef(animation) { this.animation = animation; }
+  animationRef(animation) {
+    this.animation = animation;
+    if(this.animation)
+      this.animation.play();
+ }
 
   render() {
     if(this.props.loading) {

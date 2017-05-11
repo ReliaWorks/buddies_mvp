@@ -21,7 +21,6 @@ const styles = {
     height: 115,
     width: 115,
     justifyContent: 'center',
-    borderRadius: 10,
   },
 };
 
