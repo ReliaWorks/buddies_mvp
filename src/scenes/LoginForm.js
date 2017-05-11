@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, View, Image, Text, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 import { Button, Spinner } from '../components/common';
 import { legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
@@ -50,22 +51,27 @@ class LoginForm extends Component {
     );
   }
 
+//  <View style={styles.solidContainer}>
+
   renderLoginForm2() {
     return (
-      <View style={styles.solidContainer}>
+      <LinearGradient colors={['#FF4F7D', '#6091FF', '#75FED8']} style={styles.linearGradient}>
         <View style={{justifyContent: 'center', flex: 35}}>
         <Text style={styles.nameText}>Wavelength</Text>
+        <View style={{height: 10}}/>
+        <Text style={styles.taglineText}>Meet people who share</Text>
+        <Text style={styles.taglineText}>your interests.</Text>
         </View>
         <Button
           onPress={this.onButtonPress.bind(this)}
           styles={{buttonStyle: styles.loginButtonContainer, textStyle: styles.fbLoginText }}
         >
-          Log in with Facebook
+          Login with Facebook
         </Button>
         <View style={styles.termsContainer}>
           <Text style={legalTextStyle}>Terms of Service</Text>
         </View>
-      </View>
+      </LinearGradient>
     );
   }
 
@@ -88,6 +94,10 @@ class LoginForm extends Component {
 // Valid Source Sans Pro FontFamily names are: 'SourceSansPro-Regular', 'Source Sans Pro', 'SourceSansPro-It'
 
 const styles = {
+  linearGradient: {
+    flex: 1,
+    justifyContent: 'flex-end'
+  },
   container: {
     flex: 1,
     justifyContent: 'flex-end'
@@ -99,19 +109,30 @@ const styles = {
   },
   nameText: {
     color: 'white',
-    fontSize: 35,
+    fontSize: 50,
     fontFamily: 'Source Sans Pro',
     fontWeight: '700',
     textAlign: 'center',
     justifyContent: 'center',
     marginLeft: 10,
     marginRight: 10,
+    backgroundColor: 'transparent'
+  },
+  taglineText: {
+    color: 'white',
+    fontSize: 24,
+    fontFamily: 'SourceSansPro-SemiBold',
+    textAlign: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: 'transparent'
   },
   fbLoginText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: 'Source Sans Pro',
-    fontWeight: '700',
+    fontWeight: '500',
     textAlign: 'center',
     justifyContent: 'center',
     marginLeft: 10,
@@ -134,9 +155,9 @@ const styles = {
   },
   termsContainer: {
     flex: 3,
+    backgroundColor: 'transparent'
   },
   backgroundImage: {
-    flex: 35,
     alignSelf: 'stretch',
     alignItems: 'center',
     justifyContent: 'space-around',
