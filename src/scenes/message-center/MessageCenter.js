@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, ListView, ScrollView, Text, View } from 'react-native';
+import { ListView, ScrollView, Text, View } from 'react-native';
 import NoConvoMatch from '../../components/common/NoConvoMatch';
 import ConversationListItem from '../../components/common/ConversationListItem';
 import { TypingDots } from '../../components/common';

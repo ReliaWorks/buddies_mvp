@@ -27,18 +27,18 @@ class ProfileModal extends Component {
       </TouchableOpacity>
     );
   }
-/*  <Icon
-    name="close"
-    size={ICON_WIDTH}
-    color="black"
-    style={{marginRight: MARGIN}}
-  />
-*/
+
+  animationRef(animation) {
+    this.animation = animation;
+    if(this.animation)
+      this.animation.play();
+  }
+
   render() {
     const { loading, firstName, age, profileImages, location, activities, affiliations, description, uid } = this.props.selectedUser;
 
     if(loading) {
-      return(<Spinner size="large" />);
+      return <Spinner size="large" />;
     }
     return (
       <View style={{flex: 1}}>

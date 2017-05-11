@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, Text, TouchableWithoutFeedback, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, TouchableWithoutFeedback, TouchableOpacity, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
-//import ImagePicker from 'react-native-image-picker';
 import { PictureModal } from './PictureModal';
-import { textStyle, buttonStyle } from './styles';
+import { buttonStyle } from './styles';
 import { ICON_SIZE, DEFAULT_PROFILE_PHOTO } from '../../constants';
 import CustomIcon from '../../assets/icons';
 
-const { height, width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 const MAX_NUM_PHOTOS = 7;
 
 class ProfileImages extends Component {
