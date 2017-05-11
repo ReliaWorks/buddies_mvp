@@ -24,6 +24,7 @@ export const fetchConversation = (otherUserId) => {
             });
             //Updates notifications
             firebase.database().ref(`/notifications/conversations/${conversationId}/seen/${currentUser.uid}`).set(true);
+            firebase.database().ref(`/user_matches/${currentUser.uid}/${otherUserId}/seen/`).set(true);
           });
       } else {
         //Conversation doesn't exist and create one

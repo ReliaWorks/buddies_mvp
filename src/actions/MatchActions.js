@@ -65,7 +65,6 @@ const getLastMsg = (otherUserId, conversationId, dispatch) => {
               dispatch({
                 type: LAST_MESSAGES_FETCH,
                 payload: { uid: otherUserId,
-                           seen2: conversationSeen,
                            msg: {
                             senderId: uid,
                             text: lastMsg.text,
