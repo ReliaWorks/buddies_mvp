@@ -40,6 +40,8 @@ function fetchLastMessages(dispatch) {
 
 const getLastMsg = (otherUserId, conversationId, dispatch) => {
   let resolved = false;
+  const { currentUser } = firebase.auth();
+  const currentUid = currentUser.uid;
   const myPromise = new Promise((resolve /* add a reject and an error function */) => {
     firebase.database().ref(`/conversations/${conversationId}`)
       .on('value', snapshot => {
@@ -51,17 +53,25 @@ const getLastMsg = (otherUserId, conversationId, dispatch) => {
           return { ...val, id};
         });
         if(msgs.length > 0) {
+          let conversationSeen = false;
           const lastMsg = msgs[msgs.length - 1];
           const uid = lastMsg.user._id;
-          dispatch({
-            type: LAST_MESSAGES_FETCH,
-            payload: { uid: otherUserId,
-                       msg: {
-                        senderId: uid,
-                        text: lastMsg.text,
-                        timestamp: lastMsg.createdAt,
-                        seen: lastMsg.seen === true
-                      }}});
+
+          firebase.database().ref(`/notifications/conversations/${conversationId}/seen/${currentUid}`)
+            .on('value', snap => {
+              if (snap.val()) {
+                conversationSeen = snap.val() === true;
+              }
+              dispatch({
+                type: LAST_MESSAGES_FETCH,
+                payload: { uid: otherUserId,
+                           msg: {
+                            senderId: uid,
+                            text: lastMsg.text,
+                            timestamp: lastMsg.createdAt,
+                            seen: conversationSeen
+                          }}});
+          });
         }
       });
   });

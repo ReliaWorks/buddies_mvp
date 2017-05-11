@@ -3,7 +3,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Moment from 'moment';
-import { selectChat, updateConversationStatus } from '../../actions';
+import { selectChat } from '../../actions';
 
 
 const MARGIN = 15;
@@ -33,7 +33,8 @@ class ConversationListItem extends Component {
 
     let msg = '';
     let createdAt = '';
-    const itemSeen = msgContainer.senderId != this.props.otherUserId || msgContainer.seen;
+    const itemSeen = msgContainer.seen;
+    console.log('itemSeen',itemSeen);
     if(!msgContainer) msg = "Start chatting";
     else {
       msg = msgContainer.text;
@@ -44,7 +45,6 @@ class ConversationListItem extends Component {
       <TouchableOpacity
         onPress={() => {
           this.props.selectChat(this.props.otherUserId, this.props.otherUserName, this.props.otherUserPic);
-          this.props.updateConversationStatus(this.props.currentUserId, this.props.otherUserId, this.props.lastMsg);
           Actions.conversation();
         }}
       >
@@ -129,4 +129,4 @@ const mapStateToProps = ({ matchSet }) => {
   return { matchSet };
 };
 
-export default connect(mapStateToProps, { selectChat, updateConversationStatus })(ConversationListItem);
+export default connect(mapStateToProps, { selectChat })(ConversationListItem);

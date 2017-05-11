@@ -63,7 +63,6 @@ class MessageCenter extends Component {
   renderNewConnections() {
     if(this.props.matchesWithoutChatDataSource.getRowCount() === 0)
       return null;
-
     return (
       <View style={{flex: 0.30, marginTop: MARGIN, marginLeft: MARGIN }}>
         <Text style={styles.headerText}>New Connections</Text>
