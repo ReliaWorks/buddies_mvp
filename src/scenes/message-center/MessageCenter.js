@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { ListView, ScrollView, Text, View } from 'react-native';
+import { Image, ListView, ScrollView, Text, View } from 'react-native';
 import NoConvoMatch from '../../components/common/NoConvoMatch';
 import ConversationListItem from '../../components/common/ConversationListItem';
-import { Spinner } from '../../components/common';
+import { TypingDots } from '../../components/common';
 //import { homeLeftIconButton } from '../../icons';
 //import { ICON_CLICKABLE_AREA_WIDTH } from '../../constants';
 
@@ -29,6 +29,10 @@ class MessageCenter extends Component {
       </View>
      );
    }*/
+
+  componentDidMount() {
+    if(this.animation) this.animation.play();
+  }
 
   renderZeroState(msg) {
     return(
@@ -76,9 +80,13 @@ class MessageCenter extends Component {
     );
   }
 
+  animationRef(animation) { this.animation = animation; }
+
   render() {
     if(this.props.loading) {
-      return <Spinner size="large" />;
+      return (
+        <TypingDots animationRef={this.animationRef} />
+      );
     } else if(this.props.matchesWithChatDataSource.getRowCount() === 0 &&
        this.props.matchesWithoutChatDataSource.getRowCount() === 0) {
        return this.renderZeroState("Connect with people to start chatting");
