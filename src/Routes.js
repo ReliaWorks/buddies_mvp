@@ -20,6 +20,7 @@ import ChatComponentIconButton from './components/common/ChatComponentIconButton
 import Splash from './scenes/Splash';
 import { navBarStyle, navTitleStyle, navBackNextStyle } from './components/common/styles';
 import { homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
+import { ACTIVITY_SETUP_SCENE_TITLE, AFFILIATION_SETUP_SCENE_TITLE } from './constants';
 
 //const MSG_CENTER_IMG = require('./assets/img/MsgCenter.png');
 //const MSG_CENTER_URL = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/img%2Fapp_icons%2Fmessage%20icon.png?alt=media&token=afa34c63-4288-4f9f-a4d1-090acc830b20';
@@ -50,7 +51,7 @@ class Routes extends Component {
         <Scene key="profileSetup">
           <Scene
             key="activitySetup"
-            title="Select Activities"
+            title={ACTIVITY_SETUP_SCENE_TITLE}
             type={ActionConst.RESET}
             component={ActivitySetupScene}
             rightTitle="Next"
@@ -60,7 +61,7 @@ class Routes extends Component {
           <Scene
             key="affiliationSetup"
             type={ActionConst.RESET}
-            title="Select Affiliations"
+            title={AFFILIATION_SETUP_SCENE_TITLE}
             component={AffiliationSetupScene}
             rightTitle="Next"
             onRight={() => Actions.descriptionSetup()}
