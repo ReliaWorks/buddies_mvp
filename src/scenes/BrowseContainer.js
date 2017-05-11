@@ -5,10 +5,8 @@ import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser, potentialsFetch, checkNotifications } from '../actions';
-import { Deck, NoMoreCards, Spinner, TypingDots } from '../components/common';
+import { Deck, NoMoreCards, Spinner, GlowLoader } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
-
-//const anim = require('../assets/animations/glow_loading.json');
 
 class BrowseContainer extends Component {
   swiper:Object;
@@ -32,10 +30,6 @@ class BrowseContainer extends Component {
     if(this.state.currentIndex > 0) {
       this.swiper.scrollBy(this.state.currentIndex * -1);
     }
-  }
-*/
-/*  componentDidMount() {
-    if(this.animation) this.animation.play();
   }
 */
   _onMomentumScrollEnd(e, state, context) {
@@ -63,7 +57,7 @@ class BrowseContainer extends Component {
     }
     return images;
   }
-//  location: { city: 'San Francisco, CA', distance: "4 miles" },
+
   renderMatches() {
     if(this.props.connection.potentials.length === 0 ||
         this.state.viewedAllPotentials) {
@@ -122,7 +116,7 @@ class BrowseContainer extends Component {
 
   render() {
     if(this.props.connection.loadingPotentials)
-      return <TypingDots animationRef={this.animationRef} />;
+      return <GlowLoader animationRef={this.animationRef} />;
     else return this.renderMatches();
 /*      return (
         <Deck
