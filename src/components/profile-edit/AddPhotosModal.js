@@ -134,7 +134,7 @@ export default class AddPhotosModal extends Component {
         dataSource={ds.cloneWithRows(albums)}
         renderRow={(rowData) => this.renderAlbumAsListItem(rowData)}
       />
-    )
+    );
   }
   renderAlbumAsListItem(rowData) {
     const { id, name, cover_photo, count } = rowData;
@@ -144,16 +144,17 @@ export default class AddPhotosModal extends Component {
       <TouchableOpacity
         style={styles.albumItem}
         onPress={() => {
-          this.props.onFetchFacebookAlbumPhotos(id)
-          this.setState({ imagesComponent: 'facebook-album-photos', albumId: id })
-        }}>
+          this.props.onFetchFacebookAlbumPhotos(id);
+          this.setState({ imagesComponent: 'facebook-album-photos', albumId: id });
+        }}
+      >
         <Image style={styles.albumItemImage} source={{ uri: source }} />
         <View style={styles.albumItemRightContainer}>
           <Text style={styles.albumItemName}>{name}</Text>
           <Text style={styles.albumItemImageCount}>{count} images</Text>
         </View>
       </TouchableOpacity>
-    )
+    );
   }
   renderFacebookAlbumsAction() {
     return (
@@ -174,32 +175,35 @@ export default class AddPhotosModal extends Component {
     return (
       <ListView
         contentContainerStyle={styles.photosList}
-        enableEmptySections={true}
+        enableEmptySections
         dataSource={ds.cloneWithRows(this.props.facebookAlbumPhotos)}
         renderRow={(rowData) => this.renderFacebookPicAsListItem(rowData)}
       />
-    )
+    );
   }
 
-  renderFacebookPicAsListItem(source){
+  renderFacebookPicAsListItem(source) {
     return (
       <TouchableOpacity
         style={styles.photosItem}
         onPress={() => {
-          this.setState({ imagesComponent: 'facebook-pic', picSource: source })
-        }}>
+          this.setState({ imagesComponent: 'facebook-pic', picSource: source });
+        }}
+      >
         <Image style={styles.picItemImage} source={{ uri: source }} />
       </TouchableOpacity>
-    )
+    );
   }
 
   renderFacebookAlbumPhotosAction() {
     return (
       <View>
-        <Button onPress={() => {
-          this.setState({ imagesComponent: 'facebook-albums' })
-          this.props.onFetchFacebookAlbums()
-        }}>
+        <Button
+          onPress={() => {
+            this.setState({ imagesComponent: 'facebook-albums' });
+            this.props.onFetchFacebookAlbums();
+          }}
+        >
           <Text>Back</Text>
         </Button>
       </View>
@@ -269,17 +273,18 @@ const styles = StyleSheet.create({
   albumItemImage: {
     width: 60,
     height: 60,
-    borderRadius: 5,
     marginRight: 15,
   },
   albumItemName: {
     fontSize: 16,
     marginTop: 14,
+    fontFamily: 'Source Sans Pro'
   },
   albumItemImageCount: {
     fontSize: 12,
     color: 'grey',
-    marginTop: 5
+    marginTop: 5,
+    fontFamily: 'Source Sans Pro'
   },
   photosList: {
     flexDirection: 'row',
@@ -287,14 +292,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     margin: 10,
-    //alignSelf: 'center'
   },
   photosItem: {
     width: 100,
-    margin: 0,
+    marginTop: 10,
   },
   picItemImage: {
     width: 90,
-    height: 90
+    height: 90,
   }
 });
