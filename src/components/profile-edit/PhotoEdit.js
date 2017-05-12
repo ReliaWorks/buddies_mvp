@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { MARGIN } from '../common/styles';
 import { Button } from '../common';
 import EditablePhoto from './EditablePhoto';
-import { TRASH_ICON } from '../../scenes/profile-setup/strings';
-import CameraRollPicker from 'react-native-camera-roll-picker';
 import CustomIcon from '../../assets/icons';
 import AddPhotosModal from './AddPhotosModal';
 import UploadingPhoto from './UploadingPhoto';
