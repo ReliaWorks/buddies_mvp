@@ -1,17 +1,20 @@
-import React, {Component} from 'react'
-import { Image, Text, Modal, ListView, View, TouchableOpacity, StyleSheet } from 'react-native'
-import { Button } from '../common';
+import React, {Component} from 'react';
+import { Image, Text, Modal, ListView, View, TouchableOpacity, StyleSheet } from 'react-native';
 import CameraRollPicker from 'react-native-camera-roll-picker';
 import ImagePicker from 'react-native-image-crop-picker';
+import { Button, GlowLoader } from '../common';
 
 export default class AddPhotosModal extends Component {
+  cameraRollPicker:Object;
+
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       imagesComponent: 'none',
       images: [],
-      albumId: null
-    }
+      albumId: null,
+      loading: false,
+    };
   }
 
   // set to initial state when modal closed to be able to reopen it with default values
@@ -20,42 +23,44 @@ export default class AddPhotosModal extends Component {
       this.setState({
         imagesComponent: 'none',
         images: [],
-      })
+      });
     }
   }
 
-  render(){
-    let imagesComponent = null
-    let actionComponent = null
+  render() {
+    let imagesComponent = null;
+    let actionComponent = null;
 
     switch (this.state.imagesComponent) {
       case 'camera':
-        imagesComponent = this.renderCameraRoll()
-        actionComponent = this.renderCameraRollAction()
+        imagesComponent = this.renderCameraRoll();
+        actionComponent = this.renderCameraRollAction();
         break;
       case 'facebook-albums':
-        imagesComponent = this.renderFacebookAlbums()
-        actionComponent = this.renderFacebookAlbumsAction()
+        imagesComponent = this.renderFacebookAlbums();
+        actionComponent = this.renderFacebookAlbumsAction();
         break;
       case 'facebook-album-photos':
-        imagesComponent = this.renderFacebookAlbumPhotos()
-        actionComponent = this.renderFacebookAlbumPhotosAction()
+        imagesComponent = this.renderFacebookAlbumPhotos();
+        actionComponent = this.renderFacebookAlbumPhotosAction();
         break;
       case 'facebook-pic':
-        imagesComponent = this.renderFacebookPic()
+        imagesComponent = this.renderFacebookPic();
         actionComponent = null;
         break;
       default:
-        imagesComponent = null
-        actionComponent = this.renderDefaultAction()
+        imagesComponent = null;
+        actionComponent = this.renderDefaultAction();
         break;
     }
 
     return (
-      <Modal style={styles.container}
+      <Modal
+        style={styles.container}
         visible={this.props.visible}
         animationType={"slide"}
-        transparent={false}>
+        transparent={false}
+      >
 
         <View style={styles.imagesComponent}>
           {imagesComponent}
@@ -68,17 +73,29 @@ export default class AddPhotosModal extends Component {
         </Button>
 
       </Modal>
-    )
+    );
   }
+
+  animationRef(animation) {
+    this.animation = animation;
+    if(this.animation)
+      this.animation.play();
+  }
+
 
   renderCameraRoll() {
     return (
       <View style={styles.cameraRollContainer}>
         <Text style={styles.selectedImagesInfo}>{this.state.images.length} images selected</Text>
         <CameraRollPicker
+          ref={(component) => { this.cameraRollPicker = component; }}
           initialListSize={1}
           selected={this.state.images}
-          callback={(images, current) => this.setState({images: images})} />
+          batchSize={5}
+          imageMargin={5}
+          maximum={7}
+          callback={(images, current) => this.setState({images: images, loading: false})}
+        />
       </View>
     );
   }
@@ -95,9 +112,11 @@ export default class AddPhotosModal extends Component {
           <Text>Add selected image(s)</Text>
         </Button>
 
-        <Button  onPress={() => {
-          this.setState({ imagesComponent: 'none', images: [] })
-        }}>
+        <Button
+          onPress={() => {
+            this.setState({ imagesComponent: 'none', images: [] });
+          }}
+        >
           <Text>Back</Text>
         </Button>
       </View>
@@ -106,12 +125,12 @@ export default class AddPhotosModal extends Component {
 
   renderFacebookAlbums() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id});
-    const albums = this.props.facebookAlbums.filter((album) => album.count > 0)
+    const albums = this.props.facebookAlbums.filter((album) => album.count > 0);
 
     return (
       <ListView
         contentContainerStyle={styles.albumList}
-        enableEmptySections={true}
+        enableEmptySections
         dataSource={ds.cloneWithRows(albums)}
         renderRow={(rowData) => this.renderAlbumAsListItem(rowData)}
       />
@@ -119,7 +138,7 @@ export default class AddPhotosModal extends Component {
   }
   renderAlbumAsListItem(rowData) {
     const { id, name, cover_photo, count } = rowData;
-    const source = cover_photo && cover_photo.images[0].source
+    const source = cover_photo && cover_photo.images[0].source;
 
     return (
       <TouchableOpacity
@@ -139,14 +158,17 @@ export default class AddPhotosModal extends Component {
   renderFacebookAlbumsAction() {
     return (
       <View>
-        <Button  onPress={() => {
-          this.setState({ imagesComponent: 'none' })
-        }}>
+        <Button
+          onPress={() => {
+            this.setState({ imagesComponent: 'none' });
+          }}
+        >
           <Text>Back</Text>
         </Button>
       </View>
-    )
+    );
   }
+
   renderFacebookAlbumPhotos() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
@@ -158,6 +180,7 @@ export default class AddPhotosModal extends Component {
       />
     )
   }
+
   renderFacebookPicAsListItem(source){
     return (
       <TouchableOpacity
@@ -169,6 +192,7 @@ export default class AddPhotosModal extends Component {
       </TouchableOpacity>
     )
   }
+
   renderFacebookAlbumPhotosAction() {
     return (
       <View>
@@ -190,24 +214,25 @@ export default class AddPhotosModal extends Component {
     }).then(croppedUri => {
       this.props.getSelectedImages([croppedUri], 'facebook');
       this.props.close();
-    }).catch( error => {
+    }).catch(error => {
       console.log('imagepicker catch:', error);
-      this.setState( {imagesComponent: 'facebook-album-photos'} )
+      this.setState({imagesComponent: 'facebook-album-photos'});
     });
-
   }
 
   renderDefaultAction() {
     return (
       <View>
-        <Button onPress={() => this.setState({imagesComponent: 'camera'})}>
+        <Button onPress={() => this.setState({imagesComponent: 'camera', loading: true})}>
           <Text>Camera Roll</Text>
         </Button>
 
-        <Button onPress={() => {
-          this.setState({ imagesComponent: 'facebook-albums' })
-          this.props.onFetchFacebookAlbums()
-        }}>
+        <Button
+          onPress={() => {
+            this.setState({ imagesComponent: 'facebook-albums' });
+            this.props.onFetchFacebookAlbums();
+          }}
+        >
           <Text>Facebook</Text>
         </Button>
       </View>
