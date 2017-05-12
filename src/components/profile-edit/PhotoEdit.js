@@ -8,7 +8,7 @@ import AddPhotosModal from './AddPhotosModal';
 import UploadingPhoto from './UploadingPhoto';
 
 const { width } = Dimensions.get('window');
-const MAX_NUM_PHOTOS = 5 + 3;
+const MAX_NUM_PHOTOS = 25;
 
 class PhotoEdit extends Component {
   constructor(props) {
@@ -30,53 +30,52 @@ class PhotoEdit extends Component {
     const otherImages = profileImages.slice(1, MAX_NUM_PHOTOS - 1);
 
     return (
-      <View style={{flex: 0.75, marginBottom: 5}}>
-      <ScrollView>
-        <View style={{width: width}}>
-          {this.renderPrimaryPic(firstProfileImage, onRemove)}
+      <View style={{flex: 0.75}}>
+        <ScrollView>
+          <View style={{width: width}}>
+            {this.renderPrimaryPic(firstProfileImage, onRemove)}
+            <View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', alignSelf: 'center'}}>
+              {otherImages.map((img) => {
+                return (
+                  <EditablePhoto
+                    url={img.url}
+                    photo={img}
+                    key={img.key}
+                    onRemove={onRemove}
+                  />
+                );
+              })}
+              {this.props.uploadingPhotos.map((img) => {
+                const key = img + new Date().getTime();
+                return (
+                  <UploadingPhoto
+                    url={img}
+                    key={key}
+                  />
+                );
+              })}
+              <TouchableOpacity
+                style={styles.camera}
+                onPress={() => this.setState({modalVisible: true})}
+              >
+                <CustomIcon
+                  name="camera_icon"
+                  size={44}
+                />
+              </TouchableOpacity>
 
-          <View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', alignSelf: 'center'}}>
-            {otherImages.map((img) => {
-              return (
-                <EditablePhoto
-                  url={img.url}
-                  photo={img}
-                  key={img.key}
-                  onRemove={onRemove}
-                />
-              );
-            })}
-            {this.props.uploadingPhotos.map((img) => {
-              const key = img + new Date().getTime();
-              return (
-                <UploadingPhoto
-                  url={img}
-                  key={key}
-                />
-              );
-            })}
-            <TouchableOpacity
-              style={styles.camera}
-              onPress={() => this.setState({modalVisible: true})}
-            >
-              <CustomIcon
-                name="camera_icon"
-                size={44}
+              <AddPhotosModal
+                visible={this.state.modalVisible}
+                close={this.closeModal.bind(this)}
+                getSelectedImages={this.getSelectedImages.bind(this)}
+                onFetchFacebookAlbums={this.props.onFetchFacebookAlbums}
+                facebookAlbums={this.props.facebookAlbums}
+                onFetchFacebookAlbumPhotos={this.props.onFetchFacebookAlbumPhotos}
+                facebookAlbumPhotos={this.props.facebookAlbumPhotos}
               />
-            </TouchableOpacity>
-
-            <AddPhotosModal
-              visible={this.state.modalVisible}
-              close={this.closeModal.bind(this)}
-              getSelectedImages={this.getSelectedImages.bind(this)}
-              onFetchFacebookAlbums={this.props.onFetchFacebookAlbums}
-              facebookAlbums={this.props.facebookAlbums}
-              onFetchFacebookAlbumPhotos={this.props.onFetchFacebookAlbumPhotos}
-              facebookAlbumPhotos={this.props.facebookAlbumPhotos}
-            />
-        </View>
-      </View>
-      </ScrollView>
+            </View>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -105,10 +104,10 @@ class PhotoEdit extends Component {
 
   renderSaveButton(onNext) {
     return (
-      <View style={{flex: 0.1, justifyContent: 'flex-end' }}>
-      <Button onPress={onNext}>
-        Save
-      </Button>
+      <View style={{flex: 0.09, justifyContent: 'flex-end' }}>
+        <Button onPress={onNext} styles={styles}>
+          Save
+        </Button>
       </View>
     );
   }
@@ -117,7 +116,6 @@ class PhotoEdit extends Component {
     return (
       <View style={{flex: 1}}>
         {this.renderPics()}
-        {this.renderSaveButton(this.props.onSave)}
       </View>
     );
   }
@@ -167,7 +165,7 @@ const styles = {
     borderRadius: 10,
     borderColor: 'black',
     padding: 2,
-  }
+  },
 };
 
 export default PhotoEdit;

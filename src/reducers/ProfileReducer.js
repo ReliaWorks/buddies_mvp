@@ -182,19 +182,21 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, profileImagesUploadProgress };
     }
     case PHOTO_UPLOADED: {
-      const profileImagesUploadProgress = state.profileImagesUploadProgress.filter( item => item !== action.payload.localUrl )
+      const profileImagesUploadProgress = state.profileImagesUploadProgress.filter(item => item !== action.payload.localUrl);
       const profileImages = [...state.profileImages, action.payload.photo];
       return { ...state, profileImages, profileImagesUploadProgress };
     }
     // case FACEBOOK_PHOTO_FETCHED:
     //   const selectableFacebookPhotos = [...selectableFacebookPhotos, action.payload];
     //   return { ...state, selectableFacebookPhotos };
-    case FACEBOOK_ALBUMS_FETCHED:
+    case FACEBOOK_ALBUMS_FETCHED: {
       const facebookAlbums = action.payload;
       return { ...state, facebookAlbums };
-    case FACEBOOK_ALBUM_PHOTOS_FETCHED:
+    }
+    case FACEBOOK_ALBUM_PHOTOS_FETCHED: {
       const facebookAlbumPhotos = action.payload;
-      return { ...state, facebookAlbumPhotos };
+      return { ...state, facebookAlbumPhotos };      
+    }
     case SET_CURRENT_GEOLOCATION: {
       return { ...state, geolocation: action.payload };
     }
