@@ -13,19 +13,21 @@ export const fetchConversation = (otherUserId) => {
   return (dispatch) => {
     const { currentUser } = firebase.auth();
     const chatRef = firebase.database().ref(`/user_chats/${currentUser.uid}/${otherUserId}`);
-    chatRef.on('value', snapshot => {
+    chatRef.once('value', snapshot => {
       if(snapshot.val()) {
         const conversationId = snapshot.val().conversationId;
+
+        //Updates notifications
+        firebase.database().ref(`/notifications/conversations/${conversationId}/seen/${currentUser.uid}`).set(true);
+        firebase.database().ref(`/user_matches/${currentUser.uid}/${otherUserId}/seen/`).set(true);
+        firebase.database().ref(`/notifications/new/${currentUser.uid}`).set(false);
+
         firebase.database().ref(`/conversations/${conversationId}`)
           .on('value', snap => {
             dispatch({
               type: CURRENT_CHAT_FETCH,
               payload: { chatId: conversationId, messages: _.map(snap.val()).reverse() }
             });
-            //Updates notifications
-            firebase.database().ref(`/notifications/conversations/${conversationId}/seen/${currentUser.uid}`).set(true);
-            firebase.database().ref(`/user_matches/${currentUser.uid}/${otherUserId}/seen/`).set(true);
-            firebase.database().ref(`/notifications/new/${currentUser.uid}`).set(false);
           });
       } else {
         //Conversation doesn't exist and create one
