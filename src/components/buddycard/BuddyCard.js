@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Dimensions, Image, LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import ActivitySet from './ActivitySet';
 import { ProfileImages } from '../common';
 import { buttonStyle, centeredTextStyle } from '../common/styles';
