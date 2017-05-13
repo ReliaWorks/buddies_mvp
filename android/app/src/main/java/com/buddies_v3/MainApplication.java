@@ -11,6 +11,7 @@ import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -51,6 +52,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFetchBlobPackage(),
             new ImagePickerPackage(),
             new RandomBytesPackage(),
+            new VectorIconsPackage(),
             new FBSDKPackage(mCallbackManager)
       );
     }
