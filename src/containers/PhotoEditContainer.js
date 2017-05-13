@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import PhotoEdit from './PhotoEdit';
-import { photoRemoved, photosSelected, fetchFacebookAlbums, fetchFacebookAlbumPhotos } from '../../actions';
+import PhotoEdit from '../components/profile-edit/PhotoEdit';
+import { photoRemoved, photosSelected, fetchFacebookAlbums, fetchFacebookAlbumPhotos } from '../actions';
 
 class PhotoEditContainer extends Component {
   onImageSave() {
@@ -11,17 +11,14 @@ class PhotoEditContainer extends Component {
   onImageRemove(photo) {
     this.props.photoRemoved(photo);
   }
-
-  onImagesSelected(images, from = 'cameraRoll') {
-    this.props.photosSelected(images, from);
+  onImagesSelected(images, from='cameraRoll'){
+    this.props.photosSelected(images, from)
   }
-
-  onFetchFacebookAlbums() {
-     this.props.fetchFacebookAlbums();
+  onFetchFacebookAlbums(){
+     this.props.fetchFacebookAlbums()
   }
-
-  onFetchFacebookAlbumPhotos(albumId) {
-     this.props.fetchFacebookAlbumPhotos(albumId);
+  onFetchFacebookAlbumPhotos(albumId){
+     this.props.fetchFacebookAlbumPhotos(albumId)
   }
 
   render() {

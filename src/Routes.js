@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Dimensions } from 'react-native';
 import { ActionConst, Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
 import SettingsContainer from './scenes/settings';
@@ -8,7 +9,7 @@ import ActivitySetupScene from './scenes/activity-setup/';
 import AffiliationSetupScene from './scenes/affiliation-setup/';
 import DescriptionSetup from './scenes/profile-setup/DescriptionSetup';
 import UserEditContainer from './scenes/user-edit/UserEditContainer';
-import PhotoEditContainer from './components/profile-edit/PhotoEditContainer';
+import PhotoEditContainer from './containers/PhotoEditContainer';
 import UserView from './scenes/UserView';
 import MessageCenterContainer from './scenes/message-center';
 import ConnectionContainer from './components/connection';
@@ -161,13 +162,11 @@ class Routes extends Component {
         <Scene
           key="photoEdit"
           component={PhotoEditContainer}
-          title="Edit Your Photos"
+          title="Photo Edit"
           navigationBarStyle={{
             borderBottomWidth: 3,
             borderBottomColor: 'black',
           }}
-          leftButton={profileIconButton}
-          type={ActionConst.RESET}
         />
         <Scene
           key="activityEdit"

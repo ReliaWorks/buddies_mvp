@@ -4,7 +4,7 @@ export default styles = {
   nameText: {
     fontSize: 18,
     marginLeft: 15,
-    marginRight: 5,
+    marginRight: 15,
     marginTop: 15,
     fontWeight: 'bold',
     fontFamily: 'Source Sans Pro',
