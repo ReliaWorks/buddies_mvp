@@ -23,9 +23,7 @@ export const checkNotifications = () => {
     const { currentUser } = firebase.auth();
     firebase.database().ref(`/notifications/new/${currentUser.uid}`)
       .on('value', snapshot => {
-        if (snapshot.val()) {
-          dispatch({ type: SET_NEW_NOTIFICATION, payload: { notification: true } });
-        }
+          dispatch({ type: SET_NEW_NOTIFICATION, payload: { notification: snapshot.val() } });
     });
   };
 };
@@ -115,7 +113,7 @@ export const getCityStateCountry = (uid, position, dispatch) => {
     .then((val) => {
       const value = JSON.parse(val);
       location = value[position.latitude + '' + position.longitude];
-      if (value && location) {
+      if (value && location && location.city) {
         dispatch({ type: SET_CURRENT_LOCATION, payload: location });
         setLocation(uid, location);
       }else{
