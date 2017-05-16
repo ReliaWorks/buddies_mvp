@@ -6,7 +6,7 @@ import EditablePhoto from './EditablePhoto';
 import { TRASH_ICON } from '../../scenes/profile-setup/strings';
 import CameraRollPicker from 'react-native-camera-roll-picker';
 import CustomIcon from '../../assets/icons';
-import AddPhotosModal from './AddPhotosModal';
+import AddPhotosModal from './addPhoto/AddPhotosModal';
 import UploadingPhoto from './UploadingPhoto';
 
 const { width } = Dimensions.get('window');
@@ -71,10 +71,7 @@ class PhotoEdit extends Component {
               visible={this.state.modalVisible}
               close={this.closeModal.bind(this)}
               getSelectedImages={this.getSelectedImages.bind(this)}
-              onFetchFacebookAlbums={this.props.onFetchFacebookAlbums}
-              facebookAlbums={this.props.facebookAlbums}
-              onFetchFacebookAlbumPhotos={this.props.onFetchFacebookAlbumPhotos}
-              facebookAlbumPhotos={this.props.facebookAlbumPhotos}
+              
             />
         </View>
       </View>
