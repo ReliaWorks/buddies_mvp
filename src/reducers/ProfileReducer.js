@@ -20,6 +20,7 @@ import {
   PHOTO_UPLOADED,
   //FACEBOOK_PHOTO_FETCHED,
   FACEBOOK_ALBUMS_FETCHED,
+  FACEBOOK_ALBUM_PHOTOS_REQUESTED,
   FACEBOOK_ALBUM_PHOTOS_FETCHED,
 } from '../actions/types';
 import { ACTIVE } from '../constants';
@@ -175,10 +176,6 @@ export default(state = INITIAL_STATE, action) => {
       console.log(updatedImages);
       return { ...state, profileImages: updatedImages };
     }
-    // case PHOTOS_SELECTED: {
-    //   const profileImages = [...state.profileImages, ...action.payload];
-    //   return { ...state, profileImages };
-    // }
     case PHOTOS_SELECTED: {
       const profileImagesUploadProgress = action.payload;
       return { ...state, profileImagesUploadProgress };
@@ -188,17 +185,23 @@ export default(state = INITIAL_STATE, action) => {
       const profileImages = [...state.profileImages, action.payload.photo];
       return { ...state, profileImages, profileImagesUploadProgress };
     }
-    // case FACEBOOK_PHOTO_FETCHED:
-    //   const selectableFacebookPhotos = [...selectableFacebookPhotos, action.payload];
-    //   return { ...state, selectableFacebookPhotos };
-    case FACEBOOK_ALBUMS_FETCHED: {
+    case FACEBOOK_ALBUMS_FETCHED:
       const facebookAlbums = action.payload;
       return { ...state, facebookAlbums };
-    }
-    case FACEBOOK_ALBUM_PHOTOS_FETCHED: {
-      const facebookAlbumPhotos = action.payload;
-      return { ...state, facebookAlbumPhotos };
-    }
+    case FACEBOOK_ALBUM_PHOTOS_REQUESTED:
+      return { ...state, facebookAlbumPhotos: action.payload }
+    case FACEBOOK_ALBUM_PHOTOS_FETCHED:
+      const { id, name, photos } = action.payload;
+      let tempPhotos = photos && photos.data
+        ? photos.data.map((item) => ({ id: item.id, source: item.images[0].source }))
+        : []
+
+      tempPhotos = [...state.facebookAlbumPhotos.photos, ...tempPhotos];
+
+      return {
+        ...state,
+        facebookAlbumPhotos: { id, name, photos: tempPhotos }
+      };
     case SET_CURRENT_GEOLOCATION: {
       return { ...state, geolocation: action.payload };
     }

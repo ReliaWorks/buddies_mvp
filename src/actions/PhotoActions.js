@@ -14,6 +14,7 @@ import {
   PHOTO_UPLOADED,
   PHOTOS_SAVED,
   FACEBOOK_ALBUMS_FETCHED,
+  FACEBOOK_ALBUM_PHOTOS_REQUESTED,
   FACEBOOK_ALBUM_PHOTOS_FETCHED
 } from './types';
 import { INACTIVE, ACTIVE } from '../constants';
@@ -42,7 +43,8 @@ export const photosSelected = (photos, from) => {
     const { currentUser } = firebase.auth();
 
     photos.forEach( photo => {
-      const photoUri = from === 'cameraRoll' ? photo.uri : photo.path;
+      //const photoUri = from === 'cameraRoll' ? photo.uri : photo.path;
+      const photoUri = photo.path
 
       dispatch({ type: PHOTOS_SELECTED, payload: photos.map( photo => photoUri ) })
 
@@ -69,18 +71,23 @@ export const photosSelected = (photos, from) => {
 const uploadImage = (uid, uri, mime = 'image/jpg', from) => {
   return new Promise((resolve, reject) => {
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
+    console.log('upload uri: ', uploadUri);
 
     const sessionId = new Date().getTime()
     let uploadBlob = null
     const imageRef = firebase.storage().ref('profileImages').child(`${uid}`).child(`${sessionId}`)
 
+    // below commented code is not required anymore since image picker already sends resized images for both camera roll and facebook images
+
     // control if it is required to resize the image. required for images from camera, not required images from facebook
-    const resizeOrNotPromise = from === 'cameraRoll'
-      ? ImageResizer.createResizedImage(uploadUri, 640, 640, 'JPEG', 40,) // rotation, outputPath)
-        .then((resizedImageUri) => {
-          return fs.readFile(resizedImageUri, 'base64')
-        })
-      : fs.readFile(uploadUri, 'base64')
+    // const resizeOrNotPromise = from === 'cameraRoll'
+    //   ? ImageResizer.createResizedImage(uploadUri, 640, 640, 'JPEG', 40,) // rotation, outputPath)
+    //     .then((resizedImageUri) => {
+    //       return fs.readFile(resizedImageUri, 'base64')
+    //     })
+    //   : fs.readFile(uploadUri, 'base64')
+
+    const resizeOrNotPromise = fs.readFile(uploadUri, 'base64');
 
       resizeOrNotPromise
       .then((data) => {
@@ -130,8 +137,14 @@ export const fetchFacebookAlbums = () => {
       .catch( error => console.log('error while fetchFacebookAlbums', error) )
   }
 }
-export const fetchFacebookAlbumPhotos = (albumId) => {
+export const fetchFacebookAlbumPhotos = (albumId, offset=0) => {
   return (dispatch) => {
+    // if this is not a load more type of request, make empty the facebookAlbumPhotos array.
+    // if you don't dispatch this it will show a list of photos of the album that is previously viewed.
+    if (offset === 0) {
+      dispatch({ type: FACEBOOK_ALBUM_PHOTOS_REQUESTED, payload: { id: albumId, photos: [] } })
+    }
+
     let token = null;
 
     AccessToken.getCurrentAccessToken()
@@ -143,13 +156,16 @@ export const fetchFacebookAlbumPhotos = (albumId) => {
           '/' + albumId,
           {
             parameters: {
-              fields: { string: 'id, photos{id,images}' },
+              fields: { string: 'id, name, photos.limit(25).offset(' + offset + '){id,images}' },
               access_token: { string: token }
             }
           },
           (error, result) => {
-            const images = result.photos.data.map((item) => item.images[0].source)
-            dispatch({ type: FACEBOOK_ALBUM_PHOTOS_FETCHED, payload: images })
+            if (error) {
+              console.log('error while pulling facebook photos from album:', error);
+              return;
+            }
+            dispatch({ type: FACEBOOK_ALBUM_PHOTOS_FETCHED, payload: result })
           }
         )
 

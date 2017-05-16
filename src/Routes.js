@@ -17,6 +17,8 @@ import Conversation from './scenes/Conversation';
 import { PictureModal } from './components/common';
 import ProfileModal from './components/common/ProfileModal';
 import ChatComponentIconButton from './components/common/ChatComponentIconButton';
+import FbAlbums from './components/profile-edit/addPhoto/FbAlbums'
+import FbAlbumPhotos from './components/profile-edit/addPhoto/FbAlbumPhotos'
 import Splash from './scenes/Splash';
 import { navBarStyle, navTitleStyle, navBackNextStyle } from './components/common/styles';
 import { homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
@@ -167,6 +169,16 @@ class Routes extends Component {
             borderBottomWidth: 3,
             borderBottomColor: 'black',
           }}
+        />
+        <Scene
+          key="addPhotoFbAlbums"
+          component={FbAlbums}
+          title="Albums"
+        />
+        <Scene
+          key="addPhotoFbAlbumPhotos"
+          component={FbAlbumPhotos}
+          title="Album"
         />
         <Scene
           key="activityEdit"
