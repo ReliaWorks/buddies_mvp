@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-n
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { fetchConversation, saveMessage } from '../actions';
+import { fetchConversation, updateConversationNotifications, saveMessage } from '../actions';
 
 class Conversation extends Component {
   constructor(props) {
@@ -14,6 +14,11 @@ class Conversation extends Component {
 
   componentWillMount() {
     this.props.fetchConversation(this.props.connection.selectedMatchId);
+  }
+
+  componentWillUnmount() {
+    console.log("unmount",this.props);
+    this.props.updateConversationNotifications(this.props.chat.chatId, this.props.currentUser.uid, this.props.connection.selectedMatchId);
   }
 
   onSend(messages = []) {
@@ -118,4 +123,4 @@ const mapStateToProps = ({ currentUser, connection, chat }) => {
   return { currentUser, connection, chat };
 };
 
-export default connect(mapStateToProps, { fetchConversation, saveMessage })(Conversation);
+export default connect(mapStateToProps, { updateConversationNotifications, fetchConversation, saveMessage })(Conversation);

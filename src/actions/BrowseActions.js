@@ -180,6 +180,7 @@ export const keepBrowsing = () => {
 };
 
 const successfullyConnected = (dispatch, uid, currentUserId) => {
+  console.log("successfullyConnected");
   firebase.database().ref(`user_matches/${uid}/${currentUserId}`)
     .update({matched: true});
 
