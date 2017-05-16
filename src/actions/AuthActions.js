@@ -7,16 +7,15 @@ import {
   GraphRequestManager
 } from 'react-native-fbsdk';
 import firebase from 'firebase';
+import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 import {
   ALREADY_AUTHENTICATED,
   NOT_ALREADY_AUTHED,
   LOGIN_USER,
-  LOGIN_USER_SUCCESS,
   LOGOUT_USER,
   PROFILE_INFO,
   PICTURE_SAVED,
 } from './types';
-import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 
 export const checkIfAlreadyLoggedIn = () => {
   return(dispatch) => {
@@ -28,11 +27,11 @@ export const checkIfAlreadyLoggedIn = () => {
         console.log(`User ${user.uid} is logged in.`);
 
         FCM.requestPermissions(); // for iOS
-        FCM.getFCMToken().then(token => {
-          console.log('notificationToken:', token);
+        FCM.getFCMToken().then(notificationToken => {
+          console.log('notificationToken:', notificationToken);
 
           const updates = {};
-          updates['/user_profiles/' + user.uid + '/notificationToken'] = token;
+          updates['/user_profiles/' + user.uid + '/notificationToken'] = notificationToken;
 
           firebase.database().ref().update(updates);
         });
@@ -189,16 +188,19 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
       if(error) {
         console.log('Error fetching data: ' + error.toString());
       } else {
+        const profileInfo = {};
+        profileInfo['/first_name'] = result.first_name || '';
+        profileInfo['/last_name'] = result.last_name || '';
+        profileInfo['/email'] = result.email || '';
+        profileInfo['/location'] = result.location || '';
+
         const profile = {
-          first_name: result.first_name || '',
-          last_name: result.last_name || '',
-          email: result.email || '',
-          location: result.location || '',
+         first_name: result.first_name || '',
+         last_name: result.last_name || '',
+         email: result.email || '',
+         location: result.location || '',
         };
-
-        console.log('from facebook',result);
-
-        ref.ref(`/user_profiles/${user.uid}`).set(profile);
+        ref.ref(`/user_profiles/${user.uid}`).update(profileInfo);
         dispatch({
           type: PROFILE_INFO,
           payload: profile

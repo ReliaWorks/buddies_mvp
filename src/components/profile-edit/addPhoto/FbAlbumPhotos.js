@@ -16,41 +16,43 @@ class FbAlbums extends Component {
       <ListView
         initialListSize={25}
         contentContainerStyle={styles.photosList}
-        enableEmptySections={true}
+        enableEmptySections
         dataSource={ds.cloneWithRows(photos)}
         renderRow={(rowData) => this.renderFacebookPicAsListItem(rowData)}
         onEndReachedThreshold={20}
-        onEndReached={ () => {
+        onEndReached={() => {
           if (photos.length > 24) {
-            this.props.fetchFacebookAlbumPhotos(albumId, photos.length )
+            this.props.fetchFacebookAlbumPhotos(albumId, photos.length);
           }
         }}
       />
-    )
+    );
   }
-  renderFacebookPicAsListItem(rowData){
+
+  renderFacebookPicAsListItem(rowData) {
     return (
       <TouchableOpacity
         style={styles.photosItem}
         onPress={() => {
-          this.renderImageCropper(rowData.source)
-        }}>
+          this.renderImageCropper(rowData.source);
+        }}
+      >
         <Image style={styles.picItemImage} source={{ uri: rowData.source }} />
       </TouchableOpacity>
-    )
+    );
   }
 
-  renderImageCropper(source){
+  renderImageCropper(source) {
     ImagePicker.openCropper({
       path: source,
       width: 650,
       height: 650
     }).then(croppedUri => {
-      Actions.pop({popNum: 2})
+      Actions.pop({popNum: 2});
       this.props.photosSelected([croppedUri], 'facebook');
-    }).catch( error => {
+    }).catch(error => {
       console.log('imagepicker catch:', error);
-      this.setState( {imagesComponent: 'facebook-album-photos'} )
+      this.setState({imagesComponent: 'facebook-album-photos'});
     });
   }
 }
@@ -64,17 +66,16 @@ const styles = StyleSheet.create({
   photosList: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
-    margin: 10,
-    //alignSelf: 'center'
+    marginTop: 5,
   },
   photosItem: {
-    width: 100,
-    margin: 0,
+    width: 91,
+    marginTop: 3,
   },
   picItemImage: {
-    width: 90,
-    height: 90
+    width: 88,
+    height: 88
   }
-})
+});

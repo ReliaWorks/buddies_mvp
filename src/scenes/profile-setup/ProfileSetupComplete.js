@@ -8,29 +8,32 @@ class ProfileSetupComplete extends Component {
   startBrowsing() {
     Actions.main();
   }
-  
+
   render() {
-    const localTextStyle = {...textStyle, textAlign: 'left', marginLeft: 30, marginRight: 30};
+    const localTextStyle = {...textStyle, textAlign: 'left'};
+
     return(
-      <View style={{flex: 1, justifyContent: 'space-around'}}>
-        <View style={{flex: 0.8, marginTop: 100}}>
-          <Text style={localTextStyle}>
-          Dear friends and family,
-          </Text>
-          <View style={{height: 10}} />
-          <Text style={localTextStyle}>
-          Thank you for helping test this alpha release. Now that you’ve created a profile you can browse, connect, and chat! We appreciate your feedback on technical bugs.
-          </Text>
-          <View style={{height: 15}} />
-          <Text style={localTextStyle}>
-          Best regards,
-          </Text>
-          <Text style={localTextStyle}>
-          Shireen, Kayleigh, and Oscar
-          </Text>
-        </View>
-        <View style={{flex: 0.18, marginBottom: 200}}>
-        <Button onPress={this.startBrowsing}>Find an activity partner!</Button>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View>
+          <View style={{marginLeft: 30, marginRight: 30}}>
+            <Text style={localTextStyle}>
+            Dear friends and family,
+            </Text>
+            <View style={{height: 10}} />
+            <Text style={localTextStyle}>
+            Thank you for helping test this beta release. Now that you’ve created a profile you can browse, connect, and chat!  Feel free to update your profile photos. We appreciate your feedback.
+            </Text>
+            <View style={{height: 15}} />
+            <Text style={localTextStyle}>
+            Best regards,
+            </Text>
+            <Text style={localTextStyle}>
+            Shireen, Kayleigh, Oscar, Ali and Amber
+            </Text>
+          </View>
+          <View style={{marginTop: 30}}>
+            <Button onPress={this.startBrowsing}>Let's go!</Button>
+          </View>
         </View>
       </View>
     );

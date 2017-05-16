@@ -61,16 +61,21 @@ const styles = StyleSheet.create({
   albumItemImage: {
     width: 60,
     height: 60,
-    borderRadius: 5,
     marginRight: 15,
+  },
+  albumItemRightContainer: {
+    flex: 1,
+    borderBottomWidth: 1,
+    borderColor: '#D5D5D5',
   },
   albumItemName: {
     fontSize: 16,
-    marginTop: 14,
+    fontFamily: 'Source Sans Pro',
+    flexWrap: "wrap",
   },
   albumItemImageCount: {
     fontSize: 12,
+    marginTop: 5,
     color: 'grey',
-    marginTop: 5
   },
-})
+});

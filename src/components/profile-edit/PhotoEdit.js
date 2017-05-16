@@ -69,7 +69,6 @@ class PhotoEdit extends Component {
               visible={this.state.modalVisible}
               close={this.closeModal.bind(this)}
               getSelectedImages={this.getSelectedImages.bind(this)}
-              
             />
         </View>
       </View>
