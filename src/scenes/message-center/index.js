@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import MessageCenter from './MessageCenter';
-import { matchesFetch, fetchLastMessages } from '../../actions';
+import { matchesFetch, fetchLastMessages, updateMessageCenterNotification } from '../../actions';
 
 class MessageCenterContainer extends Component {
   componentWillMount() {
     this.props.matchesFetch();
     this.createDataSource(this.props);
+  }
+
+  componentWillUnmount() {
+    console.log("updateMessageCenterNotification");
+    this.props.updateMessageCenterNotification(this.props.uid);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,8 +39,8 @@ class MessageCenterContainer extends Component {
 }
 const mapStateToProps = ({ matchSet, currentUser }) => {
   const { matches, matchesWithoutChat, loading, sortedMatches, numMatches } = matchSet;
-  const { firstName } = currentUser;
-  return { matches, matchesWithoutChat, loading, sortedMatches, numMatches, firstName };
+  const { firstName, uid } = currentUser;
+  return { uid, matches, matchesWithoutChat, loading, sortedMatches, numMatches, firstName };
 };
 
-export default connect(mapStateToProps, { matchesFetch, fetchLastMessages })(MessageCenterContainer);
+export default connect(mapStateToProps, { updateMessageCenterNotification, matchesFetch, fetchLastMessages })(MessageCenterContainer);

@@ -153,7 +153,7 @@ class Routes extends Component {
         <Scene
           key="userEdit"
           component={UserEditContainer}
-          title="Edit Profile"
+          title="Edit Your Photos"
           leftButton={profileIconButton}
           type={ActionConst.RESET}
           navigationBarStyle={{

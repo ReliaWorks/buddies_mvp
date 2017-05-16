@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { MARGIN } from '../common/styles';
 import { Button } from '../common';
 import EditablePhoto from './EditablePhoto';
-import { TRASH_ICON } from '../../scenes/profile-setup/strings';
-import CameraRollPicker from 'react-native-camera-roll-picker';
 import CustomIcon from '../../assets/icons';
 import AddPhotosModal from './addPhoto/AddPhotosModal';
 import UploadingPhoto from './UploadingPhoto';
 
 const { width } = Dimensions.get('window');
-const MAX_NUM_PHOTOS = 5 + 3;
+const MAX_NUM_PHOTOS = 25;
 
 class PhotoEdit extends Component {
   constructor(props) {
@@ -32,7 +30,7 @@ class PhotoEdit extends Component {
     const otherImages = profileImages.slice(1, MAX_NUM_PHOTOS - 1);
 
     return (
-      <View style={{flex: 0.75, marginBottom: 5}}>
+      <View style={{flex: 0.75}}>
       <ScrollView>
         <View style={{width: width}}>
           {this.renderPrimaryPic(firstProfileImage, onRemove)}
@@ -102,21 +100,10 @@ class PhotoEdit extends Component {
     );
   }
 
-  renderSaveButton(onNext) {
-    return (
-      <View style={{flex: 0.1, justifyContent: 'flex-end' }}>
-      <Button onPress={onNext}>
-        Save
-      </Button>
-      </View>
-    );
-  }
-
   render() {
     return (
       <View style={{flex: 1}}>
         {this.renderPics()}
-        {this.renderSaveButton(this.props.onSave)}
       </View>
     );
   }
