@@ -8,7 +8,7 @@ class ProfileSetupComplete extends Component {
   startBrowsing() {
     Actions.main();
   }
-
+  
   render() {
     const localTextStyle = {...textStyle, textAlign: 'left', marginLeft: 30, marginRight: 30};
     return(

@@ -166,11 +166,13 @@ export default(state = INITIAL_STATE, action) => {
     }
     case PICTURE_SAVED: {
       let updatedImages = [];
-      if(state.profileImages) {
+      console.log(`In PICTURE_SAVED action.payload = ${action.payload}`);
+      if(state.profileImages.length) {
         updatedImages = [...state.profileImages, action.payload];
       } else {
         updatedImages.push(action.payload);
       }
+      console.log(updatedImages);
       return { ...state, profileImages: updatedImages };
     }
     // case PHOTOS_SELECTED: {
@@ -182,19 +184,21 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, profileImagesUploadProgress };
     }
     case PHOTO_UPLOADED: {
-      const profileImagesUploadProgress = state.profileImagesUploadProgress.filter( item => item !== action.payload.localUrl )
+      const profileImagesUploadProgress = state.profileImagesUploadProgress.filter(item => item !== action.payload.localUrl);
       const profileImages = [...state.profileImages, action.payload.photo];
       return { ...state, profileImages, profileImagesUploadProgress };
     }
     // case FACEBOOK_PHOTO_FETCHED:
     //   const selectableFacebookPhotos = [...selectableFacebookPhotos, action.payload];
     //   return { ...state, selectableFacebookPhotos };
-    case FACEBOOK_ALBUMS_FETCHED:
+    case FACEBOOK_ALBUMS_FETCHED: {
       const facebookAlbums = action.payload;
       return { ...state, facebookAlbums };
-    case FACEBOOK_ALBUM_PHOTOS_FETCHED:
+    }
+    case FACEBOOK_ALBUM_PHOTOS_FETCHED: {
       const facebookAlbumPhotos = action.payload;
       return { ...state, facebookAlbumPhotos };
+    }
     case SET_CURRENT_GEOLOCATION: {
       return { ...state, geolocation: action.payload };
     }

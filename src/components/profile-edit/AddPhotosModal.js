@@ -269,12 +269,12 @@ const styles = StyleSheet.create({
   albumItemImage: {
     width: 60,
     height: 60,
-    borderRadius: 5,
     marginRight: 15,
   },
   albumItemName: {
     fontSize: 16,
     marginTop: 14,
+    fontFamily: 'Source Sans Pro',
   },
   albumItemImageCount: {
     fontSize: 12,
@@ -287,14 +287,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     margin: 10,
-    //alignSelf: 'center'
   },
   photosItem: {
     width: 100,
-    margin: 0,
+    marginTop: 10,
   },
   picItemImage: {
     width: 90,
-    height: 90
+    height: 90,
   }
 });

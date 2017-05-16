@@ -26,7 +26,9 @@
 	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
 	<false/>
-	<key>IS_APPINVITE_ENABLED</key>
+	<key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+  <key>IS_APPINVITE_ENABLED</key>
 	<false/>
 	<key>IS_GCM_ENABLED</key>
 	<true/>

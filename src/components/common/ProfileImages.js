@@ -46,12 +46,7 @@ class ProfileImages extends Component {
   showEditableButton(editable) {
     if(!editable) return;
     return (
-      <View
-        style={{
-          backgroundColor: 'black',
-          marginBottom: 30,
-        }}
-      >
+      <View style={styles.editIconBox}>
         <TouchableOpacity onPress={() => Actions.photoEdit()} style={buttonStyle}>
           <CustomIcon
             name="edit_icon"
@@ -147,6 +142,12 @@ const styles = {
     alignItems: 'flex-end',
     height: (height * 0.5),
     width: null,
+  },
+  editIconBox: {
+    backgroundColor: 'black',
+    marginBottom: 25,
+    height: 40,
+    width: 40,
   }
 };
 
