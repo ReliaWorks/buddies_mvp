@@ -38,31 +38,32 @@ export const activityUnselected = (id) => {
   };
 };
 
-function photosSaved(photos, dispatch) {
-  const { currentUser } = firebase.auth();
+export const photosSaved = (photos) => {
+  return (dispatch) => {
+    const { currentUser } = firebase.auth();
 
-  const photoObj = {};
-  const photoSet = [];
-  let i = 0;
-  photos.forEach((photo) => {
-    photoObj.url = photo;
-    photoObj.status = ACTIVE;
-    firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
-      .push(photoObj)
-      .then((snap) => {
-        photoSet[snap.key] = photoObj.url;
-        i++;
-        if(i === photos.length - 1)
-          dispatch({ type: PHOTOS_SAVED, payload: photoSet });
-      });
-  });
-}
+    const photoObj = {};
+    const photoSet = [];
+    let i = 0;
+    photos.forEach((photo) => {
+      photoObj.url = photo;
+      photoObj.status = ACTIVE;
+      firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
+        .push(photoObj)
+        .then((snap) => {
+          photoSet[snap.key] = photoObj.url;
+          i++;
+          if(i === photos.length - 1)
+            dispatch({ type: PHOTOS_SAVED, payload: photoSet });
+        });
+    });
+  };
+};
 
-export const activitiesSaved = (activities, profileImages) => {
+export const activitiesSaved = (activities) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
-    photosSaved(profileImages, dispatch);
     if(activities && activities.length > 0) {
       activities.forEach((activity, index) => {
         firebase.database().ref(`user_profiles/${currentUser.uid}/activities/`)

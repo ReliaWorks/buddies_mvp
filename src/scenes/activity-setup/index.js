@@ -3,7 +3,7 @@ import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ActivitySetup from './ActivitySetup';
-import { activitiesFetch, activitiesSaved, activitySelected, activityUnselected } from '../../actions';
+import { activitiesFetch, activitiesSaved, photosSaved, activitySelected, activityUnselected } from '../../actions';
 import _ from 'lodash'
 
 class ActivitySetupScene extends Component {
@@ -22,7 +22,10 @@ class ActivitySetupScene extends Component {
   }
 
   componentWillUnmount() {
-    this.props.activitiesSaved(this.props.currentUser.activities, this.props.currentUser.profileImages);
+    this.props.activitiesSaved(this.props.currentUser.activities);
+    if(this.props.source != 'Edit') {
+      this.props.photosSaved(this.props.currentUser.profileImages);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -95,4 +98,4 @@ const mapStateToProps = ({ currentUser, auth, activities }) => {
   return { currentUser, auth, activities: activities.allActivities };
 };
 
-export default connect(mapStateToProps, { activitiesFetch, activitiesSaved, activitySelected, activityUnselected })(ActivitySetupScene);
+export default connect(mapStateToProps, { activitiesFetch, activitiesSaved, photosSaved, activitySelected, activityUnselected })(ActivitySetupScene);

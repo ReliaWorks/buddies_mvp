@@ -7,7 +7,6 @@ import {
   GraphRequestManager
 } from 'react-native-fbsdk';
 import firebase from 'firebase';
-import { savePics } from './ProfileSetupActions';
 import {
   ALREADY_AUTHENTICATED,
   NOT_ALREADY_AUTHED,
@@ -30,14 +29,13 @@ export const checkIfAlreadyLoggedIn = () => {
 
         FCM.requestPermissions(); // for iOS
         FCM.getFCMToken().then(token => {
-          console.log('notificationToken:', token)
+          console.log('notificationToken:', token);
 
           const updates = {};
           updates['/user_profiles/' + user.uid + '/notificationToken'] = token;
 
           firebase.database().ref().update(updates);
         });
-
 
         dispatch({
           type: ALREADY_AUTHENTICATED,
@@ -123,6 +121,7 @@ export const logoutUser = () => {
     LoginManager.logOut();
     firebase.auth().signOut()
       .then(() => {
+        console.log('Signed out of Firebase');
         dispatch({ type: LOGOUT_USER });
         Actions.root();
       }, (error) => {
@@ -214,7 +213,7 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
 function checkIfUserExists(user, ref, accessTokenData, dispatch) {
   ref.ref(`/user_profiles/${user.uid}`)
     .once('value', snapshot => {
-      const exists = (snapshot.val() !== null);
+      const exists = (snapshot.val() && snapshot.val().first_name);
       if(exists) {
         Actions.main();
       } else {
