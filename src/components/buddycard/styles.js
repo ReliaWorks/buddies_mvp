@@ -1,5 +1,3 @@
-//import { Dimensions } from 'react-native';
-
 export default styles = {
   nameText: {
     fontSize: 18,
