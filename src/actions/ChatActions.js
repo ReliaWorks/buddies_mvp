@@ -9,6 +9,20 @@ import {
   MESSAGE_SENT,
 } from './types';
 
+export const updateConversationNotifications = (conversationId, uid, otherUserId) => {
+  const fb = firebase.database();
+  return (dispatch) => {
+    fb.ref(`/notifications/conversations/${conversationId}/seen/${uid}`).set(true);
+    fb.ref(`/user_matches/${uid}/${otherUserId}/seen/`).set(true);
+  };
+};
+
+export const updateMessageCenterNotification = (uid) => {  
+  return (dispatch) => {
+    firebase.database().ref(`/notifications/new/${uid}`).set(false);
+  };
+};
+
 export const fetchConversation = (otherUserId) => {
   return (dispatch) => {
     const { currentUser } = firebase.auth();
@@ -16,11 +30,6 @@ export const fetchConversation = (otherUserId) => {
     chatRef.once('value', snapshot => {
       if(snapshot.val()) {
         const conversationId = snapshot.val().conversationId;
-
-        //Updates notifications
-        firebase.database().ref(`/notifications/conversations/${conversationId}/seen/${currentUser.uid}`).set(true);
-        firebase.database().ref(`/user_matches/${currentUser.uid}/${otherUserId}/seen/`).set(true);
-        firebase.database().ref(`/notifications/new/${currentUser.uid}`).set(false);
 
         firebase.database().ref(`/conversations/${conversationId}`)
           .on('value', snap => {
