@@ -29,10 +29,7 @@ class FbAlbums extends Component {
       />
     );
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> ReliaWorks/qa
+  
   renderFacebookPicAsListItem(rowData) {
     return (
       <TouchableOpacity
