@@ -36,7 +36,6 @@ export const photoRemoved = (photo) => {
 // this action fires when user select images from camera roll (or potentially facebook at future)
 export const photosSelected = (photos) => {
   return (dispatch) => {
-    console.log('from:', from);
     const { currentUser } = firebase.auth();
 
     photos.forEach(photo => {
@@ -44,7 +43,7 @@ export const photosSelected = (photos) => {
 
       dispatch({ type: PHOTOS_SELECTED, payload: photos.map(() => photoUri)});
 
-      uploadImage(currentUser.uid, photoUri, from)
+      uploadImage(currentUser.uid, photoUri)
       .then(uri => {
         const newImageRef = firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`).push();
 
