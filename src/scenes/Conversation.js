@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import firebase from 'firebase';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { fetchConversation, updateConversationNotifications, saveMessage } from '../actions';
+import { fetchConversation, updateConversationNotifications, saveMessage, closeConversation } from '../actions';
 
 class Conversation extends Component {
   constructor(props) {
@@ -18,6 +17,7 @@ class Conversation extends Component {
 
   componentWillUnmount() {
     this.props.updateConversationNotifications(this.props.chat.chatId, this.props.currentUser.uid, this.props.connection.selectedMatchId);
+    this.props.closeConversation(this.props.chat.chatId);
   }
 
   onSend(messages = []) {
@@ -121,4 +121,4 @@ const mapStateToProps = ({ currentUser, connection, chat }) => {
   return { currentUser, connection, chat };
 };
 
-export default connect(mapStateToProps, { updateConversationNotifications, fetchConversation, saveMessage })(Conversation);
+export default connect(mapStateToProps, { updateConversationNotifications, fetchConversation, saveMessage, closeConversation })(Conversation);

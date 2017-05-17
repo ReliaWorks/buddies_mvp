@@ -2,7 +2,8 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import {
   CURRENT_CHAT_FETCH,
   MESSAGE_SENT,
-  LOGOUT_USER
+  LOGOUT_USER,
+  CLOSE_CONVERSATION
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -24,6 +25,9 @@ export default(state = INITIAL_STATE, action) => {
         return { ...state, messages: updatedMsgs };
       }
       return state;
+    }
+    case CLOSE_CONVERSATION: {
+      return {...state, messages: []};
     }
     case LOGOUT_USER:
       return { INITIAL_STATE };
