@@ -185,6 +185,7 @@ const successfullyConnected = (dispatch, uid, currentUserId) => {
     .update({matched: true});
 
   firebase.database().ref(`/notifications/new/${uid}`).set(true);
+  firebase.database().ref(`user_matches/${currentUserId}/${uid}/seen`).set(true);
 
   dispatch({
     type: CONNECTION_SUCCESSFUL
