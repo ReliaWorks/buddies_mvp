@@ -29,6 +29,10 @@ class FbAlbums extends Component {
       />
     );
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> ReliaWorks/qa
   renderFacebookPicAsListItem(rowData) {
     return (
       <TouchableOpacity
@@ -66,17 +70,16 @@ const styles = StyleSheet.create({
   photosList: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
-    margin: 10,
-    //alignSelf: 'center'
+    marginTop: 5,
   },
   photosItem: {
-    width: 100,
-    margin: 0,
+    width: 91,
+    marginTop: 3,
   },
   picItemImage: {
-    width: 90,
-    height: 90
+    width: 88,
+    height: 88
   }
 });

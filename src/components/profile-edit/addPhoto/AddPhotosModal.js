@@ -1,3 +1,4 @@
+
 import React, {Component} from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -13,7 +14,6 @@ export default class AddPhotosModal extends Component {
         style={styles.container}
         transparent
       >
-
         <Button onPress={() => this.renderImageCropper()}>
           <Text>Camera Roll</Text>
         </Button>

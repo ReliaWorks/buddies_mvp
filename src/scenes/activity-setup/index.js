@@ -1,18 +1,18 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ActivitySetup from './ActivitySetup';
 import { activitiesFetch, activitiesSaved, photosSaved, activitySelected, activityUnselected } from '../../actions';
-import _ from 'lodash'
 
 class ActivitySetupScene extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       dataSource: [],
       searchText: ''
-    }
+    };
   }
 
   componentWillMount() {
