@@ -17,7 +17,7 @@ export const updateConversationNotifications = (conversationId, uid, otherUserId
   };
 };
 
-export const updateMessageCenterNotification = (uid) => {  
+export const updateMessageCenterNotification = (uid) => {
   return (dispatch) => {
     firebase.database().ref(`/notifications/new/${uid}`).set(false);
   };
@@ -30,12 +30,12 @@ export const fetchConversation = (otherUserId) => {
     chatRef.once('value', snapshot => {
       if(snapshot.val()) {
         const conversationId = snapshot.val().conversationId;
-
+        console.log(`In Fetch Conversation with chatid = ${conversationId}`);
         firebase.database().ref(`/conversations/${conversationId}`)
           .on('value', snap => {
             dispatch({
               type: CURRENT_CHAT_FETCH,
-              payload: { chatId: conversationId, messages: _.map(snap.val()).reverse() }
+              payload: { chatId: conversationId, messages: _.map(snap.val()).reverse(), justConnected: false }
             });
           });
       } else {
@@ -47,7 +47,7 @@ export const fetchConversation = (otherUserId) => {
             firebase.database().ref(`user_chats/${otherUserId}/${currentUser.uid}`)
               .set({conversationId: convRef.getKey()})
               .then(() => {
-                dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convRef.getKey(), messages: [] }});
+                dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convRef.getKey(), messages: [], justConnected: true }});
               });
           });
       }

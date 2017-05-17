@@ -11,14 +11,17 @@ class PhotoEditContainer extends Component {
   onImageRemove(photo) {
     this.props.photoRemoved(photo);
   }
-  onImagesSelected(images, from='cameraRoll'){
-    this.props.photosSelected(images, from)
+
+  onImagesSelected(images, from = 'cameraRoll') {
+    this.props.photosSelected(images, from);
   }
-  onFetchFacebookAlbums(){
-     this.props.fetchFacebookAlbums()
+
+  onFetchFacebookAlbums() {
+     this.props.fetchFacebookAlbums();
   }
-  onFetchFacebookAlbumPhotos(albumId){
-     this.props.fetchFacebookAlbumPhotos(albumId)
+
+  onFetchFacebookAlbumPhotos(albumId) {
+     this.props.fetchFacebookAlbumPhotos(albumId);
   }
 
   render() {
@@ -41,5 +44,5 @@ class PhotoEditContainer extends Component {
 const mapStateToProps = ({ currentUser }) => {
   return { currentUser };
 };
-/*fetchFacebookPhotos*/
+
 export default connect(mapStateToProps, { photoRemoved, photosSelected, fetchFacebookAlbums, fetchFacebookAlbumPhotos })(PhotoEditContainer);
