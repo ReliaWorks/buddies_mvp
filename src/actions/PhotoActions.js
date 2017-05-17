@@ -2,17 +2,14 @@ import { Platform } from 'react-native';
 import firebase from 'firebase';
 import {
   AccessToken,
-  LoginManager,
   GraphRequest,
   GraphRequestManager
 } from 'react-native-fbsdk';
 import RNFetchBlob from 'react-native-fetch-blob';
-import ImageResizer from 'react-native-image-resizer';
 import {
   PHOTO_REMOVED,
   PHOTOS_SELECTED,
   PHOTO_UPLOADED,
-  PHOTOS_SAVED,
   FACEBOOK_ALBUMS_FETCHED,
   FACEBOOK_ALBUM_PHOTOS_REQUESTED,
   FACEBOOK_ALBUM_PHOTOS_FETCHED
@@ -37,45 +34,44 @@ export const photoRemoved = (photo) => {
 };
 
 // this action fires when user select images from camera roll (or potentially facebook at future)
-export const photosSelected = (photos, from) => {
+export const photosSelected = (photos) => {
   return (dispatch) => {
     console.log('from:', from);
     const { currentUser } = firebase.auth();
 
-    photos.forEach( photo => {
-      //const photoUri = from === 'cameraRoll' ? photo.uri : photo.path;
-      const photoUri = photo.path
+    photos.forEach(photo => {
+      const photoUri = photo.path;
 
-      dispatch({ type: PHOTOS_SELECTED, payload: photos.map( photo => photoUri ) })
+      dispatch({ type: PHOTOS_SELECTED, payload: photos.map(() => photoUri)});
 
       uploadImage(currentUser.uid, photoUri, from)
-        .then( uri => {
-          const newImageRef = firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`).push()
+      .then(uri => {
+        const newImageRef = firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`).push();
 
-          newImageRef.set({ url: uri, status: ACTIVE })
-            .then((snap) => {
-              dispatch({
-                type: PHOTO_UPLOADED,
-                payload: {
-                  photo: { key: newImageRef.key, url: uri },
-                  localUrl: photoUri
-                }
-              });
+        newImageRef.set({ url: uri, status: ACTIVE })
+          .then(() => {
+            dispatch({
+              type: PHOTO_UPLOADED,
+              payload: {
+                photo: { key: newImageRef.key, url: uri },
+                localUrl: photoUri
+              }
             });
-        })
-        .catch(error => console.log(error));
+          });
+      })
+      .catch(error => console.log(error));
     });
   };
 };
 
-const uploadImage = (uid, uri, mime = 'image/jpg', from) => {
+const uploadImage = (uid, uri, mime = 'image/jpg') => {
   return new Promise((resolve, reject) => {
-    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
     console.log('upload uri: ', uploadUri);
 
-    const sessionId = new Date().getTime()
-    let uploadBlob = null
-    const imageRef = firebase.storage().ref('profileImages').child(`${uid}`).child(`${sessionId}`)
+    const sessionId = new Date().getTime();
+    let uploadBlob = null;
+    const imageRef = firebase.storage().ref('profileImages').child(`${uid}`).child(`${sessionId}`);
 
     // below commented code is not required anymore since image picker already sends resized images for both camera roll and facebook images
 
@@ -105,18 +101,18 @@ const uploadImage = (uid, uri, mime = 'image/jpg', from) => {
         resolve(url);
       })
       .catch((error) => {
-        reject(error)
-      })
-  })
-}
+        reject(error);
+      });
+  });
+};
 
 export const fetchFacebookAlbums = () => {
   return (dispatch) => {
     let token = null;
 
     AccessToken.getCurrentAccessToken()
-      .then( data => {
-        token = data.accessToken.toString()
+      .then(data => {
+        token = data.accessToken.toString();
       })
       .then(() => {
         const request = new GraphRequest(
@@ -128,28 +124,29 @@ export const fetchFacebookAlbums = () => {
             }
           },
           (error, result) => {
-            dispatch({ type: FACEBOOK_ALBUMS_FETCHED, payload: result.albums.data })
+            dispatch({ type: FACEBOOK_ALBUMS_FETCHED, payload: result.albums.data });
           }
-        )
+        );
 
-        new GraphRequestManager().addRequest(request).start()
+        new GraphRequestManager().addRequest(request).start();
       })
-      .catch( error => console.log('error while fetchFacebookAlbums', error) )
-  }
-}
-export const fetchFacebookAlbumPhotos = (albumId, offset=0) => {
+      .catch(error => console.log('error while fetchFacebookAlbums', error));
+  };
+};
+
+export const fetchFacebookAlbumPhotos = (albumId, offset = 0) => {
   return (dispatch) => {
     // if this is not a load more type of request, make empty the facebookAlbumPhotos array.
     // if you don't dispatch this it will show a list of photos of the album that is previously viewed.
     if (offset === 0) {
-      dispatch({ type: FACEBOOK_ALBUM_PHOTOS_REQUESTED, payload: { id: albumId, photos: [] } })
+      dispatch({ type: FACEBOOK_ALBUM_PHOTOS_REQUESTED, payload: { id: albumId, photos: [] } });
     }
 
     let token = null;
 
     AccessToken.getCurrentAccessToken()
-      .then( data => {
-        token = data.accessToken.toString()
+      .then(data => {
+        token = data.accessToken.toString();
       })
       .then(() => {
         const request = new GraphRequest(
@@ -165,12 +162,12 @@ export const fetchFacebookAlbumPhotos = (albumId, offset=0) => {
               console.log('error while pulling facebook photos from album:', error);
               return;
             }
-            dispatch({ type: FACEBOOK_ALBUM_PHOTOS_FETCHED, payload: result })
+            dispatch({ type: FACEBOOK_ALBUM_PHOTOS_FETCHED, payload: result });
           }
-        )
+        );
 
-        new GraphRequestManager().addRequest(request).start()
+        new GraphRequestManager().addRequest(request).start();
       })
-      .catch( error => console.log('error while fetchFacebookAlbumPhotos', error) )
-  }
-}
+      .catch(error => console.log('error while fetchFacebookAlbumPhotos', error));
+  };
+};

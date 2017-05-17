@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { MARGIN } from '../common/styles';
-import { Button } from '../common';
 import EditablePhoto from './EditablePhoto';
 import CustomIcon from '../../assets/icons';
 import AddPhotosModal from './addPhoto/AddPhotosModal';
@@ -69,7 +68,7 @@ class PhotoEdit extends Component {
               visible={this.state.modalVisible}
               close={this.closeModal.bind(this)}
               getSelectedImages={this.getSelectedImages.bind(this)}
-              
+
             />
         </View>
       </View>
@@ -87,12 +86,11 @@ class PhotoEdit extends Component {
         >
         <View style={styles.removeIconContainer}>
           <TouchableOpacity onPress={() => onRemove(firstProfileImage)}>
-            <CustomIcon name='add_circle_icon' size={20}
-              style={{ backgroundColor: 'transparent', transform: [{ rotate: '45deg'}] }} />
-            {/*<Image
-              style={styles.iconStyle}
-              source={TRASH_ICON}
-            />*/}
+            <CustomIcon
+              name='add_circle_icon'
+              size={20}
+              style={{ backgroundColor: 'transparent', transform: [{ rotate: '45deg'}] }}
+            />
           </TouchableOpacity>
         </View>
         </Image>
