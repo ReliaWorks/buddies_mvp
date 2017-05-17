@@ -10,17 +10,20 @@ const INITIAL_STATE = {
   messages: [],
   loading: true,
   typingText: false,
+  justConnected: false
 };
 
 export default(state = INITIAL_STATE, action) => {
   switch(action.type) {
     case CURRENT_CHAT_FETCH: {
-      return { ...state, chatId: action.payload.chatId, loading: false, messages: action.payload.messages };
+      return { ...state, chatId: action.payload.chatId, loading: false, messages: action.payload.messages, justConnected: action.payload.justConnected };
     }
     case MESSAGE_SENT: {
-      if(action.payload.messages[0]._id === state.messages[0]._id) return state;
-      const updatedMsgs = GiftedChat.append(state.messages, action.payload.messages);
-      return { ...state, messages: updatedMsgs };
+      if(state.justConnected) {
+        const updatedMsgs = GiftedChat.append(state.messages, action.payload.messages);
+        return { ...state, messages: updatedMsgs };
+      }
+      return state;
     }
     case LOGOUT_USER:
       return { INITIAL_STATE };

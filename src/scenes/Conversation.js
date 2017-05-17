@@ -17,7 +17,6 @@ class Conversation extends Component {
   }
 
   componentWillUnmount() {
-    console.log("unmount",this.props);
     this.props.updateConversationNotifications(this.props.chat.chatId, this.props.currentUser.uid, this.props.connection.selectedMatchId);
   }
 
@@ -27,7 +26,7 @@ class Conversation extends Component {
 
   renderFooter() {
     if(this.props.chat.typingText) {
-      return(
+      return (
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>
             {this.props.chat.typingText}
@@ -79,7 +78,6 @@ class Conversation extends Component {
   }
 
   render() {
-    const { currentUser } = firebase.auth();
     let profileImage = '';
     if(this.props.currentUser.profilesImages)
       profileImage = this.props.currentUser.profileImages[0].url;
@@ -90,7 +88,7 @@ class Conversation extends Component {
           messages={this.props.chat.messages}
           onSend={this.onSend}
           user={{
-            _id: currentUser.uid,
+            _id: this.props.currentUser.uid,
             avatar: profileImage,
           }}
           renderFooter={this.renderFooter.bind(this)}
