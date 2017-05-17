@@ -5,42 +5,42 @@ import { Actions } from 'react-native-router-flux';
 import { fetchFacebookAlbums, fetchFacebookAlbumPhotos } from '../../../actions';
 
 class FbAlbums extends Component {
-  componentWillMount(){
-    this.props.fetchFacebookAlbums()
+  componentWillMount() {
+    this.props.fetchFacebookAlbums();
   }
 
   render() {
-
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id});
-    const albums = this.props.currentUser.facebookAlbums.filter((album) => album.count > 0)
+    const albums = this.props.currentUser.facebookAlbums.filter((album) => album.count > 0);
 
     return (
       <ListView
         contentContainerStyle={styles.albumList}
-        enableEmptySections={true}
+        enableEmptySections
         dataSource={ds.cloneWithRows(albums)}
         renderRow={(rowData) => this.renderAlbumAsListItem(rowData)}
       />
-    )
+    );
   }
   renderAlbumAsListItem(rowData) {
-    const { id, name, cover_photo, count } = rowData;
-    const source = cover_photo && cover_photo.images[0].source
+    const { id, name, cover_photo: coverPhoto, count } = rowData;
+    const source = coverPhoto && coverPhoto.images[0].source;
 
     return (
       <TouchableOpacity
         style={styles.albumItem}
         onPress={() => {
-          Actions.addPhotoFbAlbumPhotos()
-          this.props.fetchFacebookAlbumPhotos(id)
-        }}>
+          Actions.addPhotoFbAlbumPhotos();
+          this.props.fetchFacebookAlbumPhotos(id);
+        }}
+      >
         <Image style={styles.albumItemImage} source={{ uri: source }} />
         <View style={styles.albumItemRightContainer}>
           <Text style={styles.albumItemName}>{name}</Text>
           <Text style={styles.albumItemImageCount}>{count} photos</Text>
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 }
 

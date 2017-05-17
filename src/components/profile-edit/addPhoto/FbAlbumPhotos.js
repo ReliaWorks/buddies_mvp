@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ListView, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { ListView, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -10,7 +10,8 @@ class FbAlbums extends Component {
   render() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id});
 
-    const {id: albumId, name: albumName, photos} = this.props.currentUser.facebookAlbumPhotos;
+    //name: albumName will be used in future
+    const {id: albumId, photos} = this.props.currentUser.facebookAlbumPhotos;
 
     return (
       <ListView
@@ -28,7 +29,7 @@ class FbAlbums extends Component {
       />
     );
   }
-
+  
   renderFacebookPicAsListItem(rowData) {
     return (
       <TouchableOpacity

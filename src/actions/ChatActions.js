@@ -7,6 +7,7 @@ import {
   CHAT_PROFILE_FETCH_SUCCESS,
   CURRENT_CHAT_FETCH,
   MESSAGE_SENT,
+  CLOSE_CONVERSATION
 } from './types';
 
 export const updateConversationNotifications = (conversationId, uid, otherUserId) => {
@@ -23,6 +24,8 @@ export const updateMessageCenterNotification = (uid) => {
   };
 };
 
+let currentChatFetchOff = function () {};
+
 export const fetchConversation = (otherUserId) => {
   return (dispatch) => {
     const { currentUser } = firebase.auth();
@@ -31,7 +34,8 @@ export const fetchConversation = (otherUserId) => {
       if(snapshot.val()) {
         const conversationId = snapshot.val().conversationId;
         console.log(`In Fetch Conversation with chatid = ${conversationId}`);
-        firebase.database().ref(`/conversations/${conversationId}`)
+
+        currentChatFetchOff = firebase.database().ref(`/conversations/${conversationId}`)
           .on('value', snap => {
             dispatch({
               type: CURRENT_CHAT_FETCH,
@@ -92,5 +96,15 @@ export const saveMessage = (msg, currentUser, otherUser, chatId, messages) => {
           firebase.database().ref(`/notifications/new/${otherUser.selectedMatchId}`).set(true);
         });
     }
+  };
+};
+
+export const closeConversation = (conversationId) => {
+  return (dispatch) => {
+    firebase.database().ref(`/conversations/${conversationId}`).off('value', currentChatFetchOff);
+    dispatch({
+      type: CLOSE_CONVERSATION,
+      payload: { }
+    });
   };
 };

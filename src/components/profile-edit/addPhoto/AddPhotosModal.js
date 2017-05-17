@@ -1,7 +1,8 @@
-import React, {Component} from 'react'
-import { Image, Text, ListView, View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Actions, ActionConst } from 'react-native-router-flux';
-import Modal from 'react-native-modal'
+
+import React, {Component} from 'react';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import Modal from 'react-native-modal';
 import ImagePicker from 'react-native-image-crop-picker';
 import { Button } from '../../common';
 
@@ -17,10 +18,12 @@ export default class AddPhotosModal extends Component {
           <Text>Camera Roll</Text>
         </Button>
 
-        <Button onPress={() => {
-          this.props.close()
-          Actions.addPhotoFbAlbums()
-        }}>
+        <Button
+          onPress={() => {
+            this.props.close();
+            Actions.addPhotoFbAlbums();
+          }}
+        >
           <Text>Facebook</Text>
         </Button>
 
@@ -63,4 +66,4 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: 'transparent',
   }
-})
+});
