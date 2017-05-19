@@ -70,17 +70,12 @@ class ProfileImages extends Component {
 
     if(!profileImages || profileImages.length === 0)
       return this.renderNoPhotos();
-<<<<<<< HEAD
-    if(profileImages.length >= MAX_NUM_PHOTOS)
-      pics = profileImages.slice(0, MAX_NUM_PHOTOS);
-
-=======
 
     if(this.state.firstRender) pics = profileImages.slice(0, 1);
     else if(profileImages.length >= MAX_NUM_PHOTOS) {
         pics = profileImages.slice(0, MAX_NUM_PHOTOS);
     }
->>>>>>> ReliaWorks/qa
+
     return (
       <View style={profileImageContainer}>
         <Swiper
