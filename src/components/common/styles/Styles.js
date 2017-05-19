@@ -82,8 +82,24 @@ export const textStyle = {
 
 export const navBackNextStyle = {
   color: "black",
-  fontSize: 15,
+  fontSize: 14,
+  fontFamily: 'Source Sans Pro',
   marginTop: 8,
 //  marginLeft: 4,
   marginRight: 5,
+};
+
+export const searchBarContainer = {
+  backgroundColor: '#fbfbfb',
+  marginLeft: 15,
+  marginRight: 15,
+  marginTop: 15,
+  marginBottom: 10,
+};
+
+export const searchBarText = {
+  height: 40,
+  padding: 10,
+  fontFamily: 'SourceSansPro-Light',
+  fontSize: 18,
 };

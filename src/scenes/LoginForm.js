@@ -33,7 +33,6 @@ class LoginForm extends Component {
     );
   }
 //  {this.renderAppName()}
-
   renderLoginForm() {
     return (
       <View style={styles.container}>
@@ -58,7 +57,7 @@ class LoginForm extends Component {
       <LinearGradient colors={['#FF4F7D', '#6091FF', '#75FED8']} style={styles.linearGradient}>
         <View style={{justifyContent: 'center', flex: 35}}>
         <Text style={styles.nameText}>Wavelength</Text>
-        <View style={{height: 10}}/>
+        <View style={{height: 10}} />
         <Text style={styles.taglineText}>Meet people who share</Text>
         <Text style={styles.taglineText}>your interests.</Text>
         </View>

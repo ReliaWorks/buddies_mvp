@@ -84,6 +84,7 @@ const styles = {
   descriptionInput: {
     height: height - NEXT_BUTTON_CONTAINER_HEIGHT - PROGRESS_BAR_HEIGHT - DESC_HEADER_HEIGHT,
     fontSize: 18,
+    fontFamily: 'Source Sans Pro',
     backgroundColor: 'white',
     marginLeft: 15,
     marginRight: 15,
