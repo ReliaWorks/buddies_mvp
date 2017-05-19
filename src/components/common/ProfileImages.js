@@ -18,7 +18,12 @@ class ProfileImages extends Component {
     this.state = {
       showModal: false,
       currentImg: DEFAULT_PROFILE_PHOTO,
+      firstRender: true,
     };
+  }
+
+  componentDidMount() {
+    this.setState({firstRender: false});
   }
 
   renderNoPhotos() {
@@ -85,8 +90,11 @@ class ProfileImages extends Component {
 
     if(!profileImages || profileImages.length === 0)
       return this.renderNoPhotos();
-    if(profileImages.length >= MAX_NUM_PHOTOS)
-      pics = profileImages.slice(0, MAX_NUM_PHOTOS);
+
+    if(this.state.firstRender) pics = profileImages.slice(0, 1);
+    else if(profileImages.length >= MAX_NUM_PHOTOS) {
+        pics = profileImages.slice(0, MAX_NUM_PHOTOS);
+    }
     return (
       <View style={profileImageContainer}>
         <Swiper

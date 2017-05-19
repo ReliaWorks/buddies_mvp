@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser, potentialsFetch, checkNotifications } from '../actions';
-import { Deck, NoMoreCards, Spinner, GlowLoader } from '../components/common';
+import { NoMoreCards, GlowLoader } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
 class BrowseContainer extends Component {

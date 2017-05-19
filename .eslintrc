@@ -18,5 +18,6 @@
       "react/sort-comp": 0,
       "curly": 0,
       "eqeqeq": 0,
+      "no-unused-vars": 0,
   }
 }
