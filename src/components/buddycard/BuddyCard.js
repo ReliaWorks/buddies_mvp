@@ -1,15 +1,13 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Dimensions, Image, LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import ActivitySet from './ActivitySet';
-import { ProfileImages } from '../common';
+import { ProfileImages, ProfileImagesModal } from '../common';
 import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
 import CustomIcon from '../../assets/icons';
 
-//const { width, height } = Dimensions.get('window');
 const BOTTOM_PADDING = 100;
 const MARGIN = 15;
 
@@ -19,7 +17,15 @@ class BuddyCard extends Component {
 
     this.state = {
       descriptionExpanded: false,
+      showModal: false,
+      currentImageIndexOnSwiper: 0,
     };
+  }
+  onOpenModal(index) {
+    this.setState({ showModal: true, currentImageIndexOnSwiper: index });
+  }
+  onClose() {
+    this.setState({ showModal: false });
   }
 
   showEditableButton(editable) {
@@ -158,26 +164,36 @@ class BuddyCard extends Component {
     console.log("First name = ", firstName);
     return (
         <View style={{flex: 1, alignSelf: 'stretch' }}>
-          <ProfileImages value={{profileImages, editable}} />
-            <View style={this.descContainerStyle()}>
-              <ScrollView>
-                <TouchableWithoutFeedback onPress={this.expandDescription.bind(this)}>
-                <View>
-                 <View style={{flexDirection: 'row'}}>
-                    <Text style={nameText}>
-                      {firstName}
-                      {this.renderAge(age)}
-                    </Text>
-                    {this.showEditableButton(editable)}
-                  </View>
-                  {this.renderLocation(location, locationText)}
-                  {this.renderActivitiesAffiliations(activities, affiliations, editable)}
-                  {this.renderDescription(description)}
-                  </View>
-                </TouchableWithoutFeedback>
-              </ScrollView>
-              {this.renderMatchControls(likeable, uid, this.props.onConnect, this.props.onPass)}
-            </View>
+          <ProfileImages
+            value={{profileImages, editable}}
+            onOpenModal={this.onOpenModal.bind(this)} 
+          />
+          <ProfileImagesModal
+            profileImages={profileImages}
+            onClose={this.onClose.bind(this)}
+            visible={this.state.showModal}
+            initialIndex={this.state.currentImageIndexOnSwiper}
+          />
+
+          <View style={this.descContainerStyle()}>
+            <ScrollView>
+              <TouchableWithoutFeedback onPress={this.expandDescription.bind(this)}>
+              <View>
+               <View style={{flexDirection: 'row'}}>
+                  <Text style={nameText}>
+                    {firstName}
+                    {this.renderAge(age)}
+                  </Text>
+                  {this.showEditableButton(editable)}
+                </View>
+                {this.renderLocation(location, locationText)}
+                {this.renderActivitiesAffiliations(activities, affiliations, editable)}
+                {this.renderDescription(description)}
+                </View>
+              </TouchableWithoutFeedback>
+            </ScrollView>
+            {this.renderMatchControls(likeable, uid, this.props.onConnect, this.props.onPass)}
+          </View>
         </View>
     );
   }

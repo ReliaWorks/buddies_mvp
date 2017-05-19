@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "432468217036",
+    "firebase_url": "https://activities-test-a3871.firebaseio.com",
+    "project_id": "activities-test-a3871",
+    "storage_bucket": "activities-test-a3871.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432468217036:android:56c373e80b9465dd",
+        "android_client_info": {
+          "package_name": "com.buddies_v3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432468217036-bbq3jf3gk1igf3b7tptge5skrmb3e6n5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx4K3zaeTaLRK4uA792NtIQ-5tmwhR_HY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

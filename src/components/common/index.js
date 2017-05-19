@@ -10,7 +10,7 @@ export * from './Message';
 export * from './NoMoreCards';
 export * from './PictureModal';
 export * from './ProfileImages';
-//export * from './ProfileModal';
+export * from './ProfileImagesModal';
 export * from './SelectableTile';
 export * from './Spinner';
 export * from './Tile';

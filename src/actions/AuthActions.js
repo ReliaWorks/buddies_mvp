@@ -53,7 +53,7 @@ export const checkIfAlreadyLoggedIn = () => {
         if(data[0][1]) {
           token = data[0][1];
           uid = data[1][1];
-          console.log(`token = ${token}`);
+          console.log(`tokenn = ${token}`);
           console.log(`uid = ${uid}`);
           const provider = firebase.auth.FacebookAuthProvider;
           const cred = provider.credential(token);
