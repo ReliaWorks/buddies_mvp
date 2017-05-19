@@ -96,11 +96,10 @@ const styles = {
   },
   descriptionInput: {
     height: 300,
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: 'Source Sans Pro',
     marginLeft: 10,
     color: '#000000',
-    fontWeight: '100',
   }
 };
 

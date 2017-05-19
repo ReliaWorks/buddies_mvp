@@ -166,7 +166,7 @@ class BuddyCard extends Component {
         <View style={{flex: 1, alignSelf: 'stretch' }}>
           <ProfileImages
             value={{profileImages, editable}}
-            onOpenModal={this.onOpenModal.bind(this)} 
+            onOpenModal={this.onOpenModal.bind(this)}
           />
           <ProfileImagesModal
             profileImages={profileImages}
@@ -229,12 +229,10 @@ const localStyles = StyleSheet.create({
     borderColor: '#D5D5D5',
     marginLeft: MARGIN,
     marginRight: MARGIN,
-//    marginTop: MARGIN,
     marginBottom: BOTTOM_PADDING,
   },
   descriptionText: {
     fontSize: 18,
-    fontWeight: '200',
     marginTop: MARGIN,
     fontFamily: 'Source Sans Pro',
     backgroundColor: 'white',

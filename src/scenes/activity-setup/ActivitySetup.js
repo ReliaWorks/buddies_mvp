@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, ListView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SelectableTile } from '../../components/common';
+import { searchBarText, searchBarContainer } from '../../components/common/styles';
 import { NEXT_BUTTON_CONTAINER_HEIGHT, PROGRESS_BAR_HEIGHT } from '../../constants';
 
 const { width } = Dimensions.get('window');
@@ -83,17 +84,18 @@ class ActivitySetup extends Component {
       );
     }
   }
-  renderSearchBar(onChangeText){
-	  return (
-		  <View style={styles.searchBarContainer}>
-			<TextInput
-				style={styles.searchBar}
-				placeholder="Search for an activity"
-        onChangeText={onChangeText}
-      />
-		  </View>
-	  )
+  renderSearchBar(onChangeText) {
+    return(
+      <View style={searchBarContainer}>
+        <TextInput
+          style={searchBarText}
+          placeholder="Search for an activity"
+          onChangeText={onChangeText}
+        />
+      </View>
+    );
   }
+
   render() {
     const { activitiesDS, onNext, onSearchBarChangeText } = this.props;
     return (
@@ -113,14 +115,6 @@ const styles = {
     justifyContent: 'flex-end',
     flex: 0.1,
     borderTopWidth: 7,
-  },
-  searchBarContainer: {
-    backgroundColor: '#fbfbfb',
-    margin: 15,
-  },
-  searchBar: {
-    height: 35,
-    padding: 10,
   },
   iconStyle: {
     flexDirection: 'column',

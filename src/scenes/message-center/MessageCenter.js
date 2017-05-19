@@ -117,10 +117,8 @@ const styles = {
     justifyContent: 'space-around'
   },
   headerText: {
-    fontSize: 16,
-//    color: '#00A3B7',
-    fontFamily: 'Source Sans Pro',
-    fontWeight: '500',
+    fontSize: 18,
+    fontFamily: 'SourceSansPro-SemiBold',
   },
   noConvoThumbnailStyle: {
     flex: 1,

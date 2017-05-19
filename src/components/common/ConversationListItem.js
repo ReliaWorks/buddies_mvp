@@ -89,9 +89,8 @@ const styles = {
     flex: 1,
   },
   nameText: {
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'SourceSansPro-Bold',
     fontSize: 14,
-    fontWeight: '700',
     marginTop: MARGIN,
   },
   dateText: {
