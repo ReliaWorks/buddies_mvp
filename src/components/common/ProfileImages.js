@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, TouchableWithoutFeedback, TouchableOpacity, View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
-import { PictureModal } from './PictureModal';
 import { buttonStyle } from './styles';
 import { ICON_SIZE, DEFAULT_PROFILE_PHOTO } from '../../constants';
 import CustomIcon from '../../assets/icons';
@@ -16,7 +14,7 @@ class ProfileImages extends Component {
     super(props);
 
     this.state = {
-      showModal: false,
+      currentImageIndexOnSwiper: 0,
       currentImg: DEFAULT_PROFILE_PHOTO,
       firstRender: true,
     };
@@ -28,24 +26,6 @@ class ProfileImages extends Component {
 
   renderNoPhotos() {
     return this.renderPhoto('1', DEFAULT_PROFILE_PHOTO, this.props.editable);
-/*    return (
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: (height * 0.5),
-          width: width,
-          borderBottomWidth: 1
-        }}
-      >
-        <Text style={textStyle}>No photos</Text>
-      </View>
-    );
-    */
-  }
-
-  onClose() {
-    this.setState({ showModal: false });
   }
 
   showEditableButton(editable) {
@@ -69,7 +49,7 @@ class ProfileImages extends Component {
       <View key={key} style={styles.profileImageContainer}>
         <TouchableWithoutFeedback
           onPress={() => {
-            this.setState({ showModal: true, currentImg: img });
+            this.props.onOpenModal(this.state.currentImageIndexOnSwiper);
           }}
         >
           <Image
@@ -95,10 +75,14 @@ class ProfileImages extends Component {
     else if(profileImages.length >= MAX_NUM_PHOTOS) {
         pics = profileImages.slice(0, MAX_NUM_PHOTOS);
     }
+
     return (
       <View style={profileImageContainer}>
         <Swiper
           horizontal={false}
+          onMomentumScrollEnd={(e, state) => {
+            this.setState({currentImageIndexOnSwiper: state.index});
+          }}
           dot={
             <View
               style={{
@@ -129,12 +113,6 @@ class ProfileImages extends Component {
               return this.renderPhoto(pic.key, pic.url, editable);
           })}
         </Swiper>
-        <PictureModal
-          visible={this.state.showModal}
-          onClose={this.onClose.bind(this)}
-          img={this.state.currentImg}
-          imgSet={profileImages}
-        />
       </View>
     );
   }
