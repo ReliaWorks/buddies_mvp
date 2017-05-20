@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { MARGIN } from '../common/styles';
 import EditablePhoto from './EditablePhoto';
 import CustomIcon from '../../assets/icons';
@@ -25,6 +25,7 @@ class PhotoEdit extends Component {
 
   renderPics() {
     const { profileImages, onRemove } = this.props;
+
     const firstProfileImage = profileImages[0];
     const otherImages = profileImages.slice(1, MAX_NUM_PHOTOS - 1);
 
@@ -97,18 +98,50 @@ class PhotoEdit extends Component {
     );
   }
 
-  render() {
-    return (
-      <View style={{flex: 1}}>
-        {this.renderPics()}
+  renderAddImageButtons() {
+    return(
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text
+          style={{
+            fontFamily: 'SourceSansPro-Bold',
+            fontSize: 18,
+            marginBottom: 15,
+          }}
+        >
+          Add photos:
+        </Text>
+        <TouchableOpacity
+          style={styles.camera}
+          onPress={() => this.setState({modalVisible: true})}
+        >
+         <CustomIcon
+           name="camera_icon"
+           size={44}
+         />
+       </TouchableOpacity>
+       <AddPhotosModal
+         visible={this.state.modalVisible}
+         close={this.closeModal.bind(this)}
+         getSelectedImages={this.getSelectedImages.bind(this)}
+       />
       </View>
     );
+  }
+  render() {
+    if(this.props.profileImages.length === 0) {
+      return(this.renderAddImageButtons());
+    } else
+      return (
+        <View style={{flex: 1}}>
+          {this.renderPics()}
+        </View>
+      );
   }
 }
 
 const styles = {
   removeIconContainer: {
-    //backgroundColor: 'white',
+    backgroundColor: 'white',
     alignSelf: 'flex-end',
     marginRight: 2,
     marginBottom: 2,
