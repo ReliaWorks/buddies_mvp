@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import PhotoEdit from '../components/profile-edit/PhotoEdit';
-import { photoRemoved, photosSelected, fetchFacebookAlbums, fetchFacebookAlbumPhotos } from '../actions';
+import PhotoEdit from './PhotoEdit';
+import { photoRemoved, photosSelected, fetchFacebookAlbums, fetchFacebookAlbumPhotos } from '../../actions';
 
 class PhotoEditContainer extends Component {
   onImageSave() {

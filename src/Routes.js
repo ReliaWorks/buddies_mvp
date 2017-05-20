@@ -9,7 +9,7 @@ import ActivitySetupScene from './scenes/activity-setup/';
 import AffiliationSetupScene from './scenes/affiliation-setup/';
 import DescriptionSetup from './scenes/profile-setup/DescriptionSetup';
 import UserEditContainer from './scenes/user-edit/UserEditContainer';
-import PhotoEditContainer from './containers/PhotoEditContainer';
+import PhotoEditContainer from './components/profile-edit/PhotoEditContainer';
 import UserView from './scenes/UserView';
 import MessageCenterContainer from './scenes/message-center';
 import ConnectionContainer from './components/connection';

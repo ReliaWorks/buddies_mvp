@@ -25,7 +25,7 @@ class ProfileImages extends Component {
   }
 
   renderNoPhotos() {
-    return this.renderPhoto('1', DEFAULT_PROFILE_PHOTO, this.props.editable);
+    return this.renderPhoto('1', DEFAULT_PROFILE_PHOTO, this.props.value.editable);
   }
 
   showEditableButton(editable) {
