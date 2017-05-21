@@ -83,16 +83,16 @@ class ActivitySetup extends Component {
       );
     }
   }
-  renderSearchBar(onChangeText){
-	  return (
-		  <View style={styles.searchBarContainer}>
-			<TextInput
-				style={styles.searchBar}
-				placeholder="Search for an activity"
-        onChangeText={onChangeText}
-      />
-		  </View>
-	  )
+  renderSearchBar(onChangeText) {
+    return (
+      <View style={styles.searchBarContainer}>
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search for an activity"
+          onChangeText={onChangeText}
+        />
+      </View>
+    );
   }
   render() {
     const { activitiesDS, onNext, onSearchBarChangeText } = this.props;

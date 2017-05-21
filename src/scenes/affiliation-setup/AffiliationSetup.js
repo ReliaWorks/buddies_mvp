@@ -87,16 +87,16 @@ class AffiliationSetup extends Component {
     );
   }
 
-  renderSearchBar(onChangeText){
-	  return (
-		  <View style={styles.searchBarContainer}>
-			<TextInput
-				style={styles.searchBar}
-				placeholder="Search for an affiliation"
-        onChangeText={onChangeText}
-      />
-		  </View>
-	  )
+  renderSearchBar(onChangeText) {
+    return(
+      <View style={styles.searchBarContainer}>
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search for an affiliation"
+          onChangeText={onChangeText}
+        />
+      </View>
+    );
   }
 
   render() {
