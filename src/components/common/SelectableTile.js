@@ -73,7 +73,8 @@ const styles = {
   },
   activityTextLabel: {
     fontSize: 14,
-    fontWeight: '500',
+    fontFamily: 'Source Sans Pro',
+//    fontFamily: 'SourceSansPro-SemiBold',
     textAlign: 'center',
   }
 };

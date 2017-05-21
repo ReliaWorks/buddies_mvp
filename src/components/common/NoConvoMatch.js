@@ -32,13 +32,19 @@ class NoConvoMatch extends Component {
             style={styles.noConvoThumbnailStyle}
             source={{ uri: this.props.otherUserPic }}
           />
-          <Text style={{textAlign: 'center', marginTop: 10, fontSize: 14}}>{this.props.otherUserName}</Text>
+          <Text style={styles.imageNameLabel}>{this.props.otherUserName}</Text>
         </View>
       </TouchableOpacity>
     );
   }
 }
 const styles = {
+  imageNameLabel: {
+    fontSize: 14,
+    fontFamily: 'Source Sans Pro',
+    textAlign: 'center',
+    marginTop: 10
+  },
   noConvoThumbnailStyle: {
     height: 70,
     width: 70,

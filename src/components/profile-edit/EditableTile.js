@@ -48,7 +48,6 @@ const styles = {
   title: {
     alignSelf: 'center',
     fontSize: 14,
-    fontWeight: '100',
     fontFamily: 'Source Sans Pro',
     textAlign: 'center',
     paddingTop: 10,

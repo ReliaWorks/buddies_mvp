@@ -13,9 +13,8 @@ export default styles = {
   },
   headerText: {
     textAlign: 'center',
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'SourceSansPro-Bold',
     fontSize: 16,
-    fontWeight: 'bold',
     marginTop: 10,
   },
   textStyle: {
