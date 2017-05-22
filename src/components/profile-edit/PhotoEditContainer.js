@@ -8,6 +8,7 @@ class PhotoEditContainer extends Component {
   onImageSave() {
     Actions.pop();
   }
+
   onImageRemove(photo) {
     this.props.photoRemoved(photo);
   }

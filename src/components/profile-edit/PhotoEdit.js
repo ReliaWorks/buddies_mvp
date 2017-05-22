@@ -5,6 +5,7 @@ import EditablePhoto from './EditablePhoto';
 import CustomIcon from '../../assets/icons';
 import AddPhotosModal from './addPhoto/AddPhotosModal';
 import UploadingPhoto from './UploadingPhoto';
+import { Confirm } from '../common';
 
 const { width } = Dimensions.get('window');
 const MAX_NUM_PHOTOS = 25;
@@ -13,7 +14,9 @@ class PhotoEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: false
+      modalVisible: false,
+      showDeleteConfirmModal: false,
+      removedPhoto: null,
     };
   }
   closeModal() {
@@ -77,6 +80,19 @@ class PhotoEdit extends Component {
     );
   }
 
+  cancelDelete() {
+    this.setState({showDeleteConfirmModal: false});
+  }
+
+  confirmDelete(firstProfileImage) {
+    this.setState({showDeleteConfirmModal: false});
+    this.props.onRemove(firstProfileImage);
+  }
+
+  removePic() {
+    this.setState({showDeleteConfirmModal: true});
+  }
+
   renderPrimaryPic(firstProfileImage, onRemove) {
     return(
       <View style={{ marginLeft: MARGIN, marginTop: MARGIN, height: 300, width: width - (MARGIN * 2) }}>
@@ -85,15 +101,22 @@ class PhotoEdit extends Component {
           source={{ uri: firstProfileImage.url }}
         >
         <View style={styles.removeIconContainer}>
-          <TouchableOpacity onPress={() => onRemove(firstProfileImage)}>
+          <TouchableOpacity onPress={this.removePic.bind(this)}>
             <CustomIcon
               name='add_circle_icon'
               size={20}
-              style={{ backgroundColor: 'transparent', transform: [{ rotate: '45deg'}] }}
+              style={{ backgroundColor: 'white', transform: [{ rotate: '45deg'}] }}
             />
           </TouchableOpacity>
         </View>
         </Image>
+        <Confirm
+          visible={this.state.showDeleteConfirmModal}
+          onAccept={this.cancelDelete.bind(this)}
+          onDecline={this.confirmDelete.bind(this, firstProfileImage)}
+        >
+          Are you sure you want to delete this picture?
+        </Confirm>
       </View>
     );
   }
@@ -141,7 +164,6 @@ class PhotoEdit extends Component {
 
 const styles = {
   removeIconContainer: {
-    backgroundColor: 'white',
     alignSelf: 'flex-end',
     marginRight: 2,
     marginBottom: 2,
