@@ -57,7 +57,7 @@ export const homeLeftIconButton = () => {
     >
       <CustomIcon
         name="home_icon"
-        size={20}
+        size={ICON_SIZE - 5}
         color="black"
         style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_SIZE}}
       />
@@ -76,7 +76,7 @@ export const homeRightIconButton = () => {
     >
       <CustomIcon
         name="home_icon"
-        size={20}
+        size={ICON_SIZE - 5}
         color="black"
         style={{
           marginTop: -1 * ICON_SIZE,
