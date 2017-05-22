@@ -4,14 +4,15 @@ import { Button } from '../../components/common';
 
 const { width, height } = Dimensions.get('window');
 const MARGIN = 15;
-const CONNECTION_HEADER_TEXT = "You're connected!";
+const CONNECTION_HEADER_TEXT = "You're connected";
 
 class Connection extends Component {
-  renderHeader() {
+  renderHeader(otherUserName) {
     const { headerView, headerStyle } = styles;
     return (
       <View style={headerView}>
         <Text style={headerStyle}>{CONNECTION_HEADER_TEXT}</Text>
+        <Text style={headerStyle}>with {otherUserName}!</Text>
       </View>
     );
   }
@@ -45,7 +46,7 @@ class Connection extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        {this.renderHeader()}
+        {this.renderHeader(this.props.otherUser.name)}
         {this.renderProfilePics(this.props.currentUser.pic, this.props.otherUser.pic)}
         {this.renderMessageButton(this.props.startChat, this.props.keepBrowsing)}
       </View>
