@@ -35,7 +35,7 @@ class ProfileImages extends Component {
         <TouchableOpacity onPress={() => Actions.photoEdit()} style={buttonStyle}>
           <CustomIcon
             name="edit_icon"
-            size={ICON_SIZE}
+            size={ICON_SIZE - 5}
             color="white"
             style={{ padding: 4 }}
           />

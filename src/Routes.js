@@ -169,6 +169,8 @@ class Routes extends Component {
             borderBottomWidth: 3,
             borderBottomColor: 'black',
           }}
+          leftButton={profileIconButton}
+          type={ActionConst.RESET}
         />
         <Scene
           key="addPhotoFbAlbums"
@@ -206,6 +208,8 @@ class Routes extends Component {
             borderBottomWidth: 3,
             borderBottomColor: 'black',
           }}
+          leftButton={profileIconButton}
+          type={ActionConst.RESET}
         />
       </Router>
     );
