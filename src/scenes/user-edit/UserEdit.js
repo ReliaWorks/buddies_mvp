@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, TextInput, View } from 'react-native';
+import { Dimensions, ScrollView, Text, TextInput, View } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import ActivitiesEdit from '../../components/profile-edit/ActivitiesEdit';
 import AffiliationsEdit from '../../components/profile-edit/AffiliationsEdit';
+import { Button } from '../../components/common';
+import { DESCRIPTION_PLACEHOLDER } from '../../constants';
 
 const MARGIN = 15;
-const DESCRIPTION_PLACEHOLDER = 'Describe yourself';
+const { width } = Dimensions.get('window');
 
 class UserEdit extends Component {
   constructor(props) {
@@ -53,6 +56,14 @@ class UserEdit extends Component {
     );
   }
 
+  renderSaveButton() {
+    return (
+      <Button onPress={() => Actions.userView()} style={saveButtonStyles}>
+        Save
+      </Button>
+    );
+  }
+
   render() {
     const { activities, affiliations } = this.props;
 
@@ -61,10 +72,29 @@ class UserEdit extends Component {
         {this.renderActivities(activities)}
         {this.renderAffiliations(affiliations)}
         {this.renderDescription()}
+        {this.renderSaveButton()}
       </ScrollView>
     );
   }
 }
+
+const saveButtonStyles = {
+  textStyle: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 16,
+    fontFamily: 'SourceSansPro-Bold',
+  },
+  buttonStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'black',
+    width: width - (MARGIN * 2),
+    marginLeft: MARGIN,
+    marginRight: MARGIN,
+    marginBottom: 5,
+  }
+};
 
 const styles = {
   scrollViewContainer: {
@@ -80,11 +110,6 @@ const styles = {
     alignItems: 'center',
     marginTop: MARGIN,
     marginBottom: 10,
-  },
-  comingSoonText: {
-    fontFamily: 'Source Sans Pro',
-    fontSize: 14,
-    color: 'red',
   },
   descriptionContainer: {
     backgroundColor: 'white',
