@@ -46,7 +46,7 @@ class PhotoEdit extends Component {
                   url={img.url}
                   photo={img}
                   key={img.key}
-                  onRemove={onRemove}
+                  onRemove={(photo) => this.removePic(photo)}
                 />
               );
             })}
@@ -85,13 +85,13 @@ class PhotoEdit extends Component {
     this.setState({showDeleteConfirmModal: false});
   }
 
-  confirmDelete(firstProfileImage) {
+  confirmDelete() {
     this.setState({showDeleteConfirmModal: false});
-    this.props.onRemove(firstProfileImage);
+    this.props.onRemove(this.state.removedPhoto);
   }
 
-  removePic() {
-    this.setState({showDeleteConfirmModal: true});
+  removePic(photo) {
+    this.setState({showDeleteConfirmModal: true, removedPhoto: photo});
   }
 
   renderPrimaryPic(firstProfileImage, onRemove) {
@@ -101,7 +101,7 @@ class PhotoEdit extends Component {
           style={localStyles.mainImageStyle}
           source={{ uri: firstProfileImage.url }}
         >
-          <TouchableOpacity onPress={this.removePic.bind(this)}>
+          <TouchableOpacity onPress={() => this.removePic(firstProfileImage)}>
             <View style={styles.removeIconContainer}>
               <CustomIcon
                 name='add_circle_icon' size={20}
@@ -113,7 +113,7 @@ class PhotoEdit extends Component {
         <Confirm
           visible={this.state.showDeleteConfirmModal}
           onAccept={this.cancelDelete.bind(this)}
-          onDecline={this.confirmDelete.bind(this, firstProfileImage)}
+          onDecline={this.confirmDelete.bind(this)}
         >
           Are you sure you want to delete this picture?
         </Confirm>
