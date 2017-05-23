@@ -5,3 +5,4 @@ export * from './ChatActions';
 export * from './MatchActions';
 export * from './ProfileSetupActions';
 export * from './PhotoActions';
+export * from './ConnectionActions';
