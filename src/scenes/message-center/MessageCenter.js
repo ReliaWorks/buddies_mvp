@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { ListView, ScrollView, Text, View } from 'react-native';
+import { Dimensions, ListView, ScrollView, Text, View } from 'react-native';
 import NoConvoMatch from '../../components/common/NoConvoMatch';
 import ConversationListItem from '../../components/common/ConversationListItem';
-import { TypingDots } from '../../components/common';
+import { EmptyNewConnectionList, TypingDots } from '../../components/common';
 //import { homeLeftIconButton } from '../../icons';
 //import { ICON_CLICKABLE_AREA_WIDTH } from '../../constants';
 
 const MARGIN = 15;
-const ZERO_CONVOS = `You have no messages but you have new connections waiting for you to say hi!`;
+const { height } = Dimensions.get('window');
+const ZERO_CONVOS = `You have no messages but you have new connections waiting for you to say Hi!`;
 //const MSG_CENTER_TITLE_IMAGE = require("../../assets/img/MsgCenter.png");
 
 class MessageCenter extends Component {
@@ -35,18 +36,33 @@ class MessageCenter extends Component {
   }
 
   renderZeroState(msg) {
-    return(
-      <View style={styles.zeroStateContainer}>
-        <Text style={styles.zeroStateText}>
-          {msg}
-        </Text>
+    return (
+      <View style={{flex: 1}}>
+        <EmptyNewConnectionList />
+        <View style={styles.zeroStateContainer}>
+          <Text style={styles.zeroStateText}>
+            {msg}
+          </Text>
+        </View>
       </View>
     );
   }
 
   renderConversations(firstName) {
     if(this.props.matchesWithChatDataSource.getRowCount() === 0)
-      return this.renderZeroState(`Hey ${firstName},\n\n${ZERO_CONVOS}`);
+    return(
+      <View style={styles.zeroStateContainer}>
+        <View style={styles.zeroStateTextContainer}>
+        <Text style={styles.zeroStateText}>
+          Hey {firstName},
+        </Text>
+        <View style={{height: 10}} />
+        <Text style={styles.zeroStateText}>
+          {ZERO_CONVOS}
+        </Text>
+        </View>
+      </View>
+    );
     return (
       <View style={{flex: 1}}>
           <ListView
@@ -64,10 +80,11 @@ class MessageCenter extends Component {
     if(this.props.matchesWithoutChatDataSource.getRowCount() === 0)
       return null;
     return (
+      <View style={{flex: 1}}>
       <View style={{flex: 0.30, marginTop: MARGIN, marginLeft: MARGIN }}>
         <Text style={styles.headerText}>New Connections</Text>
         <ListView
-          style={styles.container}
+          style={{...styles.container, marginTop: 10}}
           dataSource={this.props.matchesWithoutChatDataSource}
           renderRow={(data) => <NoConvoMatch {...data} />}
           enableEmptySections
@@ -75,6 +92,8 @@ class MessageCenter extends Component {
           horizontal
           showsHorizontalScrollIndicator={false}
         />
+      </View>
+      <View style={{borderBottomWidth: 1, marginTop: MARGIN}} />
       </View>
     );
   }
@@ -98,7 +117,6 @@ class MessageCenter extends Component {
         <View style={{flex: 1, marginBottom: MARGIN}}>
           <ScrollView style={styles.container}>
             {this.renderNewConnections()}
-            <View style={{borderBottomWidth: 1, marginTop: MARGIN}} />
             {this.renderConversations(this.props.firstName)}
           </ScrollView>
         </View>
@@ -110,7 +128,6 @@ class MessageCenter extends Component {
 const styles = {
   container: {
     flex: 1,
-    marginTop: 10,
   },
   headerContentStyle: {
     flexDirection: 'column',
@@ -141,14 +158,13 @@ const styles = {
   zeroStateContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     alignSelf: 'center',
-    padding: MARGIN * 3,
+    padding: MARGIN * 2,
   },
   zeroStateText: {
     textAlign: 'left',
     fontFamily: 'Source Sans Pro',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '700',
     color: '#00A3B7'
   },

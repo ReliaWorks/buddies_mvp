@@ -1,12 +1,16 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 import { AppRegistry } from 'react-native';
-import { Sentry } from 'react-native-sentry';
+import { Sentry, SentryLog } from 'react-native-sentry';
 import App from './src/App';
+import { SENTRY_DNS } from './src/config';
 
-Sentry.config("https://2f81115717434870acf29f260688c226:63241df70957413bb812dcd4ed0b2c7c@sentry.io/169776").install();
+Sentry.config(SENTRY_DNS, {
+  logLevel: SentryLog.Debug,
+  autoBreadcrumbs: {
+    xhr: false,
+    console: true,
+    dom: true,
+    location: true,
+  }
+}).install();
 
 AppRegistry.registerComponent('buddies_v3', () => App);

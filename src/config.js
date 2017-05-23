@@ -5,3 +5,5 @@ export const FIREBASE_CONFIG = {
   storageBucket: 'activities-test-a3871.appspot.com',
   messagingSenderId: '432468217036'
 };
+
+export const SENTRY_DNS = "https://2f81115717434870acf29f260688c226:63241df70957413bb812dcd4ed0b2c7c@sentry.io/169776";
