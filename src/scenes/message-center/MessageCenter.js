@@ -7,7 +7,7 @@ import { TypingDots } from '../../components/common';
 //import { ICON_CLICKABLE_AREA_WIDTH } from '../../constants';
 
 const MARGIN = 15;
-const ZERO_CONVOS = `You have no messages but you have new connections waiting for you to say hi!`;
+const ZERO_CONVOS = `You have no messages but you have new connections waiting for you to say Hi!`;
 //const MSG_CENTER_TITLE_IMAGE = require("../../assets/img/MsgCenter.png");
 
 class MessageCenter extends Component {
@@ -64,10 +64,11 @@ class MessageCenter extends Component {
     if(this.props.matchesWithoutChatDataSource.getRowCount() === 0)
       return null;
     return (
+      <View style={{flex: 1}}>
       <View style={{flex: 0.30, marginTop: MARGIN, marginLeft: MARGIN }}>
         <Text style={styles.headerText}>New Connections</Text>
         <ListView
-          style={styles.container}
+          style={{...styles.container, marginTop: 10}}
           dataSource={this.props.matchesWithoutChatDataSource}
           renderRow={(data) => <NoConvoMatch {...data} />}
           enableEmptySections
@@ -75,6 +76,8 @@ class MessageCenter extends Component {
           horizontal
           showsHorizontalScrollIndicator={false}
         />
+      </View>
+      <View style={{borderBottomWidth: 1, marginTop: MARGIN}} />
       </View>
     );
   }
@@ -98,7 +101,6 @@ class MessageCenter extends Component {
         <View style={{flex: 1, marginBottom: MARGIN}}>
           <ScrollView style={styles.container}>
             {this.renderNewConnections()}
-            <View style={{borderBottomWidth: 1, marginTop: MARGIN}} />
             {this.renderConversations(this.props.firstName)}
           </ScrollView>
         </View>
@@ -110,7 +112,7 @@ class MessageCenter extends Component {
 const styles = {
   container: {
     flex: 1,
-    marginTop: 10,
+//    marginTop: 10,
   },
   headerContentStyle: {
     flexDirection: 'column',
