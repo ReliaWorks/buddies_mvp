@@ -8,6 +8,7 @@ import {
   ACTIVITIES_SAVED,
   ACTIVITY_SELECTED,
   ACTIVITY_UNSELECTED,
+  ACTIVITY_EDITTED,
   AFFILIATION_SELECTED,
   AFFILIATION_UNSELECTED,
   DESCRIPTION_SAVED,
@@ -24,6 +25,7 @@ import {
   FACEBOOK_ALBUM_PHOTOS_FETCHED,
 } from '../actions/types';
 import { ACTIVE } from '../constants';
+import {getValue} from '../components/profile-edit/activityAttributeUtils';
 
 const INITIAL_STATE = {
   uid: '',
@@ -73,6 +75,7 @@ export default(state = INITIAL_STATE, action) => {
               name: activity.name,
               icon: activity.icon,
               uid: activity.uid,
+              value: getValue(activity.name, activity.value)
             });
           }
         });
@@ -114,12 +117,24 @@ export default(state = INITIAL_STATE, action) => {
               name: activity.name,
               icon: activity.icon,
               uid: activity.uid,
+              value: activity.value
             });
           }
         });
       }
 
       return { ...state, activities: updatedActivities };
+    }
+    case ACTIVITY_EDITTED: {
+      const {activityId, value} = action.payload;
+      const activities = state.activities.map(activity => {
+        if (activity.uid === activityId) {
+          return {...activity, value};
+        } else {
+          return activity;
+        }
+      });
+      return {...state, activities};
     }
     case AFFILIATION_SELECTED: {
       const updatedAffiliations = [...state.affiliations, action.payload];
@@ -173,7 +188,6 @@ export default(state = INITIAL_STATE, action) => {
       } else {
         updatedImages.push(action.payload);
       }
-      console.log(updatedImages);
       return { ...state, profileImages: updatedImages };
     }
     case PHOTOS_SELECTED: {
@@ -185,16 +199,18 @@ export default(state = INITIAL_STATE, action) => {
       const profileImages = [...state.profileImages, action.payload.photo];
       return { ...state, profileImages, profileImagesUploadProgress };
     }
-    case FACEBOOK_ALBUMS_FETCHED:
+    case FACEBOOK_ALBUMS_FETCHED: {
       const facebookAlbums = action.payload;
       return { ...state, facebookAlbums };
-    case FACEBOOK_ALBUM_PHOTOS_REQUESTED:
-      return { ...state, facebookAlbumPhotos: action.payload }
-    case FACEBOOK_ALBUM_PHOTOS_FETCHED:
+    }
+    case FACEBOOK_ALBUM_PHOTOS_REQUESTED: {
+      return { ...state, facebookAlbumPhotos: action.payload };
+    }
+    case FACEBOOK_ALBUM_PHOTOS_FETCHED: {
       const { id, name, photos } = action.payload;
       let tempPhotos = photos && photos.data
         ? photos.data.map((item) => ({ id: item.id, source: item.images[0].source }))
-        : []
+        : [];
 
       tempPhotos = [...state.facebookAlbumPhotos.photos, ...tempPhotos];
 
@@ -202,6 +218,7 @@ export default(state = INITIAL_STATE, action) => {
         ...state,
         facebookAlbumPhotos: { id, name, photos: tempPhotos }
       };
+    }
     case SET_CURRENT_GEOLOCATION: {
       return { ...state, geolocation: action.payload };
     }

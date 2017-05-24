@@ -116,7 +116,7 @@ export const getCityStateCountry = (uid, position, dispatch) => {
       if (value && location && location.city) {
         dispatch({ type: SET_CURRENT_LOCATION, payload: location });
         setLocation(uid, location);
-      }else{
+      } else{
         getCityStateCountryMapAPI(uid, position, location, dispatch);
       }
     })

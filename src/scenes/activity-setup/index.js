@@ -45,13 +45,12 @@ class ActivitySetupScene extends Component {
     });
   }
 
-  onActivitySelected(uid, name, icon, isSelected) {
-    if(isSelected) this.props.activitySelected({uid, name, icon});
-    else this.props.activityUnselected({uid , name, icon});
+  onActivitySelected(uid, name, icon, isSelected, value) {
+    if(isSelected) this.props.activitySelected({uid, name, icon, value});
+    else this.props.activityUnselected({uid , name, icon, value});
   }
 
   onSearchBarChangeText(searchText) {
-    console.log(searchText);
     this.setState({
       searchText: searchText,
       dataSource: this.activitiesDS.cloneWithRows({ ...this._filterActivities(this.props.activities, searchText) })
