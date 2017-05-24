@@ -5,6 +5,8 @@ import EditablePhoto from './EditablePhoto';
 import CustomIcon from '../../assets/icons';
 import AddPhotosModal from './addPhoto/AddPhotosModal';
 import UploadingPhoto from './UploadingPhoto';
+import { Confirm } from '../common';
+import styles from './styles';
 
 const { width } = Dimensions.get('window');
 const MAX_NUM_PHOTOS = 25;
@@ -13,7 +15,9 @@ class PhotoEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: false
+      modalVisible: false,
+      showDeleteConfirmModal: false,
+      removedPhoto: null,
     };
   }
   closeModal() {
@@ -42,7 +46,7 @@ class PhotoEdit extends Component {
                   url={img.url}
                   photo={img}
                   key={img.key}
-                  onRemove={onRemove}
+                  onRemove={(photo) => this.removePic(photo)}
                 />
               );
             })}
@@ -56,7 +60,7 @@ class PhotoEdit extends Component {
               );
             })}
             <TouchableOpacity
-              style={styles.camera}
+              style={localStyles.camera}
               onPress={() => this.setState({modalVisible: true})}
             >
               <CustomIcon
@@ -77,23 +81,42 @@ class PhotoEdit extends Component {
     );
   }
 
+  cancelDelete() {
+    this.setState({showDeleteConfirmModal: false});
+  }
+
+  confirmDelete() {
+    this.setState({showDeleteConfirmModal: false});
+    this.props.onRemove(this.state.removedPhoto);
+  }
+
+  removePic(photo) {
+    this.setState({showDeleteConfirmModal: true, removedPhoto: photo});
+  }
+
   renderPrimaryPic(firstProfileImage, onRemove) {
     return(
       <View style={{ marginLeft: MARGIN, marginTop: MARGIN, height: 300, width: width - (MARGIN * 2) }}>
         <Image
-          style={styles.mainImageStyle}
+          style={localStyles.mainImageStyle}
           source={{ uri: firstProfileImage.url }}
         >
-        <View style={styles.removeIconContainer}>
-          <TouchableOpacity onPress={() => onRemove(firstProfileImage)}>
-            <CustomIcon
-              name='add_circle_icon'
-              size={20}
-              style={{ backgroundColor: 'transparent', transform: [{ rotate: '45deg'}] }}
-            />
+          <TouchableOpacity onPress={() => this.removePic(firstProfileImage)}>
+            <View style={styles.removeIconContainer}>
+              <CustomIcon
+                name='add_circle_icon' size={20}
+                style={{backgroundColor: 'transparent', color: 'black', transform: [{ rotate: '45deg'}] }}
+              />
+            </View>
           </TouchableOpacity>
-        </View>
         </Image>
+        <Confirm
+          visible={this.state.showDeleteConfirmModal}
+          onAccept={this.cancelDelete.bind(this)}
+          onDecline={this.confirmDelete.bind(this)}
+        >
+          Are you sure you want to delete this picture?
+        </Confirm>
       </View>
     );
   }
@@ -111,7 +134,7 @@ class PhotoEdit extends Component {
           Add photos:
         </Text>
         <TouchableOpacity
-          style={styles.camera}
+          style={localStyles.camera}
           onPress={() => this.setState({modalVisible: true})}
         >
          <CustomIcon
@@ -139,13 +162,7 @@ class PhotoEdit extends Component {
   }
 }
 
-const styles = {
-  removeIconContainer: {
-    backgroundColor: 'white',
-    alignSelf: 'flex-end',
-    marginRight: 2,
-    marginBottom: 2,
-  },
+const localStyles = {
   iconStyle: {
     justifyContent: 'center',
     height: 20,
@@ -158,12 +175,7 @@ const styles = {
     justifyContent: 'flex-end',
     height: 300,
     width: null,
-    padding: 5,
-  },
-  smallImageStyle: {
-    height: 115,
-    width: 115,
-    justifyContent: 'flex-end',
+    padding: 1,
   },
   camera: {
     height: 115,

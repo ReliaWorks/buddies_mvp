@@ -47,3 +47,5 @@ export const SET_CURRENT_GEOLOCATION = 'set_geolocation';
 export const SET_CURRENT_LOCATION = 'set_location';
 export const LOCATION_MAP_STORAGE_KEY = 'location_map_storage_key';
 export const API_SECRET_KEY = "dsnsdhjhj332sdnm$sms092nvy!@5";
+
+export const FIND_COMMONALITY = 'find_commonality';
