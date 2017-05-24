@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions, ActionConst } from 'react-native-router-flux';
+import _ from 'lodash';
 import AffiliationSetup from './AffiliationSetup';
 import { affiliationsFetch, affiliationsSaved, affiliationSelected, affiliationUnselected } from '../../actions';
-import _ from 'lodash'
 
 class AffiliationSetupScene extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       dataSource: [],
       searchText: ''
-    }
+    };
   }
 
   componentWillMount() {
@@ -34,7 +34,7 @@ class AffiliationSetupScene extends Component {
   createDataSource({ affiliations }) {
     //const affiliationsDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
-    const searchText = this.state.searchText
+    const searchText = this.state.searchText;
 
     this.setState({
       dataSource: this.affiliationsDS.cloneWithRows({ ...(this._filterAffiliations(affiliations, searchText)) })
@@ -49,7 +49,7 @@ class AffiliationSetupScene extends Component {
   onSearchBarChangeText(searchText) {
     this.setState({
       searchText: searchText,
-      dataSource : this.affiliationsDS.cloneWithRows({ ...this._filterAffiliations(this.props.affiliations, searchText) })
+      dataSource: this.affiliationsDS.cloneWithRows({ ...this._filterAffiliations(this.props.affiliations, searchText) })
     });
   }
 
@@ -78,11 +78,11 @@ class AffiliationSetupScene extends Component {
 
   _filterAffiliations(affiliations, searchText) {
     if (searchText) {
-      return _.pickBy(affiliations, function(value, key) {
-        return value.name.toLowerCase().includes(searchText.toLowerCase())
+      return _.pickBy(affiliations, (value, key) => {
+        return value.name.toLowerCase().includes(searchText.toLowerCase());
       });
     } else {
-      return affiliations
+      return affiliations;
     }
   }
 }

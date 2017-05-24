@@ -4,6 +4,7 @@ import {
   DESCRIPTION_SAVED,
   ACTIVITY_SELECTED,
   ACTIVITY_UNSELECTED,
+  ACTIVITY_EDITTED,
   ACTIVITIES_SAVED,
   AFFILIATIONS_SAVED,
   AFFILIATION_SELECTED,
@@ -70,7 +71,7 @@ export const activitiesSaved = (activities) => {
           .remove()
           .then(() => {
             firebase.database().ref(`user_profiles/${currentUser.uid}/activities/${activity.uid}`)
-              .set({name: activity.name, icon: activity.icon, uid: activity.uid})
+              .set({name: activity.name, icon: activity.icon, uid: activity.uid, value: activity.value})
               .then(() => {
                 if(index === activities.length - 1)
                   dispatch({ type: ACTIVITIES_SAVED, payload: activities });
@@ -81,6 +82,16 @@ export const activitiesSaved = (activities) => {
       firebase.database().ref(`user_profiles/${currentUser.uid}/activities/`).remove();
       dispatch({ type: ACTIVITIES_SAVED, payload: activities });
     }
+  };
+};
+export const activityEditted = (activityId, value) => {
+  const { currentUser } = firebase.auth();
+  return (dispatch) => {
+    const updates = {};
+    updates[`user_profiles/${currentUser.uid}/activities/${activityId}/value`] = value;
+
+    dispatch({ type: ACTIVITY_EDITTED, payload: {activityId, value} });
+    firebase.database().ref().update(updates);
   };
 };
 

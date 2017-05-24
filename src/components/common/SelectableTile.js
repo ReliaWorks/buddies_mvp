@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import {tileDescription, getValue} from '../profile-edit/activityAttributeUtils';
 
 const SELECTED_COLOR = '#D8FCFC';
 const TILE_BACKGROUNDCOLOR = 'white';
@@ -17,19 +18,20 @@ class SelectableTile extends Component {
   }
 
   onTilePress() {
-    const { onSelect, tileId, tileName, tileIcon } = this.props;
+    const { onSelect, onEdit, tileId, tileName, tileIcon, attribute } = this.props;
     const isSelected = !this.state.isSelected;
 
     this.setState({
       isSelected,
       tileBackgroundColor: (isSelected ? SELECTED_COLOR : 'white'),
     });
-    onSelect(tileId, tileName, tileIcon, isSelected);
+
+    onSelect(tileId, tileName, tileIcon, isSelected, getValue(tileName, attribute));
   }
 
   render() {
     const { tileName, tileIcon, source } = this.props;
-    const { activityTextLabel, imageStyle} = styles;
+    const { activityTextLabel, imageStyle, attribute} = styles;
 
     let width = 108;
     let height = 108;
@@ -58,6 +60,12 @@ class SelectableTile extends Component {
           <Text style={activityTextLabel}>
             {tileName}
           </Text>
+          {this.props.isSelected
+            ? <Text style={attribute}>
+              {tileDescription(tileName, this.props.attribute)}
+              </Text>
+            : null
+          }
         </View>
       </TouchableOpacity>
     );
@@ -76,6 +84,11 @@ const styles = {
     fontFamily: 'Source Sans Pro',
 //    fontFamily: 'SourceSansPro-SemiBold',
     textAlign: 'center',
+  },
+  attribute: {
+    textAlign: 'center',
+    fontSize: 9,
+    fontFamily: 'SourceSansPro-Light'
   }
 };
 

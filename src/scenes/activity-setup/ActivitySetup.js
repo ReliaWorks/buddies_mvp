@@ -3,6 +3,7 @@ import { Dimensions, ListView, ScrollView, Text, TextInput, TouchableOpacity, Vi
 import { SelectableTile } from '../../components/common';
 import { searchBarText, searchBarContainer } from '../../components/common/styles';
 import { NEXT_BUTTON_CONTAINER_HEIGHT, PROGRESS_BAR_HEIGHT } from '../../constants';
+import ActivityAttributeModal from '../../components/profile-edit/ActivityAttributeModal';
 
 const { width } = Dimensions.get('window');
 
@@ -33,16 +34,20 @@ class ActivitySetup extends Component {
     let exists = false;
     if(activities && activities.length > 0) {
       exists = activities.find((activity) => {
+        attribute = activity.value;
         return activity.uid === rowData.uid;
       });
     }
-    return(<SelectableTile
-      tileId={rowData.uid}
-      tileName={rowData.name}
-      tileIcon={rowData.icon}
-      onSelect={this.props.onSelected}
-      isSelected={exists}
-    />);
+    return(
+      <SelectableTile
+        tileId={rowData.uid}
+        tileName={rowData.name}
+        tileIcon={rowData.icon}
+        onSelect={this.props.onSelected}
+        isSelected={exists}
+        attribute={exists ? exists.value : null}
+      />
+    );
   }
 
   renderActivityList(activitiesDS) {
@@ -66,7 +71,7 @@ class ActivitySetup extends Component {
         color="white"
       >
         <View style={styles.nextButtonContainer}>
-            <Text style={styles.nextButtonText}>{this.props.navLabel}</Text>
+          <Text style={styles.nextButtonText}>{this.props.navLabel}</Text>
         </View>
       </TouchableOpacity>
     );

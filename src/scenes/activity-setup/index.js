@@ -38,23 +38,22 @@ class ActivitySetupScene extends Component {
     // const activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     // this.dataSource = activitiesDS.cloneWithRows({ ...activities });
 
-    const searchText = this.state.searchText
+    const searchText = this.state.searchText;
 
     this.setState({
       dataSource: this.activitiesDS.cloneWithRows({ ...(this._filterActivities(activities, searchText)) })
     });
   }
 
-  onActivitySelected(uid, name, icon, isSelected) {
-    if(isSelected) this.props.activitySelected({uid, name, icon});
-    else this.props.activityUnselected({uid , name, icon});
+  onActivitySelected(uid, name, icon, isSelected, value) {
+    if(isSelected) this.props.activitySelected({uid, name, icon, value});
+    else this.props.activityUnselected({uid , name, icon, value});
   }
 
   onSearchBarChangeText(searchText) {
-    console.log(searchText);
     this.setState({
       searchText: searchText,
-      dataSource : this.activitiesDS.cloneWithRows({ ...this._filterActivities(this.props.activities, searchText) })
+      dataSource: this.activitiesDS.cloneWithRows({ ...this._filterActivities(this.props.activities, searchText) })
     });
   }
 
@@ -85,11 +84,11 @@ class ActivitySetupScene extends Component {
 
   _filterActivities(activities, searchText) {
     if (searchText) {
-      return _.pickBy(activities, function(value, key) {
-        return value.name.toLowerCase().includes(searchText.toLowerCase())
+      return _.pickBy(activities, (value, key) => {
+        return value.name.toLowerCase().includes(searchText.toLowerCase());
       });
     } else {
-      return activities
+      return activities;
     }
   }
 }

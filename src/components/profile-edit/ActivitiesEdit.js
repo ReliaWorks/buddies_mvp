@@ -2,18 +2,25 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import AffiliationSet from './AffiliationSet';
-import { activityRemoved } from '../../actions';
+import ActivitySet from './ActivitySet';
+import { activityRemoved, activityEditted } from '../../actions';
 import { Confirm } from '../common';
+import ActivityAttributeModal from './ActivityAttributeModal';
 import styles from './styles';
 
-class AffiliationsEdit extends Component {
+class ActivitiesEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showModal: false,
       tileName: '',
       tileId: '',
+      attributeModal: {
+        show: false,
+        value: '',
+        activityId: '',
+        activityName: ''
+      }
     };
   }
 
@@ -34,6 +41,25 @@ class AffiliationsEdit extends Component {
     this.setState({ showModal: false });
   }
 
+  attributeSave(activityId, newValue) {
+    this.props.activityEditted(activityId, newValue);
+  }
+  attributeEdit(activityId, activityName, value) {
+    this.setState({
+      attributeModal: {show: true, activityId, activityName, value}
+    });
+  }
+  closeActivityEditModal() {
+    this.setState({
+      attributeModal: {
+        show: false,
+        value: '',
+        activityName: '',
+        activityId: ''
+      }
+    });
+  }
+
   render() {
     const { activities, title } = this.props;
 
@@ -42,18 +68,28 @@ class AffiliationsEdit extends Component {
         <View style={styles.title}>
           <Text style={styles.sectionHeaderText}>{title}</Text>
         </View>
-      <AffiliationSet
-        value={{affiliations: activities}}
-        onRemove={this.removeActivity.bind(this)}
-        onAdd={this.addActivity.bind(this)}
-      />
-      <Confirm
-        visible={this.state.showModal}
-        onAccept={this.cancelDelete.bind(this)}
-        onDecline={this.confirmDelete.bind(this)}
-      >
-        Are you sure you want to delete {this.state.tileName}?
-      </Confirm>
+        <ActivitySet
+          value={{activities: activities}}
+          onRemove={this.removeActivity.bind(this)}
+          onAdd={this.addActivity.bind(this)}
+          onEdit={this.attributeEdit.bind(this)}
+        />
+        <Confirm
+          visible={this.state.showModal}
+          onAccept={this.cancelDelete.bind(this)}
+          onDecline={this.confirmDelete.bind(this)}
+        >
+          Are you sure you want to delete {this.state.tileName}?
+        </Confirm>
+
+        <ActivityAttributeModal
+          isVisible={this.state.attributeModal.show}
+          activityId={this.state.attributeModal.activityId}
+          activityName={this.state.attributeModal.activityName}
+          value={this.state.attributeModal.value}
+          onSave={this.attributeSave.bind(this)}
+          onClose={this.closeActivityEditModal.bind(this)}
+        />
       </View>
     );
   }
@@ -70,4 +106,4 @@ const mapStateToProps = ({ currentUser }) => {
   return { activities };
 };
 
-export default connect(mapStateToProps, { activityRemoved })(AffiliationsEdit);
+export default connect(mapStateToProps, { activityRemoved, activityEditted })(ActivitiesEdit);
