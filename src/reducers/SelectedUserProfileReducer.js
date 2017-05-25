@@ -43,6 +43,7 @@ export default(state = INITIAL_STATE, action) => {
               name: activity.name,
               icon: activity.icon,
               uid: activity.uid,
+              value: activity.value
             });
           }
         });

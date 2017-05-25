@@ -1,13 +1,13 @@
 export const attributeOptions = (activityName) => {
   switch (activityName) {
     case 'Running':
-      return ['15:00', '14:00', '13:00', '12:00', '11:00', '10:00', '9:00', '8:00', '7:00', '6:00', '5:00', '4:00'];
+      return ['none', '15:00', '14:00', '13:00', '12:00', '11:00', '10:00', '9:00', '8:00', '7:00', '6:00', '5:00', '4:00'];
     case 'Tennis':
-      return ['2.0', '2.5', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0',];
+      return ['none', '2.0', '2.5', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0',];
     case 'Walking':
-      return ['20:00', '18:00', '16:00', '14:00', '12:00', '10:00'];
+      return ['none', '20:00', '18:00', '16:00', '14:00', '12:00', '10:00'];
     default:
-      return ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+      return ['none', 'Beginner', 'Intermediate', 'Advanced', 'Expert'];
   }
 };
 
@@ -40,16 +40,18 @@ export const tileDescription = (activityName, value) => {
 export const getValue = (activityName, value) => {
   if (value) {
     return value;
+  } else {
+    return 'none';
   }
-
-  switch (activityName) {
-    case 'Running':
-      return '15:00';
-    case 'Tennis':
-      return '2.0';
-    case 'Walking':
-      return '20:00';
-    default:
-      return 'Beginner';
-  }
+  //
+  // switch (activityName) {
+  //   case 'Running':
+  //     return 'None';
+  //   case 'Tennis':
+  //     return 'None';
+  //   case 'Walking':
+  //     return 'None';
+  //   default:
+  //     return 'None';
+  // }
 };
