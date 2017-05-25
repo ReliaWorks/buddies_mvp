@@ -1,8 +1,7 @@
 export default styles = {
   sectionHeaderText: {
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'SourceSansPro-Bold',
     fontSize: 18,
-    fontWeight: 'bold',
   },
   title: {
     justifyContent: 'center',
