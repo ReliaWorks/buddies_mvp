@@ -97,7 +97,8 @@ class ActivitiesEdit extends Component {
 const localStyles = {
   sectionContainer: {
     flex: 1,
-    backgroundColor: 'white',
+//    backgroundColor: 'white',
+    backgroundColor: '#F8F8F8', 
   }
 };
 
