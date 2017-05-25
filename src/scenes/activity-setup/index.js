@@ -1,17 +1,24 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { ListView } from 'react-native';
+import { ListView, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ActivitySetup from './ActivitySetup';
-import { activitiesFetch, activitiesSaved, photosSaved, activitySelected, activityUnselected } from '../../actions';
+import { activitiesFetch, activitiesSaved, photosSaved, activitySelected, activityUnselected, activityEdited } from '../../actions';
+import ActivityAttributeModal from '../../components/profile-edit/ActivityAttributeModal';
 
 class ActivitySetupScene extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dataSource: [],
-      searchText: ''
+      searchText: '',
+      attributeModal: {
+        show: false,
+        value: '',
+        activityId: '',
+        activityName: ''
+      }
     };
   }
 
@@ -46,14 +53,38 @@ class ActivitySetupScene extends Component {
   }
 
   onActivitySelected(uid, name, icon, isSelected, value) {
-    if(isSelected) this.props.activitySelected({uid, name, icon, value});
-    else this.props.activityUnselected({uid , name, icon, value});
+    if(isSelected) {
+      this.props.activitySelected({uid, name, icon, value});
+
+      if (this.props.source === 'Edit') {
+        this.setState({
+          attributeModal: {show: true, activityId: uid, activityName: name, value}
+        });
+      }
+    } else {
+      this.props.activityUnselected({uid , name, icon, value});
+    }
   }
 
   onSearchBarChangeText(searchText) {
     this.setState({
       searchText: searchText,
       dataSource: this.activitiesDS.cloneWithRows({ ...this._filterActivities(this.props.activities, searchText) })
+    });
+  }
+
+  attributeSave(activityId, newValue) {
+    console.log('actId. :', activityId, ' newValue:', newValue);
+    this.props.activityEdited(activityId, newValue);
+  }
+  closeActivityEditModal() {
+    this.setState({
+      attributeModal: {
+        show: false,
+        value: '',
+        activityName: '',
+        activityId: ''
+      }
     });
   }
 
@@ -70,15 +101,26 @@ class ActivitySetupScene extends Component {
     }
 
     return (
-      <ActivitySetup
-        activities={this.props.activities}
-        activitiesDS={this.state.dataSource}
-        onNext={onNextAction}
-        onSelected={this.onActivitySelected.bind(this)}
-        navLabel={navLabel}
-        currentActivities={this.props.currentUser.activities}
-        onSearchBarChangeText={this.onSearchBarChangeText.bind(this)}
-      />
+      <View style={{flex:1}}>
+        <ActivitySetup
+          activities={this.props.activities}
+          activitiesDS={this.state.dataSource}
+          onNext={onNextAction}
+          onSelected={this.onActivitySelected.bind(this)}
+          navLabel={navLabel}
+          currentActivities={this.props.currentUser.activities}
+          onSearchBarChangeText={this.onSearchBarChangeText.bind(this)}
+          source={this.props.source}
+        />
+        <ActivityAttributeModal
+          isVisible={this.state.attributeModal.show}
+          activityId={this.state.attributeModal.activityId}
+          activityName={this.state.attributeModal.activityName}
+          value={this.state.attributeModal.value}
+          onSave={this.attributeSave.bind(this)}
+          onClose={this.closeActivityEditModal.bind(this)}
+        />
+      </View>
     );
   }
 
@@ -97,4 +139,4 @@ const mapStateToProps = ({ currentUser, auth, activities }) => {
   return { currentUser, auth, activities: activities.allActivities };
 };
 
-export default connect(mapStateToProps, { activitiesFetch, activitiesSaved, photosSaved, activitySelected, activityUnselected })(ActivitySetupScene);
+export default connect(mapStateToProps, { activitiesFetch, activitiesSaved, photosSaved, activitySelected, activityUnselected, activityEdited })(ActivitySetupScene);

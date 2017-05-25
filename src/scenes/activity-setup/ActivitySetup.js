@@ -46,6 +46,7 @@ class ActivitySetup extends Component {
         onSelect={this.props.onSelected}
         isSelected={exists}
         attribute={exists ? exists.value : null}
+        source={this.props.source}
       />
     );
   }

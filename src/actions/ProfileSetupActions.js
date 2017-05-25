@@ -25,16 +25,14 @@ export const descriptionSaved = (text) => {
 };
 
 export const activitySelected = (id) => {
-  return {
-    type: ACTIVITY_SELECTED,
-    payload: id
+  return (dispatch) => {
+    dispatch({type: ACTIVITY_SELECTED, payload: id});
   };
 };
 
 export const activityUnselected = (id) => {
-  return {
-    type: ACTIVITY_UNSELECTED,
-    payload: id
+  return (dispatch) => {
+    dispatch({type: ACTIVITY_UNSELECTED, payload: id});
   };
 };
 

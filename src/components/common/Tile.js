@@ -1,19 +1,29 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
+import {tileDescription, getValue} from '../profile-edit/activityAttributeUtils';
 
 const Tile = ({
   tileName,
   tileIcon,
+  tileAttribute,
   cardStyle = styles.cardStyle,
   imageStyle = styles.imageStyle,
-  titleStyle = styles.title
-  }) => {
+  titleStyle = styles.title,
+  attributeStyle = styles.attribute
+}) => {
+  console.log('atr buddycard:', getValue(tileName, tileAttribute));
   return (
     <View style={cardStyle}>
       <Image style={imageStyle} source={{ uri: tileIcon }} />
       <Text style={titleStyle}>
         {tileName}
       </Text>
+      {getValue(tileName, tileAttribute) !== 'none'
+        ? <Text style={attributeStyle}>
+          {tileDescription(tileName, tileAttribute)}
+          </Text>
+        : null
+      }
     </View>
   );
 };
@@ -36,6 +46,11 @@ const styles = {
     fontFamily: 'SourceSansPro-Bold',
     fontSize: 12,
     textAlign: 'center'
+  },
+  attribute: {
+    textAlign: 'center',
+    fontSize: 9,
+    fontFamily: 'SourceSansPro-Light',
   }
 };
 

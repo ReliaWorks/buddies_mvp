@@ -60,7 +60,7 @@ class SelectableTile extends Component {
           <Text style={activityTextLabel}>
             {tileName}
           </Text>
-          {this.props.isSelected
+          {this.props.isSelected && this.props.attribute !== 'none'
             ? <Text style={attribute}>
               {tileDescription(tileName, this.props.attribute)}
               </Text>
