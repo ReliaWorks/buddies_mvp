@@ -49,6 +49,19 @@ export const listDescription = (activityName, value) => {
   }
 };
 
+export const scrollPosition = (activityName) => {
+  switch (activityName) {
+    case 'Running':
+      return {x: 0, y: 260};
+    case 'Tennis':
+      return {x: 0, y: 210};
+    case 'Walking':
+      return {x: 0, y: 250};
+    default:
+      return {x: 0, y: 45};
+  }
+};
+
 
 export const getValue = (activityName, value) => {
   if (value) {

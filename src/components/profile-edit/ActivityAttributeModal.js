@@ -2,22 +2,28 @@ import React, {Component} from 'react';
 import { Dimensions, View, ScrollView, Text, ListView, TouchableOpacity, StyleSheet, Picker } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Modal from 'react-native-modal';
-import {attributeOptions, attributeShortDescription} from './activityAttributeUtils';
+import {attributeOptions, attributeShortDescription, scrollPosition} from './activityAttributeUtils';
 
 const { width } = Dimensions.get('window');
+
+/*
+*    scrolling to lower values when openning this modal will work only for ios, this feature will not work for android for now.
+*/
 
 export default class ActivityAttributeModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: this.props.value
+      value: this.props.value,
+      //scrollPosition: scrollPosition(nextProps.activityName)
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isVisible === false && nextProps.isVisible === true) {
       this.setState({
-        value: nextProps.value
+        value: nextProps.value,
+        //scrollPosition: {x: 0, y: 30}
       });
     }
   }
@@ -50,7 +56,7 @@ export default class ActivityAttributeModal extends Component {
             </TouchableOpacity>
           </View>
 
-          <ScrollView>
+          <ScrollView contentOffset={scrollPosition(this.props.activityName)}>
             {attributeOptions(this.props.activityName).map(name => {
               const style = name === this.state.value ? [styles.item, styles.selectedItem] : styles.item;
               return (
