@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ActivitySet from './ActivitySet';
-import { activityRemoved, activityEditted } from '../../actions';
+import { activityRemoved, activityEdited } from '../../actions';
 import { Confirm } from '../common';
 import ActivityAttributeModal from './ActivityAttributeModal';
 import styles from './styles';
@@ -42,7 +42,7 @@ class ActivitiesEdit extends Component {
   }
 
   attributeSave(activityId, newValue) {
-    this.props.activityEditted(activityId, newValue);
+    this.props.activityEdited(activityId, newValue);
   }
   attributeEdit(activityId, activityName, value) {
     this.setState({
@@ -97,7 +97,8 @@ class ActivitiesEdit extends Component {
 const localStyles = {
   sectionContainer: {
     flex: 1,
-    backgroundColor: 'white',
+//    backgroundColor: 'white',
+    backgroundColor: '#F8F8F8', 
   }
 };
 
@@ -106,4 +107,4 @@ const mapStateToProps = ({ currentUser }) => {
   return { activities };
 };
 
-export default connect(mapStateToProps, { activityRemoved, activityEditted })(ActivitiesEdit);
+export default connect(mapStateToProps, { activityRemoved, activityEdited })(ActivitiesEdit);

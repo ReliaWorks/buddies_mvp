@@ -39,26 +39,39 @@ const EditableActivityListItem = ({
 
 const styles = {
   container: {
-    borderWidth: 1,
-    borderColor: '#aaaaaa',
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: '#F8F8F8',
+    backgroundColor: 'white',
+
   },
   activity: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 10,
+//    borderBottomWidth: 1,
+    paddingBottom: 10,
+    paddingTop: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   attribute: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 10,
+    paddingBottom: 10,
+    paddingTop: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderTopWidth: 1,
+    borderTopColor: '#aaa',
   },
   name: {
-    fontFamily: 'SourceSansPro-Bold',
-    fontSize: 16,
+    fontFamily: 'SourceSansPro-SemiBold',
+    fontSize: 14,
   },
   value: {
-    fontFamily: 'SourceSansPro-Light',
+    fontFamily: 'Source Sans Pro',
     fontSize: 14,
+    color: '#808184',
   },
   editIconContainer: {
     marginRight: 3
