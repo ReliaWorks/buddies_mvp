@@ -8,7 +8,7 @@ import {
   ACTIVITIES_SAVED,
   ACTIVITY_SELECTED,
   ACTIVITY_UNSELECTED,
-  ACTIVITY_EDITTED,
+  ACTIVITY_EDITED,
   AFFILIATION_SELECTED,
   AFFILIATION_UNSELECTED,
   DESCRIPTION_SAVED,
@@ -125,7 +125,7 @@ export default(state = INITIAL_STATE, action) => {
 
       return { ...state, activities: updatedActivities };
     }
-    case ACTIVITY_EDITTED: {
+    case ACTIVITY_EDITED: {
       const {activityId, value} = action.payload;
       const activities = state.activities.map(activity => {
         if (activity.uid === activityId) {

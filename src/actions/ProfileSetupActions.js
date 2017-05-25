@@ -1,10 +1,9 @@
 import firebase from 'firebase';
-//import { Actions } from 'react-native-router-flux';
 import {
   DESCRIPTION_SAVED,
   ACTIVITY_SELECTED,
   ACTIVITY_UNSELECTED,
-  ACTIVITY_EDITTED,
+  ACTIVITY_EDITED,
   ACTIVITIES_SAVED,
   AFFILIATIONS_SAVED,
   AFFILIATION_SELECTED,
@@ -84,13 +83,13 @@ export const activitiesSaved = (activities) => {
     }
   };
 };
-export const activityEditted = (activityId, value) => {
+export const activityEdited = (activityId, value) => {
   const { currentUser } = firebase.auth();
   return (dispatch) => {
     const updates = {};
     updates[`user_profiles/${currentUser.uid}/activities/${activityId}/value`] = value;
 
-    dispatch({ type: ACTIVITY_EDITTED, payload: {activityId, value} });
+    dispatch({ type: ACTIVITY_EDITED, payload: {activityId, value} });
     firebase.database().ref().update(updates);
   };
 };

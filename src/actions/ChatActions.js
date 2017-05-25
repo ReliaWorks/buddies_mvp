@@ -83,8 +83,15 @@ export const saveMessage = (msg, currentUser, otherUser, chatId, messages) => {
     if(chatId) {
       let profileImage = DEFAULT_PROFILE_PHOTO;
       if(currentUser.profileImages) profileImage = currentUser.profileImages[0].url;
-      const user = {...msg.user, name: firstName, avatar: profileImage};
-      const m1 = {...msg, user, createdAt: firebase.database.ServerValue.TIMESTAMP, receiverId: otherUser.selectedMatchId};
+      const user = {...msg.user,
+        name: firstName,
+        avatar: profileImage
+      };
+      const m1 = {...msg,
+        user,
+        createdAt: firebase.database.ServerValue.TIMESTAMP,
+        receiverId: otherUser.selectedMatchId
+      };
       firebase.database().ref(`conversations/${chatId}`)
         .push(m1)
         .then(() => {
