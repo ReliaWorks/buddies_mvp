@@ -3,7 +3,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { renderCloseIcon } from '../../icons';
 import CustomIcon from '../../assets/icons';
 import { CLOSE_ICON_SIZE } from '../../constants';
-//import {getValue} from './activityAttributeUtils';
+import {listDescription} from './activityAttributeUtils';
 
 const EditableActivityListItem = ({
   tileName,
@@ -23,7 +23,7 @@ const EditableActivityListItem = ({
         {renderCloseIcon(onRemove, tileId, tileName)}
       </View>
       <View style={styles.attribute}>
-        <Text style={styles.value}>{attributeValue}</Text>
+        <Text style={styles.value}>{listDescription(tileName, attributeValue)}</Text>
         <TouchableOpacity style={styles.editIconContainer} onPress={() => onEdit(tileId, tileName, attributeValue)}>
           <CustomIcon
             name="edit_icon"
