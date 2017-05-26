@@ -34,7 +34,7 @@ class ActivitySetup extends Component {
     let exists = false;
     if(activities && activities.length > 0) {
       exists = activities.find((activity) => {
-        attribute = activity.value;
+        attribute = activity.attribute;
         return activity.uid === rowData.uid;
       });
     }
@@ -45,7 +45,7 @@ class ActivitySetup extends Component {
         tileIcon={rowData.icon}
         onSelect={this.props.onSelected}
         isSelected={exists}
-        attribute={exists ? exists.value : null}
+        attribute={exists ? exists.attribute : null}
         source={this.props.source}
       />
     );

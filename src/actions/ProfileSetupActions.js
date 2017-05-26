@@ -68,7 +68,7 @@ export const activitiesSaved = (activities) => {
           .remove()
           .then(() => {
             firebase.database().ref(`user_profiles/${currentUser.uid}/activities/${activity.uid}`)
-              .set({name: activity.name, icon: activity.icon, uid: activity.uid, value: activity.value})
+              .set({name: activity.name, icon: activity.icon, uid: activity.uid, attribute: activity.attribute})
               .then(() => {
                 if(index === activities.length - 1)
                   dispatch({ type: ACTIVITIES_SAVED, payload: activities });
@@ -81,13 +81,13 @@ export const activitiesSaved = (activities) => {
     }
   };
 };
-export const activityEdited = (activityId, value) => {
+export const activityEdited = (activityId, attribute) => {
   const { currentUser } = firebase.auth();
   return (dispatch) => {
     const updates = {};
-    updates[`user_profiles/${currentUser.uid}/activities/${activityId}/value`] = value;
+    updates[`user_profiles/${currentUser.uid}/activities/${activityId}/attribute`] = attribute;
 
-    dispatch({ type: ACTIVITY_EDITED, payload: {activityId, value} });
+    dispatch({ type: ACTIVITY_EDITED, payload: {activityId, attribute} });
     firebase.database().ref().update(updates);
   };
 };
