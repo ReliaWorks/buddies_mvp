@@ -12,6 +12,48 @@ import CustomIcon from '../assets/icons';
 
 const { width } = Dimensions.get('window');
 
+//Used in Conversation.js
+export const backIconButton = () => {
+  return(
+    <TouchableOpacity
+      onPress={() => Actions.matches()}
+      style={{width: 70, height: 57}}
+    >
+      <IonIcon
+        name="ios-arrow-back-outline"
+        size={ICON_SIZE}
+        style={{
+          paddingLeft: ICON_PADDING,
+          paddingTop: 15,
+        }}
+      />
+    </TouchableOpacity>
+  );
+};
+
+export const moreIconButton = () => {
+  return (
+    <TouchableOpacity
+      onPress={() => Actions.matches(ActionConst.RESET)}
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        width: 75,
+      }}
+    >
+      <IonIcon
+        name="md-more"
+        size={ICON_SIZE}
+        color="black"
+        style={{
+          paddingRight: 15,
+          paddingTop: 15,
+        }}
+      />
+    </TouchableOpacity>
+  );
+};
+
 export const chatIconButton = () => {
   return (
     <TouchableOpacity

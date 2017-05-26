@@ -3,7 +3,8 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import {tileDescription, getAttribute} from '../profile-edit/activityAttributeUtils';
 
 const SELECTED_COLOR = '#D8FCFC';
-const TILE_BACKGROUNDCOLOR = 'white';
+const TILE_BACKGROUND_COLOR = 'white';
+const TILE_BORDER_COLOR = '#ECECEC';
 
 class SelectableTile extends Component {
   constructor(props) {
@@ -11,8 +12,8 @@ class SelectableTile extends Component {
     const isSelected = this.props.isSelected;
 
     this.state = {
-      tileBackgroundColor: (isSelected ? SELECTED_COLOR : TILE_BACKGROUNDCOLOR),
-      tileBorderColor: '#ECECEC',
+      tileBackgroundColor: (isSelected ? SELECTED_COLOR : TILE_BACKGROUND_COLOR),
+      tileBorderColor: TILE_BORDER_COLOR,
       isSelected: isSelected,
     };
   }
