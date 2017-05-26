@@ -17,7 +17,7 @@ class ActivitiesEdit extends Component {
       tileId: '',
       attributeModal: {
         show: false,
-        value: '',
+        attribute: '',
         activityId: '',
         activityName: ''
       }
@@ -41,19 +41,19 @@ class ActivitiesEdit extends Component {
     this.setState({ showModal: false });
   }
 
-  attributeSave(activityId, newValue) {
-    this.props.activityEdited(activityId, newValue);
+  attributeSave(activityId, newAttribute) {
+    this.props.activityEdited(activityId, newAttribute);
   }
-  attributeEdit(activityId, activityName, value) {
+  attributeEdit(activityId, activityName, attribute) {
     this.setState({
-      attributeModal: {show: true, activityId, activityName, value}
+      attributeModal: {show: true, activityId, activityName, attribute}
     });
   }
   closeActivityEditModal() {
     this.setState({
       attributeModal: {
         show: false,
-        value: '',
+        attribute: '',
         activityName: '',
         activityId: ''
       }
@@ -86,7 +86,7 @@ class ActivitiesEdit extends Component {
           isVisible={this.state.attributeModal.show}
           activityId={this.state.attributeModal.activityId}
           activityName={this.state.attributeModal.activityName}
-          value={this.state.attributeModal.value}
+          attribute={this.state.attributeModal.attribute}
           onSave={this.attributeSave.bind(this)}
           onClose={this.closeActivityEditModal.bind(this)}
         />
@@ -98,7 +98,7 @@ const localStyles = {
   sectionContainer: {
     flex: 1,
 //    backgroundColor: 'white',
-    backgroundColor: '#F8F8F8', 
+    backgroundColor: '#F8F8F8',
   }
 };
 

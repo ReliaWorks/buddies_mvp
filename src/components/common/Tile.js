@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
-import {tileDescription, getValue} from '../profile-edit/activityAttributeUtils';
+import {tileDescription, getAttribute} from '../profile-edit/activityAttributeUtils';
 
 const renderTileImage = (tileIcon, imageStyle) => {
   if(tileIcon)
@@ -31,7 +31,7 @@ const Tile = ({
       <Text style={titleStyle}>
         {tileName}
       </Text>
-      {getValue(tileName, tileAttribute) !== 'none'
+      {getAttribute(tileName, tileAttribute) !== 'none'
         ? <Text style={attributeStyle}>
           {tileDescription(tileName, tileAttribute)}
           </Text>

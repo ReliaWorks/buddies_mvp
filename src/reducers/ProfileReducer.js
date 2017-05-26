@@ -25,7 +25,7 @@ import {
   FACEBOOK_ALBUM_PHOTOS_FETCHED,
 } from '../actions/types';
 import { ACTIVE } from '../constants';
-import {getValue} from '../components/profile-edit/activityAttributeUtils';
+import {getAttribute} from '../components/profile-edit/activityAttributeUtils';
 
 const INITIAL_STATE = {
   uid: '',
@@ -75,7 +75,7 @@ export default(state = INITIAL_STATE, action) => {
               name: activity.name,
               icon: activity.icon,
               uid: activity.uid,
-              value: getValue(activity.name, activity.value)
+              attribute: getAttribute(activity.name, activity.attribute)
             });
           }
         });
@@ -117,7 +117,7 @@ export default(state = INITIAL_STATE, action) => {
               name: activity.name,
               icon: activity.icon,
               uid: activity.uid,
-              value: activity.value
+              attribute: activity.attribute
             });
           }
         });
@@ -126,10 +126,10 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, activities: updatedActivities };
     }
     case ACTIVITY_EDITED: {
-      const {activityId, value} = action.payload;
+      const {activityId, attribute} = action.payload;
       const activities = state.activities.map(activity => {
         if (activity.uid === activityId) {
-          return {...activity, value};
+          return {...activity, attribute};
         } else {
           return activity;
         }

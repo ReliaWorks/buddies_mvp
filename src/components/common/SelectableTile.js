@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import {tileDescription, getValue} from '../profile-edit/activityAttributeUtils';
+import {tileDescription, getAttribute} from '../profile-edit/activityAttributeUtils';
 
 const SELECTED_COLOR = '#D8FCFC';
 const TILE_BACKGROUND_COLOR = 'white';
@@ -27,7 +27,7 @@ class SelectableTile extends Component {
       tileBackgroundColor: (isSelected ? SELECTED_COLOR : 'white'),
     });
 
-    onSelect(tileId, tileName, tileIcon, isSelected, getValue(tileName, attribute));
+    onSelect(tileId, tileName, tileIcon, isSelected, getAttribute(tileName, attribute));
   }
 
   render() {
