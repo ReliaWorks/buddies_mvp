@@ -9,7 +9,7 @@ const EditableActivityListItem = ({
   tileName,
   tileIcon,
   tileId,
-  attributeValue,
+  attribute,
   cardStyle = styles.cardStyle,
   imageStyle = styles.imageStyle,
   titleStyle = styles.title,
@@ -23,8 +23,8 @@ const EditableActivityListItem = ({
         {renderCloseIcon(onRemove, tileId, tileName)}
       </View>
       <View style={styles.attribute}>
-        <Text style={styles.value}>{listDescription(tileName, attributeValue)}</Text>
-        <TouchableOpacity style={styles.editIconContainer} onPress={() => onEdit(tileId, tileName, attributeValue)}>
+        <Text style={styles.value}>{listDescription(tileName, attribute)}</Text>
+        <TouchableOpacity style={styles.editIconContainer} onPress={() => onEdit(tileId, tileName, attribute)}>
           <CustomIcon
             name="edit_icon"
             size={CLOSE_ICON_SIZE}

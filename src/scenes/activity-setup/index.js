@@ -15,7 +15,7 @@ class ActivitySetupScene extends Component {
       searchText: '',
       attributeModal: {
         show: false,
-        value: '',
+        attribute: '',
         activityId: '',
         activityName: ''
       }
@@ -52,17 +52,17 @@ class ActivitySetupScene extends Component {
     });
   }
 
-  onActivitySelected(uid, name, icon, isSelected, value) {
+  onActivitySelected(uid, name, icon, isSelected, attribute) {
     if(isSelected) {
-      this.props.activitySelected({uid, name, icon, value});
+      this.props.activitySelected({uid, name, icon, attribute});
 
       if (this.props.source === 'Edit') {
         this.setState({
-          attributeModal: {show: true, activityId: uid, activityName: name, value}
+          attributeModal: {show: true, activityId: uid, activityName: name, attribute}
         });
       }
     } else {
-      this.props.activityUnselected({uid , name, icon, value});
+      this.props.activityUnselected({uid , name, icon, attribute});
     }
   }
 
@@ -73,15 +73,15 @@ class ActivitySetupScene extends Component {
     });
   }
 
-  attributeSave(activityId, newValue) {
-    console.log('actId. :', activityId, ' newValue:', newValue);
-    this.props.activityEdited(activityId, newValue);
+  attributeSave(activityId, newAttribute) {
+    console.log('actId. :', activityId, ' newAttribute:', newAttribute);
+    this.props.activityEdited(activityId, newAttribute);
   }
   closeActivityEditModal() {
     this.setState({
       attributeModal: {
         show: false,
-        value: '',
+        attribute: '',
         activityName: '',
         activityId: ''
       }
@@ -116,7 +116,7 @@ class ActivitySetupScene extends Component {
           isVisible={this.state.attributeModal.show}
           activityId={this.state.attributeModal.activityId}
           activityName={this.state.attributeModal.activityName}
-          value={this.state.attributeModal.value}
+          attribute={this.state.attributeModal.attribute}
           onSave={this.attributeSave.bind(this)}
           onClose={this.closeActivityEditModal.bind(this)}
         />

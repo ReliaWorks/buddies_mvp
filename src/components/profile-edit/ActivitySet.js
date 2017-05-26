@@ -44,7 +44,7 @@ class ActivitySet extends Component {
               tileName={rowData.name}
               tileIcon={rowData.icon}
               tileId={rowData.uid}
-              attributeValue={rowData.value}
+              attribute={rowData.attribute}
               onRemove={this.props.onRemove}
               onEdit={this.props.onEdit}
             />

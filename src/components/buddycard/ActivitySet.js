@@ -20,7 +20,7 @@ class ActivitySet extends Component {
           contentContainerStyle={styles.list}
           dataSource={dataSource}
           renderRow={(rowData) =>
-            <Tile tileName={rowData.name} tileIcon={rowData.icon} tileAttribute={rowData.value} />
+            <Tile tileName={rowData.name} tileIcon={rowData.icon} tileAttribute={rowData.attribute} />
           }
           enableEmptySections
           initialListSize={25}

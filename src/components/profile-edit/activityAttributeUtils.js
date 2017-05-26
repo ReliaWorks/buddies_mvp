@@ -24,28 +24,32 @@ export const attributeShortDescription = (activityName) => {
   }
 };
 
-export const tileDescription = (activityName, value) => {
+export const tileDescription = (activityName, attribute) => {
   switch (activityName) {
     case 'Running':
-      return value + ' min/mile';
+      return attribute + ' min/mile';
     case 'Tennis':
-      return 'Rating: ' + value;
+      return 'Rating: ' + attribute;
     case 'Walking':
-      return value + ' min/mile';
+      return attribute + ' min/mile';
     default:
-      return value;
+      return attribute;
   }
 };
-export const listDescription = (activityName, value) => {
-  switch (activityName) {
-    case 'Running':
-      return value + ' min / mile pace';
-    case 'Tennis':
-      return 'Rating: ' + value;
-    case 'Walking':
-      return value + ' min / mile pace';
-    default:
-      return value;
+export const listDescription = (activityName, attribute) => {
+  if (attribute && attribute !== 'none') {
+    switch (activityName) {
+      case 'Running':
+        return attribute + ' min / mile pace';
+      case 'Tennis':
+        return 'Rating: ' + attribute;
+      case 'Walking':
+        return attribute + ' min / mile pace';
+      default:
+        return attribute;
+    }
+  } else {
+    return 'Add Level';
   }
 };
 
@@ -63,9 +67,9 @@ export const scrollPosition = (activityName) => {
 };
 
 
-export const getValue = (activityName, value) => {
-  if (value) {
-    return value;
+export const getAttribute = (activityName, attribute) => {
+  if (attribute) {
+    return attribute;
   } else {
     return 'none';
   }

@@ -14,7 +14,7 @@ export default class ActivityAttributeModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: this.props.value,
+      attribute: this.props.attribute,
       //scrollPosition: scrollPosition(nextProps.activityName)
     };
   }
@@ -22,7 +22,7 @@ export default class ActivityAttributeModal extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.isVisible === false && nextProps.isVisible === true) {
       this.setState({
-        value: nextProps.value,
+        attribute: nextProps.attribute,
         //scrollPosition: {x: 0, y: 30}
       });
     }
@@ -48,7 +48,7 @@ export default class ActivityAttributeModal extends Component {
             <TouchableOpacity
             style={styles.saveButton}
               onPress={() => {
-                this.props.onSave(this.props.activityId, this.state.value);
+                this.props.onSave(this.props.activityId, this.state.attribute);
                 this.props.onClose();
               }}
             >
@@ -58,9 +58,9 @@ export default class ActivityAttributeModal extends Component {
 
           <ScrollView contentOffset={scrollPosition(this.props.activityName)}>
             {attributeOptions(this.props.activityName).map(name => {
-              const style = name === this.state.value ? [styles.item, styles.selectedItem] : styles.item;
+              const style = name === this.state.attribute ? [styles.item, styles.selectedItem] : styles.item;
               return (
-                <TouchableOpacity style={styles.itemContainer} key={name} onPress={() => this.setState({value: name})}>
+                <TouchableOpacity style={styles.itemContainer} key={name} onPress={() => this.setState({attribute: name})}>
                   <Text style={style}>{name}</Text>
                 </TouchableOpacity>
               );
