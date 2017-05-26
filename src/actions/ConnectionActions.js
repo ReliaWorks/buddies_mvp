@@ -16,7 +16,10 @@ export const findCommonality = (ouid, activities, affiliations) => {
         activities.forEach((activity) => {
           _.forEach(otherUserActivities, (otherUserActivity => {
             if(activity.uid === otherUserActivity.uid) {
-              commonInterests.push(otherUserActivity);
+//TO UPDATE   if(activity.attribute === otherUserActivity.attribute)
+              if(activity.value === otherUserActivity.value)
+                commonInterests.push(otherUserActivity);
+              else commonInterests.push({icon: activity.icon, name: activity.name, uid: activity.uid});
               return;
             }
           }));
