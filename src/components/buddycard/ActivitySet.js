@@ -19,7 +19,9 @@ class ActivitySet extends Component {
       <ListView
           contentContainerStyle={styles.list}
           dataSource={dataSource}
-          renderRow={(rowData) => <Tile tileName={rowData.name} tileIcon={rowData.icon} tileAttribute={rowData.attribute} />}
+          renderRow={(rowData) =>
+            <Tile tileName={rowData.name} tileIcon={rowData.icon} tileAttribute={rowData.attribute} />
+          }
           enableEmptySections
           initialListSize={25}
       />

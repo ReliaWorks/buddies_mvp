@@ -2,6 +2,20 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import {tileDescription, getAttribute} from '../profile-edit/activityAttributeUtils';
 
+const renderTileImage = (tileIcon, imageStyle) => {
+  if(tileIcon)
+    return (
+      <Image
+        style={imageStyle}
+        source={{ uri: tileIcon }}
+        onLoadEnd={() => {
+          console.log(`Finished loading ${tileIcon}`);
+        }}
+      />
+    );
+  else return null;
+};
+
 const Tile = ({
   tileName,
   tileIcon,
@@ -11,10 +25,9 @@ const Tile = ({
   titleStyle = styles.title,
   attributeStyle = styles.attribute
 }) => {
-  console.log('atr buddycard:', getAttribute(tileName, tileAttribute));
   return (
     <View style={cardStyle}>
-      <Image style={imageStyle} source={{ uri: tileIcon }} />
+      {renderTileImage(tileIcon, imageStyle)}
       <Text style={titleStyle}>
         {tileName}
       </Text>

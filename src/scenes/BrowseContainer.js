@@ -92,12 +92,10 @@ class BrowseContainer extends Component {
                 }}
                 onConnect={() => {
                   this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, true);
-                  //console.log("On Connect");
                   this.swipe();
                 }}
                 onPass={() => {
                   this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, false);
-                  //console.log("On Pass");
                   this.swipe();
                 }}
               />

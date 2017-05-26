@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { fetchConversation, updateConversationNotifications, saveMessage, closeConversation } from '../actions';
@@ -66,13 +66,14 @@ class Conversation extends Component {
           borderBottomWidth: 3,
         }}
       >
-        <Text style={{marginLeft: 10, alignSelf: 'center', fontFamily: 'Source Sans Pro'}} onPress={() => Actions.matches()}>
-          Back
-        </Text>
-          {this.renderChatPartnerHeader()}
-        <Text style={{marginRight: 10, alignSelf: 'center' }}>
-          ...
-        </Text>
+        <TouchableHighlight>
+          <View style={{width: 75, height: 50, backgroundColor: 'purple'}}>
+            <Text style={{paddingLeft: 15, paddingTop: 15, fontFamily: 'Source Sans Pro'}} onPress={() => Actions.matches()}>
+              Back
+            </Text>
+          </View>
+        </TouchableHighlight>
+        {this.renderChatPartnerHeader()}
       </View>
     );
   }
