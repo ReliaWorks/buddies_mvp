@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Image, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { backIconButton, moreIconButton } from '../icons';
 import { fetchConversation, updateConversationNotifications, saveMessage, closeConversation } from '../actions';
 
 class Conversation extends Component {
@@ -55,6 +56,18 @@ class Conversation extends Component {
     );
   }
 
+/*  <TouchableHighlight>
+    <View style={{width: 75, height: 50}}>
+      <Text style={{paddingLeft: 15, paddingTop: 15, fontFamily: 'Source Sans Pro'}} onPress={() => Actions.matches()}>
+        Back
+      </Text>
+    </View>
+  </TouchableHighlight>
+
+  <TouchableHighlight>
+    <View style={{width: 75, height: 50}} />
+  </TouchableHighlight>
+*/
   renderHeader() {
     return(
       <View
@@ -66,14 +79,9 @@ class Conversation extends Component {
           borderBottomWidth: 3,
         }}
       >
-        <TouchableHighlight>
-          <View style={{width: 75, height: 50, backgroundColor: 'purple'}}>
-            <Text style={{paddingLeft: 15, paddingTop: 15, fontFamily: 'Source Sans Pro'}} onPress={() => Actions.matches()}>
-              Back
-            </Text>
-          </View>
-        </TouchableHighlight>
+        {backIconButton()}
         {this.renderChatPartnerHeader()}
+        {moreIconButton()}
       </View>
     );
   }

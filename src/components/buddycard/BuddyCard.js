@@ -8,7 +8,7 @@ import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
 import CustomIcon from '../../assets/icons';
 
-const BOTTOM_PADDING = 100;
+const BOTTOM_PADDING = 120;
 const MARGIN = 15;
 
 class BuddyCard extends Component {
