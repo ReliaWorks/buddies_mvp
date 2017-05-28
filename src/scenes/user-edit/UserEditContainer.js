@@ -5,7 +5,7 @@ import UserEdit from './UserEdit';
 
 class UserEditContainer extends Component {
   componentWillMount() {
-    this.props.currentUserFetch();
+    //this.props.currentUserFetch();
   }
 
   render() {

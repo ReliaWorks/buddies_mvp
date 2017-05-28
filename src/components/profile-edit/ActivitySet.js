@@ -46,7 +46,10 @@ class ActivitySet extends Component {
               tileId={rowData.uid}
               attribute={rowData.attribute}
               onRemove={this.props.onRemove}
-              onEdit={this.props.onEdit}
+              onEdit={(activity) => {
+                console.log('act editing set:', activity);
+                this.props.onEdit(activity);
+              }}
             />
           }
           renderSeparator={(sectionId, rowId) => this.renderSeparator(sectionId, rowId)}

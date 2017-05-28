@@ -13,24 +13,23 @@ const { width } = Dimensions.get('window');
 export default class ActivityAttributeModal extends Component {
   constructor(props) {
     super(props);
+    console.log('act editing: ', props.activity);
     this.state = {
-      attribute: this.props.attribute,
-      //scrollPosition: scrollPosition(nextProps.activityName)
+      attribute: props.activity.attribute,
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isVisible === false && nextProps.isVisible === true) {
       this.setState({
-        attribute: nextProps.attribute,
-        //scrollPosition: {x: 0, y: 30}
+        attribute: nextProps.activity.attribute,
       });
     }
   }
 
   render() {
     const selectedStyle = {fontWeight: 'bold'};
-    console.log('actId:', this.props.activityId);
+    const {activity} = this.props;
 
     return (
       <Modal
@@ -44,11 +43,11 @@ export default class ActivityAttributeModal extends Component {
             <TouchableOpacity style={styles.cancelButton} onPress={() => this.props.onClose()}>
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
-            <Text>{attributeShortDescription(this.props.activityName)}</Text>
+            <Text>{attributeShortDescription(activity.activityName)}</Text>
             <TouchableOpacity
             style={styles.saveButton}
               onPress={() => {
-                this.props.onSave(this.props.activityId, this.state.attribute);
+                this.props.onSave({...activity, attribute: this.state.attribute});
                 this.props.onClose();
               }}
             >
@@ -56,8 +55,8 @@ export default class ActivityAttributeModal extends Component {
             </TouchableOpacity>
           </View>
 
-          <ScrollView contentOffset={scrollPosition(this.props.activityName)}>
-            {attributeOptions(this.props.activityName).map(name => {
+          <ScrollView contentOffset={scrollPosition(activity.activityName)}>
+            {attributeOptions(activity.activityName).map(name => {
               const style = name === this.state.attribute ? [styles.item, styles.selectedItem] : styles.item;
               return (
                 <TouchableOpacity style={styles.itemContainer} key={name} onPress={() => this.setState({attribute: name})}>

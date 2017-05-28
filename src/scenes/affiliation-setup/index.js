@@ -16,7 +16,9 @@ class AffiliationSetupScene extends Component {
   }
 
   componentWillMount() {
-    this.props.affiliationsFetch();
+    if (!this.props.wasAllAffiliationsFetched) {
+      this.props.affiliationsFetch();
+    }
     this.affiliationsDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.createDataSource(this.props);
   }
@@ -88,7 +90,8 @@ class AffiliationSetupScene extends Component {
 }
 
 const mapStateToProps = ({ currentUser, auth, affiliations }) => {
-  return { currentUser, auth, affiliations: affiliations.allAffiliations };
+  const {allAffiliations, wasAllAffiliationsFetched} = affiliations;
+  return { currentUser, auth, affiliations: allAffiliations, wasAllAffiliationsFetched };
 };
 
 export default connect(mapStateToProps, { affiliationsFetch, affiliationsSaved, affiliationSelected, affiliationUnselected })(AffiliationSetupScene);

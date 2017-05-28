@@ -18,6 +18,12 @@ class UserEdit extends Component {
       height: 300,
     };
   }
+  componentWillUnmount() {
+    const {text} = this.state;
+    if (this.props.description !== text) {
+      this.props.descriptionSaved(text);
+    }
+  }
 
   renderActivities(activities) {
     return(
@@ -43,7 +49,7 @@ class UserEdit extends Component {
             style={styles.descriptionInput}
             onChangeText={text => {
               this.setState({text});
-              this.props.descriptionSaved(text);
+              //this.props.descriptionSaved(text);
             }}
             onContentSizeChange={(event) => {
               this.setState({height: event.nativeEvent.contentSize.height});

@@ -17,9 +17,12 @@ class ActivitiesEdit extends Component {
       tileId: '',
       attributeModal: {
         show: false,
-        attribute: '',
-        activityId: '',
-        activityName: ''
+        activity: {
+          activityId: '',
+          activityName: '',
+          activityIcon: '',
+          attribute: ''
+        }
       }
     };
   }
@@ -41,21 +44,24 @@ class ActivitiesEdit extends Component {
     this.setState({ showModal: false });
   }
 
-  attributeSave(activityId, newAttribute) {
-    this.props.activityEdited(activityId, newAttribute);
+  attributeSave(activity) {
+    this.props.activityEdited(activity);
   }
-  attributeEdit(activityId, activityName, attribute) {
+  attributeEdit(activity) {
     this.setState({
-      attributeModal: {show: true, activityId, activityName, attribute}
+      attributeModal: {show: true, activity}
     });
   }
   closeActivityEditModal() {
     this.setState({
       attributeModal: {
         show: false,
-        attribute: '',
-        activityName: '',
-        activityId: ''
+        activity: {
+          activityId: '',
+          activityName: '',
+          activityIcon: '',
+          attribute: ''
+        }
       }
     });
   }
@@ -84,9 +90,7 @@ class ActivitiesEdit extends Component {
 
         <ActivityAttributeModal
           isVisible={this.state.attributeModal.show}
-          activityId={this.state.attributeModal.activityId}
-          activityName={this.state.attributeModal.activityName}
-          attribute={this.state.attributeModal.attribute}
+          activity={this.state.attributeModal.activity}
           onSave={this.attributeSave.bind(this)}
           onClose={this.closeActivityEditModal.bind(this)}
         />
