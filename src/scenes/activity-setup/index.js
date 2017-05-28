@@ -15,15 +15,20 @@ class ActivitySetupScene extends Component {
       searchText: '',
       attributeModal: {
         show: false,
-        attribute: '',
-        activityId: '',
-        activityName: ''
+        activity: {
+          attribute: '',
+          activityId: '',
+          activityName: '',
+          activityIcon: '',
+        }
       }
     };
   }
 
   componentWillMount() {
-    this.props.activitiesFetch();
+    if (!this.props.wasAllActivitiesFetched) {
+      this.props.activitiesFetch();
+    }
     this.activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.createDataSource(this.props);
   }
@@ -42,9 +47,6 @@ class ActivitySetupScene extends Component {
   }
 
   createDataSource({ activities }) {
-    // const activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    // this.dataSource = activitiesDS.cloneWithRows({ ...activities });
-
     const searchText = this.state.searchText;
 
     this.setState({
@@ -58,7 +60,7 @@ class ActivitySetupScene extends Component {
 
       if (this.props.source === 'Edit') {
         this.setState({
-          attributeModal: {show: true, activityId: uid, activityName: name, attribute}
+          attributeModal: {show: true, activity: {activityId: uid, activityName: name, activityIcon: icon, attribute}}
         });
       }
     } else {
@@ -73,17 +75,19 @@ class ActivitySetupScene extends Component {
     });
   }
 
-  attributeSave(activityId, newAttribute) {
-    console.log('actId. :', activityId, ' newAttribute:', newAttribute);
-    this.props.activityEdited(activityId, newAttribute);
+  attributeSave(activity) {
+    this.props.activityEdited(activity);
   }
   closeActivityEditModal() {
     this.setState({
       attributeModal: {
         show: false,
-        attribute: '',
-        activityName: '',
-        activityId: ''
+        activity: {
+          attribute: '',
+          activityId: '',
+          activityName: '',
+          activityIcon: '',
+        }
       }
     });
   }
@@ -101,7 +105,7 @@ class ActivitySetupScene extends Component {
     }
 
     return (
-      <View style={{flex:1}}>
+      <View style={{flex: 1}}>
         <ActivitySetup
           activities={this.props.activities}
           activitiesDS={this.state.dataSource}
@@ -114,9 +118,7 @@ class ActivitySetupScene extends Component {
         />
         <ActivityAttributeModal
           isVisible={this.state.attributeModal.show}
-          activityId={this.state.attributeModal.activityId}
-          activityName={this.state.attributeModal.activityName}
-          attribute={this.state.attributeModal.attribute}
+          activity={this.state.attributeModal.activity}
           onSave={this.attributeSave.bind(this)}
           onClose={this.closeActivityEditModal.bind(this)}
         />
@@ -136,7 +138,8 @@ class ActivitySetupScene extends Component {
 }
 
 const mapStateToProps = ({ currentUser, auth, activities }) => {
-  return { currentUser, auth, activities: activities.allActivities };
+  const {allActivities, wasAllActivitiesFetched} = activities;
+  return { currentUser, auth, activities: allActivities, wasAllActivitiesFetched };
 };
 
 export default connect(mapStateToProps, { activitiesFetch, activitiesSaved, photosSaved, activitySelected, activityUnselected, activityEdited })(ActivitySetupScene);

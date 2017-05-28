@@ -24,7 +24,12 @@ const EditableActivityListItem = ({
       </View>
       <View style={styles.attribute}>
         <Text style={styles.value}>{listDescription(tileName, attribute)}</Text>
-        <TouchableOpacity style={styles.editIconContainer} onPress={() => onEdit(tileId, tileName, attribute)}>
+        <TouchableOpacity
+          style={styles.editIconContainer}
+          onPress={() => onEdit({
+            activityId: tileId, activityName: tileName, activityIcon: tileIcon, attribute: attribute
+          })}
+        >
           <CustomIcon
             name="edit_icon"
             size={CLOSE_ICON_SIZE}
