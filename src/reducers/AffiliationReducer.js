@@ -7,13 +7,13 @@ const INITIAL_STATE = {
   name: '',
   icon: '',
   allAffiliations: [],
-  wasAllAffiliationsFetched: false
+  fetchedAllAffiliations: false
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ALL_AFFILIATIONS_FETCH: {
-      return { ...state, allAffiliations: action.payload, wasAllAffiliationsFetched: true };
+      return { ...state, allAffiliations: action.payload, fetchedAllAffiliations: true };
     }
     case LOGOUT_USER:
       return INITIAL_STATE;

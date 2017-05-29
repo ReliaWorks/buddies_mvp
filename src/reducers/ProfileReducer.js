@@ -28,7 +28,7 @@ import { ACTIVE } from '../constants';
 import {getAttribute} from '../components/profile-edit/activityAttributeUtils';
 
 const INITIAL_STATE = {
-  isFetched: false,
+  //isFetched: false,
   uid: '',
   firstName: '',
   email: '',
@@ -97,7 +97,7 @@ export default(state = INITIAL_STATE, action) => {
 
       let description = '';
       if(action.payload.description) description = action.payload.description;
-      return { ...state, isFetched: true, firstName, profileImages, age, activities, affiliations, description, email, uid: action.payload.uid };
+      return { ...state, firstName, profileImages, age, activities, affiliations, description, email, uid: action.payload.uid };
     }
     case ACTIVITY_SELECTED: {
       const updatedActivities = [...state.activities, action.payload];

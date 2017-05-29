@@ -26,7 +26,7 @@ class ActivitySetupScene extends Component {
   }
 
   componentWillMount() {
-    if (!this.props.wasAllActivitiesFetched) {
+    if (!this.props.fetchedAllActivities) {
       this.props.activitiesFetch();
     }
     this.activitiesDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
