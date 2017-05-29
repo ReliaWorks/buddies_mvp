@@ -21,9 +21,13 @@ class BrowseContainer extends Component {
     };
   }
   componentWillMount() {
-    this.props.currentUserFetch();
+    if (!this.props.currentUser.isFetched) {
+      this.props.currentUserFetch();
+    }
     this.props.potentialsFetch();
-    this.props.checkNotifications();
+    if (!this.props.connection.isNotificationBeingListening) {
+      this.props.checkNotifications();      
+    }
     this.setState({currentIndex: 0, numPotentials: this.props.connection.potentials});
   }
 /*  componentWillReceiveProps(nextProps) {
