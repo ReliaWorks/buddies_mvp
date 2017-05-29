@@ -21,9 +21,14 @@ class BrowseContainer extends Component {
     };
   }
   componentWillMount() {
-    this.props.currentUserFetch();
+    // firstName is assigned only after currentUserFetch, so if it is not empty no need to fetch again.
+    if (this.props.currentUser.firstName === '') {
+      this.props.currentUserFetch();
+    }
     this.props.potentialsFetch();
-    this.props.checkNotifications();
+    if (!this.props.connection.listeningForNotifications) {
+      this.props.checkNotifications();
+    }
     this.setState({currentIndex: 0, numPotentials: this.props.connection.potentials});
   }
 /*  componentWillReceiveProps(nextProps) {

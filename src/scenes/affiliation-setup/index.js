@@ -16,7 +16,7 @@ class AffiliationSetupScene extends Component {
   }
 
   componentWillMount() {
-    if (!this.props.wasAllAffiliationsFetched) {
+    if (!this.props.fetchedAllAffiliations) {
       this.props.affiliationsFetch();
     }
     this.affiliationsDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });

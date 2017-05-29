@@ -16,6 +16,7 @@ const INITIAL_STATE = {
   browseCursor: 0,
   loadingPotentials: false,
   notification: false,
+  listeningForNotifications: false
 };
 
 export default(state = INITIAL_STATE, action) => {
@@ -27,7 +28,7 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, potentials: action.payload, loadingPotentials: false };
     }
     case SET_NEW_NOTIFICATION: {
-      return { ...state, notification: action.payload.notification };
+      return { ...state, notification: action.payload.notification, listeningForNotifications: true };
     }
     case CONNECT_WITH_USER: {
       return { ...state, selectedMatchId: action.payload.uid, selectedMatchName: action.payload.name, selectedMatchPic: action.payload.pic, browseCursor: action.payload.index };

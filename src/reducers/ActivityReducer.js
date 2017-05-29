@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   name: '',
   icon: '',
   allActivities: [],
-  wasAllActivitiesFetched: false
+  fetchedAllActivities: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -17,7 +17,7 @@ export default (state = INITIAL_STATE, action) => {
       return INITIAL_STATE;
     }
     case ALL_ACTIVITIES_FETCH: {
-      return { ...state, allActivities: action.payload, wasAllActivitiesFetched: true };
+      return { ...state, allActivities: action.payload, fetchedAllActivities: true };
     }
     case LOGOUT_USER:
       return INITIAL_STATE;

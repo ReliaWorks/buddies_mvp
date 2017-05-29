@@ -28,6 +28,7 @@ import { ACTIVE } from '../constants';
 import {getAttribute} from '../components/profile-edit/activityAttributeUtils';
 
 const INITIAL_STATE = {
+  //isFetched: false,
   uid: '',
   firstName: '',
   email: '',
