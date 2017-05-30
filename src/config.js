@@ -7,3 +7,5 @@ export const FIREBASE_CONFIG = {
 };
 
 export const SENTRY_DNS = "https://2f81115717434870acf29f260688c226:63241df70957413bb812dcd4ed0b2c7c@sentry.io/169776";
+
+export const MAP_API_KEY = 'AIzaSyACWmDGmgYDEvWuzvjpDn9GYjrafCZOSKw';
