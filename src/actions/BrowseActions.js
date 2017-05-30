@@ -69,6 +69,34 @@ export const setGeolocation = (uid, geoLocation) => {
   firebase.database().ref(`user_profiles/${uid}/geoLocation`).set(geoLocation);
 };
 
+const clearUserLastLocationFB = (uid, position) => {
+  //check on last_location_path
+
+  firebase.database().ref(`last_location_path/${uid}`).once('value', snapshot => {
+        const paths = snapshot.val();
+        if (paths !== null) {
+          //foreach path remove from last location
+          // const keys = Object.keys(paths);
+          // keys.forEach((key) => {
+          //   const dataWithId = {...response.data[key], uid: key};
+          //   potentials.push(dataWithId);
+          // });
+        }
+  }).catch((e) => {
+    console.log('clearUserLastLocationFB Error:', e);
+  });
+};
+
+const setUserLastLocationFB = (uid, position) => {
+  const keys = Object.keys(position);
+  keys.forEach((key) => {
+    const value = position[key];
+    if (value) {
+
+    }
+  });
+};
+
 export const setLocationLocalStorage = (position, location) => {
   AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
     .then((result) => {
@@ -93,7 +121,7 @@ export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch
         const cacheExists = snapshot.val() !== null;
         if (cacheExists) {
           console.log('Found in cache');
-          setStateWithLocation(dispatch, snapshot.val());
+          setStateWithLocation(uid, dispatch, position, snapshot.val());
         }else{
           console.log('Not in the cache');
           getLocationFromGoogleMapAPI(locationHash, position.latitude, position.longitude);
@@ -103,7 +131,7 @@ export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch
   });
 };
 
-const setStateWithLocation = (dispatch, data) => {
+const setStateWithLocation = (uid, dispatch, position, data) => {
   dispatch({ type: SET_CURRENT_LOCATION, payload: data });
   setLocationLocalStorage(position,data);
   setLocation(uid, data);
