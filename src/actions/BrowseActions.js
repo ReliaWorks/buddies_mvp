@@ -15,6 +15,7 @@ import {
   API_SECRET_KEY,
   SET_NEW_NOTIFICATION
 } from './types';
+import { MAP_API_KEY } from '../config';
 
 const jsSHA = require("jssha");
 
@@ -86,21 +87,26 @@ export const setLocationLocalStorage = (position, location) => {
 
 export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch) => {
   const shaObj = new jsSHA("SHA-256", "TEXT");
-  shaObj.update(API_SECRET_KEY + uid);
-  const hash = shaObj.getHash("HEX");
-  console.log("MAP hash", hash);
-
-  axios.get(`https://activities-test-a3871.appspot.com/location/${position.latitude}:${position.longitude}`,{
-    headers: { authorization: `${hash}:${uid}`}
-  })
-  .then(response => {
-    dispatch({ type: SET_CURRENT_LOCATION, payload: response.data });
-    setLocationLocalStorage(position,response.data);
-    setLocation(uid, response.data);
-  })
-  .catch(error => {
-    console.log(error);
+  shaObj.update(position.latitude + position.longitude);
+  const locationHash = shaObj.getHash("HEX");
+  firebase.database().ref(`location_cache/${locationHash}`).once('value', snapshot => {
+        const cacheExists = snapshot.val() !== null;
+        if (cacheExists) {
+          console.log('Found in cache');
+          setStateWithLocation(dispatch, snapshot.val());
+        }else{
+          console.log('Not in the cache');
+          getLocationFromGoogleMapAPI(locationHash, position.latitude, position.longitude);
+        }
+  }).catch((e) => {
+    console.log('Error connecting FB:', e);
   });
+};
+
+const setStateWithLocation = (dispatch, data) => {
+  dispatch({ type: SET_CURRENT_LOCATION, payload: data });
+  setLocationLocalStorage(position,data);
+  setLocation(uid, data);
 };
 
 export const getCityStateCountry = (uid, position, dispatch) => {
@@ -177,6 +183,62 @@ export const connectWithUser = (buddy, connectStatus) => {
 
 export const keepBrowsing = () => {
   return ({ type: KEEP_BROWSING });
+};
+
+const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude) {
+  axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${MAP_API_KEY}`)
+    .then((response) => {
+      if (response.data
+            && response.data.results
+            && response.data.results.length
+            && response.data.results[0].address_components
+            && response.data.results[0].address_components.length
+          ) {
+          const addressComponents = response.data.results[0].address_components;
+
+          const location = {
+            city: '',
+            state: '',
+            country: '',
+            county: '',
+            neighborhood: ''
+          };
+
+          for (let i = 0; i < addressComponents.length; i++) {
+              const component = addressComponents[i];
+              console.log(component);
+              switch(component.types[0]) {
+                  case 'locality':
+                      location.city = component.long_name;
+                      break;
+                  case 'political':
+                      if (!location.city)
+                        location.city = component.long_name;
+                      break;
+                  case 'neighborhood':
+                      location.neighborhood = component.short_name || '';
+                      break;
+                  case 'administrative_area_level_1':
+                      location.state = component.short_name;
+                      break;
+                  case 'administrative_area_level_2':
+                      location.county = component.short_name;
+                      break;
+                  case 'country':
+                      location.country = component.long_name;
+                      break;
+                  default:
+                      break;
+              }
+          }
+          firebase.database().ref(`location_cache/${locationHash}`).set(location);
+      }else {
+        console.log('Data',response.data);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 const successfullyConnected = (dispatch, uid, currentUserId) => {
