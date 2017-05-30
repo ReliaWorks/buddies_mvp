@@ -93,7 +93,7 @@ export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch
         const cacheExists = snapshot.val() !== null;
         if (cacheExists) {
           console.log('Found in cache');
-          setStateWithLocation(dispatch, snapshot.val());
+          setStateWithLocation(uid, position, dispatch, snapshot.val());
         }else{
           console.log('Not in the cache');
           getLocationFromGoogleMapAPI(locationHash, position.latitude, position.longitude);
@@ -103,7 +103,7 @@ export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch
   });
 };
 
-const setStateWithLocation = (dispatch, data) => {
+const setStateWithLocation = (uid, position, dispatch, data) => {
   dispatch({ type: SET_CURRENT_LOCATION, payload: data });
   setLocationLocalStorage(position,data);
   setLocation(uid, data);
