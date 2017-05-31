@@ -19,6 +19,12 @@ import { MAP_API_KEY } from '../config';
 
 const jsSHA = require("jssha");
 
+const stringToVariable = (str) => {
+  if (str)
+   return str.replace(/\s+/g, '_').replace(/[^0-9a-z_]/gi, '').toLowerCase();
+  return str;
+};
+
 export const checkNotifications = () => {
   return (dispatch) => {
     const { currentUser } = firebase.auth();
@@ -62,38 +68,56 @@ export const potentialsFetch = () => {
 };
 
 export const setLocation = (uid, location) => {
-  firebase.database().ref(`user_profiles/${uid}/location`).set(location);
+  const db = firebase.database();
+  db.ref(`user_profiles/${uid}/location`).set(location);
+  setCurrentUserLocationFB(db, uid, location);
 };
 
 export const setGeolocation = (uid, geoLocation) => {
   firebase.database().ref(`user_profiles/${uid}/geoLocation`).set(geoLocation);
 };
 
-const clearUserLastLocationFB = (uid, position) => {
-  //check on last_location_path
-
-  firebase.database().ref(`last_location_path/${uid}`).once('value', snapshot => {
-        const paths = snapshot.val();
-        if (paths !== null) {
-          //foreach path remove from last location
-          // const keys = Object.keys(paths);
-          // keys.forEach((key) => {
-          //   const dataWithId = {...response.data[key], uid: key};
-          //   potentials.push(dataWithId);
-          // });
-        }
-  }).catch((e) => {
-    console.log('clearUserLastLocationFB Error:', e);
+const clearUserLastLocationFB = (db, uid, numberNewRecords) => {
+  const thisPromise = new Promise((resolve) => {
+    debugger;
+    if (numberNewRecords == 0)
+      resolve();
+    else{
+      db.ref(`last_location_path/${uid}`).update(null)
+      .then(() => {
+        resolve();
+      })
+      .catch((e) => {
+        resolve();
+      });
+    }
   });
+  return thisPromise;
 };
 
-const setUserLastLocationFB = (uid, position) => {
-  const keys = Object.keys(position);
-  keys.forEach((key) => {
-    const value = position[key];
-    if (value) {
+const setCurrentUserLocationFB = (db, uid, location) => {
+  const keys = Object.keys(location);
+  const objPaths = [];
 
-    }
+  if (location.country && location.state)
+    objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/users/${uid}`);
+  else
+    return;
+
+  if (location.county)
+    objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/users/${uid}`);
+
+  if (location.county && location.city)
+    objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/users/${uid}`);
+
+  if (location.county && location.city && location.neighborhood)
+    objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/neighborhoods/${stringToVariable(location.neighborhood)}/users/${uid}`);
+
+  clearUserLastLocationFB(db, uid, objPaths.length).then(() => {
+    objPaths.forEach((path) => {
+      db.ref(path).set(true);
+    });
+    db.ref(`last_location_path/${uid}`).set(objPaths);
   });
 };
 
@@ -118,10 +142,11 @@ export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch
   shaObj.update(position.latitude + position.longitude);
   const locationHash = shaObj.getHash("HEX");
   firebase.database().ref(`location_cache/${locationHash}`).once('value', snapshot => {
-        const cacheExists = snapshot.val() !== null;
+        //const cacheExists = snapshot.val() !== null;
+        const cacheExists=false;
         if (cacheExists) {
           console.log('Found in cache');
-          setStateWithLocation(uid, dispatch, position, snapshot.val());
+          setStateWithLocation(uid, position, dispatch, snapshot.val());
         }else{
           console.log('Not in the cache');
           getLocationFromGoogleMapAPI(locationHash, position.latitude, position.longitude);
@@ -131,14 +156,14 @@ export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch
   });
 };
 
-const setStateWithLocation = (uid, dispatch, position, data) => {
+const setStateWithLocation = (uid, position, dispatch, data) => {
   dispatch({ type: SET_CURRENT_LOCATION, payload: data });
   setLocationLocalStorage(position,data);
   setLocation(uid, data);
 };
 
 export const getCityStateCountry = (uid, position, dispatch) => {
-  let location = { city: '', state: '', country: ''};
+  let location = { city: '', state: '', country: '', county: '', neighborhood: ''};
 
   if (!(position && position.latitude && position.longitude)) return;
   console.log('Check local');
@@ -146,7 +171,7 @@ export const getCityStateCountry = (uid, position, dispatch) => {
   AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
     .then((val) => {
       const value = JSON.parse(val);
-      location = value[position.latitude + '' + position.longitude];
+      location = value[position.latitude + '' + position.longitude]; location=null;
       if (value && location && location.city) {
         dispatch({ type: SET_CURRENT_LOCATION, payload: location });
         setLocation(uid, location);
