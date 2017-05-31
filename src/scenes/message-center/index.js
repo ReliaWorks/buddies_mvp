@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import MessageCenter from './MessageCenter';
-import { matchesFetch, fetchLastMessages, updateMessageCenterNotification } from '../../actions';
+import { matchesFetch, updateMessageCenterNotification } from '../../actions';
 
 class MessageCenterContainer extends Component {
   componentWillMount() {
@@ -11,7 +11,6 @@ class MessageCenterContainer extends Component {
   }
 
   componentWillUnmount() {
-    console.log("updateMessageCenterNotification");
     this.props.updateMessageCenterNotification(this.props.uid);
   }
 
@@ -19,9 +18,9 @@ class MessageCenterContainer extends Component {
     this.createDataSource(nextProps);
   }
 
-  createDataSource({ sortedMatches, matchesWithoutChat }) {
+  createDataSource({ sortedMatches, matchesWithChat, matchesWithoutChat }) {
     const matchesWithChatDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    this.matchesWithChatDataSource = matchesWithChatDS.cloneWithRows({ ...sortedMatches });
+    this.matchesWithChatDataSource = matchesWithChatDS.cloneWithRows({ ...matchesWithChat });
     const matchesWithoutChatDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.matchesWithoutChatDataSource = matchesWithoutChatDS.cloneWithRows({ ...matchesWithoutChat });
   }
@@ -37,10 +36,10 @@ class MessageCenterContainer extends Component {
     );
   }
 }
-const mapStateToProps = ({ matchSet, currentUser }) => {
-  const { matches, matchesWithoutChat, loading, sortedMatches, numMatches } = matchSet;
+const mapStateToProps = ({ messageCenter, currentUser }) => {
+  const { matchesWithChat, matchesWithoutChat, loading, sortedMatches } = messageCenter;
   const { firstName, uid } = currentUser;
-  return { uid, matches, matchesWithoutChat, loading, sortedMatches, numMatches, firstName };
+  return { uid, matchesWithChat, matchesWithoutChat, loading, sortedMatches, firstName };
 };
 
-export default connect(mapStateToProps, { updateMessageCenterNotification, matchesFetch, fetchLastMessages })(MessageCenterContainer);
+export default connect(mapStateToProps, { updateMessageCenterNotification, matchesFetch })(MessageCenterContainer);

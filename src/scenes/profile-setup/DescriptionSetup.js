@@ -11,7 +11,7 @@ class DescriptionSetup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      placeholder: "I'm a stop-and-smell-the-roses runner. Not competitive. I just like to get outside and enjoy the beautiful weather while getting healthy!",
+      placeholder: "Describe your style as an activity partner.",
       text: '',
       height: 300,
     };

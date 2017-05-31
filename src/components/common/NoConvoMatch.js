@@ -17,7 +17,6 @@ class NoConvoMatch extends Component {
 
   render() {
     const itemSeen = this.props.seen === true;
-    console.log('props',this.props);
 
     return (
       <TouchableOpacity
