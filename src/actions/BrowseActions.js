@@ -173,6 +173,7 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
             otherUserPic: buddy.pic.url,
             liked: connectStatus,
             matched: (otherUserLikesYouToo && connectStatus),
+            matchedDate: firebase.database.ServerValue.TIMESTAMP,
           });
           if(connectStatus && otherUserLikesYouToo) {
             successfullyConnected(dispatch, buddy, currentUser);
@@ -252,9 +253,9 @@ const successfullyConnected = (dispatch, buddy, currentUser) => {
   const convRef = firebase.database().ref(`conversations`).push();
   const convKey = convRef.getKey();
   firebase.database().ref(`message_center/${currentUser.uid}/${buddy.uid}/`)
-    .set({status: 'ACTIVE', otherUserId: buddy.uid, otherUserName: buddy.name, otherUserPic: buddy.pic.url, conversationId: convKey});
+    .set({status: 'ACTIVE', otherUserId: buddy.uid, otherUserName: buddy.name, otherUserPic: buddy.pic.url, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP});
   firebase.database().ref(`message_center/${buddy.uid}/${currentUser.uid}/`)
-    .set({status: 'ACTIVE', otherUserId: currentUser.uid, otherUserName: currentUser.firstName, otherUserPic: profileImage, conversationId: convKey})
+    .set({status: 'ACTIVE', otherUserId: currentUser.uid, otherUserName: currentUser.firstName, otherUserPic: profileImage, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP})
     .then(() => {
       dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convKey, messages: [], justConnected: true }});
   });

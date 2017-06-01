@@ -18,14 +18,17 @@ export default(state = INITIAL_STATE, action) => {
       const matchesWithoutChat = _.filter(matches, (match) => {
         return(match.status === 'ACTIVE');
       });
+      const sortedMatchesWithoutChat = _.sortBy(matchesWithoutChat, (match) => {
+        return match.matchedDate;
+      });
       const matchesWithChat = _.filter(matches, (match) => {
-        return(!match.status);
+        return (!match.status);
       });
       const sortedMatchesWithChat = _.sortBy(matchesWithChat, (match) => {
-        return(match.createdAt);
+        return match.createdAt;
       });
 
-      return {...state, matchesWithChat: sortedMatchesWithChat.reverse(), matchesWithoutChat: matchesWithoutChat, loading: false};
+      return {...state, matchesWithChat: sortedMatchesWithChat.reverse(), matchesWithoutChat: sortedMatchesWithoutChat.reverse(), loading: false};
     }
     case MATCHES_FETCH_START: {
       return {...state, loading: true};
