@@ -14,7 +14,6 @@ class Conversation extends Component {
 
   componentWillMount() {
     this.props.fetchConversation(this.props.connection.selectedMatchId);
-    console.log("Line after fetchConversation");
   }
 
   componentWillUnmount() {
