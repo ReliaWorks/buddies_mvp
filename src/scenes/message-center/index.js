@@ -18,7 +18,7 @@ class MessageCenterContainer extends Component {
     this.createDataSource(nextProps);
   }
 
-  createDataSource({ sortedMatches, matchesWithChat, matchesWithoutChat }) {
+  createDataSource({ matchesWithChat, matchesWithoutChat }) {
     const matchesWithChatDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.matchesWithChatDataSource = matchesWithChatDS.cloneWithRows({ ...matchesWithChat });
     const matchesWithoutChatDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -37,9 +37,9 @@ class MessageCenterContainer extends Component {
   }
 }
 const mapStateToProps = ({ messageCenter, currentUser }) => {
-  const { matchesWithChat, matchesWithoutChat, loading, sortedMatches } = messageCenter;
+  const { matchesWithChat, matchesWithoutChat, loading } = messageCenter;
   const { firstName, uid } = currentUser;
-  return { uid, matchesWithChat, matchesWithoutChat, loading, sortedMatches, firstName };
+  return { uid, matchesWithChat, matchesWithoutChat, loading, firstName };
 };
 
 export default connect(mapStateToProps, { updateMessageCenterNotification, matchesFetch })(MessageCenterContainer);
