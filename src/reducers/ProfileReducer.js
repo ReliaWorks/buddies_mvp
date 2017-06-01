@@ -183,7 +183,6 @@ export default(state = INITIAL_STATE, action) => {
     }
     case PICTURE_SAVED: {
       let updatedImages = [];
-      console.log(`In PICTURE_SAVED action.payload = ${action.payload}`);
       if(state.profileImages.length) {
         updatedImages = [...state.profileImages, action.payload];
       } else {
