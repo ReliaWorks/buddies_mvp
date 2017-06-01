@@ -13,7 +13,7 @@ export const updateConversationNotifications = (conversationId, uid, otherUserId
   const fb = firebase.database();
   return (dispatch) => {
     fb.ref(`/notifications/conversations/${conversationId}/seen/${uid}`).set(true);
-    fb.ref(`/user_matches/${uid}/${otherUserId}/seen/`).set(true);
+    fb.ref(`/message_center/${uid}/${otherUserId}/seen/`).set(true);
   };
 };
 
