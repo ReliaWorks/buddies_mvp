@@ -8,6 +8,7 @@ import {
   CONNECT_WITH_USER,
   CONNECTION_SUCCESSFUL,
   CURRENT_USER_FETCH_SUCCESS,
+  CURRENT_CHAT_FETCH,
   KEEP_BROWSING,
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
@@ -15,6 +16,8 @@ import {
   API_SECRET_KEY,
   SET_NEW_NOTIFICATION
 } from './types';
+import { MAP_API_KEY } from '../config';
+import { DEFAULT_PROFILE_PHOTO } from '../constants';
 
 const jsSHA = require("jssha");
 
@@ -86,21 +89,26 @@ export const setLocationLocalStorage = (position, location) => {
 
 export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch) => {
   const shaObj = new jsSHA("SHA-256", "TEXT");
-  shaObj.update(API_SECRET_KEY + uid);
-  const hash = shaObj.getHash("HEX");
-  console.log("MAP hash", hash);
-
-  axios.get(`https://activities-test-a3871.appspot.com/location/${position.latitude}:${position.longitude}`,{
-    headers: { authorization: `${hash}:${uid}`}
-  })
-  .then(response => {
-    dispatch({ type: SET_CURRENT_LOCATION, payload: response.data });
-    setLocationLocalStorage(position,response.data);
-    setLocation(uid, response.data);
-  })
-  .catch(error => {
-    console.log(error);
+  shaObj.update(position.latitude + position.longitude);
+  const locationHash = shaObj.getHash("HEX");
+  firebase.database().ref(`location_cache/${locationHash}`).once('value', snapshot => {
+        const cacheExists = snapshot.val() !== null;
+        if (cacheExists) {
+          console.log('Found in cache');
+          setStateWithLocation(uid, position, dispatch, snapshot.val());
+        }else{
+          console.log('Not in the cache');
+          getLocationFromGoogleMapAPI(locationHash, position.latitude, position.longitude);
+        }
+  }).catch((e) => {
+    console.log('Error connecting FB:', e);
   });
+};
+
+const setStateWithLocation = (uid, position, dispatch, data) => {
+  dispatch({ type: SET_CURRENT_LOCATION, payload: data });
+  setLocationLocalStorage(position,data);
+  setLocation(uid, data);
 };
 
 export const getCityStateCountry = (uid, position, dispatch) => {
@@ -144,9 +152,7 @@ export const currentUserFetch = () => {
   };
 };
 
-export const connectWithUser = (buddy, connectStatus) => {
-  const { currentUser } = firebase.auth();
-
+export const connectWithUser = (currentUser, buddy, connectStatus) => {
   return(dispatch) => {
     dispatch({
       type: CONNECT_WITH_USER,
@@ -167,9 +173,10 @@ export const connectWithUser = (buddy, connectStatus) => {
             otherUserPic: buddy.pic.url,
             liked: connectStatus,
             matched: (otherUserLikesYouToo && connectStatus),
+            matchedDate: firebase.database.ServerValue.TIMESTAMP,
           });
           if(connectStatus && otherUserLikesYouToo) {
-            successfullyConnected(dispatch, buddy.uid, currentUser.uid);
+            successfullyConnected(dispatch, buddy, currentUser);
           } else keepBrowsing(dispatch);
       });
   };
@@ -179,13 +186,79 @@ export const keepBrowsing = () => {
   return ({ type: KEEP_BROWSING });
 };
 
-const successfullyConnected = (dispatch, uid, currentUserId) => {
-  console.log("successfullyConnected");
-  firebase.database().ref(`user_matches/${uid}/${currentUserId}`)
-    .update({matched: true});
+const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude) {
+  axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${MAP_API_KEY}`)
+    .then((response) => {
+      if (response.data
+            && response.data.results
+            && response.data.results.length
+            && response.data.results[0].address_components
+            && response.data.results[0].address_components.length
+          ) {
+          const addressComponents = response.data.results[0].address_components;
 
-  firebase.database().ref(`/notifications/new/${uid}`).set(true);
-  firebase.database().ref(`user_matches/${currentUserId}/${uid}/seen`).set(true);
+          const location = {
+            city: '',
+            state: '',
+            country: '',
+            county: '',
+            neighborhood: ''
+          };
+
+          for (let i = 0; i < addressComponents.length; i++) {
+              const component = addressComponents[i];
+              console.log(component);
+              switch(component.types[0]) {
+                  case 'locality':
+                      location.city = component.long_name;
+                      break;
+                  case 'political':
+                      if (!location.city)
+                        location.city = component.long_name;
+                      break;
+                  case 'neighborhood':
+                      location.neighborhood = component.short_name || '';
+                      break;
+                  case 'administrative_area_level_1':
+                      location.state = component.short_name;
+                      break;
+                  case 'administrative_area_level_2':
+                      location.county = component.short_name;
+                      break;
+                  case 'country':
+                      location.country = component.long_name;
+                      break;
+                  default:
+                      break;
+              }
+          }
+          firebase.database().ref(`location_cache/${locationHash}`).set(location);
+      }else {
+        console.log('Data',response.data);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const successfullyConnected = (dispatch, buddy, currentUser) => {
+  let profileImage = DEFAULT_PROFILE_PHOTO;
+  if(currentUser && currentUser.profileImages) profileImage = currentUser.profileImages[0].url;
+
+  firebase.database().ref(`user_matches/${buddy.uid}/${currentUser.uid}`).update({matched: true});
+  firebase.database().ref(`/notifications/new/${buddy.uid}`).set(true);
+  firebase.database().ref(`user_matches/${currentUser.uid}/${buddy.uid}/seen`).set(true);
+
+  const convRef = firebase.database().ref(`conversations`).push();
+  const convKey = convRef.getKey();
+  firebase.database().ref(`message_center/${currentUser.uid}/${buddy.uid}/`)
+    .set({status: 'ACTIVE', otherUserId: buddy.uid, otherUserName: buddy.name, otherUserPic: buddy.pic.url, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP});
+  firebase.database().ref(`message_center/${buddy.uid}/${currentUser.uid}/`)
+    .set({status: 'ACTIVE', otherUserId: currentUser.uid, otherUserName: currentUser.firstName, otherUserPic: profileImage, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP})
+    .then(() => {
+      dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convKey, messages: [], justConnected: true }});
+  });
 
   dispatch({
     type: CONNECTION_SUCCESSFUL

@@ -5,11 +5,9 @@ import { connect } from 'react-redux';
 import Moment from 'moment';
 import { selectChat } from '../../actions';
 
-
 const MARGIN = 15;
 
 class ConversationListItem extends Component {
-
   renderUnseenMark(seen) {
     if (seen)
       return null;
@@ -29,16 +27,15 @@ class ConversationListItem extends Component {
     );
   }
   render() {
-    const msgContainer = this.props.matchSet.lastMsgs[this.props.otherUserId];
+    const msgContainer = {text: this.props.text, seen: this.props.seen, timeStamp: this.props.createdAt};
 
     let msg = '';
     let createdAt = '';
     const itemSeen = msgContainer.seen;
-    console.log('itemSeen',itemSeen);
     if(!msgContainer) msg = "Start chatting";
     else {
       msg = msgContainer.text;
-      createdAt = Moment(msgContainer.timestamp).fromNow();
+      createdAt = Moment(msgContainer.timeStamp).fromNow();
     }
 
     return (
@@ -124,8 +121,8 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ matchSet }) => {
-  return { matchSet };
+const mapStateToProps = ({ messageCenter }) => {
+  return { messageCenter };
 };
 
 export default connect(mapStateToProps, { selectChat })(ConversationListItem);
