@@ -8,6 +8,7 @@ import {
   CONNECT_WITH_USER,
   CONNECTION_SUCCESSFUL,
   CURRENT_USER_FETCH_SUCCESS,
+  CURRENT_CHAT_FETCH,
   KEEP_BROWSING,
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
@@ -16,6 +17,7 @@ import {
   SET_NEW_NOTIFICATION
 } from './types';
 import { MAP_API_KEY } from '../config';
+import { DEFAULT_PROFILE_PHOTO } from '../constants';
 
 const jsSHA = require("jssha");
 
@@ -203,9 +205,7 @@ export const currentUserFetch = () => {
   };
 };
 
-export const connectWithUser = (buddy, connectStatus) => {
-  const { currentUser } = firebase.auth();
-
+export const connectWithUser = (currentUser, buddy, connectStatus) => {
   return(dispatch) => {
     dispatch({
       type: CONNECT_WITH_USER,
@@ -226,9 +226,10 @@ export const connectWithUser = (buddy, connectStatus) => {
             otherUserPic: buddy.pic.url,
             liked: connectStatus,
             matched: (otherUserLikesYouToo && connectStatus),
+            matchedDate: firebase.database.ServerValue.TIMESTAMP,
           });
           if(connectStatus && otherUserLikesYouToo) {
-            successfullyConnected(dispatch, buddy.uid, currentUser.uid);
+            successfullyConnected(dispatch, buddy, currentUser);
           } else keepBrowsing(dispatch);
       });
   };
@@ -294,13 +295,23 @@ const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude)
     });
 };
 
-const successfullyConnected = (dispatch, uid, currentUserId) => {
-  console.log("successfullyConnected");
-  firebase.database().ref(`user_matches/${uid}/${currentUserId}`)
-    .update({matched: true});
+const successfullyConnected = (dispatch, buddy, currentUser) => {
+  let profileImage = DEFAULT_PROFILE_PHOTO;
+  if(currentUser && currentUser.profileImages) profileImage = currentUser.profileImages[0].url;
 
-  firebase.database().ref(`/notifications/new/${uid}`).set(true);
-  firebase.database().ref(`user_matches/${currentUserId}/${uid}/seen`).set(true);
+  firebase.database().ref(`user_matches/${buddy.uid}/${currentUser.uid}`).update({matched: true});
+  firebase.database().ref(`/notifications/new/${buddy.uid}`).set(true);
+  firebase.database().ref(`user_matches/${currentUser.uid}/${buddy.uid}/seen`).set(true);
+
+  const convRef = firebase.database().ref(`conversations`).push();
+  const convKey = convRef.getKey();
+  firebase.database().ref(`message_center/${currentUser.uid}/${buddy.uid}/`)
+    .set({status: 'ACTIVE', otherUserId: buddy.uid, otherUserName: buddy.name, otherUserPic: buddy.pic.url, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP});
+  firebase.database().ref(`message_center/${buddy.uid}/${currentUser.uid}/`)
+    .set({status: 'ACTIVE', otherUserId: currentUser.uid, otherUserName: currentUser.firstName, otherUserPic: profileImage, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP})
+    .then(() => {
+      dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convKey, messages: [], justConnected: true }});
+  });
 
   dispatch({
     type: CONNECTION_SUCCESSFUL

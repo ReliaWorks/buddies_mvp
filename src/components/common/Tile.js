@@ -9,7 +9,6 @@ const renderTileImage = (tileIcon, imageStyle) => {
         style={imageStyle}
         source={{ uri: tileIcon }}
         onLoadEnd={() => {
-          console.log(`Finished loading ${tileIcon}`);
         }}
       />
     );

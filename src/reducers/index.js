@@ -4,7 +4,7 @@ import ActivityFormReducer from './ActivityFormReducer';
 import ActivityReducer from './ActivityReducer';
 import AffiliationReducer from './AffiliationReducer';
 import BrowseReducer from './BrowseReducer';
-import MatchReducer from './MatchReducer';
+import MessageCenterReducer from './MessageCenterReducer';
 import ProfileReducer from './ProfileReducer';
 import SettingsReducer from './SettingsReducer';
 import ChatReducer from './ChatReducer';
@@ -20,7 +20,7 @@ export default combineReducers({
   connection: BrowseReducer,
   currentUser: ProfileReducer,
   settings: SettingsReducer,
-  matchSet: MatchReducer,
+  messageCenter: MessageCenterReducer,
   selectedUser: SelectedUserProfileReducer,
   commonality: ConnectionReducer,
 });

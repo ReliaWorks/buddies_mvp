@@ -96,11 +96,11 @@ class BrowseContainer extends Component {
                   uid: buddy.uid,
                 }}
                 onConnect={() => {
-                  this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, true);
+                  this.props.connectWithUser(this.props.currentUser, {uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, true);
                   this.swipe();
                 }}
                 onPass={() => {
-                  this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, false);
+                  this.props.connectWithUser(this.props.currentUser, {uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, false);
                   this.swipe();
                 }}
               />
@@ -125,7 +125,7 @@ class BrowseContainer extends Component {
         <Deck
           data={this.props.connection.potentials}
           onSwipeRight={(buddy) => {
-            this.props.connectWithUser({uid: buddy.uid, name: buddy.first_name, pic: buddy.profileImages[0] });
+            this.props.connectWithUser(this.props.currentUser, {uid: buddy.uid, name: buddy.first_name, pic: buddy.profileImages[0] });
           }}
           renderNoMoreCards={() => {
             return (
