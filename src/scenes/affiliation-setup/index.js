@@ -43,9 +43,10 @@ class AffiliationSetupScene extends Component {
     });
   }
 
-  onAffiliationSelected(uid, name, icon, isSelected) {
-    if(isSelected) this.props.affiliationSelected({uid, name, icon});
-    else this.props.affiliationUnselected({uid, name, icon});
+  onAffiliationSelected(tileData, isSelected) {
+    const { tileId, tileName, tileShortName, tileIcon } = tileData;
+    if(isSelected) this.props.affiliationSelected({uid: tileId, name: tileShortName, icon: tileIcon});
+    else this.props.affiliationUnselected({uid: tileId, name: tileShortName, icon: tileIcon});
   }
 
   onSearchBarChangeText(searchText) {

@@ -4,8 +4,6 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  name: '',
-  icon: '',
   allAffiliations: [],
   fetchedAllAffiliations: false
 };

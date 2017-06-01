@@ -7,7 +7,6 @@ const ICON_SIZE = 50;
 const MARGIN = 15;
 
 class AffiliationSet extends Component {
-
   renderAddAffiliationIcon() {
     return (
       <View style={{marginLeft: 2, marginRight: 2 }}>
