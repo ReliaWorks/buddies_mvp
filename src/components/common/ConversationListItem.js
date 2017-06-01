@@ -35,7 +35,7 @@ class ConversationListItem extends Component {
     if(!msgContainer) msg = "Start chatting";
     else {
       msg = msgContainer.text;
-      createdAt = Moment(msgContainer.timestamp).fromNow();
+      createdAt = Moment(msgContainer.timeStamp).fromNow();
     }
 
     return (

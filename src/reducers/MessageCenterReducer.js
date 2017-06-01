@@ -8,7 +8,6 @@ import {
 const INITIAL_STATE = {
   matchesWithChat: [],
   matchesWithoutChat: [],
-  sortedMatches: [],
   loading: false,
 };
 
@@ -22,8 +21,11 @@ export default(state = INITIAL_STATE, action) => {
       const matchesWithChat = _.filter(matches, (match) => {
         return(!match.status);
       });
+      const sortedMatchesWithChat = _.sortBy(matchesWithChat, (match) => {
+        return(match.createdAt);
+      });
 
-      return {...state, matchesWithChat: matchesWithChat, matchesWithoutChat: matchesWithoutChat, loading: false};
+      return {...state, matchesWithChat: sortedMatchesWithChat.reverse(), matchesWithoutChat: matchesWithoutChat, loading: false};
     }
     case MATCHES_FETCH_START: {
       return {...state, loading: true};
