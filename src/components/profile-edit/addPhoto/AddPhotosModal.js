@@ -53,6 +53,8 @@ export default class AddPhotosModal extends Component {
   }
 }
 
+const MARGIN = 15;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -61,9 +63,12 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     backgroundColor: 'transparent',
+    marginTop: MARGIN,
   },
   cancelButtonText: {
     color: 'white',
+    fontFamily: 'Source Sans Pro',
+    fontSize: 14,
     backgroundColor: 'transparent',
   }
 });
