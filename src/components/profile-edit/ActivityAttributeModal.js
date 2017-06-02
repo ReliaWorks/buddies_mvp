@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     color: 'black',
     textAlign: 'center',
+    fontFamily: 'Source Sans Pro',
   },
   list: {
     flex: 3,
