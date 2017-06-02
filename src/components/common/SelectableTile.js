@@ -19,7 +19,7 @@ class SelectableTile extends Component {
   }
 
   onTilePress() {
-    const { onSelect, onEdit, tileId, tileName, tileIcon, attribute } = this.props;
+    const { onSelect, onEdit, tileId, tileName, tileShortName, tileIcon, attribute } = this.props;
     const isSelected = !this.state.isSelected;
 
     this.setState({
@@ -27,7 +27,7 @@ class SelectableTile extends Component {
       tileBackgroundColor: (isSelected ? SELECTED_COLOR : 'white'),
     });
 
-    onSelect(tileId, tileName, tileIcon, isSelected, getAttribute(tileName, attribute));
+    onSelect({tileId, tileName, tileShortName, tileIcon}, isSelected, getAttribute(tileName, attribute));
   }
 
   render() {
@@ -81,10 +81,14 @@ const styles = {
     marginTop: 5,
   },
   activityTextLabel: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: 'Source Sans Pro',
-//    fontFamily: 'SourceSansPro-SemiBold',
     textAlign: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10
   },
   attribute: {
     textAlign: 'center',

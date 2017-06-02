@@ -39,7 +39,7 @@ class Connection extends Component {
   renderMessageButton(startChat, keepBrowsing) {
     return (
       <View style={styles.buttonsView}>
-        <Button onPress={startChat} styles={styles}>SAY HI</Button>
+        <Button onPress={startChat} styles={SayHiButtonStyles}>SAY HI</Button>
         <Button onPress={keepBrowsing} styles={styles}>CHAT LATER</Button>
       </View>
     );
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   buttonStyle: {
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: '#42D3D3',
+//    borderColor: '#42D3D3',
     width: width - (MARGIN * 4),
     height: 50,
     marginLeft: MARGIN,
@@ -126,5 +126,25 @@ const styles = StyleSheet.create({
     zIndex: 2,
   }
 });
+
+const SayHiButtonStyles = {
+  textStyle: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+    fontFamily: 'Source Sans Pro',
+    fontWeight: '700',
+  },
+  buttonStyle: {
+    justifyContent: 'center',
+    backgroundColor: '#42D3D3',
+    width: width - (MARGIN * 4),
+    height: 50,
+    marginLeft: MARGIN,
+    marginRight: MARGIN,
+    marginBottom: 15,
+  }
+};
+
 
 export default Connection;
