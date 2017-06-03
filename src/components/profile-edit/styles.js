@@ -1,3 +1,10 @@
+import { Dimensions } from 'react-native';
+
+const WIDTH = Dimensions.get('window').width;
+const ITEMS_PER_ROW = Math.floor(WIDTH / 115);
+const TOTAL_MARGIN = (15 * 2) + (ITEMS_PER_ROW * 1);
+const IMAGE_WIDTH = (WIDTH - TOTAL_MARGIN) / (ITEMS_PER_ROW);
+
 export default styles = {
   sectionHeaderText: {
     fontFamily: 'SourceSansPro-Bold',
@@ -26,8 +33,8 @@ export default styles = {
     marginBottom: 3,
   },
   smallImageStyle: {
-    height: 115,
-    width: 115,
+    height: IMAGE_WIDTH,
+    width: IMAGE_WIDTH,
     justifyContent: 'flex-end',
   },
 };

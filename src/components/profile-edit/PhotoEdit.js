@@ -162,6 +162,11 @@ class PhotoEdit extends Component {
   }
 }
 
+const WIDTH = Dimensions.get('window').width;
+const ITEMS_PER_ROW = Math.floor(WIDTH / 115);
+const TOTAL_MARGIN = (15 * 2) + (ITEMS_PER_ROW * 1);
+const IMAGE_WIDTH = (WIDTH - TOTAL_MARGIN) / (ITEMS_PER_ROW);
+
 const localStyles = {
   iconStyle: {
     justifyContent: 'center',
@@ -178,8 +183,8 @@ const localStyles = {
     padding: 1,
   },
   camera: {
-    height: 115,
-    width: 115,
+    height: IMAGE_WIDTH,
+    width: IMAGE_WIDTH,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
