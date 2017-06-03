@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { ListView, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { Dimensions, ListView, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ImagePicker from 'react-native-image-crop-picker';
 import { photosSelected, fetchFacebookAlbumPhotos } from '../../../actions';
 
-class FbAlbums extends Component {
+const WIDTH = Dimensions.get('window').width;
+const ITEMS_PER_ROW = Math.floor(WIDTH / 90);
+const IMAGE_WIDTH = (WIDTH - ITEMS_PER_ROW) / (ITEMS_PER_ROW);
 
+class FbAlbums extends Component {
   render() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id});
 
@@ -29,7 +32,7 @@ class FbAlbums extends Component {
       />
     );
   }
-  
+
   renderFacebookPicAsListItem(rowData) {
     return (
       <TouchableOpacity
@@ -68,15 +71,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     marginTop: 5,
+    marginLeft: 2
   },
   photosItem: {
-    width: 91,
-    marginTop: 3,
+    width: IMAGE_WIDTH,
+    marginTop: 1,
   },
   picItemImage: {
-    width: 88,
-    height: 88
+    width: IMAGE_WIDTH - 1,
+    height: IMAGE_WIDTH - 1,
   }
 });

@@ -175,12 +175,36 @@ class Routes extends Component {
         <Scene
           key="addPhotoFbAlbums"
           component={FbAlbums}
+          type={ActionConst.RESET}
           title="Albums"
+          navigationBarStyle={{
+            backgroundColor: '#3b5998',
+            borderBottomWidth: 3,
+            borderBottomColor: 'black',
+          }}
+          titleStyle={{
+            color: 'white'
+          }}
+          leftTitle="Cancel"
+          onLeft={() => Actions.photoEdit()}
+          leftButtonTextStyle={{...navBackNextStyle, color: 'white'}}
         />
         <Scene
           key="addPhotoFbAlbumPhotos"
+          type={ActionConst.RESET}
           component={FbAlbumPhotos}
-          title="Album"
+          title="Photos"
+          navigationBarStyle={{
+            backgroundColor: '#3b5998',
+            borderBottomWidth: 3,
+            borderBottomColor: 'black',
+          }}
+          titleStyle={{
+            color: 'white'
+          }}
+          leftTitle="Albums"
+          onLeft={() => Actions.addPhotoFbAlbums()}
+          leftButtonTextStyle={{...navBackNextStyle, color: 'white'}}
         />
         <Scene
           key="activityEdit"
