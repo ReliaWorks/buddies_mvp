@@ -132,6 +132,8 @@ const styles = {
   editIconBox: {
     backgroundColor: 'black',
     marginBottom: 25,
+    borderWidth: 1,
+    borderColor: 'white',
     height: 40,
     width: 40,
   }
