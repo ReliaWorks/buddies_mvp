@@ -72,7 +72,7 @@ class BuddyCard extends Component {
     );
   }
 
-  renderActivitiesAffiliations(activities, affiliations, editable) {
+  renderActivitiesAffiliations(activities, affiliations, editable, imageLoaded) {
     //if there are none and this is a browseable profile, then return null
     if(!activities && !affiliations) {
       if(editable) {
@@ -118,7 +118,7 @@ class BuddyCard extends Component {
     }
     return (
       <View>
-        <ActivitySet value={{activitiesAndAffiliations}} />
+        <ActivitySet value={{activitiesAndAffiliations}} imageLoaded={imageLoaded} />
       </View>
     );
   }
@@ -162,7 +162,7 @@ class BuddyCard extends Component {
   }
 
   render() {
-    const { firstName, age, editable, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
+    const { firstName, age, editable, imageLoaded, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
     const { locationText, nameText } = styles;
 //    <Image source={{ uri: profileImages[0]}} style={{height: 300, width: width - 20, alignSelf: 'stretch'}} />
 
@@ -172,6 +172,7 @@ class BuddyCard extends Component {
           <ProfileImages
             value={{profileImages, editable}}
             onOpenModal={this.onOpenModal.bind(this)}
+            imageLoaded={this.props.imageLoaded}
           />
           <ProfileImagesModal
             profileImages={profileImages}
@@ -192,7 +193,7 @@ class BuddyCard extends Component {
                   {this.showEditableButton(editable)}
                 </View>
                 {this.renderLocation(location, locationText)}
-                {this.renderActivitiesAffiliations(activities, affiliations, editable)}
+                {this.renderActivitiesAffiliations(activities, affiliations, editable, imageLoaded)}
                 {this.renderDescription(description)}
                 </View>
               </TouchableWithoutFeedback>

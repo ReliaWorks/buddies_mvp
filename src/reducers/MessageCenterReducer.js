@@ -15,13 +15,19 @@ export default(state = INITIAL_STATE, action) => {
   switch(action.type) {
     case MATCHES_FETCH: {
       const matches = action.payload;
-      const matchesWithoutChat = _.filter(matches, (match) => {
+      const keys = Object.keys(matches);
+      let i = 0;
+      const matchesWithIds = _.map(matches, match => {
+        return {...match, otherUserId: keys[i++]};
+      });
+
+      const matchesWithoutChat = _.filter(matchesWithIds, (match) => {
         return(match.status === 'ACTIVE');
       });
       const sortedMatchesWithoutChat = _.sortBy(matchesWithoutChat, (match) => {
         return match.matchedDate;
       });
-      const matchesWithChat = _.filter(matches, (match) => {
+      const matchesWithChat = _.filter(matchesWithIds, (match) => {
         return (!match.status);
       });
       const sortedMatchesWithChat = _.sortBy(matchesWithChat, (match) => {
