@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Modal from 'react-native-modal';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -9,6 +9,7 @@ import { Button } from '../../common';
 export default class AddPhotosModal extends Component {
   render() {
     return (
+      <TouchableWithoutFeedback onPress={() => this.props.close()}>
       <Modal
         isVisible={this.props.visible}
         style={styles.container}
@@ -30,8 +31,8 @@ export default class AddPhotosModal extends Component {
         <TouchableOpacity style={styles.cancelButton} onPress={() => this.props.close()}>
           <Text style={styles.cancelButtonText}>Cancel</Text>
         </TouchableOpacity>
-
       </Modal>
+      </TouchableWithoutFeedback>
     );
   }
 
@@ -47,11 +48,13 @@ export default class AddPhotosModal extends Component {
       this.props.getSelectedImages([image], 'facebook');
       this.props.close();
     }).catch(error => {
-      console.log('image picker', error);
+      console.log('image picker error = ', error);
       this.setState({ imagesComponent: 'none', images: [] });
     });
   }
 }
+
+const MARGIN = 15;
 
 const styles = StyleSheet.create({
   container: {
@@ -61,9 +64,12 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     backgroundColor: 'transparent',
+    marginTop: MARGIN,
   },
   cancelButtonText: {
     color: 'white',
+    fontFamily: 'Source Sans Pro',
+    fontSize: 14,
     backgroundColor: 'transparent',
   }
 });

@@ -54,17 +54,19 @@ class ActivitySetupScene extends Component {
     });
   }
 
-  onActivitySelected(uid, name, icon, isSelected, attribute) {
+  onActivitySelected(tileData, isSelected, attribute) {
+    const { tileId, tileName, tileIcon } = tileData;
+
     if(isSelected) {
-      this.props.activitySelected({uid, name, icon, attribute});
+      this.props.activitySelected({uid: tileId, name: tileName, icon: tileIcon, attribute});
 
       if (this.props.source === 'Edit') {
         this.setState({
-          attributeModal: {show: true, activity: {activityId: uid, activityName: name, activityIcon: icon, attribute}}
+          attributeModal: {show: true, activity: {activityId: tileId, activityName: tileName, activityIcon: tileIcon, attribute}}
         });
       }
     } else {
-      this.props.activityUnselected({uid , name, icon, attribute});
+      this.props.activityUnselected({uid: tileId, name: tileName, icon: tileIcon, attribute});
     }
   }
 

@@ -42,6 +42,7 @@ class ActivitySetup extends Component {
       <SelectableTile
         tileId={rowData.uid}
         tileName={rowData.name}
+        tileShortName={rowData.name}
         tileIcon={rowData.icon}
         onSelect={this.props.onSelected}
         isSelected={exists}

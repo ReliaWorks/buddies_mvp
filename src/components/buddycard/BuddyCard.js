@@ -219,7 +219,7 @@ const localStyles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     height: 55,
-    backgroundColor: '#1DABB5',
+    backgroundColor: '#42D3D3',
     opacity: 0.75,
   },
   footerText: {

@@ -32,7 +32,6 @@ export const checkNotifications = () => {
 };
 
 export const potentialsFetch = () => {
-  console.log('Entering potentialsFetch');
   return (dispatch) => {
     const { currentUser } = firebase.auth();
     const potentials = [];

@@ -40,6 +40,7 @@ class AffiliationSetup extends Component {
     return(<SelectableTile
       tileId={rowData.uid}
       tileName={rowData.name}
+      tileShortName={rowData.shortName}
       tileIcon={rowData.icon}
       onSelect={this.props.onSelected}
       isSelected={exists}
