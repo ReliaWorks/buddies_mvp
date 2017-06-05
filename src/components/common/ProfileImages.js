@@ -55,6 +55,10 @@ class ProfileImages extends Component {
           <Image
             source={{ uri: img }}
             style={styles.profileImage}
+            onLoadEnd={() => {
+              if(this.state.firstRender && this.props.imageLoaded)
+                this.props.imageLoaded();
+            }}
           >
             {this.showEditableButton(editable)}
           </Image>

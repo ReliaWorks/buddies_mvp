@@ -45,10 +45,10 @@ export const fetchConversation = (otherUserId) => {
         const convRef = firebase.database().ref(`conversations`).push();
         const convKey = convRef.getKey();
         firebase.database().ref(`message_center/${currentUser.uid}/${otherUserId}/`)
-          .set({status: 'ACTIVE', conversationId: convKey, otherUserId, seen: true})
+          .set({status: 'ACTIVE', conversationId: convKey, seen: true})
           .then(() => {
             firebase.database().ref(`message_center/${otherUserId}/${currentUser.uid}/`)
-              .set({status: 'ACTIVE', conversationId: convKey, otherUserId, seen: true })
+              .set({status: 'ACTIVE', conversationId: convKey, seen: true })
               .then(() => {
                 dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convKey, messages: [], justConnected: true }});
               });
@@ -92,7 +92,6 @@ export const saveMessage = (msg, currentUser, otherUser, chatId, messages) => {
         otherUserPic: otherUser.selectedMatchPic,
         user,
         createdAt: firebase.database.ServerValue.TIMESTAMP,
-        receiverId: otherUser.selectedMatchId
       };
       firebase.database().ref(`conversations/${chatId}`)
         .push(m1)

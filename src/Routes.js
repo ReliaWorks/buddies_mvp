@@ -179,8 +179,6 @@ class Routes extends Component {
           title="Albums"
           navigationBarStyle={{
             backgroundColor: '#3b5998',
-            borderBottomWidth: 3,
-            borderBottomColor: 'black',
           }}
           titleStyle={{
             color: 'white'
@@ -196,8 +194,6 @@ class Routes extends Component {
           title="Photos"
           navigationBarStyle={{
             backgroundColor: '#3b5998',
-            borderBottomWidth: 3,
-            borderBottomColor: 'black',
           }}
           titleStyle={{
             color: 'white'
