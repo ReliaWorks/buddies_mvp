@@ -14,7 +14,8 @@ import {
   SET_CURRENT_LOCATION,
   LOCATION_MAP_STORAGE_KEY,
   API_SECRET_KEY,
-  SET_NEW_NOTIFICATION
+  SET_NEW_NOTIFICATION,
+  IMAGE_LOADED,
 } from './types';
 import { MAP_API_KEY } from '../config';
 import { DEFAULT_PROFILE_PHOTO } from '../constants';
@@ -151,6 +152,12 @@ export const currentUserFetch = () => {
   };
 };
 
+export const imageLoaded = () => {
+  return {
+    type: IMAGE_LOADED
+  };
+};
+
 export const connectWithUser = (currentUser, buddy, connectStatus) => {
   return(dispatch) => {
     dispatch({
@@ -166,8 +173,6 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
 
         matches.ref(`user_matches/${currentUser.uid}/${buddy.uid}`)
           .set({
-            currentUserId: currentUser.uid,
-            otherUserId: buddy.uid,
             otherUserName: buddy.name,
             otherUserPic: buddy.pic.url,
             liked: connectStatus,
@@ -252,9 +257,9 @@ const successfullyConnected = (dispatch, buddy, currentUser) => {
   const convRef = firebase.database().ref(`conversations`).push();
   const convKey = convRef.getKey();
   firebase.database().ref(`message_center/${currentUser.uid}/${buddy.uid}/`)
-    .set({status: 'ACTIVE', otherUserId: buddy.uid, otherUserName: buddy.name, otherUserPic: buddy.pic.url, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP});
+    .set({status: 'ACTIVE', otherUserName: buddy.name, otherUserPic: buddy.pic.url, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP});
   firebase.database().ref(`message_center/${buddy.uid}/${currentUser.uid}/`)
-    .set({status: 'ACTIVE', otherUserId: currentUser.uid, otherUserName: currentUser.firstName, otherUserPic: profileImage, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP})
+    .set({status: 'ACTIVE', otherUserName: currentUser.firstName, otherUserPic: profileImage, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP})
     .then(() => {
       dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convKey, messages: [], justConnected: true }});
   });

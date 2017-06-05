@@ -14,13 +14,17 @@ class ActivitySet extends Component {
     if(!actsAndAffs) actsAndAffs = [];
 
     dataSource = ds.cloneWithRows(actsAndAffs);
-
     return (
       <ListView
           contentContainerStyle={styles.list}
           dataSource={dataSource}
           renderRow={(rowData) =>
-            <Tile tileName={rowData.name} tileIcon={rowData.icon} tileAttribute={rowData.attribute} />
+            <Tile
+              tileName={rowData.name}
+              tileIcon={rowData.icon}
+              tileAttribute={rowData.attribute}
+              imageLoaded={this.props.imageLoaded}
+            />
           }
           enableEmptySections
           initialListSize={25}
