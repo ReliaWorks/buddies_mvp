@@ -5,6 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import {
   POTENTIALS_FETCH,
   POTENTIALS_FETCH_SUCCESS,
+  POTENTIALS_ADD_SUCCESS,
   CONNECT_WITH_USER,
   CONNECTION_SUCCESSFUL,
   CURRENT_USER_FETCH_SUCCESS,
@@ -17,7 +18,7 @@ import {
   SET_NEW_NOTIFICATION
 } from './types';
 import { MAP_API_KEY } from '../config';
-import { DEFAULT_PROFILE_PHOTO } from '../constants';
+import { DEFAULT_PROFILE_PHOTO, LIMIT_RECORDS_LOCATION, WEIGHTS_PROXIMITY_INDEX } from '../constants';
 
 const jsSHA = require("jssha");
 
@@ -35,6 +36,142 @@ export const checkNotifications = () => {
           dispatch({ type: SET_NEW_NOTIFICATION, payload: { notification: snapshot.val() } });
     });
   };
+};
+
+const getGeoDistance = (user1, user2) => {
+  return 0;
+};
+
+const numberCommonAffiliations = (user1, user2) => {
+  const affiliations1 = Object.keys(user1.affiliations);
+  const affiliations2 = Object.keys(user2.affiliations);
+  const intersection = affiliations1.filter((n) => {
+    return affiliations2.indexOf(n) !== -1;
+  });
+
+  return intersection.length;
+};
+
+const numberCommonActivities = (user1, user2) => {
+  const activities1 = Object.keys(user1.activities);
+  const activities2 = Object.keys(user2.activities);
+  const intersection = activities1.filter((n) => {
+    return activities2.indexOf(n) !== -1;
+  });
+
+  return intersection.length;
+};
+
+const sameGenderIndex = (user1, user2) => {
+  return (user1.gender && user2.gender && user1.gender == user2.gender) ? 1 : 0;
+};
+
+const getProximityIndex = (user1, user2, areaIndexValue) => {
+    //proxIndex =  W1 Area + W2 LocProx +  W3 commonAffil + W4 commonAct + W5 genderCommon
+    //where W1 + .. + Wn = 1
+    const { WEIGHT_AREA,
+            WEIGHT_GEO_PROX,
+            WEIGHT_COMMON_AFFILIATION,
+            WEIGHT_COMMON_ACTIVITIES,
+            WEIGHT_COMMON_GENDER } = WEIGHTS_PROXIMITY_INDEX;
+
+    const proxIndex = (WEIGHT_AREA * areaIndexValue) +
+                      (WEIGHT_GEO_PROX * getGeoDistance(user1, user2)) +
+                      (WEIGHT_COMMON_AFFILIATION * numberCommonAffiliations(user1, user2)) +
+                      (WEIGHT_COMMON_ACTIVITIES * numberCommonActivities(user1, user2)) +
+                      (WEIGHT_COMMON_GENDER * sameGenderIndex(user1, user2));
+
+    return Math.round(proxIndex);
+};
+
+const getLocationArea = (fb, dispatch, currentUser, path, lastAreaRecordId, areaIndexValue) => {
+  console.log('Path getLocationArea: ', path);
+  const promise = new Promise((resolve, reject) => {
+    const ref = fb.ref(path).orderByKey;
+
+    if (lastAreaRecordId) {
+      ref.startAt(lastAreaRecordId);
+    }else{
+      ref.limitToFirst(LIMIT_RECORDS_LOCATION);
+    }
+
+    ref.once('value', snapshot => {
+       const data = snapshot.val();
+       if (data) {
+         const keys = Object.keys(data);
+
+         if (keys.length)
+           resolve();
+         else
+           reject();
+
+         keys.forEach((key) => {
+           //get other user
+           const otherUserId = data[key];
+
+           if (currentUser.uid == otherUserId)
+            return;
+
+           fb.ref(`user_profiles/${otherUserId}`).once('value', snap => {
+             const otherUser = {...snap.val(), uid: otherUserId};
+             if (snap.val()) {
+               fb.ref(`user_matches/${currentUser.uid}/${otherUserId}`).once('value', (snap2) => {
+                  //is not in user matches already
+                  if (!snap2.val()) {
+                    const proximityIndex = getProximityIndex(currentUser, otherUser, areaIndexValue);
+                    const obj = {index: proximityIndex, user: otherUser};
+                    dispatch({
+                      type: POTENTIALS_ADD_SUCCESS,
+                      payload: obj
+                    });
+                  }
+               });
+             }
+           });
+         });
+       }else {
+         reject();
+       }
+    });
+  });
+
+  return promise;
+};
+
+export const potentialsFetchRT = () => {
+    return (dispatch) => {
+      const { currentUser } = firebase.auth();
+      const lastAreaRecordId = null; //get from state
+      const location = currentUser.location;
+
+      const pathNeighborhood = `location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/neighborhoods/${stringToVariable(location.neighborhood)}/users/${currentUser.uid}`;
+      const pathCity = `location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/users`;
+      const pathCounty = `location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/users`;
+      const pathState = `location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/neighborhoods/${stringToVariable(location.neighborhood)}/users`;
+
+      //Get neighborhood
+      getLocationArea(firebase.database(), dispatch, currentUser, pathNeighborhood, lastAreaRecordId, 10000).then(() => {
+          //
+      })
+      .catch(() => {
+          getLocationArea(firebase.database(), dispatch, currentUser, pathCity, lastAreaRecordId, 10000).then(() => {
+              //
+          })
+          .catch(() => {
+            getLocationArea(firebase.database(), dispatch, currentUser, pathCounty, lastAreaRecordId, 10000).then(() => {
+                //
+            })
+            .catch(() => {
+              getLocationArea(firebase.database(), dispatch, currentUser, pathState, lastAreaRecordId, 10000).then(() => {
+                  //
+              })
+              .catch(() => {
+
+              });
+            });
+          });
+      });
+    };
 };
 
 export const potentialsFetch = () => {
@@ -80,17 +217,10 @@ export const setGeolocation = (uid, geoLocation) => {
 
 const clearUserLastLocationFB = (db, uid, numberNewRecords) => {
   const thisPromise = new Promise((resolve) => {
-    debugger;
     if (numberNewRecords == 0)
       resolve();
     else{
-      db.ref(`last_location_path/${uid}`).update(null)
-      .then(() => {
-        resolve();
-      })
-      .catch((e) => {
-        resolve();
-      });
+      db.ref(`last_location_path/${uid}`).remove(() => { resolve(); });
     }
   });
   return thisPromise;
@@ -150,7 +280,14 @@ export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch
           setStateWithLocation(uid, position, dispatch, snapshot.val());
         }else{
           console.log('Not in the cache');
-          getLocationFromGoogleMapAPI(locationHash, position.latitude, position.longitude);
+          debugger;
+          getLocationFromGoogleMapAPI(locationHash, position.latitude, position.longitude)
+            .then((location) => {
+              setStateWithLocation(uid, position, dispatch, location);
+            })
+            .catch(() => {
+              console.log("Was Unabled to return location from Google");
+            });
         }
   }).catch((e) => {
     console.log('Error connecting FB:', e);
@@ -239,59 +376,64 @@ export const keepBrowsing = () => {
 };
 
 const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude) {
-  axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${MAP_API_KEY}`)
-    .then((response) => {
-      if (response.data
-            && response.data.results
-            && response.data.results.length
-            && response.data.results[0].address_components
-            && response.data.results[0].address_components.length
-          ) {
-          const addressComponents = response.data.results[0].address_components;
+  const promise = new Promise((resolve) => {
+    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${MAP_API_KEY}`)
+      .then((response) => {
+        if (response.data
+              && response.data.results
+              && response.data.results.length
+              && response.data.results[0].address_components
+              && response.data.results[0].address_components.length
+            ) {
+            const addressComponents = response.data.results[0].address_components;
 
-          const location = {
-            city: '',
-            state: '',
-            country: '',
-            county: '',
-            neighborhood: ''
-          };
+            const location = {
+              city: '',
+              state: '',
+              country: '',
+              county: '',
+              neighborhood: ''
+            };
 
-          for (let i = 0; i < addressComponents.length; i++) {
-              const component = addressComponents[i];
-              console.log(component);
-              switch(component.types[0]) {
-                  case 'locality':
-                      location.city = component.long_name;
-                      break;
-                  case 'political':
-                      if (!location.city)
+            for (let i = 0; i < addressComponents.length; i++) {
+                const component = addressComponents[i];
+                console.log(component);
+                switch(component.types[0]) {
+                    case 'locality':
                         location.city = component.long_name;
-                      break;
-                  case 'neighborhood':
-                      location.neighborhood = component.short_name || '';
-                      break;
-                  case 'administrative_area_level_1':
-                      location.state = component.short_name;
-                      break;
-                  case 'administrative_area_level_2':
-                      location.county = component.short_name;
-                      break;
-                  case 'country':
-                      location.country = component.long_name;
-                      break;
-                  default:
-                      break;
-              }
-          }
-          firebase.database().ref(`location_cache/${locationHash}`).set(location);
-      }else {
-        console.log('Data',response.data);
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+                        break;
+                    case 'political':
+                        if (!location.city)
+                          location.city = component.long_name;
+                        break;
+                    case 'neighborhood':
+                        location.neighborhood = component.short_name || '';
+                        break;
+                    case 'administrative_area_level_1':
+                        location.state = component.short_name;
+                        break;
+                    case 'administrative_area_level_2':
+                        location.county = component.short_name;
+                        break;
+                    case 'country':
+                        location.country = component.long_name;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            firebase.database().ref(`location_cache/${locationHash}`).set(location);
+            resolve(location);
+        }else{
+          console.log('Data',response.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+
+  return promise;
 };
 
 const successfullyConnected = (dispatch, buddy, currentUser) => {

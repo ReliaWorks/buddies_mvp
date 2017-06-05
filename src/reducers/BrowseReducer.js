@@ -27,6 +27,11 @@ export default(state = INITIAL_STATE, action) => {
     case POTENTIALS_FETCH_SUCCESS: {
       return { ...state, potentials: action.payload, loadingPotentials: false };
     }
+    case POTENTIALS_ADD_SUCCESS: {
+      const potentialsTemp = potentials.slice(0); //clone
+      potentialsTemp[action.payload.index] = action.payload.user;
+      return { ...state, potentials: potentialsTemp, loadingPotentials: false };
+    }
     case SET_NEW_NOTIFICATION: {
       return { ...state, notification: action.payload.notification, listeningForNotifications: true };
     }
