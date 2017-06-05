@@ -43,6 +43,7 @@ export const potentialsFetch = () => {
     console.log("API hash", hash);
 
     dispatch({type: POTENTIALS_FETCH});
+    console.log(`In potentialsFetch. CurrentUser.uid = ${currentUser.uid}`);
     axios.get(`https://activities-test-a3871.appspot.com/match/${currentUser.uid}`, {
       headers: { authorization: `${hash}:${currentUser.uid}`}
     })
