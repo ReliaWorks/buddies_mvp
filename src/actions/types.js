@@ -42,6 +42,7 @@ export const POTENTIALS_FETCH_SUCCESS = 'potentials_fetch_success';
 export const IMAGE_LOADED = 'image_loaded';
 export const MATCHES_FETCH = 'matches_fetch';
 export const MATCHES_FETCH_START = 'matches_fetch_start';
+export const MATCHES_FETCH_FAIL = 'matches_fetch_fail';
 export const SET_CURRENT_GEOLOCATION = 'set_geolocation';
 export const SET_CURRENT_LOCATION = 'set_location';
 export const LOCATION_MAP_STORAGE_KEY = 'location_map_storage_key';
