@@ -56,6 +56,7 @@ class UserEdit extends Component {
             }}
             placeholder={DESCRIPTION_PLACEHOLDER}
             value={this.state.text}
+            testID={'descriptionTextInput'}
           />
         </View>
       </View>
@@ -74,7 +75,7 @@ class UserEdit extends Component {
     const { activities, affiliations } = this.props;
 
     return (
-      <ScrollView style={styles.scrollViewContainer}>
+      <ScrollView style={styles.scrollViewContainer} testID={'ScrollView'}>
         {this.renderActivities(activities)}
         {this.renderAffiliations(affiliations)}
         {this.renderDescription()}

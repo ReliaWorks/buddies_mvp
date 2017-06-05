@@ -29,6 +29,7 @@ const EditableActivityListItem = ({
           onPress={() => onEdit({
             activityId: tileId, activityName: tileName, activityIcon: tileIcon, attribute: attribute
           })}
+          testID={'editActivityIcon'}
         >
           <CustomIcon
             name="edit_icon"

@@ -97,6 +97,7 @@ class ActivitySetup extends Component {
           style={searchBarText}
           placeholder="Search for an activity"
           onChangeText={onChangeText}
+          testID={'searchBarTextField'}
         />
       </View>
     );

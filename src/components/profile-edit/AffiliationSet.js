@@ -22,6 +22,7 @@ class AffiliationSet extends Component {
         >
           <TouchableOpacity
             onPress={this.props.onAdd}
+            testID={'addAffiliationButton'}
           >
             <Icon
               name="add-circle"
