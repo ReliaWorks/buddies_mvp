@@ -4,6 +4,7 @@ import {
   CHAT_SELECTED,
   POTENTIALS_FETCH,
   POTENTIALS_FETCH_SUCCESS,
+  CURRENT_USER_FETCH_START,
   IMAGE_LOADED,
   LOGOUT_USER,
   SET_NEW_NOTIFICATION,
@@ -16,6 +17,7 @@ const INITIAL_STATE = {
   potentials: [],
   browseCursor: 0,
   loadingPotentials: false,
+  loadingCurrentUser: false,
   numImagesOnScreen: 0,
   notification: false,
   listeningForNotifications: false
@@ -23,11 +25,14 @@ const INITIAL_STATE = {
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CURRENT_USER_FETCH_START: {
+      return { ...state, loadingCurrentUser: true };
+    }
     case POTENTIALS_FETCH: {
-      return { ...state, loadingPotentials: true };
+      return { ...state, loadingPotentials: true, loadingCurrentUser: false };
     }
     case POTENTIALS_FETCH_SUCCESS: {
-      let numImages = 0;
+/*      let numImages = 0;
       if(action.payload) {
         const firstMatch = action.payload[0];
         if(firstMatch.activities)
@@ -37,11 +42,12 @@ export default(state = INITIAL_STATE, action) => {
         if(firstMatch.profileImages && Object.keys(firstMatch.profileImages).length > 0)
           numImages += 1;
       }
-      console.log(`numImagesOnScreen = ${numImages}`);
-      return { ...state, potentials: action.payload, loadingPotentials: false, numImagesOnScreen: numImages };
+      console.log(`numImagesOnScreen = ${numImages}`);*/
+      return { ...state, potentials: action.payload, loadingPotentials: false };
     }
     case IMAGE_LOADED: {
-      return { ...state, numImagesOnScreen: state.numImagesOnScreen - 1 };
+//      return { ...state, numImagesOnScreen: state.numImagesOnScreen - 1 };
+      return state;
     }
     case SET_NEW_NOTIFICATION: {
       return { ...state, notification: action.payload.notification, listeningForNotifications: true };

@@ -13,6 +13,7 @@ import {
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
   LOCATION_MAP_STORAGE_KEY,
+  CURRENT_USER_FETCH_START,
   API_SECRET_KEY,
   SET_NEW_NOTIFICATION,
   IMAGE_LOADED,
@@ -138,6 +139,7 @@ export const currentUserFetch = () => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
+    dispatch({ type: CURRENT_USER_FETCH_START })
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const initialPosition = JSON.stringify(position);
@@ -249,7 +251,8 @@ const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude)
 
 const successfullyConnected = (dispatch, buddy, currentUser) => {
   let profileImage = DEFAULT_PROFILE_PHOTO;
-  if(currentUser && currentUser.profileImages) profileImage = currentUser.profileImages[0].url;
+  if(currentUser && currentUser.profileImages && currentUser.profileImages.length > 0)
+    profileImage = currentUser.profileImages[0].url;
 
   firebase.database().ref(`user_matches/${buddy.uid}/${currentUser.uid}`).update({matched: true});
   firebase.database().ref(`/notifications/new/${buddy.uid}`).set(true);
