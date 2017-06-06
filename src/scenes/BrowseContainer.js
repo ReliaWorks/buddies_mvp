@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
-import { currentUserFetch, connectWithUser, potentialsFetch, checkNotifications } from '../actions';
+import { currentUserFetch, connectWithUser, potentialsFetch, potentialsFetchRT, checkNotifications } from '../actions';
 import { NoMoreCards, GlowLoader } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
@@ -23,9 +23,12 @@ class BrowseContainer extends Component {
   componentWillMount() {
     // firstName is assigned only after currentUserFetch, so if it is not empty no need to fetch again.
     if (this.props.currentUser.firstName === '') {
-      this.props.currentUserFetch();
+      const props = this.props;
+      debugger;
+      this.props.currentUserFetch(props.potentialsFetchRT);
     }
-    this.props.potentialsFetch();
+    //this.props.potentialsFetch();
+
     if (!this.props.connection.listeningForNotifications) {
       this.props.checkNotifications();
     }
@@ -167,4 +170,4 @@ const mapStateToProps = ({ currentUser, connection }) => {
   return { currentUser, connection };
 };
 
-export default connect(mapStateToProps, { currentUserFetch, connectWithUser, potentialsFetch, checkNotifications })(BrowseContainer);
+export default connect(mapStateToProps, { currentUserFetch, connectWithUser, potentialsFetch, potentialsFetchRT, checkNotifications })(BrowseContainer);

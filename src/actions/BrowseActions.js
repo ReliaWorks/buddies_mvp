@@ -38,8 +38,24 @@ export const checkNotifications = () => {
   };
 };
 
-const getGeoDistance = (user1, user2) => {
-  return 0;
+const degreesToRadians = (degrees) => {
+  return (degrees * Math.PI) / 180;
+};
+
+const getGeoDistance = (lat1, lon1, lat2, lon2) => {
+  const earthRadiusKm = 6371;
+
+  const dLat = degreesToRadians(lat2 - lat1);
+  const dLon = degreesToRadians(lon2 - lon1);
+
+  const lat1d = degreesToRadians(lat1);
+  const lat2d = degreesToRadians(lat2);
+
+  const a = (Math.sin(dLat / 2) * Math.sin(dLat / 2)) +
+          (Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1d) * Math.cos(lat2d));
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return earthRadiusKm * c;
 };
 
 const numberCommonAffiliations = (user1, user2) => {
@@ -76,7 +92,7 @@ const getProximityIndex = (user1, user2, areaIndexValue) => {
             WEIGHT_COMMON_GENDER } = WEIGHTS_PROXIMITY_INDEX;
 
     const proxIndex = (WEIGHT_AREA * areaIndexValue) +
-                      (WEIGHT_GEO_PROX * getGeoDistance(user1, user2)) +
+                      (WEIGHT_GEO_PROX * getGeoDistance(user1.position.latitude, user1.position.longitude, user2.position.latitude, user2.position.longitude)) +
                       (WEIGHT_COMMON_AFFILIATION * numberCommonAffiliations(user1, user2)) +
                       (WEIGHT_COMMON_ACTIVITIES * numberCommonActivities(user1, user2)) +
                       (WEIGHT_COMMON_GENDER * sameGenderIndex(user1, user2));
@@ -138,11 +154,14 @@ const getLocationArea = (fb, dispatch, currentUser, path, lastAreaRecordId, area
   return promise;
 };
 
-export const potentialsFetchRT = () => {
+export const potentialsFetchRT = (currentUser) => {
+    debugger;
     return (dispatch) => {
-      const { currentUser } = firebase.auth();
+      debugger;
       const lastAreaRecordId = null; //get from state
       const location = currentUser.location;
+
+      if (!location) return;
 
       const pathNeighborhood = `location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/neighborhoods/${stringToVariable(location.neighborhood)}/users/${currentUser.uid}`;
       const pathCity = `location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/users`;
@@ -205,7 +224,8 @@ export const potentialsFetch = () => {
   };
 };
 
-export const setLocation = (uid, location) => {
+export const setLocation = (currentUser, location) => {
+  const uid = currentUser.uid;
   const db = firebase.database();
   db.ref(`user_profiles/${uid}/location`).set(location);
   setCurrentUserLocationFB(db, uid, location);
@@ -269,29 +289,38 @@ export const setLocationLocalStorage = (position, location) => {
 };
 
 export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch) => {
-  const shaObj = new jsSHA("SHA-256", "TEXT");
-  shaObj.update(position.latitude + position.longitude);
-  const locationHash = shaObj.getHash("HEX");
-  firebase.database().ref(`location_cache/${locationHash}`).once('value', snapshot => {
-        //const cacheExists = snapshot.val() !== null;
-        const cacheExists=false;
-        if (cacheExists) {
-          console.log('Found in cache');
-          setStateWithLocation(uid, position, dispatch, snapshot.val());
-        }else{
-          console.log('Not in the cache');
-          debugger;
-          getLocationFromGoogleMapAPI(locationHash, position.latitude, position.longitude)
-            .then((location) => {
-              setStateWithLocation(uid, position, dispatch, location);
-            })
-            .catch(() => {
-              console.log("Was Unabled to return location from Google");
-            });
-        }
-  }).catch((e) => {
-    console.log('Error connecting FB:', e);
+  const promise = new Promise((resolve, reject) => {
+    debugger;
+    const shaObj = new jsSHA("SHA-256", "TEXT");
+    shaObj.update(position.latitude + position.longitude);
+    const locationHash = shaObj.getHash("HEX");
+    firebase.database().ref(`location_cache/${locationHash}`).once('value', snapshot => {
+          //const cacheExists = snapshot.val() !== null;
+          const cacheExists=false;
+          if (cacheExists) {
+            console.log('Found in cache');
+            resolve(snapshot.val());
+            setStateWithLocation(uid, position, dispatch, snapshot.val());
+          }else{
+            console.log('Not in the cache');
+            debugger;
+            getLocationFromGoogleMapAPI(locationHash, position.latitude, position.longitude)
+              .then((location) => {
+                resolve(location);
+                setStateWithLocation(uid, position, dispatch, location);
+              })
+              .catch(() => {
+                reject();
+                console.log("Was Unabled to return location from Google");
+              });
+          }
+          reject();
+    }).catch((e) => {
+      reject();
+      console.log('Error connecting FB:', e);
+    });
   });
+  return promise;
 };
 
 const setStateWithLocation = (uid, position, dispatch, data) => {
@@ -300,40 +329,62 @@ const setStateWithLocation = (uid, position, dispatch, data) => {
   setLocation(uid, data);
 };
 
-export const getCityStateCountry = (uid, position, dispatch) => {
-  let location = { city: '', state: '', country: '', county: '', neighborhood: ''};
+export const getCityStateCountry = (currentUser, position, dispatch) => {
+  const promise = new Promise((resolve, reject) => {
+    let location = { city: '', state: '', country: '', county: '', neighborhood: ''};
+    const uid = currentUser.uid;
 
-  if (!(position && position.latitude && position.longitude)) return;
-  console.log('Check local');
+    if (!(position && position.latitude && position.longitude)) reject();
+    console.log('Check local');
 
-  AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
-    .then((val) => {
-      const value = JSON.parse(val);
-      location = value[position.latitude + '' + position.longitude]; location=null;
-      if (value && location && location.city) {
-        dispatch({ type: SET_CURRENT_LOCATION, payload: location });
-        setLocation(uid, location);
-      } else{
-        getCityStateCountryMapAPI(uid, position, location, dispatch);
-      }
-    })
-    .catch(() => {
-      getCityStateCountryMapAPI(uid, position, location, dispatch);
-    });
+    AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
+      .then((val) => {
+        const value = JSON.parse(val);
+        location = value[position.latitude + '' + position.longitude]; location = null;
+        if (value && location && location.city) {
+          dispatch({ type: SET_CURRENT_LOCATION, payload: location });
+          resolve(location);
+          setLocation(currentUser, location);
+        } else{
+          getCityStateCountryMapAPI(uid, position, location, dispatch)
+            .then((returnedLocation) => {
+              resolve(returnedLocation);
+            });
+        }
+      })
+      .catch(() => {
+        getCityStateCountryMapAPI(uid, position, location, dispatch)
+          .then((returnedLocation) => {
+            resolve(returnedLocation);
+          });
+      });
+  });
+  return promise;
 };
 
-export const currentUserFetch = () => {
+export const currentUserFetch = (callback) => {
   const { currentUser } = firebase.auth();
-
+  console.log('currentUser',currentUser.uid);
+debugger;
   return (dispatch) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const initialPosition = JSON.stringify(position);
-        getCityStateCountry(currentUser.uid, position.coords, dispatch);
+        currentUser.position = position.coords;
+        debugger;
+        getCityStateCountry(currentUser, position.coords, dispatch)
+          .then((location) => {
+            debugger;
+
+            currentUser.location = location;
+            callback(currentUser);
+          });
         dispatch({ type: SET_CURRENT_GEOLOCATION, payload: initialPosition });
+
         setGeolocation(currentUser.uid, position);
       }
     );
+    debugger;
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
       .once('value', snapshot => {
         dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
@@ -432,7 +483,7 @@ const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude)
         console.log(error);
       });
   });
-
+debugger;
   return promise;
 };
 
