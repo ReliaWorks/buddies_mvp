@@ -47,7 +47,7 @@ const styles = {
   },
   title: {
     alignSelf: 'center',
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: 'Source Sans Pro',
     textAlign: 'center',
     paddingTop: 10,

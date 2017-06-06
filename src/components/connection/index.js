@@ -28,7 +28,7 @@ class ConnectionContainer extends Component {
     const { currentUser, connection } = this.props;
     const { selectedMatchId, selectedMatchName, selectedMatchPic } = connection;
     let profileImage = DEFAULT_PROFILE_PHOTO;
-    if(currentUser.profileImages) {
+    if(currentUser.profileImages && currentUser.profileImages.length > 0) {
       profileImage = currentUser.profileImages[0].url;
     }
 

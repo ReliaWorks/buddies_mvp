@@ -5,6 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { backIconButton, moreIconButton } from '../icons';
 import { fetchConversation, updateConversationNotifications, saveMessage, closeConversation } from '../actions';
+import { DEFAULT_PROFILE_PHOTO } from '../constants';
 
 class Conversation extends Component {
   constructor(props) {
@@ -87,9 +88,11 @@ class Conversation extends Component {
   }
 
   render() {
-    let profileImage = '';
-    if(this.props.currentUser.profilesImages)
-      profileImage = this.props.currentUser.profileImages[0].url;
+    const { currentUser } = this.props;
+    let profileImage = DEFAULT_PROFILE_PHOTO;
+    if(currentUser && currentUser.profileImages && currentUser.profileImages.length > 0)
+      profileImage = currentUser.profileImages[0].url;
+
     return (
       <View style={{flex: 1}}>
         {this.renderHeader()}

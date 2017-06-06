@@ -26,7 +26,7 @@ class BrowseContainer extends Component {
     if (this.props.currentUser.firstName === '') {
       this.props.currentUserFetch();
     }
-    this.props.potentialsFetch();
+    if (!this.props.connection.loadingCurrentUser) this.props.potentialsFetch();
     if (!this.props.connection.listeningForNotifications) {
       this.props.checkNotifications();
     }
@@ -133,7 +133,7 @@ class BrowseContainer extends Component {
   }
 
   render() {
-    if(this.props.connection.loadingPotentials)
+    if(this.props.connection.loadingPotentials || this.props.connection.loadingCurrentUser)
       return <GlowLoader animationRef={this.animationRef} />;
     else return this.renderMatches();
 /*      return (

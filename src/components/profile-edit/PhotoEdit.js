@@ -3,6 +3,7 @@ import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'rea
 import { MARGIN } from '../common/styles';
 import EditablePhoto from './EditablePhoto';
 import CustomIcon from '../../assets/icons';
+import { AddIcon } from '../../icons/AddIcon';
 import AddPhotosModal from './addPhoto/AddPhotosModal';
 import UploadingPhoto from './UploadingPhoto';
 import { Confirm } from '../common';
@@ -59,15 +60,10 @@ class PhotoEdit extends Component {
                 />
               );
             })}
-            <TouchableOpacity
-              style={localStyles.camera}
+            <AddIcon
               onPress={() => this.setState({modalVisible: true})}
-            >
-              <CustomIcon
-                name="camera_icon"
-                size={44}
-              />
-            </TouchableOpacity>
+              styles={{addActivityIcon: localStyles.camera}}
+            />
 
             <AddPhotosModal
               visible={this.state.modalVisible}
@@ -191,7 +187,8 @@ const localStyles = {
     borderColor: '#dddddd',
     marginRight: 5,
     marginTop: 5,
-    backgroundColor: 'transparent'
+    backgroundColor: '#F8F8F8',
+//    backgroundColor: 'transparent'
   },
   cameraIcon: {
     justifyContent: 'center',
