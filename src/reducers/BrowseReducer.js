@@ -33,11 +33,13 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, loadingPotentials: true, loadingCurrentUser: false };
     }
     case POTENTIALS_ADD_SUCCESS: {
+      debugger;
+      const addedPotentialUsers = state.addedPotentialUsers;
       if (action.payload.user.uid && typeof addedPotentialUsers[action.payload.user.uid] === 'undefined') {
         addedPotentialUsers[action.payload.user.uid] = true;
         const potentialsTemp = potentials.slice(0); //clone
         potentialsTemp[action.payload.index] = action.payload.user;
-        return { ...state, potentials: potentialsTemp, loadingPotentials: false };
+        return { ...state, potentials: potentialsTemp, loadingPotentials: false, addedPotentialUsers: addedPotentialUsers };
       }else{
         return { ...state };
       }

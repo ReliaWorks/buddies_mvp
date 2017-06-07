@@ -61,6 +61,8 @@ const getGeoDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 const numberCommonAffiliations = (user1, user2) => {
+  if (!user1 || !user2 || !user1.affiliations || !user2.affiliations) return 0;
+
   const affiliations1 = Object.keys(user1.affiliations);
   const affiliations2 = Object.keys(user2.affiliations);
   const intersection = affiliations1.filter((n) => {
@@ -71,6 +73,8 @@ const numberCommonAffiliations = (user1, user2) => {
 };
 
 const numberCommonActivities = (user1, user2) => {
+  if (!user1 || !user2 || !user1.activities || !user2.activities) return 0;
+
   const activities1 = Object.keys(user1.activities);
   const activities2 = Object.keys(user2.activities);
   const intersection = activities1.filter((n) => {
@@ -94,7 +98,7 @@ const getProximityIndex = (user1, user2, areaIndexValue) => {
             WEIGHT_COMMON_GENDER } = WEIGHTS_PROXIMITY_INDEX;
 
     const proxIndex = (WEIGHT_AREA * areaIndexValue) +
-                      (WEIGHT_GEO_PROX * getGeoDistance(user1.position.latitude, user1.position.longitude, user2.position.latitude, user2.position.longitude)) +
+                      (WEIGHT_GEO_PROX * getGeoDistance(user1.geoLocation.coords.latitude, user1.geoLocation.coords.longitude, user2.geoLocation.coords.latitude, user2.geoLocation.coords.longitude)) +
                       (WEIGHT_COMMON_AFFILIATION * numberCommonAffiliations(user1, user2)) +
                       (WEIGHT_COMMON_ACTIVITIES * numberCommonActivities(user1, user2)) +
                       (WEIGHT_COMMON_GENDER * sameGenderIndex(user1, user2));
@@ -105,7 +109,7 @@ const getProximityIndex = (user1, user2, areaIndexValue) => {
 const getLocationArea = (fb, dispatch, currentUser, path, lastAreaRecordId, areaIndexValue) => {
   console.log('Path getLocationArea: ', path);
   const promise = new Promise((resolve, reject) => {
-    const ref = fb.ref(path).orderByKey;
+    const ref = fb.ref(path).orderByKey();
 
     if (lastAreaRecordId) {
       ref.startAt(lastAreaRecordId);
@@ -125,7 +129,7 @@ const getLocationArea = (fb, dispatch, currentUser, path, lastAreaRecordId, area
 
          keys.forEach((key) => {
            //get other user
-           const otherUserId = data[key];
+           const otherUserId = key;
 
            if (currentUser.uid == otherUserId)
             return;
@@ -157,14 +161,15 @@ const getLocationArea = (fb, dispatch, currentUser, path, lastAreaRecordId, area
 };
 
 export const potentialsFetchRT = (currentUser) => {
+    debugger;
     return (dispatch) => {
       debugger;
       const lastAreaRecordId = null; //get from state
       const location = currentUser.location;
 
-      if (!location) return;
+      if (!location && location.country && location.state) return;
 
-      const pathNeighborhood = `location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/neighborhoods/${stringToVariable(location.neighborhood)}/users/${currentUser.uid}`;
+      const pathNeighborhood = `location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/neighborhoods/${stringToVariable(location.neighborhood)}/users`;
       const pathCity = `location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/users`;
       const pathCounty = `location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/users`;
       const pathState = `location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/neighborhoods/${stringToVariable(location.neighborhood)}/users`;
@@ -174,15 +179,15 @@ export const potentialsFetchRT = (currentUser) => {
           //
       })
       .catch(() => {
-          getLocationArea(firebase.database(), dispatch, currentUser, pathCity, lastAreaRecordId, 10000).then(() => {
+          getLocationArea(firebase.database(), dispatch, currentUser, pathCity, lastAreaRecordId, 40000).then(() => {
               //
           })
           .catch(() => {
-            getLocationArea(firebase.database(), dispatch, currentUser, pathCounty, lastAreaRecordId, 10000).then(() => {
+            getLocationArea(firebase.database(), dispatch, currentUser, pathCounty, lastAreaRecordId, 80000).then(() => {
                 //
             })
             .catch(() => {
-              getLocationArea(firebase.database(), dispatch, currentUser, pathState, lastAreaRecordId, 10000).then(() => {
+              getLocationArea(firebase.database(), dispatch, currentUser, pathState, lastAreaRecordId, 120000).then(() => {
                   //
               })
               .catch(() => {
@@ -226,8 +231,7 @@ export const potentialsFetch = () => {
   };
 };
 
-export const setLocation = (currentUser, location) => {
-  const uid = currentUser.uid;
+export const setLocation = (uid, location) => {
   const db = firebase.database();
   db.ref(`user_profiles/${uid}/location`).set(location);
   setCurrentUserLocationFB(db, uid, location);
@@ -308,7 +312,7 @@ export const getCityStateCountryMapAPI = (uid, position, dispatch) => {
                 .then((location) => {
                   setStateWithLocation(uid, position, dispatch, location);
                   console.log('Got location from MAP', location);
-                  alert('location');
+                  resolve(location);
                 })
                 .catch((e) => {
                   console.log("Was Unabled to return location from Google");
@@ -342,17 +346,26 @@ export const getCityStateCountry = (currentUser, position, dispatch) => {
           let location = value[position.latitude + '' + position.longitude]; location = null;
           if (value && location && location.city) {
             dispatch({ type: SET_CURRENT_LOCATION, payload: location });
-            setLocation(currentUser, location);
+            setLocation(uid, location);
             resolve(location);
           } else{
-            getCityStateCountryMapAPI(uid, position, dispatch);
-            resolve({});
-            alert('cxcxxcxcx3');
+            getCityStateCountryMapAPI(uid, position, dispatch)
+              .then((location) => {
+                resolve(location);
+              })
+              .catch(() => {
+                reject();
+              });
           }
         })
         .catch(() => {
-          getCityStateCountryMapAPI(uid, position, dispatch);
-          resolve({});
+          getCityStateCountryMapAPI(uid, position, dispatch)
+            .then((location) => {
+              resolve(location);
+            })
+            .catch(() => {
+              reject();
+            });
         });
     });
     return promise;
@@ -365,19 +378,31 @@ export const currentUserFetch = (callback) => {
     dispatch({ type: CURRENT_USER_FETCH_START })
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log("position: ", position);
         const initialPosition = JSON.stringify(position);
         setGeolocation(currentUser.uid, position);
 
-        getCityStateCountry(currentUser, position.coords, dispatch);
+        getCityStateCountry(currentUser, position.coords, dispatch)
+          .then((location) => {
+            console.log(`/user_profiles/${currentUser.uid}`, location);
+            firebase.database().ref(`/user_profiles/${currentUser.uid}`)
+              .once('value', snapshot => {
+                debugger;
+                const user = snapshot.val();
+                user.location = location;
+                user.geoLocation = position;
+                user.uid = currentUser.uid;
+                callback(user);
+                dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...user } });
+              });
+          })
+          .catch(() => {
+            console.log("Wasn't able to get the city, state info");
+          });
 
         dispatch({ type: SET_CURRENT_GEOLOCATION, payload: initialPosition });
       }
     );
-    if (currentUser.uid)
-      firebase.database().ref(`/user_profiles/${currentUser.uid}`)
-        .once('value', snapshot => {
-          dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
-        });
   };
 };
 

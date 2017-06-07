@@ -26,9 +26,9 @@ class BrowseContainer extends Component {
     // firstName is assigned only after currentUserFetch, so if it is not empty no need to fetch again.
     if (this.props.currentUser.firstName === '') {
       const props = this.props;
-      this.props.currentUserFetch();
+      props.currentUserFetch(props.potentialsFetchRT);
     }
-    if (!this.props.connection.loadingCurrentUser) this.props.potentialsFetch();
+    //if (!this.props.connection.loadingCurrentUser) this.props.potentialsFetchRT(this.props.currentUser);
     if (!this.props.connection.listeningForNotifications) {
       this.props.checkNotifications();
     }
