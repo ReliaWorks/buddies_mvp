@@ -1,7 +1,7 @@
 /* eslint-disable */
 var admin = require("firebase-admin");
 
-const uid = 'LGENb4JJZTUpKdQDX3oRkMySV613';
+const uid = 'I8RddYjJ6ZPjS2ECmOO3PIcrxX43';
 const affiliationsToAdd = ['Nike Run Club', 'Run and Chug'];
 
 describe('Activity, Affiliations and Description empty state', () => {
@@ -16,9 +16,10 @@ describe('Activity, Affiliations and Description empty state', () => {
   it('should remove all activities and affiliations', async () => {
     const count = await activityAndAffiliationsCount();
 
+    console.log('will remove ', count, ' of activities and affiliations');
+
     for (var i = 0; i < count; i++) {
       //await waitFor(element(by.id('removeActivityIcon')).atIndex(0)).toBeVisible().withTimeout(10000); //.whileElement(by.id('ScrollView')).scroll(50, 'down');
-      console.log('index: ', element(by.id('removeActivityIcon')).atIndex(0));
       await element(by.id('removeActivityIcon')).atIndex(0).tap();
       await delay(800);
       await element(by.text('Remove')).tap()
@@ -106,25 +107,20 @@ describe('Add Activities', () => {
   });
 });
 
-
-
 async function activityAndAffiliationsCount() {
-  const snap1 = await admin.database().ref('/user_profiles/' + uid + '/activities').once('value')
-  const snap2 = await admin.database().ref('/user_profiles/' + uid + '/affiliations').once('value')
+  const snap1 = await admin.database().ref('/user_profiles/' + uid + '/activities').once('value');
+  const snap2 = await admin.database().ref('/user_profiles/' + uid + '/affiliations').once('value');
 
   let i = 0;
   snap1.forEach((item) => {
     i++;
-    console.log(i+': '+item);
   });
   snap2.forEach((item) => {
     i++;
-    console.log(i+': '+item);
   });
 
   return i;
 }
-
 
 function delay(ms){
     var ctr, rej, p = new Promise(function (resolve, reject) {
