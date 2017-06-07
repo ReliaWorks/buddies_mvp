@@ -291,8 +291,7 @@ export const setLocationLocalStorage = (position, location) => {
 };
 
 export const getCityStateCountryMapAPI = (uid, position, dispatch) => {
-
-    //const promise = new Promise((resolve, reject) => {
+  const promise = new Promise((resolve, reject) => {
       const shaObj = new jsSHA("SHA-256", "TEXT");
       shaObj.update(position.latitude + position.longitude);
       const locationHash = shaObj.getHash("HEX");
@@ -309,7 +308,7 @@ export const getCityStateCountryMapAPI = (uid, position, dispatch) => {
                 .then((location) => {
                   setStateWithLocation(uid, position, dispatch, location);
                   console.log('Got location from MAP', location);
-                  resolve(location);
+                  alert('location');
                 })
                 .catch((e) => {
                   console.log("Was Unabled to return location from Google");
@@ -320,9 +319,8 @@ export const getCityStateCountryMapAPI = (uid, position, dispatch) => {
         console.log('Error connecting FB:', e);
         reject(e);
       });
-      /*
     });
-    return promise;*/
+    return promise;
 };
 
 const setStateWithLocation = (uid, position, dispatch, data) => {
@@ -348,10 +346,13 @@ export const getCityStateCountry = (currentUser, position, dispatch) => {
             resolve(location);
           } else{
             getCityStateCountryMapAPI(uid, position, dispatch);
+            resolve({});
+            alert('cxcxxcxcx3');
           }
         })
         .catch(() => {
           getCityStateCountryMapAPI(uid, position, dispatch);
+          resolve({});
         });
     });
     return promise;
@@ -372,11 +373,11 @@ export const currentUserFetch = (callback) => {
         dispatch({ type: SET_CURRENT_GEOLOCATION, payload: initialPosition });
       }
     );
-
-    firebase.database().ref(`/user_profiles/${currentUser.uid}`)
-      .once('value', snapshot => {
-        dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
-      });
+    if (currentUser.uid)
+      firebase.database().ref(`/user_profiles/${currentUser.uid}`)
+        .once('value', snapshot => {
+          dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
+        });
   };
 };
 
