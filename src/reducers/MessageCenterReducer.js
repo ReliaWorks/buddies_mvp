@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {
   MATCHES_FETCH,
   MATCHES_FETCH_START,
+  MATCHES_FETCH_FAIL,
   LOGOUT_USER,
 } from '../actions/types';
 
@@ -15,13 +16,20 @@ export default(state = INITIAL_STATE, action) => {
   switch(action.type) {
     case MATCHES_FETCH: {
       const matches = action.payload;
-      const matchesWithoutChat = _.filter(matches, (match) => {
+
+      const keys = Object.keys(matches);
+      let i = 0;
+      const matchesWithIds = _.map(matches, match => {
+        return {...match, otherUserId: keys[i++]};
+      });
+
+      const matchesWithoutChat = _.filter(matchesWithIds, (match) => {
         return(match.status === 'ACTIVE');
       });
       const sortedMatchesWithoutChat = _.sortBy(matchesWithoutChat, (match) => {
         return match.matchedDate;
       });
-      const matchesWithChat = _.filter(matches, (match) => {
+      const matchesWithChat = _.filter(matchesWithIds, (match) => {
         return (!match.status);
       });
       const sortedMatchesWithChat = _.sortBy(matchesWithChat, (match) => {
@@ -32,6 +40,9 @@ export default(state = INITIAL_STATE, action) => {
     }
     case MATCHES_FETCH_START: {
       return {...state, loading: true};
+    }
+    case MATCHES_FETCH_FAIL: {
+      return {...state, loading: false};
     }
     case LOGOUT_USER: {
       return INITIAL_STATE;

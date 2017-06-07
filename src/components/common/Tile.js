@@ -2,13 +2,15 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import {tileDescription, getAttribute} from '../profile-edit/activityAttributeUtils';
 
-const renderTileImage = (tileIcon, imageStyle) => {
+const renderTileImage = (tileIcon, imageStyle, imageLoaded) => {
   if(tileIcon)
     return (
       <Image
         style={imageStyle}
         source={{ uri: tileIcon }}
         onLoadEnd={() => {
+          if(imageLoaded)
+            imageLoaded();
         }}
       />
     );
@@ -22,11 +24,12 @@ const Tile = ({
   cardStyle = styles.cardStyle,
   imageStyle = styles.imageStyle,
   titleStyle = styles.title,
-  attributeStyle = styles.attribute
+  attributeStyle = styles.attribute,
+  imageLoaded
 }) => {
   return (
     <View style={cardStyle}>
-      {renderTileImage(tileIcon, imageStyle)}
+      {renderTileImage(tileIcon, imageStyle, imageLoaded)}
       <Text style={titleStyle}>
         {tileName}
       </Text>

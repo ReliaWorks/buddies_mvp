@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { Modal, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
-import { currentUserFetch, connectWithUser, potentialsFetch, potentialsFetchRT, checkNotifications } from '../actions';
-import { NoMoreCards, GlowLoader } from '../components/common';
+import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, potentialsFetchRT, checkNotifications } from '../actions';
+import { NoMoreCards, Spinner, GlowLoader } from '../components/common';
+
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
 class BrowseContainer extends Component {
@@ -18,21 +19,20 @@ class BrowseContainer extends Component {
       currentIndex: 0,
       viewedAllPotentials: false,
       numPotentials: 0,
+      firstPotentialLoaded: false,
     };
   }
   componentWillMount() {
     // firstName is assigned only after currentUserFetch, so if it is not empty no need to fetch again.
     if (this.props.currentUser.firstName === '') {
       const props = this.props;
-      debugger;
-      this.props.currentUserFetch(props.potentialsFetchRT);
+      this.props.currentUserFetch();
     }
-    //this.props.potentialsFetch();
-
+    if (!this.props.connection.loadingCurrentUser) this.props.potentialsFetch();
     if (!this.props.connection.listeningForNotifications) {
       this.props.checkNotifications();
     }
-    this.setState({currentIndex: 0, numPotentials: this.props.connection.potentials});
+    this.setState({currentIndex: 0, numPotentials: this.props.connection.potentials, firstPotentialLoaded: (this.props.connection.numImagesOnScreen < 1)});
   }
 /*  componentWillReceiveProps(nextProps) {
     if(this.state.currentIndex > 0) {
@@ -72,6 +72,7 @@ class BrowseContainer extends Component {
       return <NoMoreCards />;
     }
     return (
+      <View>
       <Swiper
         ref={(component) => {
           this.swiper = component;
@@ -83,6 +84,11 @@ class BrowseContainer extends Component {
           let profileImage = {url: DEFAULT_PROFILE_PHOTO, key: null};
           const images = this.convertProfileImagesObjectToArray(buddy.profileImages);
           if(images && images[0]) profileImage = images[0];
+          let imageLoadedCallback = null;
+          if(key === 0) {
+            imageLoadedCallback = this.props.imageLoaded;
+            console.log(`Buddy name = ${buddy.first_name}`);
+          }
           return (
             <View key={key} style={styles.cardStyle}>
               <BuddyCard
@@ -97,6 +103,7 @@ class BrowseContainer extends Component {
                   likeable: true,
                   editable: false,
                   uid: buddy.uid,
+                  imageLoaded: imageLoadedCallback,
                 }}
                 onConnect={() => {
                   this.props.connectWithUser(this.props.currentUser, {uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, true);
@@ -111,8 +118,15 @@ class BrowseContainer extends Component {
           );
         })}
       </Swiper>
+      </View>
     );
   }
+/*  <Modal
+    visible={!this.state.firstPotentialLoaded}
+    transparent={false}
+    animationType="none"
+  />
+*/
 //
   animationRef(animation) {
     this.animation = animation;
@@ -121,7 +135,7 @@ class BrowseContainer extends Component {
   }
 
   render() {
-    if(this.props.connection.loadingPotentials)
+    if(this.props.connection.loadingPotentials || this.props.connection.loadingCurrentUser)
       return <GlowLoader animationRef={this.animationRef} />;
     else return this.renderMatches();
 /*      return (

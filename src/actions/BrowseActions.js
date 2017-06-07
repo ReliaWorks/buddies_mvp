@@ -14,8 +14,10 @@ import {
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
   LOCATION_MAP_STORAGE_KEY,
+  CURRENT_USER_FETCH_START,
   API_SECRET_KEY,
-  SET_NEW_NOTIFICATION
+  SET_NEW_NOTIFICATION,
+  IMAGE_LOADED,
 } from './types';
 import { MAP_API_KEY } from '../config';
 import { DEFAULT_PROFILE_PHOTO, LIMIT_RECORDS_LOCATION, WEIGHTS_PROXIMITY_INDEX } from '../constants';
@@ -155,7 +157,6 @@ const getLocationArea = (fb, dispatch, currentUser, path, lastAreaRecordId, area
 };
 
 export const potentialsFetchRT = (currentUser) => {
-    debugger;
     return (dispatch) => {
       debugger;
       const lastAreaRecordId = null; //get from state
@@ -204,6 +205,7 @@ export const potentialsFetch = () => {
     console.log("API hash", hash);
 
     dispatch({type: POTENTIALS_FETCH});
+    console.log(`In potentialsFetch. CurrentUser.uid = ${currentUser.uid}`);
     axios.get(`https://activities-test-a3871.appspot.com/match/${currentUser.uid}`, {
       headers: { authorization: `${hash}:${currentUser.uid}`}
     })
@@ -288,39 +290,39 @@ export const setLocationLocalStorage = (position, location) => {
     });
 };
 
-export const getCityStateCountryMapAPI = (uid, position, emptyLocation, dispatch) => {
-  const promise = new Promise((resolve, reject) => {
-    debugger;
-    const shaObj = new jsSHA("SHA-256", "TEXT");
-    shaObj.update(position.latitude + position.longitude);
-    const locationHash = shaObj.getHash("HEX");
-    firebase.database().ref(`location_cache/${locationHash}`).once('value', snapshot => {
-          //const cacheExists = snapshot.val() !== null;
-          const cacheExists=false;
-          if (cacheExists) {
-            console.log('Found in cache');
-            resolve(snapshot.val());
-            setStateWithLocation(uid, position, dispatch, snapshot.val());
-          }else{
-            console.log('Not in the cache');
-            debugger;
-            getLocationFromGoogleMapAPI(locationHash, position.latitude, position.longitude)
-              .then((location) => {
-                resolve(location);
-                setStateWithLocation(uid, position, dispatch, location);
-              })
-              .catch(() => {
-                reject();
-                console.log("Was Unabled to return location from Google");
-              });
-          }
-          reject();
-    }).catch((e) => {
-      reject();
-      console.log('Error connecting FB:', e);
+export const getCityStateCountryMapAPI = (uid, position, dispatch) => {
+
+    //const promise = new Promise((resolve, reject) => {
+      const shaObj = new jsSHA("SHA-256", "TEXT");
+      shaObj.update(position.latitude + position.longitude);
+      const locationHash = shaObj.getHash("HEX");
+      firebase.database().ref(`location_cache/${locationHash}`).once('value', snapshot => {
+            //const cacheExists = snapshot.val() !== null;
+            const cacheExists=false;
+            if (cacheExists) {
+              console.log('Found in cache');
+              setStateWithLocation(uid, position, dispatch, snapshot.val());
+              resolve(snapshot.val());
+            }else{
+              console.log('Not in the cache');
+              getLocationFromGoogleMapAPI(locationHash, position.latitude, position.longitude)
+                .then((location) => {
+                  setStateWithLocation(uid, position, dispatch, location);
+                  console.log('Got location from MAP', location);
+                  resolve(location);
+                })
+                .catch((e) => {
+                  console.log("Was Unabled to return location from Google");
+                  reject(e);
+                });
+            }
+      }).catch((e) => {
+        console.log('Error connecting FB:', e);
+        reject(e);
+      });
+      /*
     });
-  });
-  return promise;
+    return promise;*/
 };
 
 const setStateWithLocation = (uid, position, dispatch, data) => {
@@ -330,65 +332,57 @@ const setStateWithLocation = (uid, position, dispatch, data) => {
 };
 
 export const getCityStateCountry = (currentUser, position, dispatch) => {
-  const promise = new Promise((resolve, reject) => {
-    let location = { city: '', state: '', country: '', county: '', neighborhood: ''};
-    const uid = currentUser.uid;
+    const promise = new Promise((resolve, reject) => {
+      const uid = currentUser.uid;
 
-    if (!(position && position.latitude && position.longitude)) reject();
-    console.log('Check local');
+      if (!(position && position.latitude && position.longitude)) reject();
+      console.log('Check local');
 
-    AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
-      .then((val) => {
-        const value = JSON.parse(val);
-        location = value[position.latitude + '' + position.longitude]; location = null;
-        if (value && location && location.city) {
-          dispatch({ type: SET_CURRENT_LOCATION, payload: location });
-          resolve(location);
-          setLocation(currentUser, location);
-        } else{
-          getCityStateCountryMapAPI(uid, position, location, dispatch)
-            .then((returnedLocation) => {
-              resolve(returnedLocation);
-            });
-        }
-      })
-      .catch(() => {
-        getCityStateCountryMapAPI(uid, position, location, dispatch)
-          .then((returnedLocation) => {
-            resolve(returnedLocation);
-          });
-      });
-  });
-  return promise;
+      AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
+        .then((val) => {
+          const value = JSON.parse(val);
+          let location = value[position.latitude + '' + position.longitude]; location = null;
+          if (value && location && location.city) {
+            dispatch({ type: SET_CURRENT_LOCATION, payload: location });
+            setLocation(currentUser, location);
+            resolve(location);
+          } else{
+            getCityStateCountryMapAPI(uid, position, dispatch);
+          }
+        })
+        .catch(() => {
+          getCityStateCountryMapAPI(uid, position, dispatch);
+        });
+    });
+    return promise;
 };
 
 export const currentUserFetch = (callback) => {
   const { currentUser } = firebase.auth();
   console.log('currentUser',currentUser.uid);
-debugger;
   return (dispatch) => {
+    dispatch({ type: CURRENT_USER_FETCH_START })
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const initialPosition = JSON.stringify(position);
-        currentUser.position = position.coords;
-        debugger;
-        getCityStateCountry(currentUser, position.coords, dispatch)
-          .then((location) => {
-            debugger;
-
-            currentUser.location = location;
-            callback(currentUser);
-          });
-        dispatch({ type: SET_CURRENT_GEOLOCATION, payload: initialPosition });
-
         setGeolocation(currentUser.uid, position);
+
+        getCityStateCountry(currentUser, position.coords, dispatch);
+
+        dispatch({ type: SET_CURRENT_GEOLOCATION, payload: initialPosition });
       }
     );
-    debugger;
+
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
       .once('value', snapshot => {
         dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
       });
+  };
+};
+
+export const imageLoaded = () => {
+  return {
+    type: IMAGE_LOADED
   };
 };
 
@@ -407,8 +401,6 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
 
         matches.ref(`user_matches/${currentUser.uid}/${buddy.uid}`)
           .set({
-            currentUserId: currentUser.uid,
-            otherUserId: buddy.uid,
             otherUserName: buddy.name,
             otherUserPic: buddy.pic.url,
             liked: connectStatus,
@@ -427,7 +419,7 @@ export const keepBrowsing = () => {
 };
 
 const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude) {
-  const promise = new Promise((resolve) => {
+  const promise = new Promise((resolve, reject) => {
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${MAP_API_KEY}`)
       .then((response) => {
         if (response.data
@@ -477,19 +469,21 @@ const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude)
             resolve(location);
         }else{
           console.log('Data',response.data);
+          reject();
         }
       })
       .catch((error) => {
+        reject();
         console.log(error);
       });
   });
-debugger;
   return promise;
 };
 
 const successfullyConnected = (dispatch, buddy, currentUser) => {
   let profileImage = DEFAULT_PROFILE_PHOTO;
-  if(currentUser && currentUser.profileImages) profileImage = currentUser.profileImages[0].url;
+  if(currentUser && currentUser.profileImages && currentUser.profileImages.length > 0)
+    profileImage = currentUser.profileImages[0].url;
 
   firebase.database().ref(`user_matches/${buddy.uid}/${currentUser.uid}`).update({matched: true});
   firebase.database().ref(`/notifications/new/${buddy.uid}`).set(true);
@@ -498,9 +492,9 @@ const successfullyConnected = (dispatch, buddy, currentUser) => {
   const convRef = firebase.database().ref(`conversations`).push();
   const convKey = convRef.getKey();
   firebase.database().ref(`message_center/${currentUser.uid}/${buddy.uid}/`)
-    .set({status: 'ACTIVE', otherUserId: buddy.uid, otherUserName: buddy.name, otherUserPic: buddy.pic.url, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP});
+    .set({status: 'ACTIVE', otherUserName: buddy.name, otherUserPic: buddy.pic.url, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP});
   firebase.database().ref(`message_center/${buddy.uid}/${currentUser.uid}/`)
-    .set({status: 'ACTIVE', otherUserId: currentUser.uid, otherUserName: currentUser.firstName, otherUserPic: profileImage, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP})
+    .set({status: 'ACTIVE', otherUserName: currentUser.firstName, otherUserPic: profileImage, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP})
     .then(() => {
       dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convKey, messages: [], justConnected: true }});
   });

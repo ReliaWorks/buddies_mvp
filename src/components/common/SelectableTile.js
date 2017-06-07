@@ -37,10 +37,12 @@ class SelectableTile extends Component {
     let width = 108;
     let height = 108;
     let imageMarginTop = 5;
+    let labelMargin = 0;
     if (source === 'affiliations') {
       imageMarginTop = 35;
       width = 168;
       height = 168;
+      labelMargin = 10;
     }
     imageStyle.marginTop = imageMarginTop;
 
@@ -58,7 +60,15 @@ class SelectableTile extends Component {
           }}
         >
           <Image style={imageStyle} source={{ uri: tileIcon }} />
-          <Text style={activityTextLabel}>
+          <Text
+            style={{
+              ...activityTextLabel,
+              marginTop: labelMargin,
+              marginBottom: labelMargin,
+              marginLeft: labelMargin + 10,
+              marginRight: labelMargin + 10,
+            }}
+          >
             {tileName}
           </Text>
           {this.props.isSelected && this.props.attribute !== 'none'
@@ -81,14 +91,12 @@ const styles = {
     marginTop: 5,
   },
   activityTextLabel: {
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Source Sans Pro',
     textAlign: 'center',
     justifyContent: 'center',
-    marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
-    marginBottom: 10
   },
   attribute: {
     textAlign: 'center',
