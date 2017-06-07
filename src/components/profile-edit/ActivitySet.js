@@ -47,7 +47,6 @@ class ActivitySet extends Component {
               attribute={rowData.attribute}
               onRemove={this.props.onRemove}
               onEdit={(activity) => {
-                console.log('act editing set:', activity);
                 this.props.onEdit(activity);
               }}
             />

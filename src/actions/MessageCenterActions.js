@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import {
   MATCHES_FETCH,
   MATCHES_FETCH_START,
+  MATCHES_FETCH_FAIL,
 } from './types';
 
 export const matchesFetch = () => {
@@ -11,9 +12,10 @@ export const matchesFetch = () => {
 
     const { currentUser } = firebase.auth();
     firebase.database().ref(`/message_center/${currentUser.uid}`)
-      .once('value')
-        .then(snapshot => {
-          dispatch({ type: MATCHES_FETCH, payload: snapshot.val()});
-        });
+      .on('value', snapshot => {
+        if(!snapshot.val())
+          dispatch({ type: MATCHES_FETCH_FAIL});
+        else dispatch({ type: MATCHES_FETCH, payload: snapshot.val()});
+      });
   };
 };

@@ -52,7 +52,7 @@ class FbAlbums extends Component {
       width: 650,
       height: 650
     }).then(croppedUri => {
-      Actions.pop({popNum: 2});
+      Actions.photoEdit();
       this.props.photosSelected([croppedUri], 'facebook');
     }).catch(error => {
       console.log('imagepicker catch:', error);

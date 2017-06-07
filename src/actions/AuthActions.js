@@ -149,11 +149,10 @@ function fetchProfilePhotos(result, dispatch, token) {
         } else {
           let profilePics = result1.photos.data || [];
 
-          if (profilePics && profilePics.length > 10) profilePics = profilePics.slice(0,10);
+          if (profilePics && profilePics.length > 7) profilePics = profilePics.slice(0,7);
 
           profilePics.sort((o1,o2) => o2.id - o1.id);
 
-          console.log('profilePics',profilePics);
           profilePics.forEach((pic) => {
               const picRequest = new GraphRequest(
                 `/${pic.id}`, {

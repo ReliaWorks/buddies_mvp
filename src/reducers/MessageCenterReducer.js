@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {
   MATCHES_FETCH,
   MATCHES_FETCH_START,
+  MATCHES_FETCH_FAIL,
   LOGOUT_USER,
 } from '../actions/types';
 
@@ -15,6 +16,7 @@ export default(state = INITIAL_STATE, action) => {
   switch(action.type) {
     case MATCHES_FETCH: {
       const matches = action.payload;
+
       const keys = Object.keys(matches);
       let i = 0;
       const matchesWithIds = _.map(matches, match => {
@@ -38,6 +40,9 @@ export default(state = INITIAL_STATE, action) => {
     }
     case MATCHES_FETCH_START: {
       return {...state, loading: true};
+    }
+    case MATCHES_FETCH_FAIL: {
+      return {...state, loading: false};
     }
     case LOGOUT_USER: {
       return INITIAL_STATE;
