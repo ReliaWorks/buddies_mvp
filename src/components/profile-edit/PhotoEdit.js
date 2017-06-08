@@ -25,7 +25,12 @@ class PhotoEdit extends Component {
     this.setState({modalVisible: false});
   }
   getSelectedImages(images, from) {
-    this.props.onImagesSelected(images, from);
+    if (this.props.profileImages.length === 0) {
+      console.log('primary değişti');
+      this.props.onImagesSelected(images, true, from);
+    } else {
+      this.props.onImagesSelected(images, false, from);
+    }
   }
 
   renderPics() {
@@ -83,11 +88,11 @@ class PhotoEdit extends Component {
 
   confirmDelete() {
     this.setState({showDeleteConfirmModal: false});
-    this.props.onRemove(this.state.removedPhoto);
+    this.props.onRemove(this.state.removedPhoto, this.state.isPrimary);
   }
 
-  removePic(photo) {
-    this.setState({showDeleteConfirmModal: true, removedPhoto: photo});
+  removePic(photo, isPrimary = false) {
+    this.setState({showDeleteConfirmModal: true, removedPhoto: photo, isPrimary: isPrimary});
   }
 
   renderPrimaryPic(firstProfileImage, onRemove) {
@@ -97,7 +102,7 @@ class PhotoEdit extends Component {
           style={localStyles.mainImageStyle}
           source={{ uri: firstProfileImage.url }}
         >
-          <TouchableOpacity onPress={() => this.removePic(firstProfileImage)}>
+          <TouchableOpacity onPress={() => this.removePic(firstProfileImage, true)}>
             <View style={styles.removeIconContainer}>
               <CustomIcon
                 name='add_circle_icon' size={20}
