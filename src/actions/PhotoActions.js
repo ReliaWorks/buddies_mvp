@@ -51,17 +51,13 @@ const updatePrimaryPicReferences = (withUrl = null) => {
   const updates = {};
 
   newPrimaryPhotoUrlPromise.then((newPrimaryPhotoUrl) => {
-    console.log('newPrimaryPhotoUrl then:', newPrimaryPhotoUrl);
     return firebase.database().ref('message_center/' + currentUser.uid).once('value', matchesSnap => {
       matchesSnap.forEach(matchSnap => {
         const otherUserId = matchSnap.key;
         const conversationId = matchSnap.val().conversationId;
 
-        // message_center/otherUserId/currentUser.uid/otherUserPic ler değiştirilecek.
         updates[`message_center/${currentUser.uid}/${otherUserId}/user/avatar`] = newPrimaryPhotoUrl;
         updates[`message_center/${otherUserId}/${currentUser.uid}/otherUserPic`] = newPrimaryPhotoUrl;
-
-        //updates[`conversations/${conversationId}/${otherUserId}/user/avatar`]
       });
 
       firebase.database().ref().update(updates);
@@ -90,8 +86,6 @@ export const photoRemoved = (photo, isPrimary) => {
 export const photosSelected = (photos, isPrimary) => {
   return (dispatch) => {
     const { currentUser } = firebase.auth();
-
-    console.log('photos selectedddddd');
 
     photos.forEach(photo => {
       const photoUri = photo.path;
