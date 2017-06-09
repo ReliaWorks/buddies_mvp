@@ -83,13 +83,13 @@ export const activitiesSaved = (activities) => {
 };
 export const activityEdited = (activity) => {
   const { currentUser } = firebase.auth();
-  const {activityId, attribute} = activity;
+  const {uid, attribute} = activity;
 
   return (dispatch) => {
     const updates = {};
-    updates[`user_profiles/${currentUser.uid}/activities/${activityId}`] = activity;
+    updates[`user_profiles/${currentUser.uid}/activities/${uid}`] = activity;
 
-    dispatch({ type: ACTIVITY_EDITED, payload: {activityId, attribute} });
+    dispatch({ type: ACTIVITY_EDITED, payload: {uid, attribute} });
     firebase.database().ref().update(updates);
   };
 };
