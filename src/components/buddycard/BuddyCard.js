@@ -40,8 +40,13 @@ class BuddyCard extends Component {
   showEditableButton(editable) {
     if(!editable) return;
     return (
-      <View>
-        <TouchableOpacity onPress={() => Actions.userEdit()} style={buttonStyle}>
+      <View accessible>
+        <TouchableOpacity
+          onPress={() => Actions.userEdit()}
+          style={buttonStyle}
+          accessibilityLabel={'userEditButton'}
+          testID={'userEditButton'}
+        >
           <CustomIcon
             name="edit_icon"
             size={20}

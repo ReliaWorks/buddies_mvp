@@ -43,7 +43,6 @@ export default class AddPhotosModal extends Component {
       cropping: true,
       compressImageQuality: 0.7
     }).then(image => {
-      console.log('image picker da image seçildi: ', image);
       this.setState({ imagesComponent: 'none', images: [] });
       this.props.getSelectedImages([image], 'facebook');
       this.props.close();

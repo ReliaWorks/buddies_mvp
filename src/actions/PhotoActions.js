@@ -14,27 +14,76 @@ import {
   FACEBOOK_ALBUM_PHOTOS_REQUESTED,
   FACEBOOK_ALBUM_PHOTOS_FETCHED
 } from './types';
-import { INACTIVE, ACTIVE } from '../constants';
+import { INACTIVE, ACTIVE, DEFAULT_PROFILE_PHOTO } from '../constants';
 
 const Blob = RNFetchBlob.polyfill.Blob;
 const fs = RNFetchBlob.fs;
 window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
 window.Blob = Blob;
 
-export const photoRemoved = (photo) => {
+const updatePrimaryPicReferences = (withUrl = null) => {
+  const { currentUser } = firebase.auth();
+
+  newPrimaryPhotoUrlPromise = (() => {
+    if (withUrl) {
+      return new Promise((resolve, reject) => {
+        resolve(withUrl);
+      });
+    } else {
+      return firebase.database().ref('user_profiles/' + currentUser.uid + '/profileImages')
+      .orderByChild('status').equalTo(ACTIVE)
+      .limitToFirst(1)
+      .once('value')
+      .then(photosSnap => {
+        let url = '';
+        photosSnap.forEach(photoSnap => {
+          url = photoSnap.val().url;
+        });
+
+        if (url)
+          return url;
+        else
+          return DEFAULT_PROFILE_PHOTO;
+      });
+    }
+  })();
+
+  const updates = {};
+
+  newPrimaryPhotoUrlPromise.then((newPrimaryPhotoUrl) => {
+    return firebase.database().ref('message_center/' + currentUser.uid).once('value', matchesSnap => {
+      matchesSnap.forEach(matchSnap => {
+        const otherUserId = matchSnap.key;
+        const conversationId = matchSnap.val().conversationId;
+
+        updates[`message_center/${currentUser.uid}/${otherUserId}/user/avatar`] = newPrimaryPhotoUrl;
+        updates[`message_center/${otherUserId}/${currentUser.uid}/otherUserPic`] = newPrimaryPhotoUrl;
+      });
+
+      firebase.database().ref().update(updates);
+    });
+  });
+};
+
+export const photoRemoved = (photo, isPrimary) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
+    // Make inactive to remove photo.
     firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages/${photo.key}`)
       .set({status: INACTIVE, url: photo.url})
       .then(() => {
         dispatch({ type: PHOTO_REMOVED, payload: photo });
+
+        if (isPrimary) {
+          updatePrimaryPicReferences();
+        }
       });
   };
 };
 
 // this action fires when user select images from camera roll (or potentially facebook at future)
-export const photosSelected = (photos) => {
+export const photosSelected = (photos, isPrimary) => {
   return (dispatch) => {
     const { currentUser } = firebase.auth();
 
@@ -57,6 +106,10 @@ export const photosSelected = (photos) => {
               }
             });
           });
+
+          if (isPrimary) {
+            updatePrimaryPicReferences(uri);
+          }
       })
       .catch(error => console.log(error));
     });
@@ -66,7 +119,6 @@ export const photosSelected = (photos) => {
 const uploadImage = (uid, uri, mime = 'image/jpg') => {
   return new Promise((resolve, reject) => {
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-    console.log('upload uri: ', uploadUri);
 
     const sessionId = new Date().getTime();
     let uploadBlob = null;
