@@ -1,43 +1,53 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 import { textStyle } from '../../components/common/styles';
 import { Button } from '../../components/common';
+import ActivitySet from '../../components/buddycard/ActivitySet';
 
+const BUTTON_TEXT = "Let's go!";
 class ProfileSetupComplete extends Component {
   startBrowsing() {
     Actions.main();
   }
 
   render() {
-    const localTextStyle = {...textStyle, textAlign: 'left'};
+    const { firstName, activities, startBrowsing } = this.props.currentUser;
 
-    return(
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <View>
-          <View style={{marginLeft: 30, marginRight: 30}}>
-            <Text style={localTextStyle}>
-            Dear friends and family,
-            </Text>
-            <View style={{height: 10}} />
-            <Text style={localTextStyle}>
-            Thank you for helping test this beta release. Now that you’ve created a profile you can browse, connect, and chat!  Feel free to update your profile photos. We appreciate your feedback.
-            </Text>
-            <View style={{height: 15}} />
-            <Text style={localTextStyle}>
-            Best regards,
-            </Text>
-            <Text style={localTextStyle}>
-            Shireen, Kayleigh, Oscar, Ali and Amber
-            </Text>
+    return (
+      <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{flex: 0.1}} />
+        <View style={{justifyContent: 'center', flex: 0.2}}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>Nice looking profile, {firstName}.</Text>
+            <Text style={styles.titleText}>Find a partner for:</Text>
+            <ActivitySet value={{activitiesAndAffiliations: activities}} />
           </View>
-          <View style={{marginTop: 30}}>
-            <Button onPress={this.startBrowsing}>Let's go!</Button>
-          </View>
+        </View>
+        <View style={{flex: 0.1}}>
+          <Button onPress={this.startBrowsing}>{BUTTON_TEXT}</Button>
         </View>
       </View>
     );
   }
 }
 
-export { ProfileSetupComplete };
+const styles = {
+  titleText: {
+    fontFamily: 'SourceSansPro-SemiBold',
+    fontSize: 24,
+  },
+  titleContainer: {
+    marginLeft: 15,
+    marginRight: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+};
+
+const mapStateToProps = ({ currentUser }) => {
+  return { currentUser };
+};
+
+export default connect(mapStateToProps)(ProfileSetupComplete);

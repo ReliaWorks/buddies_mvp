@@ -17,6 +17,7 @@ const INITIAL_STATE = {
   location: {},
   description: '',
   loading: false,
+  numTimesMatched: 0,
 };
 
 export default(state = INITIAL_STATE, action) => {
@@ -68,7 +69,19 @@ export default(state = INITIAL_STATE, action) => {
       const email = action.payload.email;
       let description = '';
       if(action.payload.description) description = action.payload.description;
-      return { ...state, firstName, profileImages, age, location, activities, affiliations, description, email, uid: action.payload.uid, loading: false };
+      return {
+        ...state,
+        firstName,
+        profileImages,
+        age,
+        location,
+        activities,
+        affiliations,
+        description,
+        email,
+        uid: action.payload.uid,
+        numTimesMatched: action.payload.numTimesMatched,
+        loading: false };
     }
     case LOGOUT_USER:
       return INITIAL_STATE;

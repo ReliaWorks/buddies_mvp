@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Dimensions, View, ScrollView, Text, ListView, TouchableOpacity, StyleSheet, Picker } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Modal from 'react-native-modal';
@@ -13,7 +13,6 @@ const { width } = Dimensions.get('window');
 export default class ActivityAttributeModal extends Component {
   constructor(props) {
     super(props);
-    console.log('act editing: ', props.activity);
     this.state = {
       attribute: props.activity.attribute,
     };
@@ -122,5 +121,6 @@ const styles = StyleSheet.create({
   },
   saveButtonText: {
     textAlign: 'center',
+    fontFamily: 'Source Sans Pro',
   }
 });
