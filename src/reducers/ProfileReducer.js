@@ -163,9 +163,9 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, activities: updatedActivities };
     }
     case ACTIVITY_EDITED: {
-      const {activityId, attribute} = action.payload;
+      const {uid, attribute} = action.payload;
       const activities = state.activities.map(activity => {
-        if (activity.uid === activityId) {
+        if (activity.uid === uid) {
           return {...activity, attribute};
         } else {
           return activity;
