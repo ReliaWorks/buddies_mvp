@@ -31,6 +31,9 @@ class BrowseContainer extends Component {
     if (!this.props.connection.listeningForNotifications) {
       this.props.checkNotifications();
     }
+//    if(!seenConnectionHelper && doneCheckingConnectionStatus)
+//      Actions.connectionHelper();
+
     this.setState({currentIndex: 0, numPotentials: this.props.connection.potentials, firstPotentialLoaded: (this.props.connection.numImagesOnScreen < 1)});
   }
 /*  componentWillReceiveProps(nextProps) {
@@ -80,7 +83,7 @@ class BrowseContainer extends Component {
 
   renderMatches() {
     console.log("In renderMatches");
-    const { potentials, numTimesConnected, numTimesMatched, doneCheckingConnectionStatus } = this.props.connection;
+    const { potentials, numTimesConnected, numTimesMatched, doneCheckingConnectionStatus, seenConnectionHelper } = this.props.connection;
 
     if(this.props.connection.loadingCurrentUser) return <Spinner size="large" />;
     else if(this.state.viewedAllPotentials) {
@@ -120,12 +123,11 @@ class BrowseContainer extends Component {
                   uid: buddy.uid,
                   madeFirstConnection: this.props.currentUser.madeFirstConnection,
                   imageLoaded: imageLoadedCallback,
-                  doneCheckingConnectionStatus: this.props.connection.doneCheckingConnectionStatus,
-                  seenConnectionHelper: this.props.connection.seenConnectionHelper,
+                  doneCheckingConnectionStatus,
+                  seenConnectionHelper,
                   numTimesConnected,
                   numTimesMatched,
                 }}
-                connectionHelperSeen={() => this.props.connectionHelperSeen()}
                 onConnect={() => {
                   this.props.connectWithUser(this.props.currentUser, {uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, true);
                   this.swipe();

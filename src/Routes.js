@@ -14,7 +14,7 @@ import UserView from './scenes/UserView';
 import MessageCenterContainer from './scenes/message-center';
 import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
-import { PictureModal } from './components/common';
+import { PictureModal, FirstConnectionHelperModal } from './components/common';
 import ProfileModal from './components/common/ProfileModal';
 import ChatComponentIconButton from './components/common/ChatComponentIconButton';
 import FbAlbums from './components/profile-edit/addPhoto/FbAlbums';
@@ -99,6 +99,11 @@ class Routes extends Component {
             leftButton={profileIconButton}
             rightButton={ChatComponentIconButton}
             type={ActionConst.RESET}
+          />
+          <Scene
+            key="connectionHelper"
+            component={FirstConnectionHelperModal}
+            hideNavBar
           />
           <Scene
             key="picture"
