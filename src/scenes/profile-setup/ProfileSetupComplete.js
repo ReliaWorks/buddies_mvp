@@ -17,16 +17,14 @@ class ProfileSetupComplete extends Component {
 
     return (
       <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-        <View style={{flex: 0.1}} />
-        <View style={{justifyContent: 'center', flex: 0.2}}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>Nice looking profile, {firstName}.</Text>
-            <Text style={styles.titleText}>Find a partner for:</Text>
-            <ActivitySet value={{activitiesAndAffiliations: activities}} />
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Nice looking profile, {firstName}.</Text>
+          <Text style={styles.titleText}>Find a partner for:</Text>
+          <View style={{height: 15}} />
+          <ActivitySet value={{activitiesAndAffiliations: activities}} />
+          <View style={{margin: 15}}>
+            <Button onPress={this.startBrowsing}>{BUTTON_TEXT}</Button>
           </View>
-        </View>
-        <View style={{flex: 0.1}}>
-          <Button onPress={this.startBrowsing}>{BUTTON_TEXT}</Button>
         </View>
       </View>
     );
@@ -35,14 +33,16 @@ class ProfileSetupComplete extends Component {
 
 const styles = {
   titleText: {
-    fontFamily: 'SourceSansPro-SemiBold',
+    fontFamily: 'Source Sans Pro',
     fontSize: 24,
   },
   titleContainer: {
     marginLeft: 15,
     marginRight: 15,
+    marginBottom: 15,
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
   }
 };
 
