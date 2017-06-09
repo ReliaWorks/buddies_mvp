@@ -27,7 +27,7 @@ class ActivitySet extends Component {
             />
           }
           enableEmptySections
-          initialListSize={25}
+          initialListSize={15}
       />
     );
   }

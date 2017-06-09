@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Dimensions, View, ScrollView, Text, ListView, TouchableOpacity, StyleSheet, Picker } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Modal from 'react-native-modal';
@@ -13,7 +13,6 @@ const { width } = Dimensions.get('window');
 export default class ActivityAttributeModal extends Component {
   constructor(props) {
     super(props);
-    console.log('act editing: ', props.activity);
     this.state = {
       attribute: props.activity.attribute,
     };
@@ -43,7 +42,7 @@ export default class ActivityAttributeModal extends Component {
             <TouchableOpacity style={styles.cancelButton} onPress={() => this.props.onClose()}>
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
-            <Text>{attributeShortDescription(activity.activityName)}</Text>
+            <Text>{attributeShortDescription(activity.name)}</Text>
             <TouchableOpacity
             style={styles.saveButton}
               onPress={() => {
@@ -55,8 +54,8 @@ export default class ActivityAttributeModal extends Component {
             </TouchableOpacity>
           </View>
 
-          <ScrollView contentOffset={scrollPosition(activity.activityName)}>
-            {attributeOptions(activity.activityName).map(name => {
+          <ScrollView contentOffset={scrollPosition(activity.name)}>
+            {attributeOptions(activity.name).map(name => {
               const style = name === this.state.attribute ? [styles.item, styles.selectedItem] : styles.item;
               return (
                 <TouchableOpacity style={styles.itemContainer} key={name} onPress={() => this.setState({attribute: name})}>
@@ -122,5 +121,6 @@ const styles = StyleSheet.create({
   },
   saveButtonText: {
     textAlign: 'center',
+    fontFamily: 'Source Sans Pro',
   }
 });

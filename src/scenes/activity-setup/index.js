@@ -17,9 +17,9 @@ class ActivitySetupScene extends Component {
         show: false,
         activity: {
           attribute: '',
-          activityId: '',
-          activityName: '',
-          activityIcon: '',
+          uid: '',
+          name: '',
+          icon: '',
         }
       }
     };
@@ -62,7 +62,7 @@ class ActivitySetupScene extends Component {
 
       if (this.props.source === 'Edit') {
         this.setState({
-          attributeModal: {show: true, activity: {activityId: tileId, activityName: tileName, activityIcon: tileIcon, attribute}}
+          attributeModal: {show: true, activity: {uid: tileId, name: tileName, icon: tileIcon, attribute}}
         });
       }
     } else {
@@ -86,9 +86,9 @@ class ActivitySetupScene extends Component {
         show: false,
         activity: {
           attribute: '',
-          activityId: '',
-          activityName: '',
-          activityIcon: '',
+          uid: '',
+          name: '',
+          icon: '',
         }
       }
     });

@@ -35,9 +35,13 @@ class PhotoEdit extends Component {
 
   renderPics() {
     const { profileImages, onRemove } = this.props;
+    if(!profileImages) return null;
 
     const firstProfileImage = profileImages[0];
-    const otherImages = profileImages.slice(1, MAX_NUM_PHOTOS - 1);
+    let otherImages = [];
+    if(profileImages.length > 1) {
+      otherImages = profileImages.slice(1, MAX_NUM_PHOTOS - 2);
+    }
 
     return (
       <View style={{flex: 0.75}}>

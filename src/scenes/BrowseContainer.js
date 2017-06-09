@@ -4,7 +4,7 @@ import { Modal, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
-import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications } from '../actions';
+import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen } from '../actions';
 import { NoMoreCards, Spinner, GlowLoader } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
@@ -26,10 +26,14 @@ class BrowseContainer extends Component {
     if (this.props.currentUser.firstName === '') {
       this.props.currentUserFetch();
     }
-    if (!this.props.connection.loadingCurrentUser) this.props.potentialsFetch();
+    if (!this.props.connection.loadingCurrentUser)
+      this.props.potentialsFetch();
     if (!this.props.connection.listeningForNotifications) {
       this.props.checkNotifications();
     }
+//    if(!seenConnectionHelper && doneCheckingConnectionStatus)
+//      Actions.connectionHelper();
+
     this.setState({currentIndex: 0, numPotentials: this.props.connection.potentials, firstPotentialLoaded: (this.props.connection.numImagesOnScreen < 1)});
   }
 /*  componentWillReceiveProps(nextProps) {
@@ -38,6 +42,19 @@ class BrowseContainer extends Component {
     }
   }
 */
+
+/*  shouldComponentUpdate(nextProps, nextState) {
+    if(this.props.connection.potentials !== nextProps.connection.potentials)
+      return true;
+    if(this.props.connection.loadingPotentials !== nextProps.connection.loadingPotentials)
+      return true;
+    if(this.props.connection.loadingCurrentUser !== nextProps.connection.loadingCurrentUser)
+      return true;
+    if(this.props.connection.listeningForNotifications !== nextProps.connection.listeningForNotifications)
+      return true;
+    return false;
+  }*/
+
   _onMomentumScrollEnd(e, state, context) {
     this.setState({currentIndex: this.state.currentIndex + 1});
   }
@@ -65,10 +82,13 @@ class BrowseContainer extends Component {
   }
 
   renderMatches() {
-    if(this.props.connection.potentials.length === 0 ||
-        this.state.viewedAllPotentials) {
+    console.log("In renderMatches");
+    const { potentials, numTimesConnected, numTimesMatched, doneCheckingConnectionStatus, seenConnectionHelper } = this.props.connection;
+
+    if(this.props.connection.loadingCurrentUser) return <Spinner size="large" />;
+    else if(this.state.viewedAllPotentials) {
       return <NoMoreCards />;
-    }
+    } else if(potentials && potentials.length === 0) return <NoMoreCards />;
     return (
       <View>
       <Swiper
@@ -78,15 +98,15 @@ class BrowseContainer extends Component {
         onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)}
         showPagination
       >
-        {this.props.connection.potentials.map((buddy, key) => {
+        {potentials.map((buddy, key) => {
           let profileImage = {url: DEFAULT_PROFILE_PHOTO, key: null};
           const images = this.convertProfileImagesObjectToArray(buddy.profileImages);
           if(images && images[0]) profileImage = images[0];
           let imageLoadedCallback = null;
           if(key === 0) {
             imageLoadedCallback = this.props.imageLoaded;
-            console.log(`Buddy name = ${buddy.first_name}`);
           }
+          console.log(`Buddy name = ${buddy.first_name}`);
           return (
             <View key={key} style={styles.cardStyle}>
               <BuddyCard
@@ -101,7 +121,12 @@ class BrowseContainer extends Component {
                   likeable: true,
                   editable: false,
                   uid: buddy.uid,
+                  madeFirstConnection: this.props.currentUser.madeFirstConnection,
                   imageLoaded: imageLoadedCallback,
+                  doneCheckingConnectionStatus,
+                  seenConnectionHelper,
+                  numTimesConnected,
+                  numTimesMatched,
                 }}
                 onConnect={() => {
                   this.props.connectWithUser(this.props.currentUser, {uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, true);
@@ -182,4 +207,4 @@ const mapStateToProps = ({ currentUser, connection }) => {
   return { currentUser, connection };
 };
 
-export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications })(BrowseContainer);
+export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen })(BrowseContainer);

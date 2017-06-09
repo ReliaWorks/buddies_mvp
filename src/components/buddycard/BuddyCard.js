@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ActivitySet from './ActivitySet';
+import FirstConnectionHelperModal from '../common/FirstConnectionHelperModal';
 import { ProfileImages, ProfileImagesModal } from '../common';
 import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
@@ -21,6 +22,7 @@ class BuddyCard extends Component {
       currentImageIndexOnSwiper: 0,
     };
   }
+
   onOpenModal(index) {
     this.setState({ showModal: true, currentImageIndexOnSwiper: index });
   }
@@ -63,7 +65,9 @@ class BuddyCard extends Component {
     return (
       <View style={localStyles.footer}>
         <TouchableOpacity
-          onPress={onConnect}
+          onPress={() => {
+            onConnect();
+          }}
           style={localStyles.connectButton}
         >
             <Text style={localStyles.footerText}>Connect</Text>
@@ -164,10 +168,9 @@ class BuddyCard extends Component {
   render() {
     const { firstName, age, editable, imageLoaded, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
     const { locationText, nameText } = styles;
-//    <Image source={{ uri: profileImages[0]}} style={{height: 300, width: width - 20, alignSelf: 'stretch'}} />
 
-    console.log("First name = ", firstName);
     return (
+      <View style={{flex: 1}}>
         <View style={{flex: 1, alignSelf: 'stretch' }}>
           <ProfileImages
             value={{profileImages, editable}}
@@ -201,6 +204,7 @@ class BuddyCard extends Component {
             {this.renderMatchControls(likeable, uid, this.props.onConnect, this.props.onPass)}
           </View>
         </View>
+      </View>
     );
   }
 }
