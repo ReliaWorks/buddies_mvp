@@ -232,8 +232,8 @@ export default(state = INITIAL_STATE, action) => {
     }
     case PHOTO_UPLOADED: {
       const profileImagesUploadProgress = state.profileImagesUploadProgress.filter(item => item !== action.payload.localUrl);
-      const profileImages = [...state.profileImages, action.payload.photo];
-      return { ...state, profileImages, profileImagesUploadProgress };
+      //const profileImages = [...state.profileImages, action.payload.photo];
+      return { ...state, profileImagesUploadProgress };
     }
     case FACEBOOK_ALBUMS_FETCHED: {
       const facebookAlbums = action.payload;
