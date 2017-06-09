@@ -24,8 +24,8 @@ export const attributeShortDescription = (activityName) => {
   }
 };
 
-export const tileDescription = (activityName, attribute) => {
-  switch (activityName) {
+export const tileDescription = (name, attribute) => {
+  switch (name) {
     case 'Running':
       return attribute + ' min/mile';
     case 'Tennis':
@@ -73,15 +73,4 @@ export const getAttribute = (activityName, attribute) => {
   } else {
     return 'none';
   }
-  //
-  // switch (activityName) {
-  //   case 'Running':
-  //     return 'None';
-  //   case 'Tennis':
-  //     return 'None';
-  //   case 'Walking':
-  //     return 'None';
-  //   default:
-  //     return 'None';
-  // }
 };

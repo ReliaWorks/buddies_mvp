@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 
 function renderGreyCircles() {
   return(
@@ -18,10 +18,18 @@ const EmptyNewConnectionList = () => {
         <Text style={styles.headerText}>New Connections</Text>
         {renderGreyCircles()}
       </View>
-      <View style={{borderBottomWidth: 1, marginTop: MARGIN}} />
+      <View style={{height: StyleSheet.hairlineWidth, backgroundColor: 'black', marginTop: MARGIN }} />
     </View>
   );
 };
+//separator: {
+//  flex: 1,
+//    height: StyleSheet.hairlineWidth,
+//  height: 1,
+//  backgroundColor: 'black'
+//},
+
+//<View style={{borderBottomWidth: 1, marginTop: MARGIN}} />
 
 const MARGIN = 15;
 
@@ -41,7 +49,7 @@ const styles = {
     width: 70,
     borderRadius: 35,
     borderWidth: 35,
-    borderColor: '#F8F8F8',
+    borderColor: '#F3F3F3',
   },
 };
 

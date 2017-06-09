@@ -22,8 +22,10 @@ export default class FirstConnectionHelperModal extends Component {
           }}
         >
           <View style={styles.container}>
-            <Image source={MSG_CENTER_NOT_ICON} />
-            <Text style={styles.textStyle}>Great choice, you will be notified when they connect with you too!</Text>
+            <Image source={MSG_CENTER_NOT_ICON} style={{height: 80, width: 80 }} />
+            <View style={{margin: 30}}>
+              <Text style={styles.textStyle}>Nice find, you will be notified when they connect with you too!</Text>
+            </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -43,8 +45,8 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   textStyle: {
-    fontFamily: 'Source Sans Pro',
-    fontSize: 18,
+    fontFamily: 'SourceSansPro-SemiBold',
+    fontSize: 21,
     textAlign: 'center',
   }
 });

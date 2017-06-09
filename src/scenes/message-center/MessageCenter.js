@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, ListView, ScrollView, Text, View } from 'react-native';
+import { Dimensions, ListView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import NoConvoMatch from '../../components/common/NoConvoMatch';
 import ConversationListItem from '../../components/common/ConversationListItem';
 import { EmptyNewConnectionList, TypingDots } from '../../components/common';
@@ -43,6 +43,7 @@ class MessageCenter extends Component {
           <Text style={styles.zeroStateText}>
             {msg}
           </Text>
+          <View style={{height: 50}} />
         </View>
       </View>
     );
@@ -53,11 +54,11 @@ class MessageCenter extends Component {
     return(
       <View style={styles.zeroStateContainer}>
         <View style={styles.zeroStateTextContainer}>
-        <Text style={styles.zeroStateText}>
+        <Text style={{...styles.zeroStateText, textAlign: 'left'}}>
           Hey {firstName},
         </Text>
         <View style={{height: 10}} />
-        <Text style={styles.zeroStateText}>
+        <Text style={{...styles.zeroStateText, textAlign: 'left'}}>
           {ZERO_CONVOS}
         </Text>
         </View>
@@ -93,7 +94,7 @@ class MessageCenter extends Component {
           showsHorizontalScrollIndicator={false}
         />
       </View>
-      <View style={{borderBottomWidth: 1, marginTop: MARGIN}} />
+      <View style={{height: StyleSheet.hairlineWidth, backgroundColor: 'black', marginTop: MARGIN }} />
       </View>
     );
   }
@@ -160,13 +161,13 @@ const styles = {
     justifyContent: 'center',
     alignSelf: 'center',
     padding: MARGIN * 2,
+    margin: MARGIN,
   },
   zeroStateText: {
-    textAlign: 'left',
-    fontFamily: 'Source Sans Pro',
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#00A3B7'
+    textAlign: 'center',
+    fontFamily: 'SourceSansPro-SemiBold',
+    fontSize: 24,
+//    color: '#00A3B7'
   },
 };
 

@@ -42,7 +42,7 @@ export default class ActivityAttributeModal extends Component {
             <TouchableOpacity style={styles.cancelButton} onPress={() => this.props.onClose()}>
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
-            <Text>{attributeShortDescription(activity.activityName)}</Text>
+            <Text>{attributeShortDescription(activity.name)}</Text>
             <TouchableOpacity
             style={styles.saveButton}
               onPress={() => {
@@ -54,8 +54,8 @@ export default class ActivityAttributeModal extends Component {
             </TouchableOpacity>
           </View>
 
-          <ScrollView contentOffset={scrollPosition(activity.activityName)}>
-            {attributeOptions(activity.activityName).map(name => {
+          <ScrollView contentOffset={scrollPosition(activity.name)}>
+            {attributeOptions(activity.name).map(name => {
               const style = name === this.state.attribute ? [styles.item, styles.selectedItem] : styles.item;
               return (
                 <TouchableOpacity style={styles.itemContainer} key={name} onPress={() => this.setState({attribute: name})}>
