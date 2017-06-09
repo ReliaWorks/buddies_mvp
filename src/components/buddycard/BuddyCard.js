@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ActivitySet from './ActivitySet';
+import FirstConnectionHelperModal from './FirstConnectionHelperModal';
 import { ProfileImages, ProfileImagesModal } from '../common';
 import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
@@ -19,7 +20,15 @@ class BuddyCard extends Component {
       descriptionExpanded: false,
       showModal: false,
       currentImageIndexOnSwiper: 0,
+      showConnectionHelper: false,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { seenConnectionHelper, doneCheckingConnectionStatus } = nextProps.value;
+    console.log(`seenConnectionHelper = ${seenConnectionHelper} and doneCheckingConnectionStatus=${doneCheckingConnectionStatus}`);
+    if(!seenConnectionHelper && doneCheckingConnectionStatus)
+      this.setState({showConnectionHelper: true});
   }
   onOpenModal(index) {
     this.setState({ showModal: true, currentImageIndexOnSwiper: index });
@@ -58,7 +67,9 @@ class BuddyCard extends Component {
     return (
       <View style={localStyles.footer}>
         <TouchableOpacity
-          onPress={onConnect}
+          onPress={() => {
+            onConnect();
+          }}
           style={localStyles.connectButton}
         >
             <Text style={localStyles.footerText}>Connect</Text>
@@ -156,13 +167,18 @@ class BuddyCard extends Component {
     );
   }
 
-  render() {
-    const { firstName, age, editable, imageLoaded, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
-    const { locationText, nameText } = styles;
-//    <Image source={{ uri: profileImages[0]}} style={{height: 300, width: width - 20, alignSelf: 'stretch'}} />
+  closeConnectionHelperModal() {
+    this.setState({showConnectionHelper: false});
+    this.props.connectionHelperSeen();
+  }
 
-    console.log("First name = ", firstName);
+  render() {
+    const { firstName, age, editable, imageLoaded, likeable, location, profileImages, activities, affiliations, description, uid,
+            seenConnectionHelper, doneCheckingConnectionStatus, numTimesConnected, numTimesMatched } = this.props.value;
+    const { locationText, nameText } = styles;
+
     return (
+      <View style={{flex: 1}}>
         <View style={{flex: 1, alignSelf: 'stretch' }}>
           <ProfileImages
             value={{profileImages, editable}}
@@ -196,6 +212,11 @@ class BuddyCard extends Component {
             {this.renderMatchControls(likeable, uid, this.props.onConnect, this.props.onPass)}
           </View>
         </View>
+        <FirstConnectionHelperModal
+          visible={this.state.showConnectionHelper}
+          close={this.closeConnectionHelperModal.bind(this)}
+        />
+      </View>
     );
   }
 }

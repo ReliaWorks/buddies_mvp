@@ -4,7 +4,7 @@ import { ActionConst, Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
 import SettingsContainer from './scenes/settings';
 import BrowseContainer from './scenes/BrowseContainer';
-import { ProfileSetupComplete } from './scenes/profile-setup';
+import ProfileSetupComplete from './scenes/profile-setup/ProfileSetupComplete';
 import ActivitySetupScene from './scenes/activity-setup/';
 import AffiliationSetupScene from './scenes/affiliation-setup/';
 import DescriptionSetup from './scenes/profile-setup/DescriptionSetup';

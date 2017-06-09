@@ -4,14 +4,17 @@ import {
   LOGIN_USER,
   LOGOUT_USER,
   AFFILIATIONS_SAVED,
-  CURRENT_USER_FETCH_SUCCESS,
   ACTIVITIES_SAVED,
   ACTIVITY_SELECTED,
   ACTIVITY_UNSELECTED,
   ACTIVITY_EDITED,
   AFFILIATION_SELECTED,
   AFFILIATION_UNSELECTED,
+  CONNECT_WITH_USER,
+  CONNECTION_SUCCESSFUL,
+  CURRENT_USER_FETCH_SUCCESS,
   DESCRIPTION_SAVED,
+  KEEP_BROWSING,
   SET_CURRENT_LOCATION,
   SET_CURRENT_GEOLOCATION,
   PHOTOS_SAVED,
@@ -19,7 +22,7 @@ import {
   PICTURE_SAVED,
   PHOTOS_SELECTED,
   PHOTO_UPLOADED,
-  //FACEBOOK_PHOTO_FETCHED,
+  PROFILE_INFO,
   FACEBOOK_ALBUMS_FETCHED,
   FACEBOOK_ALBUM_PHOTOS_REQUESTED,
   FACEBOOK_ALBUM_PHOTOS_FETCHED,
@@ -43,10 +46,23 @@ const INITIAL_STATE = {
   location: {},
   geolocation: {},
   description: '',
+  numTimesConnected: 0,
+  numTimesMatched: 0,
+  seenConnectionHelper: false,
 };
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case KEEP_BROWSING: {
+      console.log("In ProfileReducer KEEP_BROWSING");
+      return { ...state, seenConnectionHelper: true };
+    }
+//    case CONNECTION_SUCCESSFUL: {
+//      return { ...state, numTimesMatched: state.numTimesMatched + 1 };
+//    }
+//    case KEEP_BROWSING: {
+//      return { ...state, numTimesConnected: state.numTimesConnected + 1, seenConnectionHelper: true };
+//    }
     case ALREADY_AUTHENTICATED: {
       return { ...state, uid: action.payload.uid };
     }
@@ -97,7 +113,27 @@ export default(state = INITIAL_STATE, action) => {
 
       let description = '';
       if(action.payload.description) description = action.payload.description;
-      return { ...state, firstName, profileImages, age, activities, affiliations, description, email, uid: action.payload.uid };
+      let numTimesConnected = 0;
+      if(action.payload.numTimesConnected)
+        numTimesConnected = action.payload.numTimesConnected;
+      let numTimesMatched = 0;
+      if(action.payload.numTimesMatched)
+        numTimesMatched = action.payload.numTimesMatched;
+
+      return {
+        ...state,
+        firstName,
+        profileImages,
+        age,
+        activities,
+        affiliations,
+        description,
+        email,
+        uid: action.payload.uid,
+        numTimesConnected,
+        numTimesMatched,
+        seenConnectionHelper: action.payload.seenConnectionHelper,
+      };
     }
     case ACTIVITY_SELECTED: {
       const updatedActivities = [...state.activities, action.payload];
@@ -228,6 +264,8 @@ export default(state = INITIAL_STATE, action) => {
     case LOGOUT_USER: {
       return INITIAL_STATE;
     }
+    case PROFILE_INFO:
+      return { ...state, email: action.payload.email, firstName: action.payload.first_name, };
     default:
       return state;
   }

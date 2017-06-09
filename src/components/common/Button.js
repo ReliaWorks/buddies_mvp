@@ -26,7 +26,8 @@ const localStyles = {
   },
   buttonStyle: {
     justifyContent: 'center',
-    backgroundColor: '#42D3D3',
+    backgroundColor: 'black',
+//    backgroundColor: '#42D3D3',
     width: width - (MARGIN * 2),
     height: 60,
     marginLeft: MARGIN,

@@ -16,6 +16,7 @@ export const ACTIVITY_EDITED = 'activity_edited';
 export const AFFILIATIONS_SAVED = 'affiliations_saved';
 export const AFFILIATION_SELECTED = 'affiliation_selected';
 export const AFFILIATION_UNSELECTED = 'affiliation_unselected';
+export const DONE_CHECKING_CONNECTION_STATUS = 'done_checking_connection_status';
 export const PHOTOS_SAVED = 'photos_saved';
 export const PHOTO_REMOVED = 'photo_removed';
 export const PICTURE_SAVED = 'pic_saved';
