@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ActivitySet from './ActivitySet';
-import FirstConnectionHelperModal from './FirstConnectionHelperModal';
+import FirstConnectionHelperModal from '../common/FirstConnectionHelperModal';
 import { ProfileImages, ProfileImagesModal } from '../common';
 import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
@@ -20,16 +20,9 @@ class BuddyCard extends Component {
       descriptionExpanded: false,
       showModal: false,
       currentImageIndexOnSwiper: 0,
-      showConnectionHelper: false,
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { seenConnectionHelper, doneCheckingConnectionStatus } = nextProps.value;
-    console.log(`seenConnectionHelper = ${seenConnectionHelper} and doneCheckingConnectionStatus=${doneCheckingConnectionStatus}`);
-    if(!seenConnectionHelper && doneCheckingConnectionStatus)
-      this.setState({showConnectionHelper: true});
-  }
   onOpenModal(index) {
     this.setState({ showModal: true, currentImageIndexOnSwiper: index });
   }
@@ -172,14 +165,8 @@ class BuddyCard extends Component {
     );
   }
 
-  closeConnectionHelperModal() {
-    this.setState({showConnectionHelper: false});
-    this.props.connectionHelperSeen();
-  }
-
   render() {
-    const { firstName, age, editable, imageLoaded, likeable, location, profileImages, activities, affiliations, description, uid,
-            seenConnectionHelper, doneCheckingConnectionStatus, numTimesConnected, numTimesMatched } = this.props.value;
+    const { firstName, age, editable, imageLoaded, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
     const { locationText, nameText } = styles;
 
     return (
@@ -217,10 +204,6 @@ class BuddyCard extends Component {
             {this.renderMatchControls(likeable, uid, this.props.onConnect, this.props.onPass)}
           </View>
         </View>
-        <FirstConnectionHelperModal
-          visible={this.state.showConnectionHelper}
-          close={this.closeConnectionHelperModal.bind(this)}
-        />
       </View>
     );
   }

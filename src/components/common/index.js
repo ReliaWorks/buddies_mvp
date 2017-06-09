@@ -5,6 +5,7 @@ export * from './Deck';
 export * from './EmptyNewConnectionList';
 export * from './FullSizeImageModal';
 export * from './Header';
+export * from './FirstConnectionHelperModal';
 export * from './Input';
 export * from './Message';
 export * from './NoMoreCards';

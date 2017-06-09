@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Image, Modal, StyleSheet, TouchableWithoutFeedback, Text, View } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { MSG_CENTER_NOT_ICON } from '../../constants';
 
-export default class FirstConnectionHelperModal extends Component {
+class FirstConnectionHelperModal extends Component {
   render() {
     const { visible, firstName, close } = this.props;
 
@@ -10,9 +11,9 @@ export default class FirstConnectionHelperModal extends Component {
       <Modal
         visible={visible}
         animationType="none"
-        onRequestClose={() => close()}
+        onRequestClose={() => Actions.pop()}
       >
-      <TouchableWithoutFeedback onPress={() => this.props.close()}>
+      <TouchableWithoutFeedback onPress={() => Actions.pop()}>
         <View
           style={{
             flex: 1,
@@ -34,7 +35,6 @@ export default class FirstConnectionHelperModal extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
@@ -50,3 +50,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });
+
+export { FirstConnectionHelperModal };
