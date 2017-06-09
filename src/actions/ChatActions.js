@@ -25,38 +25,66 @@ export const updateMessageCenterNotification = (uid) => {
 
 let currentChatFetchOff = function () {};
 
-export const fetchConversation = (otherUserId) => {
+export const fetchConversation = (connection) => {
   return (dispatch) => {
     const { currentUser } = firebase.auth();
-    const chatRef = firebase.database().ref(`/message_center/${currentUser.uid}/${otherUserId}`);
-    chatRef.once('value', snapshot => {
-      if(snapshot.val()) {
-        const lastMsg = snapshot.val();
-        const conversationId = lastMsg.conversationId;
-        currentChatFetchOff = firebase.database().ref(`/conversations/${conversationId}`)
-          .on('value', snap => {
-            dispatch({
-              type: CURRENT_CHAT_FETCH,
-              payload: { chatId: conversationId, messages: _.map(snap.val()).reverse(), justConnected: false }
-            });
-          });
-      } else {
-        //Conversation doesn't exist and create one
-        const convRef = firebase.database().ref(`conversations`).push();
-        const convKey = convRef.getKey();
-        firebase.database().ref(`message_center/${currentUser.uid}/${otherUserId}/`)
-          .set({status: 'ACTIVE', conversationId: convKey, seen: true})
-          .then(() => {
-            firebase.database().ref(`message_center/${otherUserId}/${currentUser.uid}/`)
-              .set({status: 'ACTIVE', conversationId: convKey, seen: true })
-              .then(() => {
-                dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convKey, messages: [], justConnected: true }});
-              });
-          });
-      }
-    });
+    const conversationId = connection.selectedConversationId;
+
+    currentChatFetchOff = firebase.database().ref(`/conversations/${conversationId}`)
+      .on('value', snap => {
+        dispatch({
+          type: CURRENT_CHAT_FETCH,
+          payload: { chatId: conversationId, messages: _.map(snap.val()).reverse(), justConnected: false }
+        });
+      });
+
+    // const chatRef = firebase.database().ref(`/message_center/${currentUser.uid}/${otherUserId}`);
+    // chatRef.once('value', snapshot => {
+    //   const lastMsg = snapshot.val();
+    //   const conversationId = lastMsg.conversationId;
+    //   currentChatFetchOff = firebase.database().ref(`/conversations/${conversationId}`)
+    //     .on('value', snap => {
+    //       dispatch({
+    //         type: CURRENT_CHAT_FETCH,
+    //         payload: { chatId: conversationId, messages: _.map(snap.val()).reverse(), justConnected: false }
+    //       });
+    //     });
+    // });
   };
 };
+
+// export const fetchConversation = (otherUserId) => {
+//   return (dispatch) => {
+//     const { currentUser } = firebase.auth();
+//     const chatRef = firebase.database().ref(`/message_center/${currentUser.uid}/${otherUserId}`);
+//     chatRef.once('value', snapshot => {
+//       if(snapshot.val()) {
+//         const lastMsg = snapshot.val();
+//         const conversationId = lastMsg.conversationId;
+//         currentChatFetchOff = firebase.database().ref(`/conversations/${conversationId}`)
+//           .on('value', snap => {
+//             dispatch({
+//               type: CURRENT_CHAT_FETCH,
+//               payload: { chatId: conversationId, messages: _.map(snap.val()).reverse(), justConnected: false }
+//             });
+//           });
+//       } else {
+//         //Conversation doesn't exist and create one
+//         const convRef = firebase.database().ref(`conversations`).push();
+//         const convKey = convRef.getKey();
+//         firebase.database().ref(`message_center/${currentUser.uid}/${otherUserId}/`)
+//           .set({status: 'ACTIVE', conversationId: convKey, seen: true})
+//           .then(() => {
+//             firebase.database().ref(`message_center/${otherUserId}/${currentUser.uid}/`)
+//               .set({status: 'ACTIVE', conversationId: convKey, seen: true })
+//               .then(() => {
+//                 dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convKey, messages: [], justConnected: true }});
+//               });
+//           });
+//       }
+//     });
+//   };
+// };
 
 export const chatProfileFetch = (uid) => {
   return (dispatch) => {
@@ -68,10 +96,11 @@ export const chatProfileFetch = (uid) => {
   };
 };
 
-export const selectChat = (uid, name, avatar) => {
+export const selectChat = (uid, name, avatar, conversationId) => {
+  console.log('selected chat: uid: ', uid, ' name: ', name, ' avatar: ', avatar, ' conversaitonId:' , conversationId);
   return ({
     type: CHAT_SELECTED,
-    payload: { uid, name, avatar }
+    payload: { uid, name, avatar, conversationId }
   });
 };
 

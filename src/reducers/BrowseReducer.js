@@ -56,7 +56,8 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, selectedMatchId: action.payload.uid, selectedMatchName: action.payload.name, selectedMatchPic: action.payload.pic, browseCursor: action.payload.index };
     }
     case CHAT_SELECTED: {
-      return { ...state, selectedMatchId: action.payload.uid, selectedMatchPic: action.payload.avatar, selectedMatchName: action.payload.name };
+      const {uid, avatar, name, conversationId} = action.payload;
+      return {...state, selectedMatchId: uid, selectedMatchPic: avatar, selectedMatchName: name, selectedConversationId: conversationId};
     }
     case KEEP_BROWSING: {
 //      const lastMatch = state.potentials.splice(state.browseCursor, 1);
