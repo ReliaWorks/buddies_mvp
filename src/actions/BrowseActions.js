@@ -141,8 +141,7 @@ export const getCityStateCountryMapAPI = (uid, position, dispatch) => {
       shaObj.update(position.latitude + position.longitude);
       const locationHash = shaObj.getHash("HEX");
       firebase.database().ref(`location_cache/${locationHash}`).once('value', snapshot => {
-            //const cacheExists = snapshot.val() !== null;
-            const cacheExists=false;
+            const cacheExists = snapshot.val() !== null;
             if (cacheExists) {
               console.log('Found in cache');
               setStateWithLocation(uid, position, dispatch, snapshot.val());
@@ -184,7 +183,7 @@ export const getCityStateCountry = (currentUser, position, dispatch) => {
       AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
         .then((val) => {
           const value = JSON.parse(val);
-          let location = value[position.latitude + '' + position.longitude]; location = null;
+          let location = value[position.latitude + '' + position.longitude];
           if (value && location && location.city) {
             dispatch({ type: SET_CURRENT_LOCATION, payload: location });
             setLocation(uid, location);
@@ -212,9 +211,8 @@ export const getCityStateCountry = (currentUser, position, dispatch) => {
     return promise;
 };
 
-export const currentUserFetch = (callback) => {
+export const currentUserFetch = () => {
   const { currentUser } = firebase.auth();
-  console.log('currentUser',currentUser.uid);
   return (dispatch) => {
     dispatch({ type: CURRENT_USER_FETCH_START });
     navigator.geolocation.getCurrentPosition(
@@ -225,15 +223,12 @@ export const currentUserFetch = (callback) => {
 
         getCityStateCountry(currentUser, position.coords, dispatch)
           .then((location) => {
-            console.log(`/user_profiles/${currentUser.uid}`, location);
             firebase.database().ref(`/user_profiles/${currentUser.uid}`)
               .once('value', snapshot => {
-                debugger;
                 const user = snapshot.val();
                 user.location = location;
                 user.geoLocation = position;
                 user.uid = currentUser.uid;
-                callback(user);
                 dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...user } });
               });
           })
