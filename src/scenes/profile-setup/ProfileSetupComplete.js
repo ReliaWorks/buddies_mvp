@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import { textStyle } from '../../components/common/styles';
 import { Button } from '../../components/common';
 import ActivitySet from '../../components/buddycard/ActivitySet';
+import {currentUserFetch} from '../../actions';
 
 const BUTTON_TEXT = "Let's go!";
 class ProfileSetupComplete extends Component {
   startBrowsing() {
+    this.props.currentUserFetch();
     Actions.main();
   }
 
@@ -23,7 +25,7 @@ class ProfileSetupComplete extends Component {
           <View style={{height: 15}} />
           <ActivitySet value={{activitiesAndAffiliations: activities}} />
           <View style={{margin: 15}}>
-            <Button onPress={this.startBrowsing}>{BUTTON_TEXT}</Button>
+            <Button onPress={this.startBrowsing.bind(this)}>{BUTTON_TEXT}</Button>
           </View>
         </View>
       </View>
@@ -50,4 +52,4 @@ const mapStateToProps = ({ currentUser }) => {
   return { currentUser };
 };
 
-export default connect(mapStateToProps)(ProfileSetupComplete);
+export default connect(mapStateToProps, {currentUserFetch})(ProfileSetupComplete);

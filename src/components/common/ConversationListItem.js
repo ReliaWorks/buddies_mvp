@@ -41,7 +41,7 @@ class ConversationListItem extends Component {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.props.selectChat(this.props.otherUserId, this.props.otherUserName, this.props.otherUserPic);
+          this.props.selectChat(this.props.otherUserId, this.props.otherUserName, this.props.otherUserPic, this.props.conversationId);
           Actions.conversation();
         }}
       >
