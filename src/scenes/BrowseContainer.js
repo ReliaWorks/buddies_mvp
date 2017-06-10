@@ -4,11 +4,7 @@ import { Modal, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
-<<<<<<< HEAD
-import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, potentialsFetchRT, checkNotifications } from '../actions';
-=======
 import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen } from '../actions';
->>>>>>> origin/qa
 import { NoMoreCards, Spinner, GlowLoader } from '../components/common';
 
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
@@ -32,12 +28,8 @@ class BrowseContainer extends Component {
       const props = this.props;
       props.currentUserFetch(props.potentialsFetchRT);
     }
-<<<<<<< HEAD
-    //if (!this.props.connection.loadingCurrentUser) this.props.potentialsFetchRT(this.props.currentUser);
-=======
     if (!this.props.connection.loadingCurrentUser)
       this.props.potentialsFetch();
->>>>>>> origin/qa
     if (!this.props.connection.listeningForNotifications) {
       this.props.checkNotifications();
     }
@@ -217,8 +209,4 @@ const mapStateToProps = ({ currentUser, connection }) => {
   return { currentUser, connection };
 };
 
-<<<<<<< HEAD
-export default connect(mapStateToProps, { currentUserFetch, connectWithUser, potentialsFetch, potentialsFetchRT, checkNotifications })(BrowseContainer);
-=======
 export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen })(BrowseContainer);
->>>>>>> origin/qa
