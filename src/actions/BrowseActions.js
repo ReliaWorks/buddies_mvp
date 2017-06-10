@@ -52,14 +52,14 @@ export const potentialsFetch = () => {
 
     dispatch({type: POTENTIALS_FETCH});
     console.log(`In potentialsFetch. CurrentUser.uid = ${currentUser.uid}`);
-    axios.get(`https://activities-test-a3871.appspot.com/match/${currentUser.uid}`, {
+    axios.get(`https://activities-test-a3871.appspot.com/match_new/${currentUser.uid}`, {
       headers: { authorization: `${hash}:${currentUser.uid}`}
     })
       .then(response => {
         const keys = Object.keys(response.data);
         keys.forEach((key) => {
-          const dataWithId = {...response.data[key], uid: key};
-          potentials.push(dataWithId);
+          //const dataWithId = {...response.data[key], uid: key};
+          potentials.push(response.data[key]);
         });
         dispatch({
           type: POTENTIALS_FETCH_SUCCESS,
@@ -87,7 +87,24 @@ const clearUserLastLocationFB = (db, uid, numberNewRecords) => {
     if (numberNewRecords == 0)
       resolve();
     else{
-      db.ref(`last_location_path/${uid}`).remove(() => { resolve(); });
+      const ref = db.ref(`last_location_path/${uid}`);
+      ref.once('value',snapshot=>{
+        const data = snapshot.val();
+        if (data){
+          const keys = Object.keys(data);
+          keys.forEach((key)=>{
+            const path = data[key];
+            db.ref(path).remove();
+          });
+
+        }
+        ref.remove(() => {
+          resolve();
+        });
+      })
+      .catch(()=>{
+        resolve();
+      });
     }
   });
   return thisPromise;
