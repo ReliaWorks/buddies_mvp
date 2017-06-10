@@ -41,7 +41,6 @@ export const CLOSE_CONVERSATION = 'close_conversation';
 
 export const POTENTIALS_FETCH = 'potentials_fetch';
 export const POTENTIALS_FETCH_SUCCESS = 'potentials_fetch_success';
-export const POTENTIALS_ADD_SUCCESS = 'potentials_add_success';
 export const IMAGE_LOADED = 'image_loaded';
 export const MATCHES_FETCH = 'matches_fetch';
 export const MATCHES_FETCH_START = 'matches_fetch_start';
