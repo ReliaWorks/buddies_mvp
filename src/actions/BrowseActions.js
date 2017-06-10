@@ -20,7 +20,7 @@ import {
   IMAGE_LOADED,
 } from './types';
 import { MAP_API_KEY } from '../config';
-import { DEFAULT_PROFILE_PHOTO, LIMIT_RECORDS_LOCATION, WEIGHTS_PROXIMITY_INDEX } from '../constants';
+import { DEFAULT_PROFILE_PHOTO } from '../constants';
 
 const jsSHA = require("jssha");
 
