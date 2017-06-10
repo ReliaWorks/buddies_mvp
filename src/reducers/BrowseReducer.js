@@ -1,4 +1,5 @@
 import {
+  BROWSED_TO_NEXT_USER,
   CONNECT_WITH_USER,
   CONNECTION_SUCCESSFUL,
   KEEP_BROWSING,
@@ -6,6 +7,7 @@ import {
   DONE_CHECKING_CONNECTION_STATUS,
   POTENTIALS_FETCH,
   POTENTIALS_FETCH_SUCCESS,
+  RESET_CURRENT_INDEX,
   CURRENT_USER_FETCH_START,
   CURRENT_USER_FETCH_SUCCESS,
   IMAGE_LOADED,
@@ -14,6 +16,7 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
+  currentIndex: 0,
   selectedMatchId: '',
   selectedMatchName: '',
   selectedMatchPic: '',
@@ -31,6 +34,14 @@ const INITIAL_STATE = {
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case BROWSED_TO_NEXT_USER: {
+      console.log("In BROWSED_TO_NEXT_USER");
+      console.log(`state.currentIndex = ${state.currentIndex}`);
+      console.log(`payload = ${action.payload}`);
+      return { ...state, currentIndex: action.payload };
+    }
+    case RESET_CURRENT_INDEX:
+      return { ...state, currentIndex: 0 };
     case DONE_CHECKING_CONNECTION_STATUS: {
       console.log("In DONE_CHECKING_CONNECTION_STATUS");
       return { ...state, doneCheckingConnectionStatus: true, seenConnectionHelper: action.payload };
