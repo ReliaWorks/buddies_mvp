@@ -17,12 +17,22 @@ import {
   SET_CURRENT_LOCATION,
   API_SECRET_KEY,
   SET_NEW_NOTIFICATION,
+  BROWSED_TO_NEXT_USER,
+  RESET_CURRENT_INDEX,
   IMAGE_LOADED,
 } from './types';
 import { MAP_API_KEY } from '../config';
 import { DEFAULT_PROFILE_PHOTO } from '../constants';
 
 const jsSHA = require("jssha");
+
+export const scrolled = (index) => {
+  return ({ type: BROWSED_TO_NEXT_USER, payload: index });
+};
+
+export const resetCurrentIndex = () => {
+  return ({ type: RESET_CURRENT_INDEX });
+};
 
 export const checkNotifications = () => {
   return (dispatch) => {
@@ -42,10 +52,8 @@ export const potentialsFetch = () => {
     const shaObj = new jsSHA("SHA-256", "TEXT");
     shaObj.update(API_SECRET_KEY + currentUser.uid);
     const hash = shaObj.getHash("HEX");
-    console.log("API hash", hash);
 
     dispatch({type: POTENTIALS_FETCH});
-    console.log(`In potentialsFetch. CurrentUser.uid = ${currentUser.uid}`);
     axios.get(`https://activities-test-a3871.appspot.com/match/${currentUser.uid}`, {
       headers: { authorization: `${hash}:${currentUser.uid}`}
     })
@@ -62,7 +70,6 @@ export const potentialsFetch = () => {
       }, (error) => {
         console.log(`API not responding.  Error = ${error}`);
     });
-    console.log("Exiting potentials fetch");
   };
 };
 
@@ -118,7 +125,6 @@ export const getCityStateCountry = (uid, position, dispatch) => {
   let location = { city: '', state: '', country: ''};
 
   if (!(position && position.latitude && position.longitude)) return;
-  console.log('Check local');
 
   AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
     .then((val) => {
@@ -150,7 +156,7 @@ export const currentUserFetch = () => {
       }
     );
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
-      .on('value', snapshot => {
+      .once('value', snapshot => {
         dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
       });
   };
