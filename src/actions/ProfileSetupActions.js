@@ -63,18 +63,22 @@ export const activitiesSaved = (activities) => {
 
   return (dispatch) => {
     if(activities && activities.length > 0) {
-      activities.forEach((activity, index) => {
-        firebase.database().ref(`user_profiles/${currentUser.uid}/activities/`)
-          .remove()
-          .then(() => {
-            firebase.database().ref(`user_profiles/${currentUser.uid}/activities/${activity.uid}`)
-              .set({name: activity.name, icon: activity.icon, uid: activity.uid, attribute: activity.attribute})
-              .then(() => {
-                if(index === activities.length - 1)
-                  dispatch({ type: ACTIVITIES_SAVED, payload: activities });
-              });
+      firebase.database().ref(`user_profiles/${currentUser.uid}/activities/`)
+        .remove()
+        .then(() => {
+          const updates = {};
+
+          activities.forEach((activity, index) => {
+              updates[`user_profiles/${currentUser.uid}/activities/${activity.uid}/uid`] = activity.uid;
+              updates[`user_profiles/${currentUser.uid}/activities/${activity.uid}/name`] = activity.name;
+              updates[`user_profiles/${currentUser.uid}/activities/${activity.uid}/icon`] = activity.icon;
+              updates[`user_profiles/${currentUser.uid}/activities/${activity.uid}/attribute`] = activity.attribute;
           });
-      });
+
+          firebase.database().ref().update(updates).then(() => {
+            dispatch({ type: ACTIVITIES_SAVED, payload: activities });
+          });
+        });
     } else {
       firebase.database().ref(`user_profiles/${currentUser.uid}/activities/`).remove();
       dispatch({ type: ACTIVITIES_SAVED, payload: activities });
@@ -143,16 +147,19 @@ export const affiliationsSaved = (affiliations) => {
 
   return (dispatch) => {
     if(affiliations && affiliations.length > 0) {
-      affiliations.forEach((affiliation, index) => {
-        firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/`)
-          .remove()
-          .then(() => {
-            firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/${affiliation.uid}`)
-              .set({name: affiliation.name, icon: affiliation.icon, uid: affiliation.uid})
-              .then(() => {
-                if(index === affiliations.length - 1)
-                  dispatch({ type: AFFILIATIONS_SAVED, payload: affiliations });
-              });
+      firebase.database().ref(`user_profiles/${currentUser.uid}/affiliations/`)
+        .remove()
+        .then(() => {
+          const updates = {};
+
+          affiliations.forEach((affiliation, index) => {
+            updates[`user_profiles/${currentUser.uid}/affiliations/${affiliation.uid}/name`] = affiliation.name;
+            updates[`user_profiles/${currentUser.uid}/affiliations/${affiliation.uid}/icon`] = affiliation.icon;
+            updates[`user_profiles/${currentUser.uid}/affiliations/${affiliation.uid}/uid`] = affiliation.uid;
+          });
+
+          firebase.database().ref().update(updates).then(() => {
+            dispatch({ type: AFFILIATIONS_SAVED, payload: affiliations });
           });
         });
     } else {

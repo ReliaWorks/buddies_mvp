@@ -99,10 +99,12 @@ export default(state = INITIAL_STATE, action) => {
       };
     }
     case CHAT_SELECTED: {
+      const {uid, avatar, name, conversationId} = action.payload;
       return { ...state,
-        selectedMatchId: action.payload.uid,
-        selectedMatchPic: action.payload.avatar,
-        selectedMatchName: action.payload.name
+        selectedMatchId: uid,
+        selectedMatchPic: avatar,
+        selectedMatchName: name,
+        selectedConversationId: conversationId
       };
     }
 //    case KEEP_BROWSING: {
