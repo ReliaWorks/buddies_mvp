@@ -1,5 +1,6 @@
 # OSX
 #
+.tmp
 .DS_Store
 
 # Xcode
