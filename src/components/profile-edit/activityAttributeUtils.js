@@ -1,5 +1,5 @@
-export const attributeOptions = (activityName) => {
-  switch (activityName) {
+export const attributeOptions = (name) => {
+  switch (name) {
     case 'Running':
       return ['none', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4'];
     case 'Tennis':
@@ -11,8 +11,8 @@ export const attributeOptions = (activityName) => {
   }
 };
 
-export const attributeShortDescription = (activityName) => {
-  switch (activityName) {
+export const attributeShortDescription = (name) => {
+  switch (name) {
     case 'Running':
       return 'Running Pace (min/mile)';
     case 'Tennis':
@@ -24,8 +24,8 @@ export const attributeShortDescription = (activityName) => {
   }
 };
 
-export const tileDescription = (activityName, attribute) => {
-  switch (activityName) {
+export const tileDescription = (name, attribute) => {
+  switch (name) {
     case 'Running':
       return attribute + ' min/mile';
     case 'Tennis':
@@ -36,9 +36,9 @@ export const tileDescription = (activityName, attribute) => {
       return attribute;
   }
 };
-export const listDescription = (activityName, attribute) => {
+export const listDescription = (name, attribute) => {
   if (attribute && attribute !== 'none') {
-    switch (activityName) {
+    switch (name) {
       case 'Running':
         return attribute + ' min / mile pace';
       case 'Tennis':
@@ -53,8 +53,8 @@ export const listDescription = (activityName, attribute) => {
   }
 };
 
-export const scrollPosition = (activityName) => {
-  switch (activityName) {
+export const scrollPosition = (name) => {
+  switch (name) {
     case 'Running':
       return {x: 0, y: 260};
     case 'Tennis':
@@ -67,21 +67,10 @@ export const scrollPosition = (activityName) => {
 };
 
 
-export const getAttribute = (activityName, attribute) => {
+export const getAttribute = (name, attribute) => {
   if (attribute) {
     return attribute;
   } else {
     return 'none';
   }
-  //
-  // switch (activityName) {
-  //   case 'Running':
-  //     return 'None';
-  //   case 'Tennis':
-  //     return 'None';
-  //   case 'Walking':
-  //     return 'None';
-  //   default:
-  //     return 'None';
-  // }
 };

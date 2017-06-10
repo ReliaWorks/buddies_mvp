@@ -1,10 +1,13 @@
 import {
   CONNECT_WITH_USER,
+  CONNECTION_SUCCESSFUL,
   KEEP_BROWSING,
   CHAT_SELECTED,
+  DONE_CHECKING_CONNECTION_STATUS,
   POTENTIALS_FETCH,
   POTENTIALS_FETCH_SUCCESS,
   CURRENT_USER_FETCH_START,
+  CURRENT_USER_FETCH_SUCCESS,
   IMAGE_LOADED,
   LOGOUT_USER,
   POTENTIALS_ADD_SUCCESS,
@@ -21,28 +24,34 @@ const INITIAL_STATE = {
   loadingCurrentUser: false,
   numImagesOnScreen: 0,
   notification: false,
-  addedPotentialUsers: []
+  listeningForNotifications: false,
+  numTimesConnected: 0,
+  doneCheckingConnectionStatus: false,
+  seenConnectionHelper: true,
 };
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case DONE_CHECKING_CONNECTION_STATUS: {
+      console.log("In DONE_CHECKING_CONNECTION_STATUS");
+      return { ...state, doneCheckingConnectionStatus: true, seenConnectionHelper: action.payload };
+    }
+    case KEEP_BROWSING: {
+      console.log("In KEEP_BROWSING");
+      return { ...state, seenConnectionHelper: true, doneCheckingConnectionStatus: false };
+    }
+    case CONNECTION_SUCCESSFUL: {
+      console.log("In CONNECTION_SUCCESSFUL");
+      return { ...state, doneCheckingConnectionStatus: true, seenConnectionHelper: true };
+    }
     case CURRENT_USER_FETCH_START: {
       return { ...state, loadingCurrentUser: true };
     }
+    case CURRENT_USER_FETCH_SUCCESS: {
+      return { ...state, numTimesConnected: action.payload.numTimesConnected || 0};
+    }
     case POTENTIALS_FETCH: {
       return { ...state, loadingPotentials: true, loadingCurrentUser: false };
-    }
-    case POTENTIALS_ADD_SUCCESS: {
-      debugger;
-      const addedPotentialUsers = state.addedPotentialUsers;
-      if (action.payload.user.uid && typeof addedPotentialUsers[action.payload.user.uid] === 'undefined') {
-        addedPotentialUsers[action.payload.user.uid] = true;
-        const potentialsTemp = potentials.slice(0); //clone
-        potentialsTemp[action.payload.index] = action.payload.user;
-        return { ...state, potentials: potentialsTemp, loadingPotentials: false, addedPotentialUsers: addedPotentialUsers };
-      }else{
-        return { ...state };
-      }
     }
     case POTENTIALS_FETCH_SUCCESS: {
 /*      let numImages = 0;
@@ -63,19 +72,32 @@ export default(state = INITIAL_STATE, action) => {
       return state;
     }
     case SET_NEW_NOTIFICATION: {
-      return { ...state, notification: action.payload.notification, listeningForNotifications: true };
+      return { ...state,
+        notification: action.payload.notification,
+        listeningForNotifications: true
+      };
     }
     case CONNECT_WITH_USER: {
-      return { ...state, selectedMatchId: action.payload.uid, selectedMatchName: action.payload.name, selectedMatchPic: action.payload.pic, browseCursor: action.payload.index };
+      console.log("In CONNECT_WITH_USER");
+      return { ...state,
+        selectedMatchId: action.payload.uid,
+        selectedMatchName: action.payload.name,
+        selectedMatchPic: action.payload.pic,
+        browseCursor: action.payload.index,
+        doneCheckingConnectionStatus: false,
+        seenConnectionHelper: true
+      };
     }
     case CHAT_SELECTED: {
-      return { ...state, selectedMatchId: action.payload.uid, selectedMatchPic: action.payload.avatar, selectedMatchName: action.payload.name };
+      return { ...state,
+        selectedMatchId: action.payload.uid,
+        selectedMatchPic: action.payload.avatar,
+        selectedMatchName: action.payload.name
+      };
     }
-    case KEEP_BROWSING: {
-//      const lastMatch = state.potentials.splice(state.browseCursor, 1);
-//      return { ...state, potentials: state.potentials, browseCursor: 0 };
-      return state;
-    }
+//    case KEEP_BROWSING: {
+//      return { ...state, numTimesConnected: state.numTimesConnected + 1, doneCheckingConnectionStatus: true };
+//    }
     case LOGOUT_USER: {
       return INITIAL_STATE;
     }

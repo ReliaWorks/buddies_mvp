@@ -3,18 +3,18 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
-  POTENTIALS_FETCH,
-  POTENTIALS_FETCH_SUCCESS,
-  POTENTIALS_ADD_SUCCESS,
   CONNECT_WITH_USER,
   CONNECTION_SUCCESSFUL,
+  CURRENT_USER_FETCH_START,
   CURRENT_USER_FETCH_SUCCESS,
   CURRENT_CHAT_FETCH,
+  DONE_CHECKING_CONNECTION_STATUS,
   KEEP_BROWSING,
+  LOCATION_MAP_STORAGE_KEY,
+  POTENTIALS_FETCH,
+  POTENTIALS_FETCH_SUCCESS,
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
-  LOCATION_MAP_STORAGE_KEY,
-  CURRENT_USER_FETCH_START,
   API_SECRET_KEY,
   SET_NEW_NOTIFICATION,
   IMAGE_LOADED,
@@ -375,7 +375,7 @@ export const currentUserFetch = (callback) => {
   const { currentUser } = firebase.auth();
   console.log('currentUser',currentUser.uid);
   return (dispatch) => {
-    dispatch({ type: CURRENT_USER_FETCH_START })
+    dispatch({ type: CURRENT_USER_FETCH_START });
     navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log("position: ", position);
@@ -403,6 +403,10 @@ export const currentUserFetch = (callback) => {
         dispatch({ type: SET_CURRENT_GEOLOCATION, payload: initialPosition });
       }
     );
+    firebase.database().ref(`/user_profiles/${currentUser.uid}`)
+      .on('value', snapshot => {
+        dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
+      });
   };
 };
 
@@ -423,7 +427,8 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
     matches.ref(`user_matches/${buddy.uid}/${currentUser.uid}`)
       .once('value', snapshot => {
         let otherUserLikesYouToo = false;
-        if(snapshot.val()) otherUserLikesYouToo = snapshot.val().liked;
+        if(snapshot.val())
+          otherUserLikesYouToo = snapshot.val().liked;
 
         matches.ref(`user_matches/${currentUser.uid}/${buddy.uid}`)
           .set({
@@ -433,15 +438,29 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
             matched: (otherUserLikesYouToo && connectStatus),
             matchedDate: firebase.database.ServerValue.TIMESTAMP,
           });
-          if(connectStatus && otherUserLikesYouToo) {
-            successfullyConnected(dispatch, buddy, currentUser);
-          } else keepBrowsing(dispatch);
+        if(connectStatus && otherUserLikesYouToo) {
+          successfullyConnected(dispatch, buddy, currentUser);
+        } else {
+          dispatch({type: DONE_CHECKING_CONNECTION_STATUS, payload: currentUser.seenConnectionHelper});
+          if(!currentUser.seenConnectionHelper)
+            firebase.database().ref(`user_profiles/${currentUser.uid}/seenConnectionHelper`)
+              .set(true);
+        }
       });
+      dispatch({ type: KEEP_BROWSING });
+/*    dispatch({ type: KEEP_BROWSING });
+    let numTimesConnected = 1;
+    if(currentUser.numTimesConnected)
+      numTimesConnected = currentUser.numTimesConnected + 1;
+    firebase.database().ref(`user_profiles/${currentUser.uid}/numTimesConnected`)
+      .set(numTimesConnected);
+      */
   };
 };
 
-export const keepBrowsing = () => {
-  return ({ type: KEEP_BROWSING });
+export const connectionHelperSeen = () => {
+  console.log("In connectionHelperSeen");
+  return ({type: KEEP_BROWSING});
 };
 
 const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude) {
@@ -511,9 +530,14 @@ const successfullyConnected = (dispatch, buddy, currentUser) => {
   if(currentUser && currentUser.profileImages && currentUser.profileImages.length > 0)
     profileImage = currentUser.profileImages[0].url;
 
+//  let numTimesMatched = 1;
+//  if(currentUser.numTimesMatched)
+//    numTimesMatched = currentUser.numTimesMatched + 1;
   firebase.database().ref(`user_matches/${buddy.uid}/${currentUser.uid}`).update({matched: true});
   firebase.database().ref(`/notifications/new/${buddy.uid}`).set(true);
   firebase.database().ref(`user_matches/${currentUser.uid}/${buddy.uid}/seen`).set(true);
+//  firebase.database().ref(`user_profiles/${currentUser.uid}/numTimesMatched`)
+//    .set(numTimesMatched);
 
   const convRef = firebase.database().ref(`conversations`).push();
   const convKey = convRef.getKey();

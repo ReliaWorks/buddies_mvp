@@ -9,12 +9,12 @@ class PhotoEditContainer extends Component {
     Actions.pop();
   }
 
-  onImageRemove(photo) {
-    this.props.photoRemoved(photo);
+  onImageRemove(photo, isPrimary) {
+    this.props.photoRemoved(photo, isPrimary);
   }
 
-  onImagesSelected(images, from = 'cameraRoll') {
-    this.props.photosSelected(images, from);
+  onImagesSelected(images, isPrimary, from = 'cameraRoll') {
+    this.props.photosSelected(images, isPrimary, from);
   }
 
   onFetchFacebookAlbums() {

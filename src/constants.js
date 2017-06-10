@@ -14,10 +14,4 @@ export const DESC_HEADER_HEIGHT = 78;
 export const ACTIVITY_SETUP_SCENE_TITLE = 'What sounds fun to you?';
 export const AFFILIATION_SETUP_SCENE_TITLE = 'Which clubs interest you?';
 export const DESCRIPTION_PLACEHOLDER = 'Describe yourself';
-
-export const LIMIT_RECORDS_LOCATION = 50;
-export const WEIGHTS_PROXIMITY_INDEX = { WEIGHT_AREA: 0.3,
-                                         WEIGHT_GEO_PROX: 0.1,
-                                         WEIGHT_COMMON_AFFILIATION: 0.3,
-                                         WEIGHT_COMMON_ACTIVITIES: 0.2,
-                                         WEIGHT_COMMON_GENDER: 0.1 };
+export const MSG_CENTER_NOT_ICON = require('./assets/img/MessageCenterNotIcon.png');

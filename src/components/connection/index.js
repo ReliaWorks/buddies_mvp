@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import Connection from './Connection';
-import { connectWithUser, findCommonality, selectChat, keepBrowsing } from '../../actions';
+import { connectWithUser, findCommonality, selectChat } from '../../actions';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../../constants';
 
 class ConnectionContainer extends Component {
@@ -50,7 +50,6 @@ class ConnectionContainer extends Component {
           Actions.conversation();
         }}
         keepBrowsing={() => {
-          this.props.keepBrowsing();
           Actions.pop();
         }}
         commonInterests={this.props.commonality.commonInterests}
@@ -63,4 +62,4 @@ const mapStateToProps = ({ currentUser, connection, commonality }) => {
   return { currentUser, connection, commonality };
 };
 
-export default connect(mapStateToProps, { connectWithUser, findCommonality, selectChat, keepBrowsing })(ConnectionContainer);
+export default connect(mapStateToProps, { connectWithUser, findCommonality, selectChat })(ConnectionContainer);

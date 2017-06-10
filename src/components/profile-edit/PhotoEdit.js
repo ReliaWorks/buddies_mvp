@@ -25,14 +25,23 @@ class PhotoEdit extends Component {
     this.setState({modalVisible: false});
   }
   getSelectedImages(images, from) {
-    this.props.onImagesSelected(images, from);
+    if (this.props.profileImages.length === 0) {
+      console.log('primary değişti');
+      this.props.onImagesSelected(images, true, from);
+    } else {
+      this.props.onImagesSelected(images, false, from);
+    }
   }
 
   renderPics() {
     const { profileImages, onRemove } = this.props;
+    if(!profileImages) return null;
 
     const firstProfileImage = profileImages[0];
-    const otherImages = profileImages.slice(1, MAX_NUM_PHOTOS - 1);
+    let otherImages = [];
+    if(profileImages.length > 1) {
+      otherImages = profileImages.slice(1, MAX_NUM_PHOTOS - 2);
+    }
 
     return (
       <View style={{flex: 0.75}}>
@@ -83,11 +92,11 @@ class PhotoEdit extends Component {
 
   confirmDelete() {
     this.setState({showDeleteConfirmModal: false});
-    this.props.onRemove(this.state.removedPhoto);
+    this.props.onRemove(this.state.removedPhoto, this.state.isPrimary);
   }
 
-  removePic(photo) {
-    this.setState({showDeleteConfirmModal: true, removedPhoto: photo});
+  removePic(photo, isPrimary = false) {
+    this.setState({showDeleteConfirmModal: true, removedPhoto: photo, isPrimary: isPrimary});
   }
 
   renderPrimaryPic(firstProfileImage, onRemove) {
@@ -97,7 +106,7 @@ class PhotoEdit extends Component {
           style={localStyles.mainImageStyle}
           source={{ uri: firstProfileImage.url }}
         >
-          <TouchableOpacity onPress={() => this.removePic(firstProfileImage)}>
+          <TouchableOpacity onPress={() => this.removePic(firstProfileImage, true)}>
             <View style={styles.removeIconContainer}>
               <CustomIcon
                 name='add_circle_icon' size={20}

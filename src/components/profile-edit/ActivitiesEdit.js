@@ -18,9 +18,9 @@ class ActivitiesEdit extends Component {
       attributeModal: {
         show: false,
         activity: {
-          activityId: '',
-          activityName: '',
-          activityIcon: '',
+          uid: '',
+          name: '',
+          icon: '',
           attribute: ''
         }
       }
@@ -57,9 +57,9 @@ class ActivitiesEdit extends Component {
       attributeModal: {
         show: false,
         activity: {
-          activityId: '',
-          activityName: '',
-          activityIcon: '',
+          uid: '',
+          name: '',
+          icon: '',
           attribute: ''
         }
       }

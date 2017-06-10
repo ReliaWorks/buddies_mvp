@@ -134,6 +134,8 @@ export const profileIconButton = () => {
     <TouchableOpacity
       onPress={() => Actions.userView()}
       style={{width: ICON_CLICKABLE_AREA_WIDTH}}
+      accessibilityLabel={'profileIconButton'}
+      testID={'profileIconButton'}
     >
       <CustomIcon
         name="profile_icon"
@@ -169,6 +171,7 @@ export const renderCloseIcon = (onRemove, tileId, tileName) => {
     <TouchableHighlight
       onPress={() => onRemove(tileId, tileName)}
       style={{alignSelf: 'flex-end'}}
+      testID={'removeActivityIcon'}
     >
       <CloseIcon
         name="x"

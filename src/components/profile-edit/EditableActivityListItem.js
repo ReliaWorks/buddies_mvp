@@ -27,8 +27,9 @@ const EditableActivityListItem = ({
         <TouchableOpacity
           style={styles.editIconContainer}
           onPress={() => onEdit({
-            activityId: tileId, activityName: tileName, activityIcon: tileIcon, attribute: attribute
+            uid: tileId, name: tileName, icon: tileIcon, attribute: attribute
           })}
+          testID={'editActivityIcon'}
         >
           <CustomIcon
             name="edit_icon"

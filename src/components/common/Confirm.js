@@ -12,7 +12,6 @@ const Confirm = ({ children, visible, onAccept, onDecline }) => {
       transparent
       animationType="none"
       onRequestClose={() => {}}
-
     >
       <View
         style={{
