@@ -15,4 +15,4 @@ export const ACTIVITY_SETUP_SCENE_TITLE = 'What sounds fun to you?';
 export const AFFILIATION_SETUP_SCENE_TITLE = 'Which clubs interest you?';
 export const DESCRIPTION_PLACEHOLDER = 'Describe yourself';
 
-export const MSG_CENTER_NOT_ICON = require('./assets/img/MessageCenterNotIcon.png');
+export const MSG_CENTER_NOT_ICON = require('./assets/img/MsgCenterNotIcon.jpg');

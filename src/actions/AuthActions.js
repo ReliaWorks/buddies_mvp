@@ -24,12 +24,8 @@ export const checkIfAlreadyLoggedIn = () => {
 
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
-        console.log(`User ${user.uid} is logged in.`);
-
         FCM.requestPermissions(); // for iOS
         FCM.getFCMToken().then(notificationToken => {
-          console.log('notificationToken:', notificationToken);
-
           const updates = {};
           updates['/user_profiles/' + user.uid + '/notificationToken'] = notificationToken;
 
@@ -53,8 +49,6 @@ export const checkIfAlreadyLoggedIn = () => {
         if(data[0][1]) {
           token = data[0][1];
           uid = data[1][1];
-          console.log(`tokenn = ${token}`);
-          console.log(`uid = ${uid}`);
           const provider = firebase.auth.FacebookAuthProvider;
           const cred = provider.credential(token);
           firebase.auth().signInWithCredential(cred)
