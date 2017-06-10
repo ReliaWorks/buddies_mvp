@@ -15,7 +15,7 @@ class Conversation extends Component {
 
   componentWillMount() {
     //this.props.fetchConversation(this.props.connection.selectedMatchId);
-    this.props.fetchConversation(this.props.connection);
+    this.props.fetchConversation(this.props.connection, this.props.currentUser);
   }
 
   componentWillUnmount() {
