@@ -96,21 +96,20 @@ const clearUserLastLocationFB = (db, uid, numberNewRecords) => {
       resolve();
     else{
       const ref = db.ref(`last_location_path/${uid}`);
-      ref.once('value',snapshot=>{
+      ref.once('value', snapshot => {
         const data = snapshot.val();
-        if (data){
+        if(data) {
           const keys = Object.keys(data);
-          keys.forEach((key)=>{
+          keys.forEach((key) => {
             const path = data[key];
             db.ref(path).remove();
           });
-
         }
         ref.remove(() => {
           resolve();
         });
       })
-      .catch(()=>{
+      .catch(() => {
         resolve();
       });
     }
@@ -124,9 +123,7 @@ const setCurrentUserLocationFB = (db, uid, location) => {
 
   if (location.country && location.state)
     objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/users/${uid}`);
-  else
-    return;
-
+  else return;
   if (location.county)
     objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/users/${uid}`);
 
