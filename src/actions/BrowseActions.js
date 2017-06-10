@@ -17,6 +17,8 @@ import {
   SET_CURRENT_LOCATION,
   API_SECRET_KEY,
   SET_NEW_NOTIFICATION,
+  BROWSED_TO_NEXT_USER,
+  RESET_CURRENT_INDEX,
   IMAGE_LOADED,
 } from './types';
 import { MAP_API_KEY } from '../config';
@@ -28,6 +30,14 @@ const stringToVariable = (str) => {
   if (str)
    return str.replace(/\s+/g, '_').replace(/[^0-9a-z_]/gi, '').toLowerCase();
   return str;
+};
+
+export const scrolled = (index) => {
+  return ({ type: BROWSED_TO_NEXT_USER, payload: index });
+};
+
+export const resetCurrentIndex = () => {
+  return ({ type: RESET_CURRENT_INDEX });
 };
 
 export const checkNotifications = () => {
@@ -48,11 +58,10 @@ export const potentialsFetch = () => {
     const shaObj = new jsSHA("SHA-256", "TEXT");
     shaObj.update(API_SECRET_KEY + currentUser.uid);
     const hash = shaObj.getHash("HEX");
-    console.log("API hash", hash);
 
     dispatch({type: POTENTIALS_FETCH});
     console.log(`In potentialsFetch. CurrentUser.uid = ${currentUser.uid}`);
-    axios.get(`https://activities-test-a3871.appspot.com/match_new/${currentUser.uid}`, {
+    axios.get(`https://activities-test-a3871.appspot.com/match_geo/${currentUser.uid}`, {
       headers: { authorization: `${hash}:${currentUser.uid}`}
     })
       .then(response => {
@@ -68,7 +77,6 @@ export const potentialsFetch = () => {
       }, (error) => {
         console.log(`API not responding.  Error = ${error}`);
     });
-    console.log("Exiting potentials fetch");
   };
 };
 
@@ -193,10 +201,8 @@ const setStateWithLocation = (uid, position, dispatch, data) => {
 export const getCityStateCountry = (currentUser, position, dispatch) => {
     const promise = new Promise((resolve, reject) => {
       const uid = currentUser.uid;
-
       if (!(position && position.latitude && position.longitude)) reject();
       console.log('Check local');
-
       AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
         .then((val) => {
           const value = JSON.parse(val);
@@ -257,7 +263,7 @@ export const currentUserFetch = () => {
       }
     );
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
-      .on('value', snapshot => {
+      .once('value', snapshot => {
         dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
       });
   };

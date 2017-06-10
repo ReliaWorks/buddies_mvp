@@ -1,8 +1,10 @@
+//Auth types
 export const LOGIN_USER = 'login_user';
 export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGOUT_USER = 'logout_user';
 export const ALREADY_AUTHENTICATED = 'already_authenticated';
 export const NOT_ALREADY_AUTHED = 'not_already_authed';
+
 export const ALL_ACTIVITIES_FETCH = 'all_activities_fetch';
 export const ALL_AFFILIATIONS_FETCH = 'all_affiliations_fetch';
 export const PROFILE_INFO = 'profile_info';
@@ -39,6 +41,8 @@ export const KEEP_BROWSING = 'keep_browsing';
 export const SET_NEW_NOTIFICATION = 'set_new_notification';
 export const CLOSE_CONVERSATION = 'close_conversation';
 
+export const BROWSED_TO_NEXT_USER = 'browsed_to_next_user';
+export const RESET_CURRENT_INDEX = 'reset_current_index';
 export const POTENTIALS_FETCH = 'potentials_fetch';
 export const POTENTIALS_FETCH_SUCCESS = 'potentials_fetch_success';
 export const IMAGE_LOADED = 'image_loaded';
