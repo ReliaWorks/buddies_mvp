@@ -24,12 +24,17 @@ class BrowseContainer extends Component {
     if (this.props.currentUser.firstName === '') {
       this.props.currentUserFetch();
     }
-    if(this.props.connection.currentIndex === 0)
+    if(this.props.connection.currentIndex === 0 && this.props.connection.potentials.length === 0)
       this.props.potentialsFetch();
 
     if (!this.props.connection.listeningForNotifications) {
       this.props.checkNotifications();
     }
+  }
+
+  componentDidMount() {
+    if(this.swiper)
+      this.swiper.scrollBy(this.props.connection.currentIndex);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -45,28 +50,19 @@ class BrowseContainer extends Component {
   }
 
   _onMomentumScrollEnd(e, state, context) {
-    //need to account for left and right scroll
-    console.log(`swiper index = ${this.swiper.state.index}`);
-    console.log(this.swiper.state);
-    console.log(`currentIndex = ${this.props.connection.currentIndex}`);
-
     this.props.scrolled(this.swiper.state.index);
-//    this.setState({ currentIndex: this.state.currentIndex + 1 });
-    console.log(`currentIndex = ${this.props.connection.currentIndex}`);
     if(this.swiper.state.index === this.swiper.state.total - 1) //this is the last item in the list
-      this.props.potentialsFetch();
+      this.props.potentialsFetch(); //what if we get there by scrolling to the left instead of scrolling right ?????
   }
 
   swipe() {
-    console.log(`In swipe and currentIndex = ${this.props.connection.currentIndex}`);
     const targetIndex = this.swiper.state.index;
     if(this.props.connection.currentIndex === this.swiper.state.total - 1) {
       this.setState({viewedAllPotentials: true});
       this.props.resetCurrentIndex();
     } else {
       this.swiper.scrollBy(1);
-      this.props.scrolled();
-//      this.setState({currentIndex: targetIndex});
+      this.props.scrolled(this.swiper.state.index + 1);
     }
   }
 
@@ -82,16 +78,17 @@ class BrowseContainer extends Component {
     return images;
   }
 
+//  componentWillReceiveProps(nextProps) {
+//    if(nextProps.connection.currentIndex != this.props.connection.currentIndex)
+//      this.swiper.scrollBy(nextProps.connection.currentIndex);
+//  }
   renderMatches() {
     const { potentials, numTimesConnected, numTimesMatched, doneCheckingConnectionStatus, seenConnectionHelper } = this.props.connection;
-    let potentialMatches = [];
-    if(potentials)
-      potentialMatches = potentials.slice(this.props.connection.currentIndex, potentials.length);
 
     if(this.props.connection.loadingCurrentUser) return <Spinner size="large" />;
-    else if(this.state.viewedAllPotentials) {
+    else if(!potentials || potentials.length === 0) {
       return <NoMoreCards />;
-    } else if(potentialMatches && potentialMatches.length === 0) return <NoMoreCards />;
+    }
     return (
       <View>
       <Swiper
@@ -101,7 +98,7 @@ class BrowseContainer extends Component {
         onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)}
         showPagination
       >
-        {potentialMatches.map((buddy, key) => {
+        {potentials.map((buddy, key) => {
           let profileImage = {url: DEFAULT_PROFILE_PHOTO, key: null};
           const images = this.convertProfileImagesObjectToArray(buddy.profileImages);
           if(images && images[0]) profileImage = images[0];
@@ -109,7 +106,7 @@ class BrowseContainer extends Component {
           if(key === 0) {
             imageLoadedCallback = this.props.imageLoaded;
           }
-          console.log(`Buddy name = ${buddy.first_name}`);
+//          console.log(`Buddy name = ${buddy.first_name}`);
           return (
             <View key={key} style={styles.cardStyle}>
               <BuddyCard
