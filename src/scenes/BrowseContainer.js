@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen } from '../actions';
 import { NoMoreCards, Spinner, GlowLoader } from '../components/common';
-
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
 class BrowseContainer extends Component {
@@ -26,7 +25,7 @@ class BrowseContainer extends Component {
     // firstName is assigned only after currentUserFetch, so if it is not empty no need to fetch again.
     if (this.props.currentUser.firstName === '') {
       const props = this.props;
-      props.currentUserFetch(props.potentialsFetchRT);
+      props.currentUserFetch();
     }
     if (!this.props.connection.loadingCurrentUser)
       this.props.potentialsFetch();
