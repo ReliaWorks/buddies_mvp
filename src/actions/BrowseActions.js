@@ -28,7 +28,11 @@ const jsSHA = require("jssha");
 
 const stringToVariable = (str) => {
   if (str)
-   return str.replace(/\s+/g, '_').replace(/[^0-9a-z_]/gi, '').toLowerCase();
+   return str.replace(/\s+/g, '_')
+          .replace(/\++/g, '')
+          .replace(/\-+/g, 'N')
+          .replace(/[^0-9a-z_]/gi, '')
+          .toLowerCase();
   return str;
 };
 
@@ -159,9 +163,7 @@ export const setLocationLocalStorage = (position, location) => {
 
 export const getCityStateCountryMapAPI = (uid, position, dispatch) => {
   const promise = new Promise((resolve, reject) => {
-      const shaObj = new jsSHA("SHA-256", "TEXT");
-      shaObj.update(position.latitude + position.longitude);
-      const locationHash = shaObj.getHash("HEX");
+      const locationHash = stringToVariable('' + position.latitude + position.longitude);
       firebase.database().ref(`location_cache/${locationHash}`).once('value', snapshot => {
             const cacheExists = snapshot.val() !== null;
             if (cacheExists) {
