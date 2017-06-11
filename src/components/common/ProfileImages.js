@@ -49,7 +49,9 @@ class ProfileImages extends Component {
       <View key={key} style={styles.profileImageContainer}>
         <TouchableWithoutFeedback
           onPress={() => {
-            this.props.onOpenModal(this.state.currentImageIndexOnSwiper);
+            if (this.props.value.profileImages.length > 0) {
+              this.props.onOpenModal(this.state.currentImageIndexOnSwiper);
+            }
           }}
         >
           <Image
