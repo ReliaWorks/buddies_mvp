@@ -6,7 +6,9 @@ import { matchesFetch, updateMessageCenterNotification } from '../../actions';
 
 class MessageCenterContainer extends Component {
   componentWillMount() {
-    this.props.matchesFetch();
+    if (!this.props.loaded) {
+      this.props.matchesFetch();
+    }
     this.createDataSource(this.props);
   }
 
@@ -37,9 +39,9 @@ class MessageCenterContainer extends Component {
   }
 }
 const mapStateToProps = ({ messageCenter, currentUser }) => {
-  const { matchesWithChat, matchesWithoutChat, loading } = messageCenter;
+  const { matchesWithChat, matchesWithoutChat, loading, loaded } = messageCenter;
   const { firstName, uid } = currentUser;
-  return { uid, matchesWithChat, matchesWithoutChat, loading, firstName };
+  return { uid, matchesWithChat, matchesWithoutChat, loading, loaded, firstName };
 };
 
 export default connect(mapStateToProps, { updateMessageCenterNotification, matchesFetch })(MessageCenterContainer);
