@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, 
 import { Actions } from 'react-native-router-flux';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { backIconButton, moreIconButton } from '../icons';
-import { fetchConversation, updateConversationNotifications, saveMessage, closeConversation } from '../actions';
+import { fetchConversation, updateConversationNotifications, saveMessage, closeConversation, loadEarlier } from '../actions';
 import { DEFAULT_PROFILE_PHOTO } from '../constants';
 
 class Conversation extends Component {
@@ -88,8 +88,15 @@ class Conversation extends Component {
     );
   }
 
+  loadEarlier() {
+    const {messages} = this.props.chat;
+    const loadBefore = messages.length > 0 ? messages[messages.length - 1].createdAt : 0;
+    this.props.loadEarlier(loadBefore, this.props.connection, this.props.currentUser);
+  }
+
   render() {
     const { currentUser } = this.props;
+
     let profileImage = DEFAULT_PROFILE_PHOTO;
     if(currentUser && currentUser.profileImages && currentUser.profileImages.length > 0)
       profileImage = currentUser.profileImages[0].url;
@@ -98,6 +105,8 @@ class Conversation extends Component {
       <View style={{flex: 1}}>
         {this.renderHeader()}
         <GiftedChat
+          loadEarlier={this.props.chat.loadEarlier && this.props.chat.messages.length > 0}
+          onLoadEarlier={this.loadEarlier.bind(this)}
           messages={this.props.chat.messages}
           onSend={this.onSend}
           user={{
@@ -134,4 +143,4 @@ const mapStateToProps = ({ currentUser, connection, chat }) => {
   return { currentUser, connection, chat };
 };
 
-export default connect(mapStateToProps, { updateConversationNotifications, fetchConversation, saveMessage, closeConversation })(Conversation);
+export default connect(mapStateToProps, { updateConversationNotifications, fetchConversation, saveMessage, closeConversation, loadEarlier })(Conversation);

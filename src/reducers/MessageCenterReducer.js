@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   matchesWithChat: [],
   matchesWithoutChat: [],
   loading: false,
+  loaded: false
 };
 
 export default(state = INITIAL_STATE, action) => {
@@ -36,13 +37,18 @@ export default(state = INITIAL_STATE, action) => {
         return match.createdAt;
       });
 
-      return {...state, matchesWithChat: sortedMatchesWithChat.reverse(), matchesWithoutChat: sortedMatchesWithoutChat.reverse(), loading: false};
+      return {...state,
+        matchesWithChat: sortedMatchesWithChat.reverse(),
+        matchesWithoutChat: sortedMatchesWithoutChat.reverse(),
+        loading: false,
+        loaded: true
+      };
     }
     case MATCHES_FETCH_START: {
-      return {...state, loading: true};
+      return {...state, loading: true, loaded: false};
     }
     case MATCHES_FETCH_FAIL: {
-      return {...state, loading: false};
+      return {...state, loading: false, loaded: false};
     }
     case LOGOUT_USER: {
       return INITIAL_STATE;

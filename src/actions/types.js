@@ -40,6 +40,8 @@ export const CONNECTION_SUCCESSFUL = 'connection_successful';
 export const KEEP_BROWSING = 'keep_browsing';
 export const SET_NEW_NOTIFICATION = 'set_new_notification';
 export const CLOSE_CONVERSATION = 'close_conversation';
+export const NEW_MESSAGE = 'new_message';
+export const LOAD_EARLIER = 'load_earlier';
 
 export const BROWSED_TO_NEXT_USER = 'browsed_to_next_user';
 export const RESET_CURRENT_INDEX = 'reset_current_index';

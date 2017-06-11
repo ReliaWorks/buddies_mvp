@@ -1,12 +1,14 @@
 import _ from 'lodash';
 import firebase from 'firebase';
-import { DEFAULT_PROFILE_PHOTO } from '../constants';
+import { DEFAULT_PROFILE_PHOTO, MESSAGE_COUNT_FOR_EACH_LOAD } from '../constants';
 import {
   CHAT_SELECTED,
   CHAT_PROFILE_FETCH,
   CHAT_PROFILE_FETCH_SUCCESS,
   CURRENT_CHAT_FETCH,
-  CLOSE_CONVERSATION
+  CLOSE_CONVERSATION,
+  NEW_MESSAGE,
+  LOAD_EARLIER
 } from './types';
 
 export const updateConversationNotifications = (conversationId, uid, otherUserId) => {
@@ -28,13 +30,54 @@ let currentChatFetchOff = function () {};
 export const fetchConversation = (connection, currentUser) => {
   return (dispatch) => {
     getConversationId(connection.selectedConversationId, currentUser.uid, connection.selectedMatchId).then(conversationId => {
-      currentChatFetchOff = firebase.database().ref(`/conversations/${conversationId}`)
-        .on('value', snap => {
+      firebase.database().ref(`/conversations/${conversationId}`).limitToLast(MESSAGE_COUNT_FOR_EACH_LOAD)
+        .once('value', snap => {
+          const messagesReversed = _.map(snap.val()).reverse();
+
           dispatch({
             type: CURRENT_CHAT_FETCH,
             payload: {
-              chatId: connection.selectedConversationId,
-              messages: _.map(snap.val()).reverse(),
+              chatId: conversationId,
+              messages: messagesReversed,
+              justConnected: false,
+              currentUser,
+              connection
+            }
+          });
+
+          const lastMessageTime = messagesReversed.length > 0 ? messagesReversed[0].createdAt : 0;
+
+          currentChatFetchOff = firebase.database().ref(`/conversations/${conversationId}`).orderByChild('createdAt').startAt(lastMessageTime + 1)
+            .on('child_added', messageSnap => {
+              dispatch({
+                type: NEW_MESSAGE,
+                payload: {
+                  chatId: conversationId,
+                  message: messageSnap.val(),
+                  justConnected: false,
+                  currentUser,
+                  connection
+                }
+              });
+            });
+        });
+    });
+  };
+};
+
+export const loadEarlier = (loadBefore, connection, currentUser) => {
+  return (dispatch) => {
+    getConversationId(connection.selectedConversationId, currentUser.uid, connection.selectedMatchId).then(conversationId => {
+      firebase.database().ref(`/conversations/${conversationId}`).orderByChild('createdAt').endAt(loadBefore - 1)
+        .limitToLast(MESSAGE_COUNT_FOR_EACH_LOAD)
+        .once('value', snap => {
+          const messagesReversed = _.map(snap.val()).reverse();
+
+          dispatch({
+            type: LOAD_EARLIER,
+            payload: {
+              chatId: conversationId,
+              messages: messagesReversed,
               justConnected: false,
               currentUser,
               connection
@@ -121,7 +164,7 @@ export const saveMessage = (msg, currentUser, otherUser, chatIdParam, messages) 
 
 export const closeConversation = (conversationId) => {
   return (dispatch) => {
-    firebase.database().ref(`/conversations/${conversationId}`).off('value', currentChatFetchOff);
+    firebase.database().ref(`/conversations/${conversationId}`).off('child_added', currentChatFetchOff);
     dispatch({
       type: CLOSE_CONVERSATION,
       payload: { }
