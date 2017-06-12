@@ -240,6 +240,10 @@ class Routes extends Component {
           leftButton={profileIconButton}
           type={ActionConst.RESET}
         />
+        <Scene
+          key="pdf"
+          component={PDF}
+        />
       </Router>
     );
   }

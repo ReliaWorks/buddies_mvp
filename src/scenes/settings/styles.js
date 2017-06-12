@@ -35,9 +35,11 @@ export default styles = {
   },
   linkContainerStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+//    justifyContent: 'space-around',
     alignItems: 'center',
     flex: 1,
+    marginLeft: 15,
+    marginRight: 15,
   },
   preferenceContainer: {
     flexDirection: 'row',
