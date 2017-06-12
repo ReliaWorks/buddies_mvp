@@ -17,3 +17,5 @@ export const DESCRIPTION_PLACEHOLDER = 'Describe yourself';
 export const MSG_CENTER_NOT_ICON = require('./assets/img/MsgCenterNotIcon.jpg');
 
 export const MESSAGE_COUNT_FOR_EACH_LOAD = 25;
+
+export const TOS = require('./assets/pdfs/06122017WavelengthTOS.pdf');

@@ -17,6 +17,7 @@ class BrowseContainer extends Component {
     this.state = {
       viewedAllPotentials: false,
       numPotentials: 0,
+      alreadySeenFirstItem: true,
     };
   }
 
@@ -51,8 +52,10 @@ class BrowseContainer extends Component {
 
   _onMomentumScrollEnd(e, state, context) {
     this.props.scrolled(this.swiper.state.index);
-    if(this.swiper.state.index === this.swiper.state.total - 1) //this is the last item in the list
+    if(this.swiper.state.index === 0 && this.state.alreadySeenFirstItem) //this is the last item in the list
       this.props.potentialsFetch(); //what if we get there by scrolling to the left instead of scrolling right ?????
+    else if(this.swiper.state.index === 0)
+      this.setState({alreadySeenFirstItem: true});
   }
 
   swipe() {

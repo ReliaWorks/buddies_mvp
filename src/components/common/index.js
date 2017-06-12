@@ -9,6 +9,7 @@ export * from './FirstConnectionHelperModal';
 export * from './Input';
 export * from './Message';
 export * from './NoMoreCards';
+export * from './PDF';
 export * from './PictureModal';
 export * from './ProfileImages';
 export * from './ProfileImagesModal';
