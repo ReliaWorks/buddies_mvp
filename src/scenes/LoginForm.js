@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Dimensions, View, Image, Text, TouchableHighlight } from 'react-native';
+import { Dimensions, View, Image, Text, TouchableHighlight, WebView } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import { Button, Spinner } from '../components/common';
 import { legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
+import { TOS } from '../constants';
 
 const appName = "wavelength";
 const backgroundImageURL = require("../assets/img/wavelength.png");
@@ -32,7 +34,7 @@ class LoginForm extends Component {
       </View>
     );
   }
-//  {this.renderAppName()}
+/*  {this.renderAppName()}
   renderLoginForm() {
     return (
       <View style={styles.container}>
@@ -49,7 +51,7 @@ class LoginForm extends Component {
       </View>
     );
   }
-
+*/
 //  <View style={styles.solidContainer}>
 
   renderLoginForm2() {
@@ -68,8 +70,14 @@ class LoginForm extends Component {
           Login with Facebook
         </Button>
         <View style={styles.termsContainer}>
-          <Text style={legalTextStyle}>Terms of Service</Text>
+          <Text
+            style={legalTextStyle}
+            onPress={() => Actions.tos({path: TOS})}
+          >
+            Terms of Service
+          </Text>
         </View>
+
       </LinearGradient>
     );
   }
