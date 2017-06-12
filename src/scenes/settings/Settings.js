@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { Dimensions, Linking, Text, TouchableOpacity, View } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { Button } from '../../components/common';
 import { GenderPreference, AgePreference, LocationPreference } from '../../components/preferences';
 import styles from './styles';
+import { TOS, PRIVACY_POLICY } from '../../constants';
 
 const { width } = Dimensions.get('window');
 const MARGIN = 15;
 
 class Settings extends Component {
+  openTermsOfService() {
+    Actions.pdf({path: TOS});
+  }
   openPrivacyPolicy() {
-    const url = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/legal%2FApple_Developer_Program_License_Agreement_20160921.pdf?alt=media&token=07bb73b8-b294-42a0-817a-92fd8150d347';
+    Actions.pdf({path: PRIVACY_POLICY});
+/*    const url = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/legal%2FApple_Developer_Program_License_Agreement_20160921.pdf?alt=media&token=07bb73b8-b294-42a0-817a-92fd8150d347';
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
         console.log('Can\'t handle url: ' + url);
@@ -17,6 +23,7 @@ class Settings extends Component {
         return Linking.openURL(url);
       }
     }).catch(err => console.error('An error occurred', err));
+    */
   }
 
   openFeedbackLink() {
@@ -75,13 +82,17 @@ class Settings extends Component {
   renderLinks() {
     return (
       <View style={styles.linkContainerStyle}>
-        <TouchableOpacity onPress={this.openPrivacyPolicy}>
-          <Text style={styles.linkText}>Privacy Policy</Text>
-        </TouchableOpacity>
+        <View style={{flex: 1}}>
+          <TouchableOpacity onPress={this.openPrivacyPolicy}>
+            <Text style={styles.linkText}>Privacy Policy</Text>
+          </TouchableOpacity>
+        </View>
         <View style={{borderWidth: 1, borderColor: 'lightgray', height: 25 }} />
-        <TouchableOpacity onPress={this.openTermsOfService}>
-          <Text style={styles.linkText}>Terms of Service</Text>
-        </TouchableOpacity>
+        <View style={{flex: 1}}>
+          <TouchableOpacity onPress={this.openTermsOfService}>
+            <Text style={styles.linkText}>Terms of Service</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -96,24 +107,6 @@ class Settings extends Component {
       </Button>
     );
   }
-/*  renderLogoutButton() {
-    return (
-      <View style={styles.logoutContainerStyle}>
-        <LoginButton
-          onLogoutFinished={() => {
-            firebase.auth().signOut().then(() => {
-              this.props.value.onLogout();
-              Actions.root();
-            }, (error) => {
-              console.log(`Error signing out ${error}`);
-            });
-          }}
-        />
-      </View>
-    );
-  }
-*/
-//  {this.renderLinks()}
 
   render() {
     return (
@@ -121,6 +114,7 @@ class Settings extends Component {
         {this.renderHeader()}
         {this.renderPreferences()}
         {this.renderFeedbackButton()}
+        {this.renderLinks()}
         {this.renderLogoutButton()}
       </View>
     );

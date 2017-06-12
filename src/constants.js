@@ -19,3 +19,4 @@ export const MSG_CENTER_NOT_ICON = require('./assets/img/MsgCenterNotIcon.jpg');
 export const MESSAGE_COUNT_FOR_EACH_LOAD = 25;
 
 export const TOS = require('./assets/pdfs/06122017WavelengthTOS.pdf');
+export const PRIVACY_POLICY = require('./assets/pdfs/06122017WavelengthPP.pdf');
