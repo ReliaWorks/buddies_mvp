@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Settings from './Settings';
-import { logoutUser } from '../../actions';
+import { logoutUser, deactivateUser } from '../../actions';
 
 class SettingsContainer extends Component {
   render() {
@@ -13,14 +13,15 @@ class SettingsContainer extends Component {
           email
         }}
         onLogout={() => this.props.logoutUser()}
+        onDeactivate={() => this.props.deactivateUser()}
       />
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const { firstName, email } = state.currentUser;
-  return { firstName, email };
+  const { firstName, email, uid } = state.currentUser;
+  return { firstName, email, uid };
 };
 
-export default connect(mapStateToProps, { logoutUser })(SettingsContainer);
+export default connect(mapStateToProps, { logoutUser, deactivateUser })(SettingsContainer);

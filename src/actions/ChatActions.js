@@ -14,6 +14,7 @@ import {
 export const updateConversationNotifications = (conversationId, uid, otherUserId) => {
   const fb = firebase.database();
   return (dispatch) => {
+    console.log('updateConversationNotifications, uid:', uid, ' conversationId: ', conversationId, ' otherUserId: ', otherUserId);
     fb.ref(`/notifications/conversations/${conversationId}/seen/${uid}`).set(true);
     fb.ref(`/message_center/${uid}/${otherUserId}/seen/`).set(true);
   };
@@ -21,6 +22,7 @@ export const updateConversationNotifications = (conversationId, uid, otherUserId
 
 export const updateMessageCenterNotification = (uid) => {
   return (dispatch) => {
+    console.log('updateMessageCenterNotification: uid', uid);
     firebase.database().ref(`/notifications/new/${uid}`).set(false);
   };
 };
@@ -30,6 +32,7 @@ let currentChatFetchOff = function () {};
 export const fetchConversation = (connection, currentUser) => {
   return (dispatch) => {
     getConversationId(connection.selectedConversationId, currentUser.uid, connection.selectedMatchId).then(conversationId => {
+      console.log('fetchConversation conversationId: ', conversationId);
       firebase.database().ref(`/conversations/${conversationId}`).limitToLast(MESSAGE_COUNT_FOR_EACH_LOAD)
         .once('value', snap => {
           const messagesReversed = _.map(snap.val()).reverse();
@@ -68,6 +71,7 @@ export const fetchConversation = (connection, currentUser) => {
 export const loadEarlier = (loadBefore, connection, currentUser) => {
   return (dispatch) => {
     getConversationId(connection.selectedConversationId, currentUser.uid, connection.selectedMatchId).then(conversationId => {
+      console.log('load earlier: ', conversationId);
       firebase.database().ref(`/conversations/${conversationId}`).orderByChild('createdAt').endAt(loadBefore - 1)
         .limitToLast(MESSAGE_COUNT_FOR_EACH_LOAD)
         .once('value', snap => {
@@ -139,7 +143,8 @@ export const saveMessage = (msg, currentUser, otherUser, chatIdParam, messages) 
           otherUserName: otherUser.selectedMatchName,
           otherUserPic: otherUser.selectedMatchPic,
           conversationId: chatId,
-          seen: true
+          seen: true,
+          status: 'ACTIVE'
         })
         .then(() => {
           console.log("Wrote to firebase message_center");
@@ -153,7 +158,8 @@ export const saveMessage = (msg, currentUser, otherUser, chatIdParam, messages) 
           otherUserId: currentUser.uid,
           otherUserPic: profileImage,
           conversationId: chatId,
-          seen: false
+          seen: false,
+          status: 'ACTIVE'
         })
         .then(() => {
           console.log("Wrote to firebase message_center");

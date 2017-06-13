@@ -107,20 +107,47 @@ export const loginUser = () => {
 
 export const logoutUser = () => {
   return (dispatch) => {
-    const keys = ['token', 'uid'];
-    AsyncStorage.multiRemove(keys, (error) => {
-      console.log(`Unable to remove AsyncStorage with error = ${error}`);
-    });
-    LoginManager.logOut();
-    firebase.auth().signOut()
-      .then(() => {
-        console.log('Signed out of Firebase');
-        dispatch({ type: LOGOUT_USER });
-        Actions.root();
-      }, (error) => {
-        console.log(`Error signing out of Firebase ${error}`);
+    _logoutUser(dispatch);
+  };
+};
+
+export const deactivateUser = () => {
+  return (dispatch) => {
+    const { uid } = firebase.auth().currentUser;
+    toggleUserStatus(uid, 'INACTIVE')
+    // const { uid } = firebase.auth().currentUser;
+    // const updates = {};
+    //
+    // firebase.database().ref(`message_center/${uid}`).once('value')
+    // .then(snap => {
+    //   snap.forEach(connection => {
+    //     updates[`message_center/${connection.key}/${uid}/status`] = 'INACTIVE';
+    //   });
+    //
+    //   updates[`user_profiles/${uid}/status`] = 'INACTIVE';
+    //
+    //   return firebase.database().ref().update(updates);
+    // })
+    .then(() => {
+      //console.log('IMPORTANT : account deactivated, but it also need to log out when the user is deactivated !!');
+      _logoutUser(dispatch);
     });
   };
+};
+
+const toggleUserStatus = (uid, status) => {
+  const updates = {};
+
+  return firebase.database().ref(`message_center/${uid}`).once('value').then(snap => {
+    snap.forEach(connection => {
+      updates[`message_center/${connection.key}/${uid}/status`] = status;
+    });
+
+    updates[`user_profiles/${uid}/status`] = status;
+    console.log('toggleUserStatus, status: ', status, ' updates: ', updates);
+
+    return firebase.database().ref().update(updates);
+  });
 };
 
 function fetchProfilePhotos(result, dispatch, token) {
@@ -210,13 +237,42 @@ function checkIfUserExists(user, ref, accessTokenData, dispatch) {
     .once('value', snapshot => {
       const exists = (snapshot.val() && snapshot.val().first_name);
       if(exists) {
-        Actions.main();
+        reactivateAccountIfDeactivated(snapshot.key, snapshot.val().status)
+        .then(() => {
+          Actions.main();
+        });
       } else {
         setupUserFirebase(user,ref, accessTokenData, dispatch);
         Actions.profileSetup();
       }
     });
 }
+
+const reactivateAccountIfDeactivated = (uid, status) => {
+  if (status === 'INACTIVE') {
+    return toggleUserStatus(uid, 'ACTIVE');
+  } else {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
+};
+
+const _logoutUser = (dispatch) => {
+  const keys = ['token', 'uid'];
+  AsyncStorage.multiRemove(keys, (error) => {
+    console.log(`Unable to remove AsyncStorage with error = ${error}`);
+  });
+  LoginManager.logOut();
+  firebase.auth().signOut()
+    .then(() => {
+      console.log('Signed out of Firebase');
+      dispatch({ type: LOGOUT_USER });
+      Actions.root();
+    }, (error) => {
+      console.log(`Error signing out of Firebase ${error}`);
+  });
+};
 
 const signIntoFirebase = (dispatch, auth, provider, accessTokenData) => {
   const credential = provider.credential(accessTokenData.accessToken);
