@@ -1,6 +1,5 @@
 import {
   ALREADY_AUTHENTICATED,
-  NOT_ALREADY_AUTHED,
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
   LOGOUT_USER,
@@ -23,9 +22,6 @@ export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ALREADY_AUTHENTICATED: {
       return { ...state, token: action.payload.token, loggedIn: true, loading: false };
-    }
-    case NOT_ALREADY_AUTHED: {
-      return { ...state, loading: false, loggedIn: false };
     }
     case LOGIN_USER:
         return { ...state, loading: true, loggedIn: true };
