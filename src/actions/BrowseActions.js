@@ -125,9 +125,14 @@ const setCurrentUserLocationFB = (db, uid, location) => {
   const keys = Object.keys(location);
   const objPaths = [];
 
+  if (location.country)
+    objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/users/${uid}`);
+  else
+    return;
+
   if (location.country && location.state)
     objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/users/${uid}`);
-  else return;
+
   if (location.county)
     objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/users/${uid}`);
 
