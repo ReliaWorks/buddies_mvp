@@ -13,6 +13,8 @@ const BOTTOM_PADDING = 120;
 const MARGIN = 15;
 
 class BuddyCard extends Component {
+  offset: 0;
+
   constructor(props) {
     super(props);
 
@@ -20,6 +22,7 @@ class BuddyCard extends Component {
       descriptionExpanded: false,
       showModal: false,
       currentImageIndexOnSwiper: 0,
+      scrollDirection: null,
     };
   }
 
@@ -139,8 +142,11 @@ class BuddyCard extends Component {
   }
 
   expandDescription() {
+    console.log(`In expandDescription and scrollDirection = ${this.state.scrollDirection}`);
     LayoutAnimation.easeInEaseOut();
-    this.setState({descriptionExpanded: !this.state.descriptionExpanded});
+    if(this.state.scrollDirection === 'up')
+      this.setState({descriptionExpanded});
+    else this.setState({descriptionExpanded: false});
   }
 
   descContainerStyle() {
@@ -165,6 +171,17 @@ class BuddyCard extends Component {
     );
   }
 
+  onInfoScroll(event) {
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    LayoutAnimation.easeInEaseOut();
+    if(currentOffset > (this.offset + 10)) {
+      this.setState({descriptionExpanded: true});
+    } else if(currentOffset < (this.offset - 10)) {
+      this.setState({descriptionExpanded: false});
+    }
+    this.offset = currentOffset;
+  }
+
   render() {
     const { firstName, age, editable, imageLoaded, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
     const { locationText, nameText } = styles;
@@ -185,8 +202,8 @@ class BuddyCard extends Component {
           />
 
           <View style={this.descContainerStyle()}>
-            <ScrollView>
-              <TouchableWithoutFeedback onPress={this.expandDescription.bind(this)}>
+            <ScrollView onScroll={this.onInfoScroll.bind(this)} scrollEventThrottle={16}>
+              <TouchableWithoutFeedback>
               <View>
                <View style={{flexDirection: 'row'}}>
                   <Text style={nameText}>

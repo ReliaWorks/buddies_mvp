@@ -3,7 +3,6 @@ export const LOGIN_USER = 'login_user';
 export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGOUT_USER = 'logout_user';
 export const ALREADY_AUTHENTICATED = 'already_authenticated';
-export const NOT_ALREADY_AUTHED = 'not_already_authed';
 
 export const ALL_ACTIVITIES_FETCH = 'all_activities_fetch';
 export const ALL_AFFILIATIONS_FETCH = 'all_affiliations_fetch';
