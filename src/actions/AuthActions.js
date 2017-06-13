@@ -10,7 +10,6 @@ import firebase from 'firebase';
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 import {
   ALREADY_AUTHENTICATED,
-  NOT_ALREADY_AUTHED,
   LOGIN_USER,
   LOGOUT_USER,
   PROFILE_INFO,
@@ -64,9 +63,10 @@ export const checkIfAlreadyLoggedIn = () => {
             })
             .catch((error) => {
               console.log(`Error logging in previously authenticated user. Error = ${error.code}: ${error.message}`);
+              dispatch({ type: LOGOUT_USER });
             });
         }
-        dispatch({type: NOT_ALREADY_AUTHED});
+        dispatch({ type: LOGOUT_USER });
         Actions.login();
       })
       .catch(err => {

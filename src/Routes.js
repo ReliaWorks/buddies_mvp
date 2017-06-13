@@ -14,7 +14,7 @@ import UserView from './scenes/UserView';
 import MessageCenterContainer from './scenes/message-center';
 import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
-import { PictureModal, FirstConnectionHelperModal } from './components/common';
+import { PDF, PictureModal, FirstConnectionHelperModal } from './components/common';
 import ProfileModal from './components/common/ProfileModal';
 import ChatComponentIconButton from './components/common/ChatComponentIconButton';
 import FbAlbums from './components/profile-edit/addPhoto/FbAlbums';
@@ -48,6 +48,10 @@ class Routes extends Component {
               borderBottomColor: 'transparent',
             }}
             type={ActionConst.RESET}
+          />
+          <Scene
+            key="tos"
+            component={PDF}
           />
         </Scene>
         <Scene key="profileSetup">
@@ -235,6 +239,10 @@ class Routes extends Component {
           }}
           leftButton={profileIconButton}
           type={ActionConst.RESET}
+        />
+        <Scene
+          key="pdf"
+          component={PDF}
         />
       </Router>
     );

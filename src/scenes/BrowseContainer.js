@@ -14,13 +14,17 @@ class BrowseContainer extends Component {
   constructor(props) {
     super(props);
 
+    console.log("In BrowseContainer constructor");
+
     this.state = {
       viewedAllPotentials: false,
       numPotentials: 0,
+      alreadySeenFirstItem: true,
     };
   }
 
   componentWillMount() {
+    console.log("In BrowseContainer componentWillMount");
     if (this.props.currentUser.firstName === '') {
       this.props.currentUserFetch();
     }
@@ -33,6 +37,7 @@ class BrowseContainer extends Component {
   }
 
   componentDidMount() {
+    console.log("In BrowseContainer componentDidMount");
     if(this.swiper)
       this.swiper.scrollBy(this.props.connection.currentIndex);
   }
@@ -46,16 +51,21 @@ class BrowseContainer extends Component {
       return true;
     if(this.props.connection.listeningForNotifications !== nextProps.connection.listeningForNotifications)
       return true;
+    if(this.props.connection.loadingConnectionHelper !== nextProps.connection.loadingConnectionHelper)
+      return true;
     return false;
   }
 
   _onMomentumScrollEnd(e, state, context) {
     this.props.scrolled(this.swiper.state.index);
-    if(this.swiper.state.index === this.swiper.state.total - 1) //this is the last item in the list
+    if(this.swiper.state.index === 0 && this.state.alreadySeenFirstItem) //this is the last item in the list
       this.props.potentialsFetch(); //what if we get there by scrolling to the left instead of scrolling right ?????
+    else if(this.swiper.state.index === 0)
+      this.setState({alreadySeenFirstItem: true});
   }
 
   swipe() {
+    if(this.props.connection.loadingConnectionHelper) return;
     const targetIndex = this.swiper.state.index;
     if(this.props.connection.currentIndex === this.swiper.state.total - 1) {
       this.setState({viewedAllPotentials: true});

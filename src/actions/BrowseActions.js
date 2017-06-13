@@ -8,11 +8,11 @@ import {
   CURRENT_USER_FETCH_START,
   CURRENT_USER_FETCH_SUCCESS,
   CURRENT_CHAT_FETCH,
-  DONE_CHECKING_CONNECTION_STATUS,
   KEEP_BROWSING,
   LOCATION_MAP_STORAGE_KEY,
   POTENTIALS_FETCH,
   POTENTIALS_FETCH_SUCCESS,
+  SEEN_CONNECTION_HELPER,
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
   API_SECRET_KEY,
@@ -28,7 +28,11 @@ const jsSHA = require("jssha");
 
 const stringToVariable = (str) => {
   if (str)
-   return str.replace(/\s+/g, '_').replace(/[^0-9a-z_]/gi, '').toLowerCase();
+   return str.replace(/\s+/g, '_')
+          .replace(/\++/g, '')
+          .replace(/\-+/g, 'N')
+          .replace(/[^0-9a-z_]/gi, '')
+          .toLowerCase();
   return str;
 };
 
@@ -121,9 +125,14 @@ const setCurrentUserLocationFB = (db, uid, location) => {
   const keys = Object.keys(location);
   const objPaths = [];
 
+  if (location.country)
+    objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/users/${uid}`);
+  else
+    return;
+
   if (location.country && location.state)
     objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/users/${uid}`);
-  else return;
+
   if (location.county)
     objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/users/${uid}`);
 
@@ -159,9 +168,7 @@ export const setLocationLocalStorage = (position, location) => {
 
 export const getCityStateCountryMapAPI = (uid, position, dispatch) => {
   const promise = new Promise((resolve, reject) => {
-      const shaObj = new jsSHA("SHA-256", "TEXT");
-      shaObj.update(position.latitude + position.longitude);
-      const locationHash = shaObj.getHash("HEX");
+      const locationHash = stringToVariable('' + position.latitude + position.longitude);
       firebase.database().ref(`location_cache/${locationHash}`).once('value', snapshot => {
             const cacheExists = snapshot.val() !== null;
             if (cacheExists) {
@@ -296,27 +303,15 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
           });
         if(connectStatus && otherUserLikesYouToo) {
           successfullyConnected(dispatch, buddy, currentUser);
-        } else {
-          dispatch({type: DONE_CHECKING_CONNECTION_STATUS, payload: currentUser.seenConnectionHelper});
-          if(!currentUser.seenConnectionHelper)
+        } else if(!currentUser.seenConnectionHelper) {
+            Actions.connectionHelper();
             firebase.database().ref(`user_profiles/${currentUser.uid}/seenConnectionHelper`)
               .set(true);
+            dispatch({ type: SEEN_CONNECTION_HELPER });
         }
+        dispatch({ type: KEEP_BROWSING });
       });
-      dispatch({ type: KEEP_BROWSING });
-/*    dispatch({ type: KEEP_BROWSING });
-    let numTimesConnected = 1;
-    if(currentUser.numTimesConnected)
-      numTimesConnected = currentUser.numTimesConnected + 1;
-    firebase.database().ref(`user_profiles/${currentUser.uid}/numTimesConnected`)
-      .set(numTimesConnected);
-      */
   };
-};
-
-export const connectionHelperSeen = () => {
-  console.log("In connectionHelperSeen");
-  return ({type: KEEP_BROWSING});
 };
 
 const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude) {
