@@ -37,6 +37,7 @@ export const CONNECT_WITH_USER = 'connect_with_user';
 export const CONNECTION_SUCCESSFUL = 'connection_successful';
 export const SET_NEW_NOTIFICATION = 'set_new_notification';
 export const SEEN_CONNECTION_HELPER = 'seen_connection_helper';
+export const KEEP_BROWSING = 'keep_browsing';
 export const CLOSE_CONVERSATION = 'close_conversation';
 export const NEW_MESSAGE = 'new_message';
 export const LOAD_EARLIER = 'load_earlier';

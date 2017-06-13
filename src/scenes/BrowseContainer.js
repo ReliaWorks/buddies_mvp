@@ -38,8 +38,8 @@ class BrowseContainer extends Component {
 
   componentDidMount() {
     console.log("In BrowseContainer componentDidMount");
-//    if(this.swiper)
-//      this.swiper.scrollBy(this.props.connection.currentIndex);
+    if(this.swiper)
+      this.swiper.scrollBy(this.props.connection.currentIndex);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -50,6 +50,8 @@ class BrowseContainer extends Component {
     if(this.props.connection.loadingCurrentUser !== nextProps.connection.loadingCurrentUser)
       return true;
     if(this.props.connection.listeningForNotifications !== nextProps.connection.listeningForNotifications)
+      return true;
+    if(this.props.connection.loadingConnectionHelper !== nextProps.connection.loadingConnectionHelper)
       return true;
     return false;
   }
@@ -63,7 +65,7 @@ class BrowseContainer extends Component {
   }
 
   swipe() {
-    if(loadingConnectionHelper) return;
+    if(this.props.connection.loadingConnectionHelper) return;
     const targetIndex = this.swiper.state.index;
     if(this.props.connection.currentIndex === this.swiper.state.total - 1) {
       this.setState({viewedAllPotentials: true});
