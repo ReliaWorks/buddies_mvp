@@ -8,11 +8,10 @@ import {
   CURRENT_USER_FETCH_START,
   CURRENT_USER_FETCH_SUCCESS,
   CURRENT_CHAT_FETCH,
-  DONE_CHECKING_CONNECTION_STATUS,
-  KEEP_BROWSING,
   LOCATION_MAP_STORAGE_KEY,
   POTENTIALS_FETCH,
   POTENTIALS_FETCH_SUCCESS,
+  SEEN_CONNECTION_HELPER,
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
   API_SECRET_KEY,
@@ -303,27 +302,15 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
           });
         if(connectStatus && otherUserLikesYouToo) {
           successfullyConnected(dispatch, buddy, currentUser);
-        } else {
-          dispatch({type: DONE_CHECKING_CONNECTION_STATUS, payload: currentUser.seenConnectionHelper});
-          if(!currentUser.seenConnectionHelper)
+        } else if(!currentUser.seenConnectionHelper) {
+            Actions.connectionHelper();
             firebase.database().ref(`user_profiles/${currentUser.uid}/seenConnectionHelper`)
               .set(true);
+            dispatch({ type: SEEN_CONNECTION_HELPER });
         }
+        dispatch({ type: KEEP_BROWSING });
       });
-      dispatch({ type: KEEP_BROWSING });
-/*    dispatch({ type: KEEP_BROWSING });
-    let numTimesConnected = 1;
-    if(currentUser.numTimesConnected)
-      numTimesConnected = currentUser.numTimesConnected + 1;
-    firebase.database().ref(`user_profiles/${currentUser.uid}/numTimesConnected`)
-      .set(numTimesConnected);
-      */
   };
-};
-
-export const connectionHelperSeen = () => {
-  console.log("In connectionHelperSeen");
-  return ({type: KEEP_BROWSING});
 };
 
 const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude) {

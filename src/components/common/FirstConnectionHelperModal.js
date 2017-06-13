@@ -23,7 +23,7 @@ class FirstConnectionHelperModal extends Component {
           }}
         >
           <View style={styles.container}>
-            <Image source={MSG_CENTER_NOT_ICON} style={{height: 80, width: 80 }} />
+            <Image source={MSG_CENTER_NOT_ICON} style={{height: 81, width: 93 }} />
             <View style={{margin: 30}}>
               <Text style={styles.textStyle}>Nice find, you will be notified when they connect with you too!</Text>
             </View>
