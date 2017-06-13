@@ -14,7 +14,6 @@ import {
 export const updateConversationNotifications = (conversationId, uid, otherUserId) => {
   const fb = firebase.database();
   return (dispatch) => {
-    console.log('updateConversationNotifications, uid:', uid, ' conversationId: ', conversationId, ' otherUserId: ', otherUserId);
     fb.ref(`/notifications/conversations/${conversationId}/seen/${uid}`).set(true);
     fb.ref(`/message_center/${uid}/${otherUserId}/seen/`).set(true);
   };
@@ -22,7 +21,6 @@ export const updateConversationNotifications = (conversationId, uid, otherUserId
 
 export const updateMessageCenterNotification = (uid) => {
   return (dispatch) => {
-    console.log('updateMessageCenterNotification: uid', uid);
     firebase.database().ref(`/notifications/new/${uid}`).set(false);
   };
 };
@@ -32,7 +30,6 @@ let currentChatFetchOff = function () {};
 export const fetchConversation = (connection, currentUser) => {
   return (dispatch) => {
     getConversationId(connection.selectedConversationId, currentUser.uid, connection.selectedMatchId).then(conversationId => {
-      console.log('fetchConversation conversationId: ', conversationId);
       firebase.database().ref(`/conversations/${conversationId}`).limitToLast(MESSAGE_COUNT_FOR_EACH_LOAD)
         .once('value', snap => {
           const messagesReversed = _.map(snap.val()).reverse();
@@ -71,7 +68,6 @@ export const fetchConversation = (connection, currentUser) => {
 export const loadEarlier = (loadBefore, connection, currentUser) => {
   return (dispatch) => {
     getConversationId(connection.selectedConversationId, currentUser.uid, connection.selectedMatchId).then(conversationId => {
-      console.log('load earlier: ', conversationId);
       firebase.database().ref(`/conversations/${conversationId}`).orderByChild('createdAt').endAt(loadBefore - 1)
         .limitToLast(MESSAGE_COUNT_FOR_EACH_LOAD)
         .once('value', snap => {
@@ -109,10 +105,20 @@ export const selectChat = (uid, name, avatar, conversationId) => {
   });
 };
 
-export const saveMessage = (msg, currentUser, otherUser, chatIdParam, messages) => {
-  const firstName = currentUser.firstName;
-
+export const saveMessage = (msg, currentUser, otherUser, chatIdParam, messages, messageCenter) => {
   return (dispatch) => {
+    const isOtherUserDeactive = [
+      ...messageCenter.matchesWithChat,
+      ...messageCenter.matchesWithoutChat
+    ].filter(m => m.otherUserId === otherUser.selectedMatchId)
+    .length === 0;
+
+    if (isOtherUserDeactive) {
+      return;
+    }
+
+    const firstName = currentUser.firstName;
+
     getConversationId(chatIdParam, currentUser.uid, otherUser.selectedMatchId).then(chatId => {
       let profileImage = DEFAULT_PROFILE_PHOTO;
       if(currentUser.profileImages && currentUser.profileImages.length > 0)

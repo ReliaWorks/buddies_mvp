@@ -144,7 +144,6 @@ const toggleUserStatus = (uid, status) => {
     });
 
     updates[`user_profiles/${uid}/status`] = status;
-    console.log('toggleUserStatus, status: ', status, ' updates: ', updates);
 
     return firebase.database().ref().update(updates);
   });
