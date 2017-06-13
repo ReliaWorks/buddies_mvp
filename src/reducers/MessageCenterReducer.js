@@ -16,6 +16,7 @@ const INITIAL_STATE = {
 export default(state = INITIAL_STATE, action) => {
   switch(action.type) {
     case MATCHES_FETCH: {
+      //const matches = _.filter(action.payload, match => match.status !== 'INACTIVE');
       const matches = action.payload;
 
       const keys = Object.keys(matches);
@@ -24,14 +25,17 @@ export default(state = INITIAL_STATE, action) => {
         return {...match, otherUserId: keys[i++]};
       });
 
-      const matchesWithoutChat = _.filter(matchesWithIds, (match) => {
-        return(match.status === 'ACTIVE');
+      const activeMatches = _.filter(matchesWithIds, match => match.status !== 'INACTIVE');
+
+      const matchesWithoutChat = _.filter(activeMatches, (match) => {
+        //return(match.status === 'ACTIVE');
+        return(!match.text);
       });
       const sortedMatchesWithoutChat = _.sortBy(matchesWithoutChat, (match) => {
         return match.matchedDate;
       });
-      const matchesWithChat = _.filter(matchesWithIds, (match) => {
-        return (!match.status);
+      const matchesWithChat = _.filter(activeMatches, (match) => {
+        return (match.text);
       });
       const sortedMatchesWithChat = _.sortBy(matchesWithChat, (match) => {
         return match.createdAt;

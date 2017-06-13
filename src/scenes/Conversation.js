@@ -14,7 +14,6 @@ class Conversation extends Component {
   }
 
   componentWillMount() {
-    //this.props.fetchConversation(this.props.connection.selectedMatchId);
     this.props.fetchConversation(this.props.connection, this.props.currentUser);
   }
 
@@ -24,7 +23,7 @@ class Conversation extends Component {
   }
 
   onSend(messages = []) {
-    this.props.saveMessage(messages[0], this.props.currentUser, this.props.connection, this.props.chat.chatId, messages);
+    this.props.saveMessage(messages[0], this.props.currentUser, this.props.connection, this.props.chat.chatId, messages, this.props.messageCenter);
   }
 
   renderFooter() {
@@ -139,8 +138,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ currentUser, connection, chat }) => {
-  return { currentUser, connection, chat };
+const mapStateToProps = ({ currentUser, connection, chat, messageCenter }) => {
+  return { currentUser, connection, chat, messageCenter };
 };
 
 export default connect(mapStateToProps, { updateConversationNotifications, fetchConversation, saveMessage, closeConversation, loadEarlier })(Conversation);

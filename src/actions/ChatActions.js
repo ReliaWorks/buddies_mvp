@@ -105,10 +105,20 @@ export const selectChat = (uid, name, avatar, conversationId) => {
   });
 };
 
-export const saveMessage = (msg, currentUser, otherUser, chatIdParam, messages) => {
-  const firstName = currentUser.firstName;
-
+export const saveMessage = (msg, currentUser, otherUser, chatIdParam, messages, messageCenter) => {
   return (dispatch) => {
+    const isOtherUserDeactive = [
+      ...messageCenter.matchesWithChat,
+      ...messageCenter.matchesWithoutChat
+    ].filter(m => m.otherUserId === otherUser.selectedMatchId)
+    .length === 0;
+
+    if (isOtherUserDeactive) {
+      return;
+    }
+
+    const firstName = currentUser.firstName;
+
     getConversationId(chatIdParam, currentUser.uid, otherUser.selectedMatchId).then(chatId => {
       let profileImage = DEFAULT_PROFILE_PHOTO;
       if(currentUser.profileImages && currentUser.profileImages.length > 0)
@@ -139,7 +149,8 @@ export const saveMessage = (msg, currentUser, otherUser, chatIdParam, messages) 
           otherUserName: otherUser.selectedMatchName,
           otherUserPic: otherUser.selectedMatchPic,
           conversationId: chatId,
-          seen: true
+          seen: true,
+          status: 'ACTIVE'
         })
         .then(() => {
           console.log("Wrote to firebase message_center");
@@ -153,7 +164,8 @@ export const saveMessage = (msg, currentUser, otherUser, chatIdParam, messages) 
           otherUserId: currentUser.uid,
           otherUserPic: profileImage,
           conversationId: chatId,
-          seen: false
+          seen: false,
+          status: 'ACTIVE'
         })
         .then(() => {
           console.log("Wrote to firebase message_center");

@@ -108,6 +108,17 @@ class Settings extends Component {
     );
   }
 
+  renderDeactivateButton() {
+    return (
+      <Button
+        onPress={this.props.onDeactivate}
+        style={localStyles}
+      >
+        Deactivate
+      </Button>
+    );
+  }
+
   render() {
     return (
       <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: '#F8F8F8'}}>
@@ -116,6 +127,7 @@ class Settings extends Component {
         {this.renderFeedbackButton()}
         {this.renderLinks()}
         {this.renderLogoutButton()}
+        {this.renderDeactivateButton()}
       </View>
     );
   }
