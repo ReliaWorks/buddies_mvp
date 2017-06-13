@@ -14,7 +14,7 @@ import {
   CONNECTION_SUCCESSFUL,
   CURRENT_USER_FETCH_SUCCESS,
   DESCRIPTION_SAVED,
-  KEEP_BROWSING,
+  SEEN_CONNECTION_HELPER,
   SET_CURRENT_LOCATION,
   SET_CURRENT_GEOLOCATION,
   PHOTOS_SAVED,
@@ -53,16 +53,8 @@ const INITIAL_STATE = {
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case KEEP_BROWSING: {
-      console.log("In ProfileReducer KEEP_BROWSING");
+    case SEEN_CONNECTION_HELPER:
       return { ...state, seenConnectionHelper: true };
-    }
-//    case CONNECTION_SUCCESSFUL: {
-//      return { ...state, numTimesMatched: state.numTimesMatched + 1 };
-//    }
-//    case KEEP_BROWSING: {
-//      return { ...state, numTimesConnected: state.numTimesConnected + 1, seenConnectionHelper: true };
-//    }
     case ALREADY_AUTHENTICATED: {
       return { ...state, uid: action.payload.uid };
     }
