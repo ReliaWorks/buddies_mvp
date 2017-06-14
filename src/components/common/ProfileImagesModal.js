@@ -39,6 +39,7 @@ const ProfileImagesModal = ({ profileImages, onClose, visible, initialIndex}) =>
       <View style={{backgroundColor: 'black', flex: 1}}>
         {renderCloseIcon(onClose)}
         <Swiper
+          loadMinimal
           contentContainerStyle={{
             flex: 1,
             alignItems: 'stretch'
