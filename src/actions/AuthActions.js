@@ -77,18 +77,17 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
 
 export const checkIfAlreadyLoggedIn = () => {
   return(dispatch) => {
-      //debugger;
-      wasThereAnAppUpdate()
-          .then(() => {
-              AsyncStorage.clear(() => {
-                  AsyncStorage.setItem('CURRENT_APP_VERSION', CURRENT_APP_VERSION, () => {
-                      checkIfAlreadyLoggedInInner(dispatch);
-                  });
-              });
-          })
-          .catch(() => {
-              checkIfAlreadyLoggedInInner(dispatch);
+    wasThereAnAppUpdate()
+      .then(() => {
+        AsyncStorage.clear(() => {
+          AsyncStorage.setItem('CURRENT_APP_VERSION', CURRENT_APP_VERSION, () => {
+            checkIfAlreadyLoggedInInner(dispatch);
           });
+        });
+      })
+      .catch(() => {
+        checkIfAlreadyLoggedInInner(dispatch);
+      });
   };
 };
 /**
@@ -96,18 +95,16 @@ export const checkIfAlreadyLoggedIn = () => {
  */
 const wasThereAnAppUpdate = () => {
   const promise = new Promise((resolve, reject) => {
-      AsyncStorage.getItem('CURRENT_APP_VERSION')
-          .then((result) => {
-              const value = result || null;
-              if (result !== CURRENT_APP_VERSION) {
-                resolve();
-              }else{
-                reject();
-              }
-          })
-          .catch(() => {
-              reject();
-          });
+    AsyncStorage.getItem('CURRENT_APP_VERSION')
+      .then((result) => {
+        const value = result || null;
+        if (result !== CURRENT_APP_VERSION) {
+          resolve();
+        } else reject();
+      })
+      .catch(() => {
+        reject();
+      });
   });
 
   return promise;
