@@ -75,6 +75,8 @@ export const photoRemoved = (photo, isPrimary) => {
       .then(() => {
         dispatch({ type: PHOTO_REMOVED, payload: photo });
 
+        firebase.storage().refFromURL(photo.url).delete();
+
         if (isPrimary) {
           updatePrimaryPicReferences();
         }

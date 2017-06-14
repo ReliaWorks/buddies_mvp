@@ -26,7 +26,6 @@ class PhotoEdit extends Component {
   }
   getSelectedImages(images, from) {
     if (this.props.profileImages.length === 0) {
-      console.log('primary değişti');
       this.props.onImagesSelected(images, true, from);
     } else {
       this.props.onImagesSelected(images, false, from);
@@ -42,6 +41,15 @@ class PhotoEdit extends Component {
     if(profileImages.length > 1) {
       otherImages = profileImages.slice(1, MAX_NUM_PHOTOS - 2);
     }
+
+    const addIcon = this.props.profileImages.length < 7
+      ? (
+        <AddIcon
+          onPress={() => this.setState({modalVisible: true})}
+          styles={{addActivityIcon: localStyles.camera}}
+        />
+      )
+      : null;
 
     return (
       <View style={{flex: 0.75}}>
@@ -69,10 +77,8 @@ class PhotoEdit extends Component {
                 />
               );
             })}
-            <AddIcon
-              onPress={() => this.setState({modalVisible: true})}
-              styles={{addActivityIcon: localStyles.camera}}
-            />
+
+            {addIcon}
 
             <AddPhotosModal
               visible={this.state.modalVisible}
