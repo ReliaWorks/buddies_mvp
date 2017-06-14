@@ -15,7 +15,6 @@ export const matchesFetch = () => {
       .orderByChild('status')
       .equalTo('ACTIVE')
       .on('value', snapshot => {
-        console.log('matches:', snapshot.val());
         if(!snapshot.val())
           dispatch({ type: MATCHES_FETCH_FAIL});
         else dispatch({ type: MATCHES_FETCH, payload: snapshot.val()});

@@ -13,7 +13,6 @@ class MessageCenterContainer extends Component {
   }
 
   componentWillUnmount() {
-    console.log('message center index.js componentWillUnmount this.props.uid: ', this.props.uid);
     this.props.updateMessageCenterNotification(this.props.uid);
   }
 

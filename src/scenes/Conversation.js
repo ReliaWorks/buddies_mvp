@@ -3,14 +3,20 @@ import { connect } from 'react-redux';
 import { Image, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { GiftedChat } from 'react-native-gifted-chat';
+import ConnectionOptionsModal from './conversation/ConnectionOptionsModal';
 import { backIconButton, moreIconButton } from '../icons';
-import { fetchConversation, updateConversationNotifications, saveMessage, closeConversation, loadEarlier } from '../actions';
+import { fetchConversation, updateConversationNotifications, saveMessage, closeConversation, loadEarlier, unMatchWithUser } from '../actions';
 import { DEFAULT_PROFILE_PHOTO } from '../constants';
 
 class Conversation extends Component {
   constructor(props) {
     super(props);
     this.onSend = this.onSend.bind(this);
+    this.state = {
+      connectionOptionsModal: {
+        visible: false
+      }
+    };
   }
 
   componentWillMount() {
@@ -18,7 +24,9 @@ class Conversation extends Component {
   }
 
   componentWillUnmount() {
-    this.props.updateConversationNotifications(this.props.chat.chatId, this.props.currentUser.uid, this.props.connection.selectedMatchId);
+    this.props.updateConversationNotifications(
+      this.props.chat.chatId, this.props.currentUser.uid, this.props.connection.selectedMatchId, this.props.messageCenter
+    );
     this.props.closeConversation(this.props.chat.chatId);
   }
 
@@ -82,7 +90,7 @@ class Conversation extends Component {
       >
         {backIconButton()}
         {this.renderChatPartnerHeader()}
-        {moreIconButton()}
+        {moreIconButton(this.openConnectionOptionsModal.bind(this))}
       </View>
     );
   }
@@ -91,6 +99,22 @@ class Conversation extends Component {
     const {messages} = this.props.chat;
     const loadBefore = messages.length > 0 ? messages[messages.length - 1].createdAt : 0;
     this.props.loadEarlier(loadBefore, this.props.connection, this.props.currentUser);
+  }
+
+  openConnectionOptionsModal() {
+    this.setState({
+      connectionOptionsModal: {visible: true}
+    });
+  }
+
+  closeConnectionOptionsModal() {
+    this.setState({
+      connectionOptionsModal: {visible: false}
+    });
+  }
+
+  unMatch() {
+    this.props.unMatchWithUser(this.props.connection.selectedMatchId);
   }
 
   render() {
@@ -113,6 +137,12 @@ class Conversation extends Component {
             avatar: profileImage,
           }}
           renderFooter={this.renderFooter.bind(this)}
+        />
+        <ConnectionOptionsModal
+          visible={this.state.connectionOptionsModal.visible}
+          connectionName={this.props.connection.selectedMatchName}
+          onUnMatch={this.unMatch.bind(this)}
+          onClose={this.closeConnectionOptionsModal.bind(this)}
         />
       </View>
     );
@@ -142,4 +172,4 @@ const mapStateToProps = ({ currentUser, connection, chat, messageCenter }) => {
   return { currentUser, connection, chat, messageCenter };
 };
 
-export default connect(mapStateToProps, { updateConversationNotifications, fetchConversation, saveMessage, closeConversation, loadEarlier })(Conversation);
+export default connect(mapStateToProps, { updateConversationNotifications, fetchConversation, saveMessage, closeConversation, loadEarlier, unMatchWithUser })(Conversation);
