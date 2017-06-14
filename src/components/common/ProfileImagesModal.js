@@ -75,11 +75,11 @@ const ProfileImagesModal = ({ profileImages, onClose, visible, initialIndex}) =>
         >
           { profileImages.map((img) => {
             return (
-              <Image
-                key={img.key}
-                source={{ uri: img.url}}
-                style={styles.fullScreenImg}
-              />
+                <Image
+                  key={img.key}
+                  source={{ uri: img.url}}
+                  style={styles.fullScreenImg}
+                />
             );
           })}
         </Swiper>
