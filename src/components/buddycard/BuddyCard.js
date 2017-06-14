@@ -144,9 +144,10 @@ class BuddyCard extends Component {
   expandDescription() {
     console.log(`In expandDescription and scrollDirection = ${this.state.scrollDirection}`);
     LayoutAnimation.easeInEaseOut();
-    if(this.state.scrollDirection === 'up')
-      this.setState({descriptionExpanded});
-    else this.setState({descriptionExpanded: false});
+//    if(this.state.scrollDirection === 'up')
+//      this.setState({descriptionExpanded});
+//    else this.setState({descriptionExpanded: false});
+    this.setState({descriptionExpanded: !this.state.descriptionExpanded});
   }
 
   descContainerStyle() {
@@ -174,13 +175,16 @@ class BuddyCard extends Component {
   onInfoScroll(event) {
     const currentOffset = event.nativeEvent.contentOffset.y;
     LayoutAnimation.easeInEaseOut();
-    if(currentOffset > (this.offset + 10)) {
+    if(currentOffset > (this.offset)) {
       this.setState({descriptionExpanded: true});
-    } else if(currentOffset < (this.offset - 10)) {
+    } else if(currentOffset < (this.offset)) {
       this.setState({descriptionExpanded: false});
     }
     this.offset = currentOffset;
   }
+
+//  onScroll={this.onInfoScroll.bind(this)}
+//  scrollEventThrottle={1}>
 
   render() {
     const { firstName, age, editable, imageLoaded, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
@@ -202,8 +206,8 @@ class BuddyCard extends Component {
           />
 
           <View style={this.descContainerStyle()}>
-            <ScrollView onScroll={this.onInfoScroll.bind(this)} scrollEventThrottle={16}>
-              <TouchableWithoutFeedback>
+            <ScrollView>
+              <TouchableWithoutFeedback onPress={this.expandDescription.bind(this)}>
               <View>
                <View style={{flexDirection: 'row'}}>
                   <Text style={nameText}>
