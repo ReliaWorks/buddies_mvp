@@ -15,65 +15,105 @@ import {
   PROFILE_INFO,
   PICTURE_SAVED,
 } from './types';
+import { CURRENT_APP_VERSION } from '../constants';
 
-export const checkIfAlreadyLoggedIn = () => {
-  return(dispatch) => {
+
+const checkIfAlreadyLoggedInInner = (dispatch) => {
     let token;
     let uid;
 
     firebase.auth().onAuthStateChanged(user => {
-      if(user) {
-        FCM.requestPermissions(); // for iOS
-        FCM.getFCMToken().then(notificationToken => {
-          const updates = {};
-          updates['/user_profiles/' + user.uid + '/notificationToken'] = notificationToken;
+        if(user) {
+            FCM.requestPermissions(); // for iOS
+            FCM.getFCMToken().then(notificationToken => {
+                const updates = {};
+                updates['/user_profiles/' + user.uid + '/notificationToken'] = notificationToken;
 
-          firebase.database().ref().update(updates);
-        });
+                firebase.database().ref().update(updates);
+            });
 
-        dispatch({
-          type: ALREADY_AUTHENTICATED,
-          payload: {
-            token: user.refreshToken,
-            uid: user.uid
-          }
-        });
-      } else {
-        console.log(`User is not logged in`);
-        return;
-      }
-    });
-    AsyncStorage.multiGet(['token', 'uid'])
-      .then((data) => {
-        if(data[0][1]) {
-          token = data[0][1];
-          uid = data[1][1];
-          const provider = firebase.auth.FacebookAuthProvider;
-          const cred = provider.credential(token);
-          firebase.auth().signInWithCredential(cred)
-            .then((fireData) => {
-              dispatch({
+            dispatch({
                 type: ALREADY_AUTHENTICATED,
                 payload: {
-                  token,
-                  uid
+                    token: user.refreshToken,
+                    uid: user.uid
                 }
-              });
-              Actions.main();
-            })
-            .catch((error) => {
-              console.log(`Error logging in previously authenticated user. Error = ${error.code}: ${error.message}`);
-              dispatch({ type: LOGOUT_USER });
             });
+        } else {
+            console.log(`User is not logged in`);
+            return;
         }
-        dispatch({ type: LOGOUT_USER });
-        Actions.login();
-      })
-      .catch(err => {
-        console.log(`AsyncStorage.multiGet error = ${err}`);
-      });
+    });
+    AsyncStorage.multiGet(['token', 'uid'])
+        .then((data) => {
+            if(data[0][1]) {
+                token = data[0][1];
+                uid = data[1][1];
+                const provider = firebase.auth.FacebookAuthProvider;
+                const cred = provider.credential(token);
+                firebase.auth().signInWithCredential(cred)
+                    .then((fireData) => {
+                        dispatch({
+                            type: ALREADY_AUTHENTICATED,
+                            payload: {
+                                token,
+                                uid
+                            }
+                        });
+                        Actions.main();
+                    })
+                    .catch((error) => {
+                        console.log(`Error logging in previously authenticated user. Error = ${error.code}: ${error.message}`);
+                        dispatch({ type: LOGOUT_USER });
+                    });
+            }
+            dispatch({ type: LOGOUT_USER });
+            Actions.login();
+        })
+        .catch(err => {
+            console.log(`AsyncStorage.multiGet error = ${err}`);
+        });
+};
+
+export const checkIfAlreadyLoggedIn = () => {
+  return(dispatch) => {
+      debugger;
+      wasThereAnAppUpdate()
+          .then(()=>{
+              AsyncStorage.clear(()=>{
+                  AsyncStorage.setItem('CURRENT_APP_VERSION', CURRENT_APP_VERSION, ()=>{
+                      checkIfAlreadyLoggedInInner(dispatch);
+                  });
+              });
+          })
+          .catch(()=>{
+              checkIfAlreadyLoggedInInner(dispatch);
+          });
   };
 };
+/**
+ * Checks if the storage app version matches what it is in CURRENT_APP_VERSION
+ */
+const wasThereAnAppUpdate = () => {
+
+  const promise = new Promise((resolve, reject)=>{
+
+      AsyncStorage.getItem('CURRENT_APP_VERSION')
+          .then((result) => {
+              const value = result || null;
+              if (result !== CURRENT_APP_VERSION){
+                resolve();
+              }else{
+                reject();
+              }
+          })
+          .catch(()=>{
+              reject();
+          });
+  });
+
+  return promise;
+}
 
 const saveTokenToStorage = (token, uid) => {
   AsyncStorage.multiSet([
