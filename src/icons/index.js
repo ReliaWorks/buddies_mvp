@@ -31,10 +31,10 @@ export const backIconButton = () => {
   );
 };
 
-export const moreIconButton = () => {
+export const moreIconButton = (onPress) => {
   return (
     <TouchableOpacity
-      onPress={() => Actions.matches(ActionConst.RESET)}
+      onPress={onPress}
       style={{
         flexDirection: 'row',
         justifyContent: 'flex-end',

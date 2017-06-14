@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import firebase from 'firebase';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import { DEFAULT_PROFILE_PHOTO, MESSAGE_COUNT_FOR_EACH_LOAD } from '../constants';
 import {
   CHAT_SELECTED,
@@ -11,11 +12,13 @@ import {
   LOAD_EARLIER
 } from './types';
 
-export const updateConversationNotifications = (conversationId, uid, otherUserId) => {
+export const updateConversationNotifications = (conversationId, uid, otherUserId, messageCenter) => {
   const fb = firebase.database();
   return (dispatch) => {
-    fb.ref(`/notifications/conversations/${conversationId}/seen/${uid}`).set(true);
-    fb.ref(`/message_center/${uid}/${otherUserId}/seen/`).set(true);
+    if (isOtherUserActive(messageCenter, otherUserId)) {
+      fb.ref(`/notifications/conversations/${conversationId}/seen/${uid}`).set(true);
+      fb.ref(`/message_center/${uid}/${otherUserId}/seen/`).set(true);
+    }
   };
 };
 
@@ -182,6 +185,34 @@ export const closeConversation = (conversationId) => {
       payload: { }
     });
   };
+};
+
+export const unMatchWithUser = (otherUserId) => {
+  return (dispatch) => {
+    const { uid } = firebase.auth().currentUser;
+    getConversationId(null, uid, otherUserId).then(conversationId => {
+      const updates = {};
+
+      updates[`conversations/${conversationId}`] = null;
+      updates[`message_center/${uid}/${otherUserId}`] = null;
+      updates[`message_center/${otherUserId}/${uid}`] = null;
+      updates[`user_matches/${otherUserId}/${uid}/status`] = 'INACTIVE';
+      updates[`user_matches/${uid}/${otherUserId}/status`] = 'INACTIVE';
+      updates[`notifications/conversations/${conversationId}`] = null;
+
+      return firebase.database().ref().update(updates);
+    }).then(() => {
+      Actions.matches(ActionConst.RESET);
+    });
+  };
+};
+
+const isOtherUserActive = (messageCenter, otherUserId) => {
+  return [
+    ...messageCenter.matchesWithChat,
+    ...messageCenter.matchesWithoutChat
+  ].filter(m => m.otherUserId === otherUserId)
+  .length > 0;
 };
 
 const getConversationId = (conversationId, currentUserId, otherUserId) => {

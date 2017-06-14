@@ -150,21 +150,7 @@ export const deactivateUser = () => {
   return (dispatch) => {
     const { uid } = firebase.auth().currentUser;
     toggleUserStatus(uid, 'INACTIVE')
-    // const { uid } = firebase.auth().currentUser;
-    // const updates = {};
-    //
-    // firebase.database().ref(`message_center/${uid}`).once('value')
-    // .then(snap => {
-    //   snap.forEach(connection => {
-    //     updates[`message_center/${connection.key}/${uid}/status`] = 'INACTIVE';
-    //   });
-    //
-    //   updates[`user_profiles/${uid}/status`] = 'INACTIVE';
-    //
-    //   return firebase.database().ref().update(updates);
-    // })
     .then(() => {
-      //console.log('IMPORTANT : account deactivated, but it also need to log out when the user is deactivated !!');
       _logoutUser(dispatch);
     });
   };
