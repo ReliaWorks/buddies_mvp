@@ -102,6 +102,7 @@ class BrowseContainer extends Component {
         }}
         onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)}
         showPagination
+        loadMinimal
       >
         {potentials.map((buddy, key) => {
           let profileImage = {url: DEFAULT_PROFILE_PHOTO, key: null};

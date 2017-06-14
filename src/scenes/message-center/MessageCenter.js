@@ -40,6 +40,7 @@ class MessageCenter extends Component {
       <View style={{flex: 1}}>
         <EmptyNewConnectionList />
         <View style={styles.zeroStateContainer}>
+          <Text style={{...styles.zeroStateText, marginBottom: 10}}>Hey {this.props.firstName},</Text>
           <Text style={styles.zeroStateText}>
             {msg}
           </Text>
@@ -112,7 +113,7 @@ class MessageCenter extends Component {
       );
     } else if(this.props.matchesWithChatDataSource.getRowCount() === 0 &&
        this.props.matchesWithoutChatDataSource.getRowCount() === 0) {
-       return this.renderZeroState("Connect with people to start chatting");
+       return this.renderZeroState("It's lonely in here. Browse and connect with members to get this party started.");
     } else {
       return (
         <View style={{flex: 1, marginBottom: MARGIN}}>
@@ -160,11 +161,11 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignSelf: 'center',
-    padding: MARGIN * 2,
+    padding: MARGIN,
     margin: MARGIN,
   },
   zeroStateText: {
-    textAlign: 'center',
+    textAlign: 'left',
     fontFamily: 'SourceSansPro-SemiBold',
     fontSize: 24,
 //    color: '#00A3B7'
