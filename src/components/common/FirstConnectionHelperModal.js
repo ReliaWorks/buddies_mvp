@@ -11,9 +11,9 @@ class FirstConnectionHelperModal extends Component {
       <Modal
         visible={visible}
         animationType="none"
-        onRequestClose={() => Actions.pop()}
+        onRequestClose={() => Actions.browse()}
       >
-      <TouchableWithoutFeedback onPress={() => Actions.pop()}>
+      <TouchableWithoutFeedback onPress={() => Actions.browse()}>
         <View
           style={{
             flex: 1,
