@@ -210,12 +210,12 @@ export const getCityStateCountry = (currentUser, position, dispatch) => {
       AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
         .then((val) => {
           const value = JSON.parse(val);
-          let location = value[position.latitude + '' + position.longitude];
+          const location = value[position.latitude + '' + position.longitude];
           if (value && location && location.city) {
             dispatch({ type: SET_CURRENT_LOCATION, payload: location });
             setLocation(uid, location);
             resolve(location);
-          } else{
+          } else {
             getCityStateCountryMapAPI(uid, position, dispatch)
               .then((location) => {
                 resolve(location);
@@ -308,8 +308,7 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
             firebase.database().ref(`user_profiles/${currentUser.uid}/seenConnectionHelper`)
               .set(true);
             dispatch({ type: SEEN_CONNECTION_HELPER });
-        }
-        dispatch({ type: KEEP_BROWSING });
+        } else dispatch({ type: KEEP_BROWSING });
       });
   };
 };
@@ -400,8 +399,8 @@ const successfullyConnected = (dispatch, buddy, currentUser) => {
       dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convKey, messages: [], justConnected: true }});
   });
 
+  Actions.connection();
   dispatch({
     type: CONNECTION_SUCCESSFUL
   });
-  Actions.connection();
 };

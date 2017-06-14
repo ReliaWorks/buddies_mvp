@@ -63,7 +63,7 @@ class BuddyCard extends Component {
   <View style={{width: 2}} />
 */
 
-  renderMatchControls(likeable, uid, onConnect, onPass) {
+  renderMatchControls(likeable, uid, onConnect) {
     if(!likeable) return;
     return (
       <View style={localStyles.footer}>
@@ -142,11 +142,7 @@ class BuddyCard extends Component {
   }
 
   expandDescription() {
-    console.log(`In expandDescription and scrollDirection = ${this.state.scrollDirection}`);
     LayoutAnimation.easeInEaseOut();
-//    if(this.state.scrollDirection === 'up')
-//      this.setState({descriptionExpanded});
-//    else this.setState({descriptionExpanded: false});
     this.setState({descriptionExpanded: !this.state.descriptionExpanded});
   }
 
@@ -222,7 +218,7 @@ class BuddyCard extends Component {
                 </View>
               </TouchableWithoutFeedback>
             </ScrollView>
-            {this.renderMatchControls(likeable, uid, this.props.onConnect, this.props.onPass)}
+            {this.renderMatchControls(likeable, uid, this.props.onConnect)}
           </View>
         </View>
       </View>

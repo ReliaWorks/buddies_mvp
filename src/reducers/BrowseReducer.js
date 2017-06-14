@@ -1,6 +1,7 @@
 import {
   BROWSED_TO_NEXT_USER,
   CONNECT_WITH_USER,
+  CONNECTION_SUCCESSFUL,
   KEEP_BROWSING,
   CHAT_SELECTED,
   POTENTIALS_FETCH,
@@ -23,6 +24,7 @@ const INITIAL_STATE = {
   loadingPotentials: false,
   loadingCurrentUser: false,
   loadingConnectionHelper: false,
+  connectingWithUser: false,
   numImagesOnScreen: 0,
   notification: false,
   listeningForNotifications: false,
@@ -30,8 +32,10 @@ const INITIAL_STATE = {
 
 export default(state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CONNECTION_SUCCESSFUL:
+      return { ...state, connectingWithUser: false };
     case KEEP_BROWSING:
-      return { ...state, loadingConnectionHelper: false };
+      return { ...state, loadingConnectionHelper: false, connectingWithUser: false };
     case BROWSED_TO_NEXT_USER: {
       return { ...state, currentIndex: action.payload };
     }
@@ -63,6 +67,7 @@ export default(state = INITIAL_STATE, action) => {
         selectedMatchPic: action.payload.pic,
         browseCursor: action.payload.index,
         loadingConnectionHelper: true,
+        connectingWithUser: true,
       };
     }
     case CHAT_SELECTED: {

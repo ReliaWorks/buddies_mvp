@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, ScrollView, Text, TextInput, View } from 'react-native';
+import { Dimensions, findNodeHandle, ScrollView, Text, TextInput, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ActivitiesEdit from '../../components/profile-edit/ActivitiesEdit';
 import AffiliationsEdit from '../../components/profile-edit/AffiliationsEdit';
@@ -37,6 +37,14 @@ class UserEdit extends Component {
     );
   }
 
+  inputFocused(ref) {
+    this._scroll(ref, 200);
+  }
+
+  inputBlurred(ref) {
+    this._scroll(ref, 0);
+  }
+
   renderDescription() {
     return (
       <View style={{ flex: 1, padding: 10}}>
@@ -45,6 +53,7 @@ class UserEdit extends Component {
         </View>
         <View style={styles.descriptionContainer}>
           <TextInput
+            ref="myInput"
             multiline
             style={styles.descriptionInput}
             onChangeText={text => {
@@ -54,6 +63,8 @@ class UserEdit extends Component {
             onContentSizeChange={(event) => {
               this.setState({height: event.nativeEvent.contentSize.height});
             }}
+            onFocus={this.inputFocused.bind(this, 'myInput')}
+            onBlur={this.inputBlurred.bind(this, 'myInput')}
             placeholder={DESCRIPTION_PLACEHOLDER}
             value={this.state.text}
             testID={'descriptionTextInput'}
@@ -71,11 +82,27 @@ class UserEdit extends Component {
     );
   }
 
+  _scroll(ref, offset) {
+    setTimeout(() => {
+      const scrollResponder = this.refs.myScrollView.getScrollResponder();
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        findNodeHandle(this.refs[ref]),
+        offset,
+        true
+      );
+    });
+  }
+
   render() {
     const { activities, affiliations } = this.props;
 
     return (
-      <ScrollView style={styles.scrollViewContainer} testID={'ScrollView'}>
+      <ScrollView
+        ref="myScrollView"
+        style={styles.scrollViewContainer}
+        keyboardDismissMode='interactive'
+        testID={'ScrollView'}
+      >
         {this.renderActivities(activities)}
         {this.renderAffiliations(affiliations)}
         {this.renderDescription()}
@@ -105,7 +132,8 @@ const saveButtonStyles = {
 
 const styles = {
   scrollViewContainer: {
-    backgroundColor: '#F8F8F8'
+    backgroundColor: '#F8F8F8',
+    flex: 1,
   },
   sectionHeaderText: {
     fontFamily: 'Source Sans Pro',
@@ -127,7 +155,7 @@ const styles = {
     marginLeft: 15,
   },
   descriptionInput: {
-    height: 300,
+    height: 200,
     fontSize: 18,
     fontFamily: 'Source Sans Pro',
     marginLeft: 10,
