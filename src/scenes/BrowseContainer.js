@@ -14,8 +14,6 @@ class BrowseContainer extends Component {
   constructor(props) {
     super(props);
 
-    console.log("In BrowseContainer constructor");
-
     this.state = {
       viewedAllPotentials: false,
       numPotentials: 0,
@@ -65,7 +63,7 @@ class BrowseContainer extends Component {
   }
 
   swipe() {
-    if(this.props.connection.loadingConnectionHelper) return;
+    console.log(`In swipe() and loadingConnectionHelper = ${this.props.connection.loadingConnectionHelper}`);
     const targetIndex = this.swiper.state.index;
     if(this.props.connection.currentIndex === this.swiper.state.total - 1) {
       this.setState({viewedAllPotentials: true});
@@ -93,7 +91,7 @@ class BrowseContainer extends Component {
 //      this.swiper.scrollBy(nextProps.connection.currentIndex);
 //  }
   renderMatches() {
-    const { potentials, numTimesConnected, numTimesMatched, doneCheckingConnectionStatus, seenConnectionHelper } = this.props.connection;
+    const { potentials, numTimesConnected, numTimesMatched, seenConnectionHelper } = this.props.connection;
 
     if(this.props.connection.loadingCurrentUser) return <Spinner size="large" />;
     else if(!potentials || potentials.length === 0) {
@@ -116,7 +114,7 @@ class BrowseContainer extends Component {
           if(key === 0) {
             imageLoadedCallback = this.props.imageLoaded;
           }
-//          console.log(`Buddy name = ${buddy.first_name}`);
+          console.log(`Buddy name = ${buddy.first_name}`);
           return (
             <View key={key} style={styles.cardStyle}>
               <BuddyCard
@@ -133,18 +131,20 @@ class BrowseContainer extends Component {
                   uid: buddy.uid,
                   madeFirstConnection: this.props.currentUser.madeFirstConnection,
                   imageLoaded: imageLoadedCallback,
-                  doneCheckingConnectionStatus,
                   seenConnectionHelper,
                   numTimesConnected,
                   numTimesMatched,
                 }}
                 onConnect={() => {
-                  this.props.connectWithUser(this.props.currentUser, {uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, true);
-                  this.swipe();
-                }}
-                onPass={() => {
-                  this.props.connectWithUser(this.props.currentUser, {uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, false);
-                  this.swipe();
+                  console.log("Creating promise");
+                  Promise.resolve(this.props.connectWithUser(this.props.currentUser, {uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, true))
+                    .then((response) => {
+                      console.log("Swiping");
+                      this.swipe();
+                    })
+                    .catch((error) => {
+                      console.log("Erroring");
+                    });
                 }}
               />
             </View>
