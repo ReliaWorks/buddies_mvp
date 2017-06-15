@@ -85,6 +85,7 @@ class ProfileImages extends Component {
     return (
       <View style={profileImageContainer}>
         <Swiper
+          loadMinimal
           horizontal={false}
           onMomentumScrollEnd={(e, state) => {
             this.setState({currentImageIndexOnSwiper: state.index});

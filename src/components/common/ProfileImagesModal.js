@@ -39,6 +39,7 @@ const ProfileImagesModal = ({ profileImages, onClose, visible, initialIndex}) =>
       <View style={{backgroundColor: 'black', flex: 1}}>
         {renderCloseIcon(onClose)}
         <Swiper
+          loadMinimal
           contentContainerStyle={{
             flex: 1,
             alignItems: 'stretch'
@@ -75,11 +76,11 @@ const ProfileImagesModal = ({ profileImages, onClose, visible, initialIndex}) =>
         >
           { profileImages.map((img) => {
             return (
-              <Image
-                key={img.key}
-                source={{ uri: img.url}}
-                style={styles.fullScreenImg}
-              />
+                <Image
+                  key={img.key}
+                  source={{ uri: img.url}}
+                  style={styles.fullScreenImg}
+                />
             );
           })}
         </Swiper>

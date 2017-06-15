@@ -22,7 +22,6 @@ class BrowseContainer extends Component {
   }
 
   componentWillMount() {
-    console.log("In BrowseContainer componentWillMount");
     if (this.props.currentUser.firstName === '') {
       this.props.currentUserFetch();
     }
@@ -35,7 +34,6 @@ class BrowseContainer extends Component {
   }
 
   componentDidMount() {
-    console.log("In BrowseContainer componentDidMount");
     if(this.swiper)
       this.swiper.scrollBy(this.props.connection.currentIndex);
   }
@@ -63,7 +61,6 @@ class BrowseContainer extends Component {
   }
 
   swipe() {
-    console.log(`In swipe() and loadingConnectionHelper = ${this.props.connection.loadingConnectionHelper}`);
     const targetIndex = this.swiper.state.index;
     if(this.props.connection.currentIndex === this.swiper.state.total - 1) {
       this.setState({viewedAllPotentials: true});
@@ -105,6 +102,7 @@ class BrowseContainer extends Component {
         }}
         onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)}
         showPagination
+        loadMinimal
       >
         {potentials.map((buddy, key) => {
           let profileImage = {url: DEFAULT_PROFILE_PHOTO, key: null};
@@ -136,14 +134,12 @@ class BrowseContainer extends Component {
                   numTimesMatched,
                 }}
                 onConnect={() => {
-                  console.log("Creating promise");
                   Promise.resolve(this.props.connectWithUser(this.props.currentUser, {uid: buddy.uid, name: buddy.first_name, pic: profileImage, index: key}, true))
                     .then((response) => {
-                      console.log("Swiping");
                       this.swipe();
                     })
                     .catch((error) => {
-                      console.log("Erroring");
+                      console.log("In BrowseContainer. connectWithUser returned an error");
                     });
                 }}
               />
