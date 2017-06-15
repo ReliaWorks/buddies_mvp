@@ -14,6 +14,8 @@ import {
   LOGOUT_USER,
   PROFILE_INFO,
   PICTURE_SAVED,
+  LOGIN_USER_REQUESTED,
+  LOGIN_USER_CANCELLED
 } from './types';
 import { CURRENT_APP_VERSION } from '../constants';
 
@@ -24,6 +26,8 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
 
     firebase.auth().onAuthStateChanged(user => {
         if(user) {
+            //Actions.main();
+
             FCM.requestPermissions(); // for iOS
             FCM.getFCMToken().then(notificationToken => {
                 const updates = {};
@@ -41,7 +45,8 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
             });
         } else {
             console.log(`User is not logged in`);
-            return;
+            //return;
+            Actions.login();
         }
     });
     AsyncStorage.multiGet(['token', 'uid'])
@@ -68,7 +73,7 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
                     });
             }
             dispatch({ type: LOGOUT_USER });
-            Actions.login();
+            //Actions.login();
         })
         .catch(err => {
             console.log(`AsyncStorage.multiGet error = ${err}`);
@@ -122,11 +127,13 @@ export const loginUser = () => {
     const auth = firebase.auth();
     const provider = firebase.auth.FacebookAuthProvider;
 
+    dispatch({ type: LOGIN_USER_REQUESTED });
+
     LoginManager.logOut();
     LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends', 'user_photos'])
       .then((result) => {
         if (result.isCancelled) {
-          console.log('Login cancelled');
+          dispatch({ type: LOGIN_USER_CANCELLED });
         } else {
           AccessToken.getCurrentAccessToken()
             .then(accessTokenData => {
@@ -135,6 +142,7 @@ export const loginUser = () => {
         }
       }, (error) => {
         console.log(`In AuthActions loginUser. Error = ${error}`);
+        dispatch({ type: LOGIN_USER_CANCELLED });
       }
     );
   };
@@ -233,12 +241,14 @@ function setupUserFirebase(user,ref, accessTokenData, dispatch) {
         profileInfo['/last_name'] = result.last_name || '';
         profileInfo['/email'] = result.email || '';
         profileInfo['/location'] = result.location || '';
+        profileInfo['/status'] = 'ACTIVE';
 
         const profile = {
          first_name: result.first_name || '',
          last_name: result.last_name || '',
          email: result.email || '',
          location: result.location || '',
+         status: 'ACTIVE'
         };
         ref.ref(`/user_profiles/${user.uid}`).update(profileInfo);
         dispatch({
@@ -260,10 +270,14 @@ function checkIfUserExists(user, ref, accessTokenData, dispatch) {
         reactivateAccountIfDeactivated(snapshot.key, snapshot.val().status)
         .then(() => {
           Actions.main();
+          console.log('login öncesi');
+          dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
+          console.log('login hemen sonrası');
         });
       } else {
         setupUserFirebase(user,ref, accessTokenData, dispatch);
         Actions.profileSetup();
+        dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
       }
     });
 }
@@ -300,7 +314,7 @@ const signIntoFirebase = (dispatch, auth, provider, accessTokenData) => {
     .then(credData => {
       saveTokenToStorage(accessTokenData.accessToken, credData.uid);
       checkIfUserExists(credData, firebase.database(), accessTokenData, dispatch);
-      dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
+      //dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
     }).catch(err => {
       alert("Unable to log in. Try again later.");
       console.log(`Error signing into Firebase ${err.code}: ${err.message}`);

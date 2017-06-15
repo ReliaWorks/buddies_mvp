@@ -66,6 +66,7 @@ class LoginForm extends Component {
         <Button
           onPress={this.onButtonPress.bind(this)}
           styles={{buttonStyle: styles.loginButtonContainer, textStyle: styles.fbLoginText }}
+          disabled={this.props.loading}
         >
           Login with Facebook
         </Button>
