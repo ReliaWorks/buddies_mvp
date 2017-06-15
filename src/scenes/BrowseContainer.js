@@ -4,7 +4,7 @@ import { Modal, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
-import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, scrolled, resetCurrentIndex } from '../actions';
+import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, scrolled, selectedUser, resetCurrentIndex } from '../actions';
 import { NoMoreCards, Spinner, GlowLoader } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
@@ -23,10 +23,8 @@ class BrowseContainer extends Component {
 
   componentWillMount() {
     if (this.props.currentUser.firstName === '') {
-      this.props.currentUserFetch();
+        this.props.currentUserFetch();
     }
-    if(this.props.connection.currentIndex === 0 && this.props.connection.potentials.length === 0)
-      this.props.potentialsFetch();
 
     if (!this.props.connection.listeningForNotifications) {
       this.props.checkNotifications();
@@ -128,6 +126,7 @@ class BrowseContainer extends Component {
                   editable: false,
                   uid: buddy.uid,
                   madeFirstConnection: this.props.currentUser.madeFirstConnection,
+                  selectedUser: this.props.selectedUser,
                   imageLoaded: imageLoadedCallback,
                   seenConnectionHelper,
                   numTimesConnected,
@@ -158,6 +157,12 @@ class BrowseContainer extends Component {
   }
 
   render() {
+      if (this.props.currentUser.firstName !== '' && !this.props.connection.loadingPotentials) {
+          if(this.props.connection.currentIndex === 0 && this.props.connection.potentials.length === 0){
+              this.props.potentialsFetch(this.props.currentUser);
+          }
+      }
+
     if(this.props.connection.loadingPotentials || this.props.connection.loadingCurrentUser)
       return <GlowLoader animationRef={this.animationRef} />;
     else return this.renderMatches();
@@ -174,4 +179,4 @@ const mapStateToProps = ({ currentUser, connection }) => {
   return { currentUser, connection };
 };
 
-export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, scrolled, resetCurrentIndex })(BrowseContainer);
+export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, scrolled, selectedUser, resetCurrentIndex })(BrowseContainer);
