@@ -120,6 +120,7 @@ export default(state = INITIAL_STATE, action) => {
         affiliations,
         description,
         email,
+        displayedUser: action.payload.displayedUser,
         uid: action.payload.uid,
         numTimesConnected,
         numTimesMatched,

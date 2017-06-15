@@ -18,6 +18,7 @@ import {
   API_SECRET_KEY,
   SET_NEW_NOTIFICATION,
   BROWSED_TO_NEXT_USER,
+  BROWSED_SELECTED_USER,
   RESET_CURRENT_INDEX,
   IMAGE_LOADED,
 } from './types';
@@ -37,7 +38,15 @@ const stringToVariable = (str) => {
 };
 
 export const scrolled = (index) => {
-  return ({ type: BROWSED_TO_NEXT_USER, payload: index });
+    return ({ type: BROWSED_TO_NEXT_USER, payload: index });
+};
+
+export const selectedUser = (uid) => {
+    return (dispatch) => {
+        const { currentUser } = firebase.auth();
+        firebase.database().ref(`/user_profiles/${currentUser.uid}/displayedUser`).set(uid);
+        dispatch({ type: BROWSED_SELECTED_USER, payload: uid });
+    };
 };
 
 export const resetCurrentIndex = () => {
@@ -54,11 +63,11 @@ export const checkNotifications = () => {
   };
 };
 
-export const potentialsFetch = () => {
-  return (dispatch) => {
-    const { currentUser } = firebase.auth();
-    const potentials = [];
+export const potentialsFetch = (currentUser) => {
 
+  return (dispatch) => {
+
+    if (!currentUser) return;
     const shaObj = new jsSHA("SHA-256", "TEXT");
     shaObj.update(API_SECRET_KEY + currentUser.uid);
     const hash = shaObj.getHash("HEX");
@@ -70,10 +79,23 @@ export const potentialsFetch = () => {
     })
       .then(response => {
         const keys = Object.keys(response.data);
+        const firstArr = [];
+        const restArr = [];
+
         keys.forEach((key) => {
-          //const dataWithId = {...response.data[key], uid: key};
-          potentials.push(response.data[key]);
+          const dataWithId = response.data[key];
+
+          if (dataWithId.uid == currentUser.displayedUser || firstArr.length){
+              firstArr.push(dataWithId);
+          }
+          else{
+              restArr.push(dataWithId);
+          }
+
         });
+
+        const potentials = firstArr.concat(restArr);
+
         dispatch({
           type: POTENTIALS_FETCH_SUCCESS,
           payload: potentials
@@ -285,6 +307,8 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
       type: CONNECT_WITH_USER,
       payload: { uid: buddy.uid, name: buddy.name, pic: buddy.pic.url, index: buddy.index }
     });
+
+    console.log('connectWithUser', buddy.uid);
 
     const matches = firebase.database();
     matches.ref(`user_matches/${buddy.uid}/${currentUser.uid}`)
