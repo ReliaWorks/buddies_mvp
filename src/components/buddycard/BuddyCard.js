@@ -63,6 +63,18 @@ class BuddyCard extends Component {
   <View style={{width: 2}} />
 */
 
+  componentWillMount() {
+
+    const props = this.props || {};
+
+    const value = props.value || {};
+
+    if (value.uid && value.selectedUser){
+        console.log('selectedUser:', value.uid);
+        value.selectedUser(value.uid);
+    }
+  }
+
   renderMatchControls(likeable, uid, onConnect) {
     if(!likeable) return;
     return (
