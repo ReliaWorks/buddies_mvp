@@ -1,6 +1,5 @@
 import {
   BROWSED_TO_NEXT_USER,
-  BROWSED_SELECTED_USER,
   CONNECT_WITH_USER,
   CONNECTION_SUCCESSFUL,
   KEEP_BROWSING,
@@ -40,9 +39,6 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, loadingConnectionHelper: false, connectingWithUser: false };
     case BROWSED_TO_NEXT_USER: {
       return { ...state, currentIndex: action.payload };
-    }
-    case BROWSED_SELECTED_USER: {
-        return { ...state, displayedUser: action.payload };
     }
     case RESET_CURRENT_INDEX:
       return { ...state, currentIndex: 0 };
