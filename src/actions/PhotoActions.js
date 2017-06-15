@@ -71,7 +71,8 @@ export const photoRemoved = (photo, isPrimary) => {
   return (dispatch) => {
     // Make inactive to remove photo.
     firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages/${photo.key}`)
-      .set({status: INACTIVE, url: photo.url})
+      //.set({status: INACTIVE, url: photo.url})
+      .remove()
       .then(() => {
         dispatch({ type: PHOTO_REMOVED, payload: photo });
 
