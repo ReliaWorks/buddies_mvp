@@ -196,7 +196,8 @@ function fetchProfilePhotos(result, dispatch, token) {
         if (error1) {
           console.log('Error fetching data: ' + error1.toString());
         } else {
-          let profilePics = result1.photos.data || [];
+          //let profilePics = result1.photos.data || [];
+          let profilePics = result1.photos ? result1.photos.data || [] : [];
 
           if (profilePics && profilePics.length > 7) profilePics = profilePics.slice(0,7);
 
