@@ -65,13 +65,7 @@ class Settings extends Component {
     return (
       <View style={{justifyContent: 'center', flex: 1}}>
         <Text
-          style={{
-            fontFamily: 'Source Sans Pro',
-            fontWeight: '700',
-            fontSize: 16,
-            textAlign: 'center',
-            textDecorationLine: 'underline'
-          }}
+          style={localStyles.feedbackLinkStyle}
           onPress={this.openFeedbackLink}
         >
           Provide Feedback
@@ -110,12 +104,14 @@ class Settings extends Component {
 
   renderDeactivateButton() {
     return (
-      <Button
+      <View style={{flex: 1, marginTop: 10}}>
+      <Text
         onPress={this.props.onDeactivate}
-        style={localStyles}
+        style={{...localStyles.feedbackLinkStyle, fontSize: 14}}
       >
-        Deactivate
-      </Button>
+        Deactivate Account
+      </Text>
+      </View>
     );
   }
 
@@ -149,6 +145,13 @@ const localStyles = {
     marginLeft: MARGIN,
     marginRight: MARGIN,
     marginBottom: 5,
+  },
+  feedbackLinkStyle: {
+    fontFamily: 'Source Sans Pro',
+    fontWeight: '700',
+    fontSize: 16,
+    textAlign: 'center',
+    textDecorationLine: 'underline'
   }
 };
 
