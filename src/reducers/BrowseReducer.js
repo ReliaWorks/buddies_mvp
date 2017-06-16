@@ -28,6 +28,7 @@ const INITIAL_STATE = {
   numImagesOnScreen: 0,
   notification: false,
   listeningForNotifications: false,
+  displayedUser: null,
 };
 
 export default(state = INITIAL_STATE, action) => {

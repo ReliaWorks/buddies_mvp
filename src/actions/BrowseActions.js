@@ -37,8 +37,9 @@ const stringToVariable = (str) => {
 };
 
 export const scrolled = (index) => {
-  return ({ type: BROWSED_TO_NEXT_USER, payload: index });
+    return ({ type: BROWSED_TO_NEXT_USER, payload: index });
 };
+
 
 export const resetCurrentIndex = () => {
   return ({ type: RESET_CURRENT_INDEX });
@@ -55,9 +56,10 @@ export const checkNotifications = () => {
 };
 
 export const potentialsFetch = () => {
+
   return (dispatch) => {
     const { currentUser } = firebase.auth();
-    const potentials = [];
+      const potentials = [];
 
     const shaObj = new jsSHA("SHA-256", "TEXT");
     shaObj.update(API_SECRET_KEY + currentUser.uid);
@@ -70,10 +72,11 @@ export const potentialsFetch = () => {
     })
       .then(response => {
         const keys = Object.keys(response.data);
+
         keys.forEach((key) => {
-          //const dataWithId = {...response.data[key], uid: key};
-          potentials.push(response.data[key]);
+            potentials.push(response.data[key]);
         });
+
         dispatch({
           type: POTENTIALS_FETCH_SUCCESS,
           payload: potentials
