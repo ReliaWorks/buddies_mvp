@@ -4,7 +4,7 @@ import { Modal, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
-import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, scrolled, resetCurrentIndex } from '../actions';
+import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, recordView, scrolled, resetCurrentIndex } from '../actions';
 import { NoMoreCards, Spinner, GlowLoader } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
@@ -26,7 +26,7 @@ class BrowseContainer extends Component {
         this.props.currentUserFetch();
     }
 
-    if(this.props.connection.currentIndex === 0 && this.props.connection.potentials.length === 0){
+    if(this.props.connection.currentIndex === 0 && this.props.connection.potentials.length === 0) {
         this.props.potentialsFetch(this.props.currentUser);
     }
 
@@ -56,6 +56,9 @@ class BrowseContainer extends Component {
 
   _onMomentumScrollEnd(e, state, context) {
     this.props.scrolled(this.swiper.state.index);
+    console.log(`swiper index = ${this.swiper.state.index}`);
+    const otherUserIndex = (this.swiper.state.index === 0) ? this.swiper.state.total - 1 : this.swiper.state.index - 1;
+    this.props.recordView(this.props.currentUser.uid, this.props.connection.potentials[otherUserIndex].uid);
     if(this.swiper.state.index === 0 && this.state.alreadySeenFirstItem) //this is the last item in the list
       this.props.potentialsFetch(); //what if we get there by scrolling to the left instead of scrolling right ?????
     else if(this.swiper.state.index === 0)
@@ -64,7 +67,7 @@ class BrowseContainer extends Component {
 
   swipe() {
     const targetIndex = this.swiper.state.index;
-    if(this.props.connection.currentIndex === this.swiper.state.total - 1) {
+    if(this.props.connection.currentIndex === this.swiper.state.total) {
       this.setState({viewedAllPotentials: true});
       this.props.resetCurrentIndex();
     } else {
@@ -115,6 +118,7 @@ class BrowseContainer extends Component {
             imageLoadedCallback = this.props.imageLoaded;
           }
           console.log(`Buddy name = ${buddy.first_name}`);
+          this.buddyId = buddy.uid;
           return (
             <View key={key} style={styles.cardStyle}>
               <BuddyCard
@@ -176,4 +180,4 @@ const mapStateToProps = ({ currentUser, connection }) => {
   return { currentUser, connection };
 };
 
-export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, scrolled, resetCurrentIndex })(BrowseContainer);
+export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, recordView, scrolled, resetCurrentIndex })(BrowseContainer);

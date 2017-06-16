@@ -282,6 +282,18 @@ export const imageLoaded = () => {
   };
 };
 
+export const recordView = (cuid, buddyId) => {
+  console.log(`In recordView with cuid=${cuid} and buddyId=${buddyId}`);
+  return(dispatch) => {
+    const userMatches = firebase.database();
+    userMatches.ref(`user_matches/${cuid}/${buddyId}`)
+      .update({
+        viewed: true,
+        viewedDate: firebase.database.ServerValue.TIMESTAMP,
+      });
+  };
+};
+
 export const connectWithUser = (currentUser, buddy, connectStatus) => {
   return(dispatch) => {
     dispatch({
