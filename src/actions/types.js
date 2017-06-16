@@ -45,7 +45,6 @@ export const NEW_MESSAGE = 'new_message';
 export const LOAD_EARLIER = 'load_earlier';
 
 export const BROWSED_TO_NEXT_USER = 'browsed_to_next_user';
-export const BROWSED_SELECTED_USER = 'browsed_selected_user';
 export const RESET_CURRENT_INDEX = 'reset_current_index';
 export const POTENTIALS_FETCH = 'potentials_fetch';
 export const POTENTIALS_FETCH_SUCCESS = 'potentials_fetch_success';
