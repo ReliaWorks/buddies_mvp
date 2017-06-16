@@ -54,7 +54,7 @@ class ActivitySet extends Component {
           renderSeparator={(sectionId, rowId) => this.renderSeparator(sectionId, rowId)}
           renderFooter={() => this.renderAddActivityIcon()}
           enableEmptySections
-          initialListSize={25}
+          pagingEnabled
       />
     );
   }

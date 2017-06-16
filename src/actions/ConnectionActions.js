@@ -13,25 +13,29 @@ export const findCommonality = (ouid, activities, affiliations) => {
         // do the same for affiliations
         const otherUserActivities = snapshot.val().activities;
         const commonInterests = [];
-        activities.forEach((activity) => {
-          _.forEach(otherUserActivities, (otherUserActivity => {
-            if(activity.uid === otherUserActivity.uid) {
-              if(activity.attribute === otherUserActivity.attribute)
-                commonInterests.push(otherUserActivity);
-              else commonInterests.push({icon: activity.icon, name: activity.name, uid: activity.uid});
-              return;
-            }
-          }));
-        });
+        if(activities) {
+          activities.forEach((activity) => {
+            _.forEach(otherUserActivities, (otherUserActivity => {
+              if(activity.uid === otherUserActivity.uid) {
+                if(activity.attribute === otherUserActivity.attribute)
+                  commonInterests.push(otherUserActivity);
+                else commonInterests.push({icon: activity.icon, name: activity.name, uid: activity.uid});
+                return;
+              }
+            }));
+          });
+        }
         const otherUserAffiliations = snapshot.val().affiliations;
-        affiliations.forEach((affiliation) => {
-          _.forEach(otherUserAffiliations, (otherUserAffiliation => {
-            if(affiliation.uid === otherUserAffiliation.uid) {
-              commonInterests.push(otherUserAffiliation);
-              return;
-            }
-          }));
-        });
+        if(affiliations) {
+          affiliations.forEach((affiliation) => {
+            _.forEach(otherUserAffiliations, (otherUserAffiliation => {
+              if(affiliation.uid === otherUserAffiliation.uid) {
+                commonInterests.push(otherUserAffiliation);
+                return;
+              }
+            }));
+          });
+        }
         dispatch({type: FIND_COMMONALITY, payload: commonInterests});
       });
   };
