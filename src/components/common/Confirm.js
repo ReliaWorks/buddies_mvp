@@ -4,7 +4,7 @@ import { Button } from './Button';
 
 const MARGIN = 15;
 
-const Confirm = ({ children, visible, onAccept, onDecline }) => {
+const Confirm = ({ children, visible, onAccept, onDecline, actionText = 'Remove' }) => {
   const { containerStyle, confirmTextStyle } = styles;
   return (
     <Modal
@@ -33,7 +33,7 @@ const Confirm = ({ children, visible, onAccept, onDecline }) => {
           <View style={{flexDirection: 'row'}}>
             <Button onPress={onAccept} styles={styles}>Cancel</Button>
             <View style={{width: 2}} />
-            <Button onPress={onDecline} styles={styles}>Remove</Button>
+            <Button onPress={onDecline} styles={styles}>{actionText}</Button>
           </View>
         </View>
       </View>

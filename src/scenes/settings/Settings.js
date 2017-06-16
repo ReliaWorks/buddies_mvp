@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, Linking, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Button } from '../../components/common';
+import { Button, Confirm } from '../../components/common';
 import { GenderPreference, AgePreference, LocationPreference } from '../../components/preferences';
 import styles from './styles';
 import { TOS, PRIVACY_POLICY } from '../../constants';
@@ -10,6 +10,13 @@ const { width } = Dimensions.get('window');
 const MARGIN = 15;
 
 class Settings extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {showDeactivateConfirmModal: false};
+  }
+  // componentWillMount() {
+  //   this.state = {showDeactivateConfirmModal: false};
+  // }
   openTermsOfService() {
     Actions.pdf({path: TOS});
   }
@@ -102,15 +109,33 @@ class Settings extends Component {
     );
   }
 
+  showDeactivationConfirmModal() {
+    this.setState({showDeactivateConfirmModal: true});
+  }
+  cancelDeactivation() {
+    this.setState({showDeactivateConfirmModal: false});
+  }
+  acceptDeactivation() {
+    this.props.onDeactivate();
+    this.setState({showDeactivateConfirmModal: false});
+  }
   renderDeactivateButton() {
     return (
       <View style={{flex: 1, marginTop: 10}}>
-      <Text
-        onPress={this.props.onDeactivate}
-        style={{...localStyles.feedbackLinkStyle, fontSize: 14}}
-      >
-        Deactivate Account
-      </Text>
+        <Text
+          onPress={this.showDeactivationConfirmModal.bind(this)}
+          style={{...localStyles.feedbackLinkStyle, fontSize: 14}}
+        >
+          Deactivate Account
+        </Text>
+        <Confirm
+          visible={this.state.showDeactivateConfirmModal}
+          onAccept={this.cancelDeactivation.bind(this)}
+          onDecline={this.acceptDeactivation.bind(this)}
+          actionText='Deactivate'
+        >
+          Are you sure you want to deactivate your account?
+        </Confirm>
       </View>
     );
   }
