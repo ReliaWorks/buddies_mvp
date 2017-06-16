@@ -15,6 +15,24 @@ const { width } = Dimensions.get('window');
 const LOGINFORM_MARGIN = 15;
 
 class LoginForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      locationLoaded: false,
+      showButton: false,
+    };
+  }
+
+  componentWillMount() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.setState({ locationLoaded: true, showButton: true });
+    },
+    (error) => {
+      this.setState({ locationLoaded: true, showButton: false });
+    });
+  }
+
   onButtonPress() {
     this.props.loginUser();
   }
@@ -63,6 +81,24 @@ class LoginForm extends Component {
       )
       : null;
 
+    const geoLocationAvailable = this.state.locationLoaded && this.state.showButton;
+
+    const renderButton = geoLocationAvailable
+      ? (
+        <Button
+          onPress={this.onButtonPress.bind(this)}
+          styles={{buttonStyle: styles.loginButtonContainer, textStyle: styles.fbLoginText }}
+          disabled={this.props.loading}
+        >
+          Login with Facebook
+        </Button>
+      )
+      : null;
+
+    if (!geoLocationAvailable) {
+      alert('Location services need to be enable');
+    }
+
     return (
       <LinearGradient colors={['#FF4F7D', '#6091FF', '#75FED8']} style={styles.linearGradient}>
         <View style={{justifyContent: 'center', flex: 35}}>
@@ -74,13 +110,7 @@ class LoginForm extends Component {
 
         {loadingComponent}
 
-        <Button
-          onPress={this.onButtonPress.bind(this)}
-          styles={{buttonStyle: styles.loginButtonContainer, textStyle: styles.fbLoginText }}
-          disabled={this.props.loading}
-        >
-          Login with Facebook
-        </Button>
+        {renderButton}
 
         <View style={styles.termsContainer}>
           <Text
