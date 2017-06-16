@@ -54,15 +54,26 @@ class LoginForm extends Component {
 */
 //  <View style={styles.solidContainer}>
 
-  renderLoginForm2() {
+  render() {
+    const loadingComponent = this.props.loading
+      ? (
+        <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: 40}}>
+          <Spinner size="large" />
+        </View>
+      )
+      : null;
+
     return (
       <LinearGradient colors={['#FF4F7D', '#6091FF', '#75FED8']} style={styles.linearGradient}>
         <View style={{justifyContent: 'center', flex: 35}}>
-        <Text style={styles.nameText}>Wavelength</Text>
-        <View style={{height: 10}} />
-        <Text style={styles.taglineText}>Meet people who share</Text>
-        <Text style={styles.taglineText}>your interests.</Text>
+          <Text style={styles.nameText}>Wavelength</Text>
+          <View style={{height: 10}} />
+          <Text style={styles.taglineText}>Meet people who share</Text>
+          <Text style={styles.taglineText}>your interests.</Text>
         </View>
+
+        {loadingComponent}
+
         <Button
           onPress={this.onButtonPress.bind(this)}
           styles={{buttonStyle: styles.loginButtonContainer, textStyle: styles.fbLoginText }}
@@ -70,6 +81,7 @@ class LoginForm extends Component {
         >
           Login with Facebook
         </Button>
+
         <View style={styles.termsContainer}>
           <Text
             style={legalTextStyle}
@@ -81,21 +93,6 @@ class LoginForm extends Component {
 
       </LinearGradient>
     );
-  }
-
-  renderContent() {
-    if(this.props.loading) {
-      return (
-        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Spinner size="large" />
-        </View>
-      );
-    }
-    return this.renderLoginForm2();
-  }
-
-  render() {
-    return this.renderContent();
   }
 }
 

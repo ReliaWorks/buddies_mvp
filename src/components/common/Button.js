@@ -4,11 +4,11 @@ import { Dimensions, Text, TouchableOpacity } from 'react-native';
 const { width } = Dimensions.get('window');
 const MARGIN = 15;
 
-const Button = ({ onPress, children, styles = localStyles }) => {
+const Button = ({ onPress, children, styles = localStyles, disabled = false }) => {
   const { buttonStyle, textStyle } = styles;
 
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyle}>
+    <TouchableOpacity onPress={onPress} style={buttonStyle} disabled={disabled}>
       <Text style={textStyle}>
         {children}
       </Text>
