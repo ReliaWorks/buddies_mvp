@@ -4,7 +4,7 @@ import { Text, View, WebView } from 'react-native';
 const PDF = ({path}) => {
   console.log(`path = ${path}`);
   return (
-    <WebView source={path} />
+    <WebView source={path} scalesPageToFit />
   );
 };
 
