@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { MARGIN } from '../common/styles';
 import EditablePhoto from './EditablePhoto';
 import CustomIcon from '../../assets/icons';
@@ -33,7 +33,7 @@ class PhotoEdit extends Component {
   }
 
   renderPics() {
-    const { profileImages, onRemove } = this.props;
+    const { profileImages, onRemove, uploadingPhotos } = this.props;
     if(!profileImages) return null;
 
     const firstProfileImage = profileImages[0];
@@ -50,7 +50,6 @@ class PhotoEdit extends Component {
         />
       )
       : null;
-
     return (
       <View style={{flex: 0.75}}>
       <ScrollView>
@@ -68,7 +67,7 @@ class PhotoEdit extends Component {
                 />
               );
             })}
-            {this.props.uploadingPhotos.map((img) => {
+            {uploadingPhotos.map((img) => {
               const key = img + new Date().getTime();
               return (
                 <UploadingPhoto
@@ -163,6 +162,18 @@ class PhotoEdit extends Component {
   }
   render() {
     if(this.props.profileImages.length === 0) {
+      if (this.props.uploadingPhotos && this.props.uploadingPhotos.length > 0) {
+        const img = this.props.uploadingPhotos[0];
+        const key = img + new Date().getTime();
+
+        return (
+          <UploadingPhoto
+            url={img}
+            key={key}
+            primary
+          />
+        );
+      }
       return(this.renderAddImageButtons());
     } else
       return (
