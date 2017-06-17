@@ -4,7 +4,7 @@ import { Modal, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
-import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, recordView, scrolled, resetCurrentIndex } from '../actions';
+import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, recordView, scrolled, resetCurrentIndex, matchesFetch } from '../actions';
 import { NoMoreCards, Spinner, GlowLoader } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
 
@@ -36,6 +36,9 @@ class BrowseContainer extends Component {
   }
 
   componentDidMount() {
+    if (!this.props.messageCenter.loaded) {
+      this.props.matchesFetch();
+    }
     if(this.swiper)
       this.swiper.scrollBy(this.props.connection.currentIndex);
   }
@@ -176,8 +179,8 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({ currentUser, connection }) => {
-  return { currentUser, connection };
+const mapStateToProps = ({ currentUser, connection, messageCenter }) => {
+  return { currentUser, connection, messageCenter };
 };
 
-export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, recordView, scrolled, resetCurrentIndex })(BrowseContainer);
+export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, recordView, scrolled, resetCurrentIndex, matchesFetch })(BrowseContainer);
