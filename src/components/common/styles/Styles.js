@@ -53,6 +53,7 @@ export const navTitleStyle = {
   fontFamily: 'SourceSansPro-SemiBold',
   fontSize: 18,
   width: width - 50,
+  zIndex: 99
 };
 
 export const navBarStyle = {

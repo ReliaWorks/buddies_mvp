@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Modal, View } from 'react-native';
+import { Image, Modal, Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, recordView, scrolled, resetCurrentIndex, matchesFetch } from '../actions';
 import { NoMoreCards, Spinner, GlowLoader } from '../components/common';
-import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../constants';
+import { DEFAULT_PROFILE_PHOTO, ACTIVE, SERVER_DOWN_ROBOT } from '../constants';
 
 class BrowseContainer extends Component {
   swiper:Object;
@@ -47,6 +47,8 @@ class BrowseContainer extends Component {
     if(this.props.connection.potentials !== nextProps.connection.potentials)
       return true;
     if(this.props.connection.loadingPotentials !== nextProps.connection.loadingPotentials)
+      return true;
+    if(this.props.connection.potentialsFetchStatus !== nextProps.connection.potentialsFetchStatus)
       return true;
     if(this.props.connection.loadingCurrentUser !== nextProps.connection.loadingCurrentUser)
       return true;
@@ -166,9 +168,21 @@ class BrowseContainer extends Component {
       this.animation.play();
   }
 
+  renderServerError() {
+    return(
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Image source={SERVER_DOWN_ROBOT} style={{width: 200, height: 200}} />
+        <Text style={{fontFamily: 'Source Sans Pro', fontSize: 18, margin: 15}}>
+          Having trouble. Try again later
+        </Text>
+      </View>
+    );
+  }
   render() {
     if(this.props.connection.loadingPotentials || this.props.connection.loadingCurrentUser)
       return <GlowLoader animationRef={this.animationRef} />;
+    else if(!this.props.connection.potentialsFetchStatus)
+      return this.renderServerError();
     else return this.renderMatches();
   }
 }
