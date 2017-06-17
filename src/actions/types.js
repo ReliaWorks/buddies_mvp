@@ -48,6 +48,7 @@ export const BROWSED_TO_NEXT_USER = 'browsed_to_next_user';
 export const RESET_CURRENT_INDEX = 'reset_current_index';
 export const POTENTIALS_FETCH = 'potentials_fetch';
 export const POTENTIALS_FETCH_SUCCESS = 'potentials_fetch_success';
+export const POTENTIALS_FETCH_FAILURE = 'potentials_fetch_failure';
 export const IMAGE_LOADED = 'image_loaded';
 export const MATCHES_FETCH = 'matches_fetch';
 export const MATCHES_FETCH_START = 'matches_fetch_start';
