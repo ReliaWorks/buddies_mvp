@@ -6,6 +6,7 @@ import {
   CHAT_SELECTED,
   POTENTIALS_FETCH,
   POTENTIALS_FETCH_SUCCESS,
+  POTENTIALS_FETCH_FAILURE,
   RESET_CURRENT_INDEX,
   CURRENT_USER_FETCH_START,
   CURRENT_USER_FETCH_SUCCESS,
@@ -22,6 +23,7 @@ const INITIAL_STATE = {
   potentials: [],
   browseCursor: 0,
   loadingPotentials: false,
+  potentialsFetchStatus: true,
   loadingCurrentUser: false,
   loadingConnectionHelper: false,
   connectingWithUser: false,
@@ -51,6 +53,8 @@ export default(state = INITIAL_STATE, action) => {
     case POTENTIALS_FETCH_SUCCESS: {
       return { ...state, potentials: action.payload, loadingPotentials: false };
     }
+    case POTENTIALS_FETCH_FAILURE:
+      return { ...state, loadingPotentials: false, potentialsFetchStatus: false};
     case IMAGE_LOADED: {
 //      return { ...state, numImagesOnScreen: state.numImagesOnScreen - 1 };
       return state;

@@ -37,10 +37,6 @@ class Routes extends Component {
       >
         <Scene key="root" type={ActionConst.RESET}>
           <Scene
-            key="splash"
-            component={Splash}
-          />
-          <Scene
             key="login"
             component={LoginForm}
             navigationBarStyle={{

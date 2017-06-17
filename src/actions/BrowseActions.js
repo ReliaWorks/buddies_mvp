@@ -12,6 +12,7 @@ import {
   LOCATION_MAP_STORAGE_KEY,
   POTENTIALS_FETCH,
   POTENTIALS_FETCH_SUCCESS,
+  POTENTIALS_FETCH_FAILURE,
   SEEN_CONNECTION_HELPER,
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
@@ -83,6 +84,7 @@ export const potentialsFetch = () => {
         });
       }, (error) => {
         console.log(`API not responding.  Error = ${error}`);
+        dispatch({type: POTENTIALS_FETCH_FAILURE});
     });
   };
 };
