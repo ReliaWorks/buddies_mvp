@@ -82,17 +82,28 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
 
 export const checkIfAlreadyLoggedIn = () => {
   return(dispatch) => {
-    wasThereAnAppUpdate()
-      .then(() => {
-        AsyncStorage.clear(() => {
-          AsyncStorage.setItem('CURRENT_APP_VERSION', CURRENT_APP_VERSION, () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        wasThereAnAppUpdate()
+          .then(() => {
+            AsyncStorage.clear(() => {
+              AsyncStorage.setItem('CURRENT_APP_VERSION', CURRENT_APP_VERSION, () => {
+                checkIfAlreadyLoggedInInner(dispatch);
+              });
+            });
+          })
+          .catch(() => {
             checkIfAlreadyLoggedInInner(dispatch);
           });
-        });
-      })
-      .catch(() => {
-        checkIfAlreadyLoggedInInner(dispatch);
-      });
+      },
+      (error) => {
+        AsyncStorage.multiRemove(['token', 'uid']);
+        LoginManager.logOut();
+        firebase.auth().signOut();
+
+        Actions.login();
+      }
+    );
   };
 };
 /**
