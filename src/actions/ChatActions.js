@@ -193,7 +193,7 @@ export const unMatchWithUser = (otherUserId) => {
     getConversationId(null, uid, otherUserId).then(conversationId => {
       const updates = {};
 
-      updates[`conversations/${conversationId}`] = null;
+      //updates[`conversations/${conversationId}`] = null;
       updates[`message_center/${uid}/${otherUserId}`] = null;
       updates[`message_center/${otherUserId}/${uid}`] = null;
       updates[`user_matches/${otherUserId}/${uid}/status`] = 'INACTIVE';

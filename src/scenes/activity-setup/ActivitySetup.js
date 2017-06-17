@@ -30,6 +30,7 @@ class ActivitySetup extends Component {
   }
 */
   renderActivityRow(rowData) {
+    console.log('act id: ', rowData.uid);
     const activities = this.props.currentActivities;
     let exists = false;
     if(activities && activities.length > 0) {
@@ -60,7 +61,7 @@ class ActivitySetup extends Component {
           dataSource={activitiesDS}
           renderRow={this.renderActivityRow.bind(this)}
           enableEmptySections
-          initialListSize={25}
+          initialListSize={250}
         />
       </ScrollView>
     );
@@ -106,6 +107,8 @@ class ActivitySetup extends Component {
 
   render() {
     const { activitiesDS, onNext, onSearchBarChangeText } = this.props;
+    console.log('row count:', this.props.activitiesDS.getRowCount());
+    console.log('actss:', this.props.activities);
     return (
       <View style={{ flex: 1 }}>
         {this.renderSearchBar(onSearchBarChangeText)}
