@@ -124,7 +124,7 @@ export const saveMessage = (msg, currentUser, otherUser, chatIdParam, messages, 
 
     getConversationId(chatIdParam, currentUser.uid, otherUser.selectedMatchId).then(chatId => {
       let profileImage = DEFAULT_PROFILE_PHOTO;
-      if(currentUser.profileImages && currentUser.profileImages.length > 0)
+      if(currentUser && currentUser.profileImages && currentUser.profileImages.length > 0)
         profileImage = currentUser.profileImages[0].url;
       const user = {...msg.user,
         name: firstName,

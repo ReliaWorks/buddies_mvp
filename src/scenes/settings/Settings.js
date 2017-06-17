@@ -4,7 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import { Button, Confirm } from '../../components/common';
 import { GenderPreference, AgePreference, LocationPreference } from '../../components/preferences';
 import styles from './styles';
-import { TOS, PRIVACY_POLICY } from '../../constants';
+import { TOS, PRIVACY_POLICY, SAFETY_TIPS } from '../../constants';
 
 const { width } = Dimensions.get('window');
 const MARGIN = 15;
@@ -17,20 +17,8 @@ class Settings extends Component {
   // componentWillMount() {
   //   this.state = {showDeactivateConfirmModal: false};
   // }
-  openTermsOfService() {
-    Actions.pdf({path: TOS});
-  }
-  openPrivacyPolicy() {
-    Actions.pdf({path: PRIVACY_POLICY});
-/*    const url = 'https://firebasestorage.googleapis.com/v0/b/activities-test-a3871.appspot.com/o/legal%2FApple_Developer_Program_License_Agreement_20160921.pdf?alt=media&token=07bb73b8-b294-42a0-817a-92fd8150d347';
-    Linking.canOpenURL(url).then(supported => {
-      if (!supported) {
-        console.log('Can\'t handle url: ' + url);
-      } else {
-        return Linking.openURL(url);
-      }
-    }).catch(err => console.error('An error occurred', err));
-    */
+  openPDF(path) {
+    Actions.pdf({path});
   }
 
   openFeedbackLink() {
@@ -84,14 +72,20 @@ class Settings extends Component {
     return (
       <View style={styles.linkContainerStyle}>
         <View style={{flex: 1}}>
-          <TouchableOpacity onPress={this.openPrivacyPolicy}>
+          <TouchableOpacity onPress={() => this.openPDF(PRIVACY_POLICY)}>
             <Text style={styles.linkText}>Privacy Policy</Text>
           </TouchableOpacity>
         </View>
         <View style={{borderWidth: 1, borderColor: 'lightgray', height: 25 }} />
         <View style={{flex: 1}}>
-          <TouchableOpacity onPress={this.openTermsOfService}>
+          <TouchableOpacity onPress={() => this.openPDF(TOS)}>
             <Text style={styles.linkText}>Terms of Service</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{borderWidth: 1, borderColor: 'lightgray', height: 25 }} />
+        <View style={{flex: 1}}>
+          <TouchableOpacity onPress={()=> this.openPDF(SAFETY_TIPS)}>
+            <Text style={styles.linkText}>Safety Tips</Text>
           </TouchableOpacity>
         </View>
       </View>
