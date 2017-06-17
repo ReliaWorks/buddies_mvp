@@ -38,7 +38,9 @@ class FbAlbums extends Component {
       <TouchableOpacity
         style={styles.photosItem}
         onPress={() => {
-          this.renderImageCropper(rowData.source);
+          //this.renderImageCropper(rowData.source);
+          Actions.photoEdit();
+          this.props.photosSelected(rowData.source, 'FB', this.props.currentUser);
         }}
       >
         <Image style={styles.picItemImage} source={{ uri: rowData.source }} />
@@ -53,7 +55,7 @@ class FbAlbums extends Component {
       height: 650
     }).then(croppedUri => {
       Actions.photoEdit();
-      this.props.photosSelected([croppedUri], 'facebook');
+      this.props.photosSelected(croppedUri, 'FB', this.props.currentUser);
     }).catch(error => {
       console.log('imagepicker catch:', error);
       this.setState({imagesComponent: 'facebook-album-photos'});

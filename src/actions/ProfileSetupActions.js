@@ -45,7 +45,7 @@ export const photosSaved = (photos) => {
     let i = 0;
     photos.forEach((photo) => {
       photoObj.url = photo;
-      photoObj.status = ACTIVE;
+      photoObj.type = 'FB';
       firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
         .push(photoObj)
         .then((snap) => {

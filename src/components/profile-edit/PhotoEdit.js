@@ -25,11 +25,12 @@ class PhotoEdit extends Component {
     this.setState({modalVisible: false});
   }
   getSelectedImages(images, from) {
-    if (this.props.profileImages.length === 0) {
-      this.props.onImagesSelected(images, true, from);
-    } else {
-      this.props.onImagesSelected(images, false, from);
-    }
+    // if (this.props.profileImages.length === 0) {
+    //   this.props.onImagesSelected(images, true, from);
+    // } else {
+    //   this.props.onImagesSelected(images, false, from);
+    // }
+    this.props.onImagesSelected(images);
   }
 
   renderPics() {
