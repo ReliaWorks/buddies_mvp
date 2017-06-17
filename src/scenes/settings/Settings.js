@@ -84,7 +84,7 @@ class Settings extends Component {
         </View>
         <View style={{borderWidth: 1, borderColor: 'lightgray', height: 25 }} />
         <View style={{flex: 1}}>
-          <TouchableOpacity onPress={()=> this.openPDF(SAFETY_TIPS)}>
+          <TouchableOpacity onPress={() => this.openPDF(SAFETY_TIPS)}>
             <Text style={styles.linkText}>Safety Tips</Text>
           </TouchableOpacity>
         </View>
