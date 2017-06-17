@@ -67,9 +67,9 @@ export default(state = INITIAL_STATE, action) => {
       const profileImages = [];
       if(photos) {
         _.map(photos, (img, key) => {
-          if(img.status === ACTIVE) {
-            profileImages.push({url: img.url, key: key});
-          }
+          //if(img.status === ACTIVE) {
+            profileImages.push({url: img.url, key: key, type: img.type});
+          //}
         });
       }
       const firstName = action.payload.first_name;
@@ -218,7 +218,7 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, profileImages: updatedImages };
     }
     case PHOTOS_SELECTED: {
-      const profileImagesUploadProgress = action.payload;
+      const profileImagesUploadProgress = [...state.profileImagesUploadProgress, action.payload];
       return { ...state, profileImagesUploadProgress };
     }
     case PHOTO_UPLOADED: {

@@ -31,7 +31,7 @@ const updatePrimaryPicReferences = (withUrl = null) => {
       });
     } else {
       return firebase.database().ref('user_profiles/' + currentUser.uid + '/profileImages')
-      .orderByChild('status').equalTo(ACTIVE)
+      //.orderByChild('status').equalTo(ACTIVE)
       .limitToFirst(1)
       .once('value')
       .then(photosSnap => {
@@ -68,6 +68,8 @@ const updatePrimaryPicReferences = (withUrl = null) => {
 export const photoRemoved = (photo, isPrimary) => {
   const { currentUser } = firebase.auth();
 
+  console.log('remove p:', photo);
+
   return (dispatch) => {
     // Make inactive to remove photo.
     firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages/${photo.key}`)
@@ -76,7 +78,9 @@ export const photoRemoved = (photo, isPrimary) => {
       .then(() => {
         dispatch({ type: PHOTO_REMOVED, payload: photo });
 
-        firebase.storage().refFromURL(photo.url).delete();
+        if (photo.type === 'CR') {
+          firebase.storage().refFromURL(photo.url).delete();
+        }
 
         if (isPrimary) {
           updatePrimaryPicReferences();
@@ -86,77 +90,77 @@ export const photoRemoved = (photo, isPrimary) => {
 };
 
 // this action fires when user select images from camera roll (or potentially facebook at future)
-export const photosSelected = (photos, isPrimary) => {
+export const photosSelected = (photo, from, currentUser) => {
   return (dispatch) => {
-    const { currentUser } = firebase.auth();
+    //const { currentUser } = firebase.auth();
 
-    photos.forEach(photo => {
-      const photoUri = photo.path;
+    const isPrimary = currentUser.profileImages.length === 0;
 
-      dispatch({ type: PHOTOS_SELECTED, payload: photos.map(() => photoUri)});
+    console.log('in AC; isPrimary:', isPrimary, ' from: ', from);
 
-      uploadImage(currentUser.uid, photoUri)
-      .then(uri => {
-        const newImageRef = firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`).push();
+    //photos.forEach(photo => {
+    const photoUri = from === 'FB' ? photo : photo.path;
 
-        newImageRef.set({ url: uri, status: ACTIVE })
-          .then(() => {
-            dispatch({
-              type: PHOTO_UPLOADED,
-              payload: {
-                photo: { key: newImageRef.key, url: uri },
-                localUrl: photoUri
-              }
-            });
+    //dispatch({ type: PHOTOS_SELECTED, payload: photos.map(() => photoUri)});
+    dispatch({ type: PHOTOS_SELECTED, payload: photoUri});
+
+    uploadImage(currentUser.uid, photoUri, from)
+    .then(uri => {
+      const newImageRef = firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`).push();
+      console.log('uri:', uri);
+      newImageRef.set({ url: uri, type: from })
+        .then(() => {
+          dispatch({
+            type: PHOTO_UPLOADED,
+            payload: {
+              photo: { key: newImageRef.key, url: uri },
+              localUrl: photoUri
+            }
           });
+        });
 
-          if (isPrimary) {
-            updatePrimaryPicReferences(uri);
-          }
-      })
-      .catch(error => console.log(error));
-    });
+        if (isPrimary) {
+          updatePrimaryPicReferences(uri);
+        }
+    })
+    .catch(error => console.log(error));
+  //  });
   };
 };
 
-const uploadImage = (uid, uri, mime = 'image/jpg') => {
+const uploadImage = (uid, uri, from, mime = 'image/jpg') => {
   return new Promise((resolve, reject) => {
-    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+    if (from === 'FB') {
+      console.log('bmbkkjbkh: ', uri);
+      resolve(uri);
+    } else {
+      const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
 
-    const sessionId = new Date().getTime();
-    let uploadBlob = null;
-    const imageRef = firebase.storage().ref('profileImages').child(`${uid}`).child(`${sessionId}`);
+      const sessionId = new Date().getTime();
+      let uploadBlob = null;
+      const imageRef = firebase.storage().ref('profileImages').child(`${uid}`).child(`${sessionId}`);
 
-    // below commented code is not required anymore since image picker already sends resized images for both camera roll and facebook images
+      const resizeOrNotPromise = fs.readFile(uploadUri, 'base64');
 
-    // control if it is required to resize the image. required for images from camera, not required images from facebook
-    // const resizeOrNotPromise = from === 'cameraRoll'
-    //   ? ImageResizer.createResizedImage(uploadUri, 640, 640, 'JPEG', 40,) // rotation, outputPath)
-    //     .then((resizedImageUri) => {
-    //       return fs.readFile(resizedImageUri, 'base64')
-    //     })
-    //   : fs.readFile(uploadUri, 'base64')
-
-    const resizeOrNotPromise = fs.readFile(uploadUri, 'base64');
-
-      resizeOrNotPromise
-      .then((data) => {
-        return Blob.build(data, { type: `${mime};BASE64` });
-      })
-      .then((blob) => {
-        uploadBlob = blob;
-        return imageRef.put(blob, { contentType: mime });
-      })
-      .then(() => {
-        uploadBlob.close();
-        return imageRef.getDownloadURL();
-      })
-      .then((url) => {
-        resolve(url);
-      })
-      .catch((error) => {
-        reject(error);
-      });
+        resizeOrNotPromise
+        .then((data) => {
+          return Blob.build(data, { type: `${mime};BASE64` });
+        })
+        .then((blob) => {
+          uploadBlob = blob;
+          return imageRef.put(blob, { contentType: mime });
+        })
+        .then(() => {
+          uploadBlob.close();
+          return imageRef.getDownloadURL();
+        })
+        .then((url) => {
+          resolve(url);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    }
   });
 };
 

@@ -30,9 +30,9 @@ export default(state = INITIAL_STATE, action) => {
       const profileImages = [];
       if(photos) {
         _.map(photos, (img, key) => {
-          if(img.status === ACTIVE) {
+          //if(img.status === ACTIVE) {
             profileImages.push({url: img.url, key: key});
-          }
+          //}
         });
       }
 

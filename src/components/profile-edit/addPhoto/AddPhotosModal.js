@@ -44,7 +44,7 @@ export default class AddPhotosModal extends Component {
       compressImageQuality: 0.7
     }).then(image => {
       this.setState({ imagesComponent: 'none', images: [] });
-      this.props.getSelectedImages([image], 'facebook');
+      this.props.getSelectedImages(image, 'CR');
       this.props.close();
     }).catch(error => {
       console.log('image picker error = ', error);
