@@ -43,6 +43,11 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
                     uid: user.uid
                 }
             });
+            firebase.database().ref('/user_profiles/' + user.uid).once('value', (snap) => {
+              if (snap.val() && snap.val().first_name) {
+                Actions.main();
+              }
+            });
         } else {
             console.log(`User is not logged in`);
             //return;
