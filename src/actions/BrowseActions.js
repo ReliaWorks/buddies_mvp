@@ -409,10 +409,21 @@ const successfullyConnected = (dispatch, buddy, currentUser) => {
   const convRef = firebase.database().ref(`conversations`).push();
   const convKey = convRef.getKey();
   firebase.database().ref(`message_center/${currentUser.uid}/${buddy.uid}/`)
-    .set({status: 'ACTIVE', otherUserName: buddy.name, otherUserPic: buddy.pic.url, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP});
+    .set({
+      status: 'ACTIVE',
+      otherUserName: buddy.name,
+      otherUserPic: buddy.pic.url,
+      conversationId: convKey,
+      matchedDate: firebase.database.ServerValue.TIMESTAMP
+    });
   firebase.database().ref(`message_center/${buddy.uid}/${currentUser.uid}/`)
-    .set({status: 'ACTIVE', otherUserName: currentUser.firstName, otherUserPic: profileImage, conversationId: convKey, matchedDate: firebase.database.ServerValue.TIMESTAMP})
-    .then(() => {
+    .set({
+      status: 'ACTIVE',
+      otherUserName: currentUser.firstName,
+      otherUserPic: profileImage,
+      conversationId: convKey,
+      matchedDate: firebase.database.ServerValue.TIMESTAMP
+    }).then(() => {
       dispatch({ type: CURRENT_CHAT_FETCH, payload: { chatId: convKey, messages: [], justConnected: true }});
   });
 
