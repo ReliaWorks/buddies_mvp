@@ -3,7 +3,7 @@ import { Dimensions, View, Image, Text, TouchableHighlight, WebView } from 'reac
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
-import { Button, Spinner } from '../components/common';
+import { Button, Spinner, GlowLoader } from '../components/common';
 import { legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
 import { TOS } from '../constants';
@@ -34,31 +34,21 @@ class LoginForm extends Component {
       </View>
     );
   }
-/*  {this.renderAppName()}
-  renderLoginForm() {
-    return (
-      <View style={styles.container}>
-        <Image source={backgroundImageURL} style={styles.backgroundImage} />
-        <Button
-          onPress={this.onButtonPress.bind(this)}
-          styles={{buttonStyle: styles.loginButtonContainer, textStyle: styles.fbLoginText }}
-        >
-          Log in with Facebook
-        </Button>
-        <View style={styles.termsContainer}>
-          <Text style={legalTextStyle}>Terms of Service</Text>
-        </View>
-      </View>
-    );
+
+  animationRef(animation) {
+    this.animation = animation;
+    if(this.animation)
+      this.animation.play();
   }
-*/
-//  <View style={styles.solidContainer}>
 
   render() {
+//    if(this.props.loading)
+//      return <GlowLoader animationRef={this.animationRef} />;
+
     const loadingComponent = this.props.loading
       ? (
         <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: 40}}>
-          <Spinner size="large" />
+          <Spinner size="large" color="white" />
         </View>
       )
       : null;
