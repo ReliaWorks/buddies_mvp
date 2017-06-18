@@ -44,7 +44,6 @@ class LoginForm extends Component {
   render() {
 //    if(this.props.loading)
 //      return <GlowLoader animationRef={this.animationRef} />;
-
     const loadingComponent = this.props.loading
       ? (
         <View style={{justifyContent: 'center', alignItems: 'center', marginBottom: 40}}>

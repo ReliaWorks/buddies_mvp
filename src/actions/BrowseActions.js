@@ -315,7 +315,7 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
             otherUserName: buddy.name,
             otherUserPic: buddy.pic.url,
             liked: connectStatus,
-            matched: (otherUserLikesYouToo && connectStatus),
+            matched: (otherUserLikesYouToo && connectStatus) || false,
             matchedDate: firebase.database.ServerValue.TIMESTAMP,
           });
         if(connectStatus && otherUserLikesYouToo) {
