@@ -25,7 +25,7 @@ class ProfileSetupComplete extends Component {
     if(!activities || activities.length === 0) return null;
     return (
       <View style={{flex: 1, marginTop: 10}}>
-        <Text style={{...styles.titleText, textAlign: 'center'}}>Find a partner for:</Text>
+        <Text style={{...styles.titleText, textAlign: 'center'}}>Great choices</Text>
         <View style={{height: 15}} />
         <ActivitySet value={{activitiesAndAffiliations: activities}} />
       </View>
@@ -34,12 +34,12 @@ class ProfileSetupComplete extends Component {
 
   render() {
     const { firstName, profileImages, activities, startBrowsing } = this.props.currentUser;
+//    {this.renderPhoto(profileImages)}
 
     return (
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>Nice looking profile, {firstName}.</Text>
           <View style={{height: 15}} />
-          {this.renderPhoto(profileImages)}
           {this.renderActivities(activities)}
           <View style={{margin: 15}}>
           <Button onPress={this.startBrowsing.bind(this)}>{BUTTON_TEXT}</Button>

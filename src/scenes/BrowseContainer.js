@@ -85,9 +85,7 @@ class BrowseContainer extends Component {
     const images = [];
     if(profileImages) {
       _.map(profileImages, (img, key) => {
-        if(img.status === ACTIVE) {
-          images.push({url: img.url, key: key});
-        }
+        images.push({url: img.url, key: key});
       });
     }
     return images;
