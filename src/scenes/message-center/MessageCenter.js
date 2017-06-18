@@ -113,7 +113,7 @@ class MessageCenter extends Component {
       );
     } else if(this.props.matchesWithChatDataSource.getRowCount() === 0 &&
        this.props.matchesWithoutChatDataSource.getRowCount() === 0) {
-       return this.renderZeroState("It's lonely in here. Browse and connect with members to get this party started.");
+       return this.renderZeroState("It's lonely in here. Browse and connect with members to start chatting.");
     } else {
       return (
         <View style={{flex: 1, marginBottom: MARGIN}}>
