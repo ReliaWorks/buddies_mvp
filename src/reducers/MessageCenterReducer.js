@@ -17,7 +17,7 @@ export default(state = INITIAL_STATE, action) => {
   switch(action.type) {
     case MATCHES_FETCH: {
       //const matches = _.filter(action.payload, match => match.status !== 'INACTIVE');
-      const matches = action.payload;
+      const matches = action.payload || {};
 
       const keys = Object.keys(matches);
       let i = 0;
