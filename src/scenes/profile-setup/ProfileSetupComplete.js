@@ -25,7 +25,6 @@ class ProfileSetupComplete extends Component {
     if(!activities || activities.length === 0) return null;
     return (
       <View style={{flex: 1, marginTop: 10}}>
-        <Text style={{...styles.titleText, textAlign: 'center'}}>Great choices</Text>
         <View style={{height: 15}} />
         <ActivitySet value={{activitiesAndAffiliations: activities}} />
       </View>
@@ -35,15 +34,16 @@ class ProfileSetupComplete extends Component {
   render() {
     const { firstName, profileImages, activities, startBrowsing } = this.props.currentUser;
 //    {this.renderPhoto(profileImages)}
-
+//<View style={{height: 15}} />
+//{this.renderActivities(activities)}
     return (
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>Nice looking profile, {firstName}.</Text>
-          <View style={{height: 15}} />
-          {this.renderActivities(activities)}
-          <View style={{margin: 15}}>
+          <Text style={styles.titleText}>Set-up complete!</Text>
+          <Text style={styles.titleText}>Nice profile, {firstName}. People</Text>
+          <Text style={styles.titleText}>are waiting inside with</Text>
+          <Text style={styles.titleText}>similar interests to you!</Text>
+          <View style={{margin: 15}} />
           <Button onPress={this.startBrowsing.bind(this)}>{BUTTON_TEXT}</Button>
-          </View>
         </View>
     );
   }
@@ -51,7 +51,7 @@ class ProfileSetupComplete extends Component {
 
 const styles = {
   titleText: {
-    fontFamily: 'Source Sans Pro',
+    fontFamily: 'SourceSansPro-SemiBold',
     fontSize: 24,
   },
   titleContainer: {
