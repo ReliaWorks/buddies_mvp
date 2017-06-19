@@ -24,10 +24,9 @@ class BrowseContainer extends Component {
   componentWillMount() {
     if (this.props.currentUser.firstName === '')
         this.props.currentUserFetch();
-
-    if(this.props.connection.currentIndex === 0 && this.props.connection.potentials.length === 0)
-        this.props.potentialsFetch(this.props.currentUser);
-
+//    if(this.props.connection.currentIndex === 0 && this.props.connection.potentials.length === 0)
+    if(this.props.connection.currentIndex === 0)
+      this.props.potentialsFetch(this.props.currentUser);
     if (!this.props.connection.listeningForNotifications)
       this.props.checkNotifications();
   }
@@ -57,12 +56,6 @@ class BrowseContainer extends Component {
   }
 
   _onMomentumScrollEnd(e, state, context) {
-    if(this.swiper.state.index === 0 && this.state.alreadySeenFirstItem) //this is the last item in the list
-      this.props.potentialsFetch(); //what if we get there by scrolling to the left instead of scrolling right ?????
-    else if(this.swiper.state.index === 0) {
-      this.setState({alreadySeenFirstItem: true});
-    }
-
     this.props.scrolled(this.swiper.state.index);
     const otherUserIndex = (this.swiper.state.index === 0) ? this.swiper.state.total - 1 : this.swiper.state.index - 1;
     this.props.recordView(this.props.currentUser.uid, this.props.connection.potentials[otherUserIndex].uid);
@@ -89,10 +82,6 @@ class BrowseContainer extends Component {
     return images;
   }
 
-//  componentWillReceiveProps(nextProps) {
-//    if(nextProps.connection.currentIndex != this.props.connection.currentIndex)
-//      this.swiper.scrollBy(nextProps.connection.currentIndex);
-//  }
   renderMatches() {
     const { potentials, numTimesConnected, numTimesMatched, seenConnectionHelper } = this.props.connection;
 
@@ -121,7 +110,7 @@ class BrowseContainer extends Component {
           console.log(`Buddy name = ${buddy.first_name}`);
           this.buddyId = buddy.uid;
           return (
-            <View key={key} style={styles.cardStyle}>
+            <View key={key} style={{flex: 1}}>
               <BuddyCard
                 value={{
                   firstName: buddy.first_name,
@@ -182,12 +171,6 @@ class BrowseContainer extends Component {
     else return this.renderMatches();
   }
 }
-
-const styles = {
-  cardStyle: {
-    flex: 1,
-  },
-};
 
 const mapStateToProps = ({ currentUser, connection, messageCenter }) => {
   return { currentUser, connection, messageCenter };
