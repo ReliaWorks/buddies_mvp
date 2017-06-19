@@ -15,9 +15,10 @@ export const matchesFetch = () => {
       .orderByChild('status')
       .equalTo('ACTIVE')
       .on('value', snapshot => {
-        if(!snapshot.val())
-          dispatch({ type: MATCHES_FETCH_FAIL});
-        else dispatch({ type: MATCHES_FETCH, payload: snapshot.val()});
+        // if(!snapshot.val())
+        //   dispatch({ type: MATCHES_FETCH_FAIL});
+        //else
+        dispatch({ type: MATCHES_FETCH, payload: snapshot.val()});
       });
   };
 };
