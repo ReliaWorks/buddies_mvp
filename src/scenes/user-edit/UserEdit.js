@@ -151,14 +151,13 @@ const styles = {
     padding: 10,
     borderWidth: 1,
     borderColor: '#ECECEC',
-    marginRight: 15,
-    marginLeft: 15,
+    marginLeft: 5,
+    marginRight: 5,
   },
   descriptionInput: {
     height: 200,
     fontSize: 18,
     fontFamily: 'Source Sans Pro',
-    marginLeft: 10,
     color: '#000000',
   }
 };

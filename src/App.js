@@ -13,6 +13,8 @@ const composeEnhancers = composeWithDevTools({
   // Specify here name, actionsBlacklist, actionsCreators and other options if needed
 });
 
+const store = createStore(reducers, {}, composeEnhancers(applyMiddleware(ReduxThunk)));
+
 class App extends Component {
 
   componentWillMount() {
@@ -20,8 +22,6 @@ class App extends Component {
   }
 
   render() {
-    const store = createStore(reducers, {}, composeEnhancers(applyMiddleware(ReduxThunk)));
-
     return (
       <Provider store={store}>
         <Routes />
