@@ -164,9 +164,9 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const { token, loggedIn, loading } = state.auth;
+  const { loggedIn, loading } = state.auth;
 
-  return { token, loggedIn, loading };
+  return { loggedIn, loading };
 };
 
 export default connect(mapStateToProps, { loginUser })(LoginForm);
