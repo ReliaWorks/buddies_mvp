@@ -137,6 +137,7 @@ export const deactivateUser = () => {
 
 const _logoutUser = (dispatch) => {
   LoginManager.logOut();
+  dispatch({ type: LOGOUT_USER });
   firebase.auth().signOut()
     .then(() => {
       Actions.root();

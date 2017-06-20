@@ -25,7 +25,7 @@ export const getCurrentPosition = (currentUser, dispatch) => {
               user.location = location;
               user.geoLocation = position;
               user.uid = currentUser.uid;
-              dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...user } });
+//              dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...user } });
             });
         })
         .catch(() => {
