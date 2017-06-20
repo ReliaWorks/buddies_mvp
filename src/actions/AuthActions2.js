@@ -139,6 +139,7 @@ const _logoutUser = (dispatch) => {
   LoginManager.logOut();
   firebase.auth().signOut()
     .then(() => {
+      dispatch({ type: LOGOUT_USER });
       Actions.root();
     }, (error) => {
       console.log(`Error signing out of Firebase ${error}`);
