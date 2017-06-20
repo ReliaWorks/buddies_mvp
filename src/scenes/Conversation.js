@@ -4,6 +4,7 @@ import { Image, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, 
 import { Actions } from 'react-native-router-flux';
 import { GiftedChat } from 'react-native-gifted-chat';
 import ConnectionOptionsModal from './conversation/ConnectionOptionsModal';
+import { Confirm } from '../components/common';
 import { backIconButton, moreIconButton } from '../icons';
 import { fetchConversation, updateConversationNotifications, saveMessage, closeConversation, loadEarlier, unMatchWithUser } from '../actions';
 import { DEFAULT_PROFILE_PHOTO } from '../constants';
@@ -13,9 +14,8 @@ class Conversation extends Component {
     super(props);
     this.onSend = this.onSend.bind(this);
     this.state = {
-      connectionOptionsModal: {
-        visible: false
-      }
+      showConnectionOptionsModal: false,
+      showUnmatchConfirmModal: false
     };
   }
 
@@ -103,18 +103,29 @@ class Conversation extends Component {
 
   openConnectionOptionsModal() {
     this.setState({
-      connectionOptionsModal: {visible: true}
+      showConnectionOptionsModal: true
     });
   }
-
-  closeConnectionOptionsModal() {
+  closeModals() {
     this.setState({
-      connectionOptionsModal: {visible: false}
+      showConnectionOptionsModal: false,
+      showUnmatchConfirmModal: false
     });
+  }
+  showUnmatchConfirmModal() {
+    this.setState({
+      showConnectionOptionsModal: false,
+    });
+    setTimeout(() => {
+      this.setState({
+        showUnmatchConfirmModal: true,
+      });
+    }, 400);
   }
 
   unMatch() {
     this.props.unMatchWithUser(this.props.connection.selectedMatchId);
+    //this.closeModals();
   }
 
   render() {
@@ -139,11 +150,19 @@ class Conversation extends Component {
           renderFooter={this.renderFooter.bind(this)}
         />
         <ConnectionOptionsModal
-          visible={this.state.connectionOptionsModal.visible}
+          visible={this.state.showConnectionOptionsModal}
           connectionName={this.props.connection.selectedMatchName}
-          onUnMatch={this.unMatch.bind(this)}
-          onClose={this.closeConnectionOptionsModal.bind(this)}
+          onUnMatch={this.showUnmatchConfirmModal.bind(this)}
+          onClose={this.closeModals.bind(this)}
         />
+        <Confirm
+          visible={this.state.showUnmatchConfirmModal}
+          onAccept={this.closeModals.bind(this)}
+          onDecline={this.unMatch.bind(this)}
+          actionText='Unmatch'
+        >
+          Are you sure you want to unmatch with {this.props.connection.selectedMatchName}?
+        </Confirm>
       </View>
     );
   }

@@ -182,7 +182,8 @@ export const fetchFacebookAlbums = () => {
             }
           },
           (error, result) => {
-            dispatch({ type: FACEBOOK_ALBUMS_FETCHED, payload: result.albums.data });
+            const albums = result.albums ? result.albums.data || [] : [];
+            dispatch({ type: FACEBOOK_ALBUMS_FETCHED, payload: albums });
           }
         );
 
