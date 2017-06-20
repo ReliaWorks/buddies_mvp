@@ -20,7 +20,7 @@ class FbAlbums extends Component {
       dataSource={ds.cloneWithRows(albums)}
       renderRow={(rowData) => this.renderAlbumAsListItem(rowData)}
     />)
-    : <Text style={styles.noAlbumsWarningText}>There is no available Facebook Album!</Text>;
+    : <Text style={styles.noAlbumsWarningText}>You have no Facebook photos</Text>;
 
     return component;
   }
