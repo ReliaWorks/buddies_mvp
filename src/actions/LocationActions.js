@@ -2,6 +2,7 @@ import React from 'react';
 import { AsyncStorage } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
+import { Actions } from 'react-native-router-flux';
 import {
   CURRENT_USER_FETCH_SUCCESS,
   LOCATION_MAP_STORAGE_KEY,
@@ -13,7 +14,6 @@ import { MAP_API_KEY } from '../config';
 export const getCurrentPosition = (currentUser, dispatch) => {
   navigator.geolocation.getCurrentPosition(
     (position) => {
-      console.log("position: ", position);
       const initialPosition = JSON.stringify(position);
       firebase.database().ref(`user_profiles/${currentUser.uid}/geoLocation`).set(position);
 
@@ -25,7 +25,6 @@ export const getCurrentPosition = (currentUser, dispatch) => {
               user.location = location;
               user.geoLocation = position;
               user.uid = currentUser.uid;
-//              dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...user } });
             });
         })
         .catch(() => {
@@ -33,9 +32,14 @@ export const getCurrentPosition = (currentUser, dispatch) => {
         });
 
       dispatch({ type: SET_CURRENT_GEOLOCATION, payload: initialPosition });
+    },
+    (error) => {
+      Actions.location();
+      console.log("User declined geolocation services");
     }
   );
-}
+};
+
 const stringToVariable = (str) => {
   if (str)
    return str.replace(/\s+/g, '_')
