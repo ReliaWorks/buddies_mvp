@@ -88,6 +88,17 @@ export const navBackNextStyle = {
   marginTop: 8,
 //  marginLeft: 4,
   marginRight: 5,
+  alignSelf: 'flex-end',
+};
+
+export const navBackStyle = {
+  color: "black",
+  fontSize: 14,
+  fontFamily: 'Source Sans Pro',
+  marginTop: 8,
+//  marginLeft: 4,
+  marginRight: 5,
+  alignSelf: 'flex-start',
 };
 
 export const searchBarContainer = {

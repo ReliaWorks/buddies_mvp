@@ -20,7 +20,7 @@ import ChatComponentIconButton from './components/common/ChatComponentIconButton
 import FbAlbums from './components/profile-edit/addPhoto/FbAlbums';
 import FbAlbumPhotos from './components/profile-edit/addPhoto/FbAlbumPhotos';
 import Splash from './scenes/Splash';
-import { navBarStyle, navTitleStyle, navBackNextStyle } from './components/common/styles';
+import { navBarStyle, navTitleStyle, navBackNextStyle, navBackStyle } from './components/common/styles';
 import { homeLeftIconButton, homeRightIconButton, profileIconButton, wrenchIconButton } from './icons';
 import { ACTIVITY_SETUP_SCENE_TITLE, AFFILIATION_SETUP_SCENE_TITLE } from './constants';
 
@@ -74,7 +74,7 @@ class Routes extends Component {
             rightButtonTextStyle={navBackNextStyle}
             leftTitle="Back"
             onLeft={() => Actions.activitySetup()}
-            leftButtonTextStyle={navBackNextStyle}
+            leftButtonTextStyle={navBackStyle}
           />
           <Scene
             key="descriptionSetup"
@@ -86,7 +86,7 @@ class Routes extends Component {
             rightButtonTextStyle={navBackNextStyle}
             leftTitle="Back"
             onLeft={() => Actions.affiliationSetup()}
-            leftButtonTextStyle={navBackNextStyle}
+            leftButtonTextStyle={navBackStyle}
           />
           <Scene
             key="profileSetupComplete"
