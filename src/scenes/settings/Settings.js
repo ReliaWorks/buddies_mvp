@@ -12,11 +12,12 @@ const MARGIN = 15;
 class Settings extends Component {
   constructor(props) {
     super(props);
-    this.state = {showDeactivateConfirmModal: false};
+    this.state = {
+      showDeactivateConfirmModal: false,
+      showLogoutConfirmModal: false
+    };
   }
-  // componentWillMount() {
-  //   this.state = {showDeactivateConfirmModal: false};
-  // }
+
   openPDF(path) {
     Actions.pdf({path});
   }
@@ -32,10 +33,6 @@ class Settings extends Component {
     }).catch(err => console.error('An error occurred', err));
   }
 
-/*  <Text style={styles.textStyle}>
-    {this.props.value.firstName}
-  </Text>
-*/
   renderHeader() {
     return (
       <View style={{marginBottom: MARGIN, marginTop: MARGIN, flex: 0.3 }}>
@@ -92,14 +89,34 @@ class Settings extends Component {
     );
   }
 
+  showLogoutConfirmModal() {
+    this.setState({showLogoutConfirmModal: true});
+  }
+  cancelLogout() {
+    this.setState({showLogoutConfirmModal: false});
+  }
+  acceptLogout() {
+    this.props.onLogout();
+    this.setState({showLogoutConfirmModal: false});
+  }
   renderLogoutButton() {
     return (
-      <Button
-        onPress={this.props.onLogout}
-        style={localStyles}
-      >
-        Logout
-      </Button>
+      <View>
+        <Button
+          onPress={this.showLogoutConfirmModal.bind(this)}
+          style={localStyles}
+        >
+          Logout
+        </Button>
+        <Confirm
+          visible={this.state.showLogoutConfirmModal}
+          onAccept={this.cancelLogout.bind(this)}
+          onDecline={this.acceptLogout.bind(this)}
+          actionText='Logout'
+        >
+          Are you sure you want to logout?
+        </Confirm>
+      </View>
     );
   }
 
