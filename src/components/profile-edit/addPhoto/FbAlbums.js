@@ -13,15 +13,18 @@ class FbAlbums extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id});
     const albums = this.props.currentUser.facebookAlbums.filter((album) => album.count > 0);
 
-    return (
-      <ListView
-        contentContainerStyle={styles.albumList}
-        enableEmptySections
-        dataSource={ds.cloneWithRows(albums)}
-        renderRow={(rowData) => this.renderAlbumAsListItem(rowData)}
-      />
-    );
+    const component = albums.length > 0
+    ? (<ListView
+      contentContainerStyle={styles.albumList}
+      enableEmptySections
+      dataSource={ds.cloneWithRows(albums)}
+      renderRow={(rowData) => this.renderAlbumAsListItem(rowData)}
+    />)
+    : <Text style={styles.noAlbumsWarningText}>There is no available Facebook Album!</Text>;
+
+    return component;
   }
+
   renderAlbumAsListItem(rowData) {
     const { id, name, cover_photo: coverPhoto, count } = rowData;
     const source = coverPhoto && coverPhoto.images[0].source;
@@ -53,6 +56,11 @@ const styles = StyleSheet.create({
   albumList: {
     alignItems: 'stretch',
     margin: 10,
+  },
+  noAlbumsWarningText: {
+    marginTop: 70,
+    alignItems: 'center',
+    textAlign: 'center'
   },
   albumItem: {
     flexDirection: 'row',
