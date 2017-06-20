@@ -18,36 +18,37 @@ import {
   LOGIN_USER_CANCELLED
 } from './types';
 import { CURRENT_APP_VERSION } from '../constants';
-
+import { getCurrentPosition } from './LocationActions';
 
 const checkIfAlreadyLoggedInInner = (dispatch) => {
-    firebase.auth().onAuthStateChanged(user => {
-        if(user) {
-            FCM.requestPermissions(); // for iOS
-            FCM.getFCMToken().then(notificationToken => {
-                const updates = {};
-                updates['/user_profiles/' + user.uid + '/notificationToken'] = notificationToken;
+  firebase.auth().onAuthStateChanged(user => {
+    if(user) {
+      getCurrentPosition(user, dispatch);
+      FCM.requestPermissions(); // for iOS
+      FCM.getFCMToken().then(notificationToken => {
+          const updates = {};
+          updates['/user_profiles/' + user.uid + '/notificationToken'] = notificationToken;
 
-                firebase.database().ref().update(updates);
-            });
+          firebase.database().ref().update(updates);
+      });
 
-            dispatch({
-                type: ALREADY_AUTHENTICATED,
-                payload: {
-                    token: user.refreshToken,
-                    uid: user.uid
-                }
-            });
+      dispatch({
+          type: ALREADY_AUTHENTICATED,
+          payload: {
+              token: user.refreshToken,
+              uid: user.uid
+          }
+      });
 
-            AccessToken.getCurrentAccessToken()
-              .then(accessTokenData => {
-                checkIfUserExists(accessTokenData, dispatch);
-              });
-        } else {
-          dispatch({ type: LOGOUT_USER });
-          Actions.login();
-        }
-    });
+      AccessToken.getCurrentAccessToken()
+        .then(accessTokenData => {
+          checkIfUserExists(accessTokenData, dispatch);
+        });
+    } else {
+      dispatch({ type: LOGOUT_USER });
+      Actions.login();
+    }
+  });
 };
 
 export const checkIfAlreadyLoggedIn = () => {
@@ -65,6 +66,7 @@ export const checkIfAlreadyLoggedIn = () => {
       });
   };
 };
+
 /**
  * Checks if the storage app version matches what it is in CURRENT_APP_VERSION
  */

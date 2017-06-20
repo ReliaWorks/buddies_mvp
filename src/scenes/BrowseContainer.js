@@ -26,7 +26,8 @@ class BrowseContainer extends Component {
         this.props.currentUserFetch();
 //    if(this.props.connection.currentIndex === 0 && this.props.connection.potentials.length === 0)
     if(this.props.connection.currentIndex === 0)
-      this.props.potentialsFetch(this.props.currentUser);
+      this.props.potentialsFetch();
+
     if (!this.props.connection.listeningForNotifications)
       this.props.checkNotifications();
   }
