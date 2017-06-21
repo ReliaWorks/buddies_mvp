@@ -31,29 +31,11 @@ class LocationRequest extends Component {
     }
   }
 
-  renderCloseIcon() {
-    return (
-      <TouchableOpacity onPress={this.onClose}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-          }}
-        >
-          <Icon
-            name="close"
-            size={ICON_WIDTH}
-            style={{marginRight: MARGIN}}
-          />
-        </View>
-      </TouchableOpacity>
-    );
-  }
-
   renderLocationPrompt() {
     return(
       <View style={styles.textContainer}>
-        <Text style={styles.semiBoldText}>Enter your location</Text>
+        <Text style={styles.semiBoldText}>Enter your location below or enable</Text>
+        <Text style={styles.semiBoldText}>location services in your phone settings.</Text>
         <TextInput
           style={styles.locationInput}
           placeholder="City, State or Zipcode"
@@ -67,13 +49,11 @@ class LocationRequest extends Component {
   render() {
     return(
       <View style={{flex: 1}}>
-        {this.renderCloseIcon()}
         <View style={styles.container}>
           <View style={{height: 50}} />
           <View style={styles.textContainer}>
             <Text style={styles.text}>Your location is needed</Text>
-            <Text style={styles.text}>You can also enable location</Text>
-            <Text style={styles.text}>services in your app settings</Text>
+            <Text style={styles.text}>to find partners.</Text>
           </View>
           <View style={{height: 25}} />
           <Image source={LOCATION_ICON} style={styles.imageStyle} />
@@ -100,6 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Source Sans Pro',
     fontWeight: '500',
+    textAlign: 'center'
   },
   text: {
     fontSize: 20,

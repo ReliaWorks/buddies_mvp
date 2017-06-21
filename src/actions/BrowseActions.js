@@ -84,6 +84,8 @@ export const currentUserFetch = () => {
         if (snapshot.val())
           getCurrentPosition({...snapshot.val(), uid: currentUser.uid}, dispatch);
         dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
+      }, (error) => {
+        console.log(`Error in currentUserFetch = ${error}`);
       });
   };
 };

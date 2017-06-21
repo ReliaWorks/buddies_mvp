@@ -4,7 +4,7 @@ import { Image, Modal, Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
-import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, recordView, scrolled, resetCurrentIndex, matchesFetch } from '../actions';
+import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, recordView, scrolled, resetCurrentIndex, matchesFetch } from '../actions';
 import { NoMoreCards, Spinner, GlowLoader } from '../components/common';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE, SERVER_DOWN_ROBOT } from '../constants';
 
@@ -177,4 +177,4 @@ const mapStateToProps = ({ currentUser, connection, messageCenter }) => {
   return { currentUser, connection, messageCenter };
 };
 
-export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, recordView, scrolled, resetCurrentIndex, matchesFetch })(BrowseContainer);
+export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, recordView, scrolled, resetCurrentIndex, matchesFetch })(BrowseContainer);

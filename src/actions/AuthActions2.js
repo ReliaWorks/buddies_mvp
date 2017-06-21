@@ -19,6 +19,7 @@ import {
 } from './types';
 import { CURRENT_APP_VERSION } from '../constants';
 import { currentUserFetch } from './BrowseActions';
+import { getCurrentPosition } from './LocationActions';
 
 const checkIfAlreadyLoggedInInner = (dispatch) => {
   firebase.auth().onAuthStateChanged(user => {
@@ -104,6 +105,8 @@ export const loginUser = () => {
               const credential = provider.credential(accessTokenData.accessToken);
               auth.signInWithCredential(credential)
                 .then(credData => {
+                  debugger;
+                  getCurrentPosition({uid: auth.currentUser.uid}, dispatch);
                 })
                 .catch(err => {
                   alert("Unable to log in. Try again later.");
