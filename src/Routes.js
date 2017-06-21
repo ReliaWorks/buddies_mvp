@@ -199,7 +199,7 @@ class Routes extends Component {
           }}
           leftTitle="Cancel"
           onLeft={() => Actions.photoEdit()}
-          leftButtonTextStyle={{...navBackNextStyle, color: 'white'}}
+          leftButtonTextStyle={{...navBackNextStyle, color: 'white', alignSelf: 'flex-start'}}
         />
         <Scene
           key="addPhotoFbAlbumPhotos"
@@ -214,7 +214,7 @@ class Routes extends Component {
           }}
           leftTitle="Albums"
           onLeft={() => Actions.addPhotoFbAlbums()}
-          leftButtonTextStyle={{...navBackNextStyle, color: 'white'}}
+          leftButtonTextStyle={{...navBackNextStyle, color: 'white', alignSelf: 'flex-start'}}
         />
         <Scene
           key="activityEdit"
