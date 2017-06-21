@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Dimensions, Linking, Text, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, Confirm } from '../../components/common';
+import { buttonStyle } from '../../components/common/styles';
 import { GenderPreference, AgePreference, LocationPreference } from '../../components/preferences';
 import styles from './styles';
+import CustomIcon from '../../assets/icons';
 import { TOS, PRIVACY_POLICY, SAFETY_TIPS } from '../../constants';
 
 const { width } = Dimensions.get('window');
@@ -43,11 +45,12 @@ class Settings extends Component {
     );
   }
 
+//  <AgePreference />
+
   renderPreferences() {
     return (
-      <View style={{flex: 8, justifyContent: 'space-between', marginTop: 10, marginBottom: 10}}>
+      <View style={{flex: 5, justifyContent: 'space-between', marginTop: 10, marginBottom: 10}}>
         <GenderPreference />
-        <AgePreference />
         <LocationPreference />
       </View>
     );
@@ -151,12 +154,40 @@ class Settings extends Component {
     );
   }
 
+  editIcon() {
+    return (
+      <View accessible>
+        <TouchableOpacity
+          onPress={() => Actions.location()}
+          style={{...buttonStyle, marginRight: 15}}
+        >
+          <CustomIcon
+            name="edit_icon"
+            size={20}
+            color="black"
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  renderLocation() {
+    const { location } = this.props.value;
+    return(
+      <View style={{...styles.preferenceContainer, flex: 0.7, flexDirection: 'row', alignItems: 'center'}}>
+        <Text style={localStyles.locationHeaderText}>Location: <Text style={{fontFamily: 'Source Sans Pro'}}>{location.city}, {location.state}</Text></Text>
+        {this.editIcon()}
+      </View>
+    );
+  }
+
+//        {this.renderFeedbackButton()}
   render() {
     return (
       <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: '#F8F8F8'}}>
         {this.renderHeader()}
         {this.renderPreferences()}
-        {this.renderFeedbackButton()}
+        {this.renderLocation()}
         {this.renderLinks()}
         {this.renderLogoutButton()}
         {this.renderDeactivateButton()}
@@ -166,6 +197,25 @@ class Settings extends Component {
 }
 
 const localStyles = {
+  locationContainer: {
+    margin: 15,
+    backgroundColor: 'white',
+    borderWidth: 1,
+  },
+  locationHeaderText: {
+    fontFamily: 'SourceSansPro-Bold',
+    fontSize: 14,
+    marginLeft: 20,
+    marginBottom: 5,
+    marginTop: 10,
+  },
+  locationText: {
+    fontFamily: 'Source Sans Pro',
+    fontSize: 14,
+    marginLeft: 20,
+    marginBottom: 5,
+    marginTop: 10,
+  },
   textStyle: {
     textAlign: 'center',
     color: 'white',

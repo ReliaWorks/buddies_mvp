@@ -12,7 +12,6 @@ const ICON_WIDTH = 25;
 const MARGIN = 15;
 
 class LocationRequest extends Component {
-
   constructor(props) {
     super(props);
     this.state = { text: '' };
@@ -26,7 +25,8 @@ class LocationRequest extends Component {
     if(address) {
       console.log('address:',address);
       this.props.setLocationFromAddress(address);
-    }else{
+      Actions.pop();
+    } else {
       alert("You need to type a city, state");
     }
   }
@@ -145,4 +145,3 @@ const mapStateToProps = ({ currentUser }) => {
 };
 
 export default connect(mapStateToProps, { setLocationFromAddress })(LocationRequest);
-

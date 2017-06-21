@@ -5,12 +5,13 @@ import { logoutUser, deactivateUser } from '../../actions';
 
 class SettingsContainer extends Component {
   render() {
-    const { firstName, email } = this.props;
+    const { firstName, email, location } = this.props;
     return (
       <Settings
         value={{
           firstName,
-          email
+          email,
+          location
         }}
         onLogout={() => this.props.logoutUser()}
         onDeactivate={() => this.props.deactivateUser()}
@@ -20,8 +21,8 @@ class SettingsContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { firstName, email, uid } = state.currentUser;
-  return { firstName, email, uid };
+  const { firstName, email, uid, location } = state.currentUser;
+  return { firstName, email, uid, location };
 };
 
 export default connect(mapStateToProps, { logoutUser, deactivateUser })(SettingsContainer);
