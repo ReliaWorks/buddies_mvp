@@ -18,12 +18,12 @@ import {
   LOGIN_USER_CANCELLED
 } from './types';
 import { CURRENT_APP_VERSION } from '../constants';
-import { getCurrentPosition } from './LocationActions';
+import { currentUserFetch } from './BrowseActions';
 
 const checkIfAlreadyLoggedInInner = (dispatch) => {
   firebase.auth().onAuthStateChanged(user => {
     if(user) {
-      getCurrentPosition(user, dispatch);
+      currentUserFetch();
       FCM.requestPermissions(); // for iOS
       FCM.getFCMToken().then(notificationToken => {
           const updates = {};
