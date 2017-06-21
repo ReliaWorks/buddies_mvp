@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { setLocationFromAddress } from '../actions/LocationActions';
 import { Button } from '../components/common';
 import { LOCATION_ICON } from '../constants';
 
@@ -11,12 +13,22 @@ const MARGIN = 15;
 
 class LocationRequest extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = { text: '' };
+  }
+
   onClose() {
     Actions.pop();
   }
 
-  onPress() {
-    Actions.browse();
+  onPress(address) {
+    if(address) {
+      console.log('address:',address);
+      this.props.setLocationFromAddress(address);
+    }else{
+      alert("You need to type a city, state");
+    }
   }
 
   renderCloseIcon() {
@@ -38,16 +50,16 @@ class LocationRequest extends Component {
     );
   }
 
-  renderLocationPrompt(onChangeText) {
+  renderLocationPrompt() {
     return(
       <View style={styles.textContainer}>
         <Text style={styles.semiBoldText}>Enter your location</Text>
         <TextInput
           style={styles.locationInput}
-          placeholder="City, State"
-          onChangeText={onChangeText}
+          placeholder="City, State or Zipcode"
+          onChangeText={(text) => { this.setState({text}); }}
         />
-        <Button styles={buttonStyles} onPress={this.onPress}>Save Location</Button>
+        <Button styles={buttonStyles} onPress={() => this.onPress(this.state.text)}>Save Location</Button>
       </View>
     );
   }
@@ -128,5 +140,9 @@ const buttonStyles = {
   }
 };
 
+const mapStateToProps = ({ currentUser }) => {
+  return { currentUser };
+};
 
-export default LocationRequest;
+export default connect(mapStateToProps, { setLocationFromAddress })(LocationRequest);
+

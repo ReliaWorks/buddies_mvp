@@ -79,9 +79,10 @@ export const currentUserFetch = () => {
   const { currentUser } = firebase.auth();
   return (dispatch) => {
     dispatch({ type: CURRENT_USER_FETCH_START });
-    getCurrentPosition(currentUser, dispatch);
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
       .once('value', snapshot => {
+        if (snapshot.val())
+          getCurrentPosition({...snapshot.val(), uid: currentUser.uid}, dispatch);
         dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
       });
   };
