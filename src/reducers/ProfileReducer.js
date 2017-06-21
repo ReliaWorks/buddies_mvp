@@ -45,8 +45,6 @@ const INITIAL_STATE = {
   location: {},
   geolocation: {},
   description: '',
-  numTimesConnected: 0,
-  numTimesMatched: 0,
   seenConnectionHelper: false,
 };
 
@@ -104,12 +102,6 @@ export default(state = INITIAL_STATE, action) => {
 
       let description = '';
       if(action.payload.description) description = action.payload.description;
-      let numTimesConnected = 0;
-      if(action.payload.numTimesConnected)
-        numTimesConnected = action.payload.numTimesConnected;
-      let numTimesMatched = 0;
-      if(action.payload.numTimesMatched)
-        numTimesMatched = action.payload.numTimesMatched;
 
       return {
         ...state,
@@ -120,9 +112,8 @@ export default(state = INITIAL_STATE, action) => {
         affiliations,
         description,
         email,
+        location: action.payload.location,
         uid: action.payload.uid,
-        numTimesConnected,
-        numTimesMatched,
         seenConnectionHelper: action.payload.seenConnectionHelper,
       };
     }

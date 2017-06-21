@@ -21,7 +21,7 @@ const renderChoices = () => {
 
 const AgePreference = () => {
   return (
-    <View style={{...styles.preferenceContainer, flex: 0.5}}>
+    <View style={{...styles.preferenceContainer, flex: 0.7}}>
       {renderHeader()}
       {renderChoices()}
     </View>

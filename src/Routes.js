@@ -246,6 +246,10 @@ class Routes extends Component {
           type={ActionConst.RESET}
         />
         <Scene
+          key="location"
+          component={LocationRequest}
+        />
+        <Scene
           key="pdf"
           component={PDF}
         />

@@ -31,7 +31,7 @@ const renderChoices = () => {
           name="ios-checkmark-circle"
           size={ICON_SIZE}
           color="#4A90E2"
-          style={{width: ICON_SIZE, height: ICON_SIZE}}
+          style={{width: ICON_SIZE, height: ICON_SIZE, marginRight: 10}}
         />
       </View>
     </View>
@@ -40,7 +40,7 @@ const renderChoices = () => {
 
 const GenderPreference = () => {
   return (
-    <View style={styles.preferenceContainer}>
+    <View style={{...styles.preferenceContainer, flex: 0.5}}>
       {renderHeader()}
       {renderChoices()}
     </View>
