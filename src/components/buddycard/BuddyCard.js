@@ -152,10 +152,15 @@ class BuddyCard extends Component {
         flex: 1.8,
         backgroundColor: 'white',
       };
-    } else {
+    } else if(this.props.value.editable) {
       return {
-        flex: 0.5,
+        flex: 0.415,
         backgroundColor: 'white',
+      };
+    } else {
+        return {
+          flex: 0.495,
+          backgroundColor: 'white',
       };
     }
   }
