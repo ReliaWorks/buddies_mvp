@@ -10,6 +10,7 @@ import {
   PHOTO_REMOVED,
   PHOTOS_SELECTED,
   PHOTO_UPLOADED,
+  FACEBOOK_ALBUMS_REQUESTED,
   FACEBOOK_ALBUMS_FETCHED,
   FACEBOOK_ALBUM_PHOTOS_REQUESTED,
   FACEBOOK_ALBUM_PHOTOS_FETCHED
@@ -48,16 +49,29 @@ const updatePrimaryPicReferences = (withUrl = null) => {
     }
   })();
 
-  const updates = {};
-
-  newPrimaryPhotoUrlPromise.then((newPrimaryPhotoUrl) => {
+  newPrimaryPhotoUrlPromise.then(newPrimaryPhotoUrl => {
+    // return RNFetchblob.config({
+    //   fileCache: true
+    // })
+    // .fetch('GET', newPrimaryPhotoUrl)
+    // .then(res => {
+    //   return newPrimaryPhotoUrl;
+    // });
+      // remove cached file from storage
+      //res.flush();
+    //});
+    return newPrimaryPhotoUrl;
+  }).then(thumbnailUrl => {
     return firebase.database().ref('message_center/' + currentUser.uid).once('value', matchesSnap => {
+      const updates = {};
+      updates[`user_profiles/${currentUser.uid}/thumbnailImage`] = thumbnailUrl;
+
       matchesSnap.forEach(matchSnap => {
         const otherUserId = matchSnap.key;
         const conversationId = matchSnap.val().conversationId;
 
-        updates[`message_center/${currentUser.uid}/${otherUserId}/user/avatar`] = newPrimaryPhotoUrl;
-        updates[`message_center/${otherUserId}/${currentUser.uid}/otherUserPic`] = newPrimaryPhotoUrl;
+        updates[`message_center/${currentUser.uid}/${otherUserId}/user/avatar`] = thumbnailUrl;
+        updates[`message_center/${otherUserId}/${currentUser.uid}/otherUserPic`] = thumbnailUrl;
       });
 
       firebase.database().ref().update(updates);
@@ -131,7 +145,6 @@ export const photosSelected = (photo, from, currentUser) => {
 const uploadImage = (uid, uri, from, mime = 'image/jpg') => {
   return new Promise((resolve, reject) => {
     if (from === 'FB') {
-      console.log('bmbkkjbkh: ', uri);
       resolve(uri);
     } else {
       const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
@@ -167,6 +180,8 @@ const uploadImage = (uid, uri, from, mime = 'image/jpg') => {
 export const fetchFacebookAlbums = () => {
   return (dispatch) => {
     let token = null;
+
+    dispatch({type: FACEBOOK_ALBUMS_REQUESTED});
 
     AccessToken.getCurrentAccessToken()
       .then(data => {

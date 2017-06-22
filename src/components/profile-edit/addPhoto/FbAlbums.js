@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ListView, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import {ActivityIndicator, Text, View, ListView, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { fetchFacebookAlbums, fetchFacebookAlbumPhotos } from '../../../actions';
@@ -10,19 +10,22 @@ class FbAlbums extends Component {
   }
 
   render() {
+    const {currentUser} = this.props;
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id});
-    const albums = this.props.currentUser.facebookAlbums.filter((album) => album.count > 0);
+    const albums = currentUser.facebookAlbums.filter((album) => album.count > 0);
 
-    const component = albums.length > 0
-    ? (<ListView
-      contentContainerStyle={styles.albumList}
-      enableEmptySections
-      dataSource={ds.cloneWithRows(albums)}
-      renderRow={(rowData) => this.renderAlbumAsListItem(rowData)}
-    />)
-    : <Text style={styles.noAlbumsWarningText}>You have no Facebook photos</Text>;
-
-    return component;
+    if (currentUser.facebookAlbumsStatus === 'LOADING') {
+      return <ActivityIndicator style={{marginTop: 30}} size='large' />;
+    } else if (albums.length > 0) {
+      return (<ListView
+        contentContainerStyle={styles.albumList}
+        enableEmptySections
+        dataSource={ds.cloneWithRows(albums)}
+        renderRow={(rowData) => this.renderAlbumAsListItem(rowData)}
+      />);
+    } else {
+      return <Text style={styles.noAlbumsWarningText}>You have no Facebook photos</Text>;
+    }
   }
 
   renderAlbumAsListItem(rowData) {

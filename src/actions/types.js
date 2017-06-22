@@ -24,6 +24,7 @@ export const PHOTO_REMOVED = 'photo_removed';
 export const PICTURE_SAVED = 'pic_saved';
 export const PHOTOS_SELECTED = 'photos_selected';
 export const PHOTO_UPLOADED = 'photo_uploaded';
+export const FACEBOOK_ALBUMS_REQUESTED = 'facebook_albums_requested';
 export const FACEBOOK_ALBUMS_FETCHED = 'facebook_albums_fetched';
 export const FACEBOOK_ALBUM_PHOTOS_REQUESTED = 'facebook_album_photos_requested';
 export const FACEBOOK_ALBUM_PHOTOS_FETCHED = 'facebook_album_photos_fetched';
