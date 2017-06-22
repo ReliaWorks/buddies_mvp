@@ -18,6 +18,7 @@ import {
   LOGIN_USER_CANCELLED
 } from './types';
 import { CURRENT_APP_VERSION } from '../constants';
+import { currentUserFetch } from './BrowseActions';
 import { getCurrentPosition } from './LocationActions';
 
 let onAuthStateChangedUnSubscriber = null;
@@ -25,7 +26,7 @@ let onAuthStateChangedUnSubscriber = null;
 const checkIfAlreadyLoggedInInner = (dispatch) => {
   onAuthStateChangedUnSubscriber = firebase.auth().onAuthStateChanged(user => {
     if(user) {
-      getCurrentPosition(user, dispatch);
+      currentUserFetch();
       FCM.requestPermissions(); // for iOS
       FCM.getFCMToken().then(notificationToken => {
           const updates = {};
@@ -107,6 +108,8 @@ export const loginUser = () => {
               const credential = provider.credential(accessTokenData.accessToken);
               auth.signInWithCredential(credential)
                 .then(credData => {
+                  debugger;
+                  getCurrentPosition({uid: auth.currentUser.uid}, dispatch);
                 })
                 .catch(err => {
                   alert("Unable to log in. Try again later.");
@@ -143,9 +146,9 @@ export const deactivateUser = () => {
 
 const _logoutUser = (dispatch) => {
   LoginManager.logOut();
+  dispatch({ type: LOGOUT_USER });
   firebase.auth().signOut()
     .then(() => {
-      dispatch({ type: LOGOUT_USER });
       Actions.root();
     }, (error) => {
       console.log(`Error signing out of Firebase ${error}`);

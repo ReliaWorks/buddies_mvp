@@ -21,7 +21,7 @@ const renderChoices = () => {
 
 const LocationPreference = () => {
   return (
-    <View style={{...styles.preferenceContainer, flex: 0.5}}>
+    <View style={{...styles.preferenceContainer, flex: 0.2}}>
       {renderHeader()}
       {renderChoices()}
     </View>

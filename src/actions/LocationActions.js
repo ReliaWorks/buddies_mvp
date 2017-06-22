@@ -2,6 +2,7 @@ import React from 'react';
 import { AsyncStorage } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
+import { Actions } from 'react-native-router-flux';
 import {
   CURRENT_USER_FETCH_SUCCESS,
   LOCATION_MAP_STORAGE_KEY,
@@ -13,7 +14,6 @@ import { MAP_API_KEY } from '../config';
 export const getCurrentPosition = (currentUser, dispatch) => {
   navigator.geolocation.getCurrentPosition(
     (position) => {
-      console.log("position: ", position);
       const initialPosition = JSON.stringify(position);
       firebase.database().ref(`user_profiles/${currentUser.uid}/geoLocation`).set(position);
 
@@ -25,7 +25,6 @@ export const getCurrentPosition = (currentUser, dispatch) => {
               user.location = location;
               user.geoLocation = position;
               user.uid = currentUser.uid;
-              dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...user } });
             });
         })
         .catch(() => {
@@ -33,9 +32,16 @@ export const getCurrentPosition = (currentUser, dispatch) => {
         });
 
       dispatch({ type: SET_CURRENT_GEOLOCATION, payload: initialPosition });
+    },
+    (error) => {
+      if (!currentUser.location) {
+        Actions.location();
+        console.log("User declined geolocation services");
+      }
     }
   );
-}
+};
+
 const stringToVariable = (str) => {
   if (str)
    return str.replace(/\s+/g, '_')
@@ -244,6 +250,90 @@ const getLocationFromGoogleMapAPI = function (locationHash, latitude, longitude)
             }
             firebase.database().ref(`location_cache/${locationHash}`).set(location);
             resolve(location);
+        }else{
+          console.log('Data',response.data);
+          reject();
+        }
+      })
+      .catch((error) => {
+        reject();
+        console.log(error);
+      });
+  });
+  return promise;
+};
+export const setLocationFromAddress = (address) => {
+  console.log('setLocationFromAddress');
+  return (dispatch) => {
+    getLocationFromAddressMapAPI(address)
+      .then((values) => {
+        const {location, position} = values;
+        console.log('Position: ',position);
+        const { currentUser } = firebase.auth();
+        firebase.database().ref(`user_profiles/${currentUser.uid}/geoLocation`).set({ coords: position });
+        setStateWithLocation(currentUser.uid, position, dispatch, location);
+        Actions.browse();
+      })
+      .catch(() => {
+        alert("Couldn't find the location. Please make sure the city, state is typed correctly.");
+      });
+  };
+};
+
+const getLocationFromAddressMapAPI = (address) => {
+  const promise = new Promise((resolve, reject) => {
+    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${MAP_API_KEY}`)
+      .then((response) => {
+        if (response.data
+          && response.data.results
+          && response.data.results.length
+          && response.data.results[0].address_components
+          && response.data.results[0].address_components.length
+          && response.data.results[0].formatted_address
+          && response.data.results[0].geometry
+        ) {
+          const addressComponents = response.data.results[0].address_components;
+
+          const location = {
+            city: '',
+            state: '',
+            country: '',
+            county: '',
+            neighborhood: ''
+          };
+
+          for (let i = 0; i < addressComponents.length; i++) {
+            const component = addressComponents[i];
+            console.log(component);
+            switch(component.types[0]) {
+              case 'locality':
+                location.city = component.long_name;
+                break;
+              case 'political':
+                if (!location.city)
+                  location.city = component.long_name;
+                break;
+              case 'neighborhood':
+                location.neighborhood = component.short_name || '';
+                break;
+              case 'administrative_area_level_1':
+                location.state = component.short_name;
+                break;
+              case 'administrative_area_level_2':
+                location.county = component.short_name;
+                break;
+              case 'country':
+                location.country = component.long_name;
+                break;
+              default:
+                break;
+            }
+          }
+          const loc = response.data.results[0].geometry.location || {};
+
+          const position = { latitude: loc.lat, longitude: loc.lng };
+
+          resolve({location, position});
         }else{
           console.log('Data',response.data);
           reject();

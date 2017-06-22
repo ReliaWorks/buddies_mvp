@@ -4,6 +4,7 @@ import { ActionConst, Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './scenes/LoginForm';
 import SettingsContainer from './scenes/settings';
 import BrowseContainer from './scenes/BrowseContainer';
+import LocationRequest from './scenes/LocationRequest';
 import ProfileSetupComplete from './scenes/profile-setup/ProfileSetupComplete';
 import ActivitySetupScene from './scenes/activity-setup/';
 import AffiliationSetupScene from './scenes/affiliation-setup/';
@@ -105,6 +106,10 @@ class Routes extends Component {
             type={ActionConst.RESET}
           />
           <Scene
+            key="location"
+            component={LocationRequest}
+          />
+          <Scene
             key="connectionHelper"
             component={FirstConnectionHelperModal}
             hideNavBar
@@ -194,7 +199,7 @@ class Routes extends Component {
           }}
           leftTitle="Cancel"
           onLeft={() => Actions.photoEdit()}
-          leftButtonTextStyle={{...navBackNextStyle, color: 'white'}}
+          leftButtonTextStyle={{...navBackNextStyle, color: 'white', alignSelf: 'flex-start'}}
         />
         <Scene
           key="addPhotoFbAlbumPhotos"
@@ -209,7 +214,7 @@ class Routes extends Component {
           }}
           leftTitle="Albums"
           onLeft={() => Actions.addPhotoFbAlbums()}
-          leftButtonTextStyle={{...navBackNextStyle, color: 'white'}}
+          leftButtonTextStyle={{...navBackNextStyle, color: 'white', alignSelf: 'flex-start'}}
         />
         <Scene
           key="activityEdit"
@@ -239,6 +244,10 @@ class Routes extends Component {
           }}
           leftButton={profileIconButton}
           type={ActionConst.RESET}
+        />
+        <Scene
+          key="location"
+          component={LocationRequest}
         />
         <Scene
           key="pdf"

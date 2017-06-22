@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import Connection from './Connection';
-import { connectWithUser, findCommonality, selectChat } from '../../actions';
+import { findCommonality, selectChat } from '../../actions';
 import { DEFAULT_PROFILE_PHOTO, ACTIVE } from '../../constants';
 
 class ConnectionContainer extends Component {
@@ -34,7 +34,6 @@ class ConnectionContainer extends Component {
 
     return (
       <Connection
-        onConnect={(uid, name, pic) => this.props.connectWithUser(uid, name, pic)}
         currentUser={{
           id: currentUser.uid,
           name: currentUser.firstName,
@@ -62,4 +61,4 @@ const mapStateToProps = ({ currentUser, connection, commonality }) => {
   return { currentUser, connection, commonality };
 };
 
-export default connect(mapStateToProps, { connectWithUser, findCommonality, selectChat })(ConnectionContainer);
+export default connect(mapStateToProps, { findCommonality, selectChat })(ConnectionContainer);
