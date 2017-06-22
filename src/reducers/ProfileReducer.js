@@ -22,6 +22,7 @@ import {
   PHOTOS_SELECTED,
   PHOTO_UPLOADED,
   PROFILE_INFO,
+  FACEBOOK_ALBUMS_REQUESTED,
   FACEBOOK_ALBUMS_FETCHED,
   FACEBOOK_ALBUM_PHOTOS_REQUESTED,
   FACEBOOK_ALBUM_PHOTOS_FETCHED,
@@ -38,6 +39,7 @@ const INITIAL_STATE = {
   profileImages: [],
   profileImagesUploadProgress: [],
   //selectableFacebookPhotos: [],
+  facebookAlbumsStatus: 'NOT_LOADING',
   facebookAlbums: [],
   facebookAlbumPhotos: [],
   activities: {},
@@ -217,9 +219,12 @@ export default(state = INITIAL_STATE, action) => {
       const profileImages = [...state.profileImages, action.payload.photo];
       return { ...state, profileImages, profileImagesUploadProgress };
     }
+    case FACEBOOK_ALBUMS_REQUESTED: {
+      return { ...state, facebookAlbumsStatus: 'LOADING' };
+    }
     case FACEBOOK_ALBUMS_FETCHED: {
       const facebookAlbums = action.payload;
-      return { ...state, facebookAlbums };
+      return { ...state, facebookAlbums, facebookAlbumsStatus: 'NOT_LOADING' };
     }
     case FACEBOOK_ALBUM_PHOTOS_REQUESTED: {
       return { ...state, facebookAlbumPhotos: action.payload };

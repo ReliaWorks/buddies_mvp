@@ -10,6 +10,7 @@ import {
   PHOTO_REMOVED,
   PHOTOS_SELECTED,
   PHOTO_UPLOADED,
+  FACEBOOK_ALBUMS_REQUESTED,
   FACEBOOK_ALBUMS_FETCHED,
   FACEBOOK_ALBUM_PHOTOS_REQUESTED,
   FACEBOOK_ALBUM_PHOTOS_FETCHED
@@ -179,6 +180,8 @@ const uploadImage = (uid, uri, from, mime = 'image/jpg') => {
 export const fetchFacebookAlbums = () => {
   return (dispatch) => {
     let token = null;
+
+    dispatch({type: FACEBOOK_ALBUMS_REQUESTED});
 
     AccessToken.getCurrentAccessToken()
       .then(data => {
