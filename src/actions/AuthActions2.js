@@ -105,8 +105,8 @@ export const loginUser = () => {
               const credential = provider.credential(accessTokenData.accessToken);
               auth.signInWithCredential(credential)
                 .then(credData => {
-                  debugger;
-                  getCurrentPosition({uid: auth.currentUser.uid}, dispatch);
+//                  getCurrentPosition({uid: auth.currentUser.uid}, dispatch);
+                  currentUserFetch();
                 })
                 .catch(err => {
                   alert("Unable to log in. Try again later.");
