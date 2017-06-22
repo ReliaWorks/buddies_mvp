@@ -177,4 +177,4 @@ const mapStateToProps = ({ currentUser, connection, messageCenter }) => {
   return { currentUser, connection, messageCenter };
 };
 
-export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, connectionHelperSeen, recordView, scrolled, resetCurrentIndex, matchesFetch })(BrowseContainer);
+export default connect(mapStateToProps, { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, recordView, scrolled, resetCurrentIndex, matchesFetch })(BrowseContainer);
