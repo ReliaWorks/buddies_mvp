@@ -20,8 +20,10 @@ import {
 import { CURRENT_APP_VERSION } from '../constants';
 import { getCurrentPosition } from './LocationActions';
 
+let onAuthStateChangedUnSubscriber = null;
+
 const checkIfAlreadyLoggedInInner = (dispatch) => {
-  firebase.auth().onAuthStateChanged(user => {
+  onAuthStateChangedUnSubscriber = firebase.auth().onAuthStateChanged(user => {
     if(user) {
       getCurrentPosition(user, dispatch);
       FCM.requestPermissions(); // for iOS
@@ -94,6 +96,7 @@ export const loginUser = () => {
 
     dispatch({ type: LOGIN_USER_REQUESTED });
 
+    LoginManager.logOut();
     LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends', 'user_photos'])
       .then((result) => {
         if (result.isCancelled) {
@@ -121,6 +124,9 @@ export const loginUser = () => {
 
 export const logoutUser = () => {
   return (dispatch) => {
+    if (onAuthStateChangedUnSubscriber) {
+      onAuthStateChangedUnSubscriber();
+    }
     _logoutUser(dispatch);
   };
 };

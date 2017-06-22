@@ -48,16 +48,29 @@ const updatePrimaryPicReferences = (withUrl = null) => {
     }
   })();
 
-  const updates = {};
-
-  newPrimaryPhotoUrlPromise.then((newPrimaryPhotoUrl) => {
+  newPrimaryPhotoUrlPromise.then(newPrimaryPhotoUrl => {
+    // return RNFetchblob.config({
+    //   fileCache: true
+    // })
+    // .fetch('GET', newPrimaryPhotoUrl)
+    // .then(res => {
+    //   return newPrimaryPhotoUrl;
+    // });
+      // remove cached file from storage
+      //res.flush();
+    //});
+    return newPrimaryPhotoUrl;
+  }).then(thumbnailUrl => {
     return firebase.database().ref('message_center/' + currentUser.uid).once('value', matchesSnap => {
+      const updates = {};
+      updates[`user_profiles/${currentUser.uid}/thumbnailImage`] = thumbnailUrl;
+
       matchesSnap.forEach(matchSnap => {
         const otherUserId = matchSnap.key;
         const conversationId = matchSnap.val().conversationId;
 
-        updates[`message_center/${currentUser.uid}/${otherUserId}/user/avatar`] = newPrimaryPhotoUrl;
-        updates[`message_center/${otherUserId}/${currentUser.uid}/otherUserPic`] = newPrimaryPhotoUrl;
+        updates[`message_center/${currentUser.uid}/${otherUserId}/user/avatar`] = thumbnailUrl;
+        updates[`message_center/${otherUserId}/${currentUser.uid}/otherUserPic`] = thumbnailUrl;
       });
 
       firebase.database().ref().update(updates);
@@ -131,7 +144,6 @@ export const photosSelected = (photo, from, currentUser) => {
 const uploadImage = (uid, uri, from, mime = 'image/jpg') => {
   return new Promise((resolve, reject) => {
     if (from === 'FB') {
-      console.log('bmbkkjbkh: ', uri);
       resolve(uri);
     } else {
       const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;

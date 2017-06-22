@@ -4,7 +4,7 @@ import { ListView, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ActivitySetup from './ActivitySetup';
-import { activitiesFetch, activitiesSaved, photosSaved, activitySelected, activityUnselected, activityEdited } from '../../actions';
+import { activitiesFetch, activitiesSaved, activitySelected, activityUnselected, activityEdited } from '../../actions';
 import ActivityAttributeModal from '../../components/profile-edit/ActivityAttributeModal';
 
 class ActivitySetupScene extends Component {
@@ -35,9 +35,9 @@ class ActivitySetupScene extends Component {
 
   componentWillUnmount() {
     this.props.activitiesSaved(this.props.currentUser.activities);
-    if(this.props.source != 'Edit') {
-      this.props.photosSaved(this.props.currentUser.profileImages);
-    }
+    // if(this.props.source != 'Edit') {
+    //   this.props.photosSaved(this.props.currentUser.profileImages);
+    // }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -144,4 +144,4 @@ const mapStateToProps = ({ currentUser, auth, activities }) => {
   return { currentUser, auth, activities: allActivities, wasAllActivitiesFetched };
 };
 
-export default connect(mapStateToProps, { activitiesFetch, activitiesSaved, photosSaved, activitySelected, activityUnselected, activityEdited })(ActivitySetupScene);
+export default connect(mapStateToProps, { activitiesFetch, activitiesSaved, activitySelected, activityUnselected, activityEdited })(ActivitySetupScene);
