@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import sortBy from 'lodash/sortBy';
 
 import {
   ALL_ACTIVITIES_FETCH,
@@ -18,7 +19,11 @@ export const affiliationsFetch = () => {
   return (dispatch) => {
     firebase.database().ref('/affiliations')
       .once('value', snapshot => {
-        dispatch({ type: ALL_AFFILIATIONS_FETCH, payload: snapshot.val() });
+        const affiliationSet = snapshot.val();
+        const sortedCollection = sortBy(affiliationSet, (aff) => {
+          return aff.rank;
+        });
+        dispatch({ type: ALL_AFFILIATIONS_FETCH, payload: sortedCollection });
       });
   };
 };
