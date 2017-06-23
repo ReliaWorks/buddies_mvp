@@ -64,7 +64,6 @@ class SelectableTile extends Component {
             style={{
               ...activityTextLabel,
               marginTop: labelMargin,
-              marginBottom: labelMargin,
               marginLeft: labelMargin + 10,
               marginRight: labelMargin + 10,
             }}
