@@ -66,6 +66,7 @@ export default(state = INITIAL_STATE, action) => {
     }
     case CONNECT_WITH_USER: {
       return { ...state,
+        potentials: state.potentials.filter(potential => potential.uid !== action.payload.uid),
         selectedMatchId: action.payload.uid,
         selectedMatchName: action.payload.name,
         selectedMatchPic: action.payload.pic,

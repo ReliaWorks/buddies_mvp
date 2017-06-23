@@ -130,7 +130,17 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
             matchedDate: firebase.database.ServerValue.TIMESTAMP,
           });
         if(connectStatus && otherUserLikesYouToo) {
-          successfullyConnected(dispatch, buddy, currentUser);
+          firebase.database().ref(`user_profiles/${buddy.uid}/status`).once('value').then(snap => {
+            if (snap.val() === 'ACTIVE') {
+              successfullyConnected(dispatch, buddy, currentUser);
+            } else {
+              matches.ref(`user_matches/${currentUser.uid}/${buddy.uid}`)
+                .set({
+                  viewed: true,
+                  viewedDate: firebase.database.ServerValue.TIMESTAMP,
+                });
+            }
+          });
         } else if(!currentUser.seenConnectionHelper) {
             Actions.connectionHelper();
             firebase.database().ref(`user_profiles/${currentUser.uid}/seenConnectionHelper`)
