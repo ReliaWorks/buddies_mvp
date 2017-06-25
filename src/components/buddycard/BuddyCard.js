@@ -54,15 +54,6 @@ class BuddyCard extends Component {
     );
   }
 
-/*  <TouchableOpacity
-    onPress={onPass}
-    style={localStyles.connectButton}
-  >
-    <Text style={localStyles.footerText}>Pass</Text>
-  </TouchableOpacity>
-  <View style={{width: 2}} />
-*/
-
   renderMatchControls(likeable, uid, onConnect) {
     if(!likeable) return;
     return (
@@ -259,6 +250,7 @@ const localStyles = StyleSheet.create({
   descriptionStyle: {
     borderTopWidth: 1,
     borderColor: '#D5D5D5',
+    marginTop: 10,
     marginLeft: MARGIN,
     marginRight: MARGIN,
     marginBottom: BOTTOM_PADDING,
