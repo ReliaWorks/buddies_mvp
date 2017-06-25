@@ -24,10 +24,8 @@ class BrowseContainer extends Component {
   componentWillMount() {
     if (this.props.currentUser.firstName === '')
         this.props.currentUserFetch();
-//    if(this.props.connection.currentIndex === 0 && this.props.connection.potentials.length === 0)
     if(this.props.connection.currentIndex === 0)
       this.props.potentialsFetch();
-
     if (!this.props.connection.listeningForNotifications)
       this.props.checkNotifications();
   }
@@ -137,6 +135,7 @@ class BrowseContainer extends Component {
                     })
                     .catch((error) => {
                       console.log("In BrowseContainer. connectWithUser returned an error");
+//                      this.swipe();
                     });
                 }}
               />

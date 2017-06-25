@@ -19,9 +19,9 @@ export const LOCATION_ICON = require('./assets/img/location.png');
 
 export const MESSAGE_COUNT_FOR_EACH_LOAD = 25;
 
-export const TOS = require('./assets/pdfs/06162017WavelengthToS.pdf');
-export const PRIVACY_POLICY = require('./assets/pdfs/06162017WavelengthPP.pdf');
+export const TOS = require('./assets/pdfs/06232017WavelengthToS.pdf');
+export const PRIVACY_POLICY = require('./assets/pdfs/06232017WavelengthPP.pdf');
 export const SAFETY_TIPS = require("./assets/pdfs/WavelengthSafetyTips.pdf");
 export const SERVER_DOWN_ROBOT = require("./assets/img/robot.jpg");
 
-export const CURRENT_APP_VERSION = '0.0.3 (27)';
+export const CURRENT_APP_VERSION = '0.0.4 (3)';
