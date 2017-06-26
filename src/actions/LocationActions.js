@@ -34,7 +34,7 @@ export const getCurrentPosition = (currentUser, dispatch) => {
       dispatch({ type: SET_CURRENT_GEOLOCATION, payload: initialPosition });
     },
     (error) => {
-      if (!currentUser.location) {
+      if (!currentUser.hasLocation) {
         Actions.location();
         console.log("User declined geolocation services");
       }

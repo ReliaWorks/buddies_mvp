@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Dimensions, LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ActivitySet from './ActivitySet';
 import FirstConnectionHelperModal from '../common/FirstConnectionHelperModal';
@@ -8,6 +8,8 @@ import { ProfileImages, ProfileImagesModal } from '../common';
 import { buttonStyle, centeredTextStyle } from '../common/styles';
 import styles from './styles.js';
 import CustomIcon from '../../assets/icons';
+
+const { width, height } = Dimensions.get('window');
 
 const BOTTOM_PADDING = 120;
 const MARGIN = 15;
@@ -144,10 +146,21 @@ class BuddyCard extends Component {
         backgroundColor: 'white',
       };
     } else if(this.props.value.editable) {
-      return {
-        flex: 0.415,
-        backgroundColor: 'white',
-      };
+      if(height < 600)
+        return {
+          flex: 0.387,
+          backgroundColor: 'white',
+        };
+      else if(height > 600 && height <= 700)
+        return {
+          flex: 0.405,
+          backgroundColor: 'white',
+        };
+      else if(height > 700)
+          return {
+            flex: 0.415,
+            backgroundColor: 'white',
+          };
     } else {
         return {
           flex: 0.495,

@@ -7,7 +7,7 @@ import {
   GraphRequestManager
 } from 'react-native-fbsdk';
 import firebase from 'firebase';
-import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
+import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from 'react-native-fcm';
 import {
   ALREADY_AUTHENTICATED,
   LOGIN_USER,
@@ -28,7 +28,7 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
 
   onAuthStateChangedUnSubscriber = firebase.auth().onAuthStateChanged(user => {
     if(user) {
-      currentUserFetch();
+      getCurrentPosition({uid: user.uid, hasLocation: false}, dispatch);
       FCM.requestPermissions(); // for iOS
       FCM.getFCMToken().then(notificationToken => {
           const updates = {};
@@ -110,7 +110,6 @@ export const loginUser = () => {
               auth.signInWithCredential(credential)
                 .then(credData => {
 //                  getCurrentPosition({uid: auth.currentUser.uid}, dispatch);
-                  currentUserFetch();
                 })
                 .catch(err => {
                   alert("Unable to log in. Try again later.");

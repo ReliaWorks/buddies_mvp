@@ -77,14 +77,19 @@ export const potentialsFetch = () => {
 
 export const currentUserFetch = () => {
   const { currentUser } = firebase.auth();
+
   return (dispatch) => {
     dispatch({ type: CURRENT_USER_FETCH_START });
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
       .once('value', snapshot => {
-        if (snapshot.val())
-          getCurrentPosition({...snapshot.val(), uid: currentUser.uid}, dispatch);
-        dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...snapshot.val(), uid: currentUser.uid } });
+        const userInfo = snapshot.val();
+        if(userInfo && userInfo.location)
+          getCurrentPosition({uid: currentUser.uid, hasLocation: true}, dispatch);
+        else
+          getCurrentPosition({uid: currentUser.uid, hasLocation: false}, dispatch);
+        dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...userInfo, uid: currentUser.uid } });
       }, (error) => {
+        //.once errors when client does not have permission to read the data.
         console.log(`Error in currentUserFetch = ${error}`);
       });
   };
