@@ -24,6 +24,8 @@ import { getCurrentPosition } from './LocationActions';
 let onAuthStateChangedUnSubscriber = null;
 
 const checkIfAlreadyLoggedInInner = (dispatch) => {
+  dispatch({ type: LOGOUT_USER }); //added this to fix app crashing bugs on start
+
   onAuthStateChangedUnSubscriber = firebase.auth().onAuthStateChanged(user => {
     if(user) {
       currentUserFetch();
@@ -48,7 +50,6 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
           checkIfUserExists(accessTokenData, dispatch);
         });
     } else {
-      dispatch({ type: LOGOUT_USER });
       Actions.login();
     }
   });
@@ -58,7 +59,7 @@ export const checkIfAlreadyLoggedIn = () => {
   return(dispatch) => {
     wasThereAnAppUpdate()
       .then(() => {
-        AsyncStorage.clear(() => {
+        AsyncStorage.clear(() => { //clears asyncstorage to avoid bugs
           AsyncStorage.setItem('CURRENT_APP_VERSION', CURRENT_APP_VERSION, () => {
             checkIfAlreadyLoggedInInner(dispatch);
           });
