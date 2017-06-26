@@ -186,12 +186,12 @@ export default(state = INITIAL_STATE, action) => {
     case DESCRIPTION_SAVED: {
       return { ...state, description: action.payload };
     }
-    case PHOTOS_SAVED: {
-      let photos = state.profileImages;
-      if(action.payload)
-        photos = action.payload;
-      return { ...state, profileImages: photos };
-    }
+    // case PHOTOS_SAVED: {
+    //   let photos = state.profileImages;
+    //   if(action.payload)
+    //     photos = action.payload;
+    //   return { ...state, profileImages: photos };
+    // }
     case PHOTO_REMOVED: {
       let updatedProfileImages = state.profileImages;
       if(action.payload) {

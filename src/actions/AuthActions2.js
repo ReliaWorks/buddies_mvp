@@ -170,6 +170,8 @@ const toggleUserStatus = (uid, status) => {
 };
 
 function fetchProfilePhotos(result, dispatch, token) {
+  const {uid} = firebase.auth().currentUser;
+
   if(result.albums) {
     const fbAlbums = result.albums.data;
     const profileAlbum = fbAlbums.find((album) => {
@@ -194,22 +196,32 @@ function fetchProfilePhotos(result, dispatch, token) {
           profilePics.sort((o1,o2) => o2.id - o1.id);
 
           profilePics.forEach((pic) => {
-              const picRequest = new GraphRequest(
-                `/${pic.id}`, {
-                  parameters: {
-                    fields: { string: 'images' },
-                    access_token: { string: token }
-                  },
-               }, (error2, result3) => {
-                 if(error2) {
-                   console.log('Error fetching data: ' + error2.toString());
-                 } else {
-                    dispatch({type: PICTURE_SAVED, payload: result3.images[0].source});
-                 }
-               }); new GraphRequestManager().addRequest(picRequest).start();
+            const picRequest = new GraphRequest(
+              `/${pic.id}`, {
+                parameters: {
+                  fields: { string: 'images' },
+                  access_token: { string: token }
+                },
+              }, (error2, result3) => {
+              if(error2) {
+                console.log('Error fetching data: ' + error2.toString());
+              } else {
+                const newProfileImageRef = firebase.database().ref(`user_profiles/${uid}/profileImages/`).push();
+                newProfileImageRef.set({
+                  url: result3.images[0].source,
+                  type: 'FB'
+                }).then(() => {
+                  dispatch({type: PICTURE_SAVED, payload: result3.images[0].source});
+                });
+              }
+            });
+
+            new GraphRequestManager().addRequest(picRequest).start();
           });
         }
-      }); new GraphRequestManager().addRequest(profilePicRequest).start();
+      });
+
+      new GraphRequestManager().addRequest(profilePicRequest).start();
     });
   }
 }

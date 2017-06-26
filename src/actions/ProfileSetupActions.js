@@ -36,27 +36,27 @@ export const activityUnselected = (id) => {
   };
 };
 
-export const photosSaved = (photos) => {
-  return (dispatch) => {
-    const { currentUser } = firebase.auth();
-
-    const photoObj = {};
-    const photoSet = [];
-    let i = 0;
-    photos.forEach((photo) => {
-      photoObj.url = photo;
-      photoObj.type = 'FB';
-      firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
-        .push(photoObj)
-        .then((snap) => {
-          photoSet[snap.key] = photoObj.url;
-          i++;
-          if(i === photos.length - 1)
-            dispatch({ type: PHOTOS_SAVED, payload: photoSet });
-        });
-    });
-  };
-};
+// export const photosSaved = (photos) => {
+//   return (dispatch) => {
+//     const { currentUser } = firebase.auth();
+//
+//     const photoObj = {};
+//     const photoSet = [];
+//     let i = 0;
+//     photos.forEach((photo) => {
+//       photoObj.url = photo;
+//       photoObj.type = 'FB';
+//       firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`)
+//         .push(photoObj)
+//         .then((snap) => {
+//           photoSet[snap.key] = photoObj.url;
+//           i++;
+//           if(i === photos.length - 1)
+//             dispatch({ type: PHOTOS_SAVED, payload: photoSet });
+//         });
+//     });
+//   };
+// };
 
 export const activitiesSaved = (activities) => {
   const { currentUser } = firebase.auth();
