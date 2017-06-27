@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, TouchableOpacity, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { descriptionSaved, photosSaved } from '../../actions';
+import { descriptionSaved } from '../../actions';
 import { NEXT_BUTTON_CONTAINER_HEIGHT, PROGRESS_BAR_HEIGHT, DESC_HEADER_HEIGHT } from '../../constants';
 
 const { width, height } = Dimensions.get('window');
@@ -17,9 +17,9 @@ class DescriptionSetup extends Component {
     };
   }
 
-  componentWillUnmount() {
-    this.props.photosSaved(this.props.currentUser.profileImages);
-  }
+  // componentWillUnmount() {
+  //   this.props.photosSaved(this.props.currentUser.profileImages);
+  // }
 
   renderProgressBar() {
     if(this.props.source == 'Edit') {
@@ -118,4 +118,4 @@ const mapStateToProps = ({ currentUser, auth }) => {
   return { currentUser, auth };
 };
 
-export default connect(mapStateToProps, { descriptionSaved, photosSaved })(DescriptionSetup);
+export default connect(mapStateToProps, { descriptionSaved })(DescriptionSetup);
