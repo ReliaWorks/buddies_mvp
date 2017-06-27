@@ -15,12 +15,9 @@ function getContainerStyle() {
     marginRight: width * 0.15,
   };
 
-  console.log(`height = ${height}`);
   if(height < 600) {
-    console.log("iPhone 5");
     return {...containerStyle, marginBottom: 130, marginRight: 10};
   } else if(height > 600 && height <= 700) {
-    console.log("iPhone 6");
     return {...containerStyle, marginBottom: 185, marginRight: 30};
   } else if(height > 700)
     return {...containerStyle, marginBottom: 200, marginRight: 50};

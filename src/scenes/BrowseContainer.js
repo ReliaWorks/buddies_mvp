@@ -11,16 +11,6 @@ import { DEFAULT_PROFILE_PHOTO, ACTIVE, SERVER_DOWN_ROBOT } from '../constants';
 class BrowseContainer extends Component {
   swiper:Object;
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      viewedAllPotentials: false,
-      numPotentials: 0,
-      alreadySeenFirstItem: true,
-    };
-  }
-
   componentWillMount() {
     if (this.props.currentUser.firstName === '')
         this.props.currentUserFetch();
@@ -34,8 +24,6 @@ class BrowseContainer extends Component {
     if (!this.props.messageCenter.loaded) {
       this.props.matchesFetch();
     }
-    if(this.swiper)
-      this.swiper.scrollBy(this.props.connection.currentIndex);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -61,13 +49,15 @@ class BrowseContainer extends Component {
   }
 
   swipe() {
+    console.log(`this.swiper.state.index = ${this.swiper.state.index}`);
+    console.log(`this.swiper.state.total = ${this.swiper.state.total}`);
+    console.log(`currentIndex = ${this.props.connection.currentIndex}`);
+
     const targetIndex = this.swiper.state.index;
     if(this.props.connection.currentIndex === this.swiper.state.total) {
-      this.setState({viewedAllPotentials: true});
       this.props.resetCurrentIndex();
     } else {
-      this.swiper.scrollBy(1);
-      this.props.scrolled(this.swiper.state.index + 1);
+//      this.props.scrolled(this.swiper.state.index + 1);
     }
   }
 
@@ -82,8 +72,9 @@ class BrowseContainer extends Component {
   }
 
   renderMatches() {
-    const { potentials, numTimesConnected, numTimesMatched, seenConnectionHelper } = this.props.connection;
+    const { currentIndex, potentials, numTimesConnected, numTimesMatched, seenConnectionHelper } = this.props.connection;
 
+    console.log(`In renderMatches. currentIndex = ${currentIndex}`);
     if(this.props.connection.loadingCurrentUser) return <Spinner size="large" />;
     else if(!potentials || potentials.length === 0) {
       return <NoMoreCards />;
@@ -97,6 +88,9 @@ class BrowseContainer extends Component {
         onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)}
         showPagination
         loadMinimal
+        bounces={false}
+        removeClippedSubviews
+        index={currentIndex}
       >
         {potentials.map((buddy, key) => {
           let profileImage = {url: DEFAULT_PROFILE_PHOTO, key: null};
@@ -135,7 +129,6 @@ class BrowseContainer extends Component {
                     })
                     .catch((error) => {
                       console.log("In BrowseContainer. connectWithUser returned an error");
-//                      this.swipe();
                     });
                 }}
               />

@@ -9,6 +9,7 @@ import {
   POTENTIALS_FETCH_FAILURE,
   RESET_CURRENT_INDEX,
   CURRENT_USER_FETCH_START,
+  CURRENT_USER_FETCH_SUCCESS,
   IMAGE_LOADED,
   LOGOUT_USER,
   SET_NEW_NOTIFICATION,
@@ -20,7 +21,6 @@ const INITIAL_STATE = {
   selectedMatchName: '',
   selectedMatchPic: '',
   potentials: [],
-  browseCursor: 0,
   loadingPotentials: false,
   potentialsFetchStatus: true,
   loadingCurrentUser: false,
@@ -39,12 +39,17 @@ export default(state = INITIAL_STATE, action) => {
     case KEEP_BROWSING:
       return { ...state, loadingConnectionHelper: false, connectingWithUser: false };
     case BROWSED_TO_NEXT_USER: {
+      console.log(`BROWSED_TO_NEXT_USER, currentIndex = ${action.payload}`);
       return { ...state, currentIndex: action.payload };
     }
     case RESET_CURRENT_INDEX:
+      console.log(`RESET_CURRENT_INDEX`);
       return { ...state, currentIndex: 0 };
     case CURRENT_USER_FETCH_START: {
       return { ...state, loadingCurrentUser: true };
+    }
+    case CURRENT_USER_FETCH_SUCCESS: {
+      return { ...state, loadingCurrentUser: false };
     }
     case POTENTIALS_FETCH: {
       return { ...state, loadingPotentials: true, loadingCurrentUser: false };
@@ -70,7 +75,7 @@ export default(state = INITIAL_STATE, action) => {
         selectedMatchId: action.payload.uid,
         selectedMatchName: action.payload.name,
         selectedMatchPic: action.payload.pic,
-        browseCursor: action.payload.index,
+        currentIndex: action.payload.index,
         loadingConnectionHelper: true,
         connectingWithUser: true,
       };
