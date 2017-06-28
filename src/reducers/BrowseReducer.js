@@ -7,6 +7,7 @@ import {
   POTENTIALS_FETCH,
   POTENTIALS_FETCH_SUCCESS,
   POTENTIALS_FETCH_FAILURE,
+  LOAD_MORE_POTENTIALS_SUCCESS,
   RESET_CURRENT_INDEX,
   CURRENT_USER_FETCH_START,
   CURRENT_USER_FETCH_SUCCESS,
@@ -23,6 +24,7 @@ const INITIAL_STATE = {
   potentials: [],
   loadingPotentials: false,
   potentialsFetchStatus: true,
+  shouldLoadMorePotentials: true,
   loadingCurrentUser: false,
   loadingConnectionHelper: false,
   connectingWithUser: false,
@@ -59,6 +61,13 @@ export default(state = INITIAL_STATE, action) => {
     }
     case POTENTIALS_FETCH_FAILURE:
       return { ...state, loadingPotentials: false, potentialsFetchStatus: false};
+    case LOAD_MORE_POTENTIALS_SUCCESS: {
+      return {
+        ...state,
+        potentials: [...state.potentials, ...action.payload],
+        shouldLoadMorePotentials: action.payload.length > 0
+      };
+    }
     case IMAGE_LOADED: {
 //      return { ...state, numImagesOnScreen: state.numImagesOnScreen - 1 };
       return state;

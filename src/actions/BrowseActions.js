@@ -12,6 +12,7 @@ import {
   POTENTIALS_FETCH,
   POTENTIALS_FETCH_SUCCESS,
   POTENTIALS_FETCH_FAILURE,
+  LOAD_MORE_POTENTIALS_SUCCESS,
   SEEN_CONNECTION_HELPER,
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
@@ -21,7 +22,7 @@ import {
   RESET_CURRENT_INDEX,
   IMAGE_LOADED,
 } from './types';
-import { DEFAULT_PROFILE_PHOTO } from '../constants';
+import { DEFAULT_PROFILE_PHOTO, POTENTIALS_LIMIT } from '../constants';
 import { getCurrentPosition } from './LocationActions';
 
 const jsSHA = require("jssha");
@@ -55,7 +56,7 @@ export const potentialsFetch = () => {
     shaObj.update(API_SECRET_KEY + currentUser.uid);
     const hash = shaObj.getHash("HEX");
 
-    axios.get(`https://activities-test-a3871.appspot.com/match_geo/${currentUser.uid}`, {
+    axios.get(`https://activities-test-a3871.appspot.com/match_geo/${currentUser.uid}?offset=0&limit=${POTENTIALS_LIMIT}`, {
       headers: { authorization: `${hash}:${currentUser.uid}`}
     })
       .then(response => {
@@ -74,6 +75,66 @@ export const potentialsFetch = () => {
     });
   };
 };
+
+export const loadMorePotentials = (offset = 0) => {
+  return (dispatch) => {
+    const { currentUser } = firebase.auth();
+    const potentials = [];
+
+    const shaObj = new jsSHA("SHA-256", "TEXT");
+    shaObj.update(API_SECRET_KEY + currentUser.uid);
+    const hash = shaObj.getHash("HEX");
+
+    axios.get(`https://activities-test-a3871.appspot.com/match_geo/${currentUser.uid}?offset=${offset}&limit=${POTENTIALS_LIMIT}`, {
+      headers: { authorization: `${hash}:${currentUser.uid}`}
+    }).then(response => {
+      const keys = Object.keys(response.data);
+      keys.forEach((key) => {
+          potentials.push(response.data[key]);
+      });
+
+      dispatch({
+        type: LOAD_MORE_POTENTIALS_SUCCESS,
+        payload: potentials
+      });
+    }, (error) => {
+      console.log(`API not responding at load more potentials.  Error = ${error}`);
+  });
+  }
+}
+
+// export const potentialsFetch = (offset = 0, limit = POTENTIALS_LIMIT) => {
+//   return (dispatch) => {
+//     dispatch({type: POTENTIALS_FETCH});
+//
+//     const { currentUser } = firebase.auth();
+//     const potentials = [];
+//
+//     const shaObj = new jsSHA("SHA-256", "TEXT");
+//     shaObj.update(API_SECRET_KEY + currentUser.uid);
+//     const hash = shaObj.getHash("HEX");
+//
+//     axios.get(`https://activities-test-a3871.appspot.com/match_geo/${currentUser.uid}?limit=${limit}&offset=${offset}`, {
+//       headers: { authorization: `${hash}:${currentUser.uid}`}
+//     })
+//       .then(response => {
+//         const keys = Object.keys(response.data);
+//         keys.forEach((key) => {
+//             potentials.push(response.data[key]);
+//         });
+//
+//         console.log('potentials at AC: ', potentials);
+//
+//         dispatch({
+//           type: POTENTIALS_FETCH_SUCCESS,
+//           payload: potentials
+//         });
+//       }, (error) => {
+//         console.log(`API not responding.  Error = ${error}`);
+//         dispatch({type: POTENTIALS_FETCH_FAILURE});
+//     });
+//   };
+// };
 
 export const currentUserFetch = () => {
   const { currentUser } = firebase.auth();
