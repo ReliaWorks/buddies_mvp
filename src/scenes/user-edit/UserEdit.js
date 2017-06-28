@@ -58,7 +58,6 @@ class UserEdit extends Component {
             style={styles.descriptionInput}
             onChangeText={text => {
               this.setState({text});
-              //this.props.descriptionSaved(text);
             }}
             onContentSizeChange={(event) => {
               this.setState({height: event.nativeEvent.contentSize.height});
@@ -92,6 +91,12 @@ class UserEdit extends Component {
       );
     });
   }
+
+//  onScroll={() => {
+//    if(this.refs.myInput.isFocused()) {
+//            this.refs.myInput.blur();
+//    }
+//  }}
 
   render() {
     const { activities, affiliations } = this.props;
