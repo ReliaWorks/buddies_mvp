@@ -13,11 +13,14 @@ export const DESC_HEADER_HEIGHT = 78;
 
 export const ACTIVITY_SETUP_SCENE_TITLE = 'What sounds fun to you?';
 export const AFFILIATION_SETUP_SCENE_TITLE = 'Which clubs interest you?';
-export const DESCRIPTION_PLACEHOLDER = 'Describe yourself';
+export const DESCRIPTION_PLACEHOLDER = 'Describe yourself and what you are looking for in an activity partner';
 export const MSG_CENTER_NOT_ICON = require('./assets/img/MsgCenterNotIcon.jpg');
 export const LOCATION_ICON = require('./assets/img/location.png');
 
 export const MESSAGE_COUNT_FOR_EACH_LOAD = 25;
+
+export const POTENTIALS_LIMIT = 4;
+export const POTENTIALS_LOAD_BEFORE = 2;
 
 export const TOS = require('./assets/pdfs/06232017WavelengthToS.pdf');
 export const PRIVACY_POLICY = require('./assets/pdfs/06232017WavelengthPP.pdf');
