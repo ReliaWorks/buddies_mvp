@@ -92,8 +92,8 @@ class ProfileImages extends Component {
       return this.renderNoPhotos();
 
     if(this.state.firstRender) pics = profileImages.slice(0, 1);
-    else if(profileImages.length >= MAX_NUM_PHOTOS) {
-        pics = profileImages.slice(0, MAX_NUM_PHOTOS - 1);
+    else if(profileImages.length > MAX_NUM_PHOTOS) {
+        pics = profileImages.slice(0, MAX_NUM_PHOTOS);
     }
 
     return (

@@ -13,7 +13,7 @@ export const DESC_HEADER_HEIGHT = 78;
 
 export const ACTIVITY_SETUP_SCENE_TITLE = 'What sounds fun to you?';
 export const AFFILIATION_SETUP_SCENE_TITLE = 'Which clubs interest you?';
-export const DESCRIPTION_PLACEHOLDER = 'Describe yourself';
+export const DESCRIPTION_PLACEHOLDER = 'Describe yourself and what you are looking for in an activity partner';
 export const MSG_CENTER_NOT_ICON = require('./assets/img/MsgCenterNotIcon.jpg');
 export const LOCATION_ICON = require('./assets/img/location.png');
 
@@ -27,4 +27,4 @@ export const PRIVACY_POLICY = require('./assets/pdfs/06232017WavelengthPP.pdf');
 export const SAFETY_TIPS = require("./assets/pdfs/WavelengthSafetyTips.pdf");
 export const SERVER_DOWN_ROBOT = require("./assets/img/robot.jpg");
 
-export const CURRENT_APP_VERSION = '0.0.4 (4)';
+export const CURRENT_APP_VERSION = '0.0.4 (6)';
