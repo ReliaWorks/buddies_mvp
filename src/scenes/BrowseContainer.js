@@ -39,6 +39,8 @@ class BrowseContainer extends Component {
       return true;
     if(this.props.connection.loadingConnectionHelper !== nextProps.connection.loadingConnectionHelper)
       return true;
+    if(this.props.connection.morePotentialsLoading !== nextProps.connection.morePotentialsLoading)
+      return true;
     return false;
   }
 
@@ -49,7 +51,7 @@ class BrowseContainer extends Component {
     const otherUserIndex = (this.swiper.state.index === 0) ? this.swiper.state.total - 1 : this.swiper.state.index - 1;
     this.props.recordView(this.props.currentUser.uid, potentials[otherUserIndex].uid);
 
-    if(currentIndex === potentials.length - POTENTIALS_LOAD_BEFORE - 1 && shouldLoadMorePotentials) {
+    if(currentIndex === potentials.length - POTENTIALS_LOAD_BEFORE && shouldLoadMorePotentials) {
       this.props.loadMorePotentials(potentials.length);
     }
   }
@@ -78,13 +80,14 @@ class BrowseContainer extends Component {
   }
 
   renderMatches() {
-    const { currentIndex, potentials, numTimesConnected, numTimesMatched, seenConnectionHelper } = this.props.connection;
+    const { currentIndex, potentials, numTimesConnected, numTimesMatched, seenConnectionHelper, morePotentialsLoading } = this.props.connection;
 
     console.log(`In renderMatches. currentIndex = ${currentIndex}`);
     if(this.props.connection.loadingCurrentUser) return <Spinner size="large" />;
     else if(!potentials || potentials.length === 0) {
       return <NoMoreCards />;
     }
+
     return (
       <View>
       <Swiper
@@ -97,6 +100,7 @@ class BrowseContainer extends Component {
         bounces={false}
         removeClippedSubviews
         index={currentIndex}
+        scrollEnabled={!morePotentialsLoading}
       >
         {potentials.map((buddy, key) => {
           let profileImage = {url: DEFAULT_PROFILE_PHOTO, key: null};
