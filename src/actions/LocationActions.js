@@ -55,35 +55,8 @@ const stringToVariable = (str) => {
 export const setLocation = (uid, location) => {
   const db = firebase.database();
   db.ref(`user_profiles/${uid}/location`).set(location);
-  setCurrentUserLocationFB(db, uid, location);
 };
 
-const clearUserLastLocationFB = (db, uid, numberNewRecords) => {
-  const thisPromise = new Promise((resolve) => {
-    if (numberNewRecords == 0)
-      resolve();
-    else{
-      const ref = db.ref(`last_location_path/${uid}`);
-      ref.once('value', snapshot => {
-        const data = snapshot.val();
-        if(data) {
-          const keys = Object.keys(data);
-          keys.forEach((key) => {
-            const path = data[key];
-            db.ref(path).remove();
-          });
-        }
-        ref.remove(() => {
-          resolve();
-        });
-      })
-      .catch(() => {
-        resolve();
-      });
-    }
-  });
-  return thisPromise;
-};
 
 function getCityStateCountry(currentUser, position, dispatch) {
   const promise = new Promise((resolve, reject) => {
@@ -118,36 +91,7 @@ function getCityStateCountry(currentUser, position, dispatch) {
       });
   });
   return promise;
-};
-
-const setCurrentUserLocationFB = (db, uid, location) => {
-  const keys = Object.keys(location);
-  const objPaths = [];
-
-  if (location.country)
-    objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/users/${uid}`);
-  else
-    return;
-
-  if (location.country && location.state)
-    objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/users/${uid}`);
-
-  if (location.county)
-    objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/users/${uid}`);
-
-  if (location.county && location.city)
-    objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/users/${uid}`);
-
-  if (location.county && location.city && location.neighborhood)
-    objPaths.push(`location_areas/countries/${stringToVariable(location.country)}/states/${stringToVariable(location.state)}/counties/${stringToVariable(location.county)}/cities/${stringToVariable(location.city)}/neighborhoods/${stringToVariable(location.neighborhood)}/users/${uid}`);
-
-  clearUserLastLocationFB(db, uid, objPaths.length).then(() => {
-    objPaths.forEach((path) => {
-      db.ref(path).set(true);
-    });
-    db.ref(`last_location_path/${uid}`).set(objPaths);
-  });
-};
+}
 
 export const setLocationLocalStorage = (position, location) => {
   AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
