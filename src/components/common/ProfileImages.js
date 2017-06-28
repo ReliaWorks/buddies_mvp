@@ -20,6 +20,20 @@ class ProfileImages extends Component {
     };
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if(this.props.value.profileImages !== nextProps.value.profileImages)
+      return true;
+    if(this.props.imageLoaded !== nextProps.imageLoaded)
+      return true;
+    if(this.state.currentImg !== nextState.currentImg)
+      return true;
+    if(this.state.currentImageIndexOnSwiper != nextState.currentImageIndexOnSwiper)
+      return true;
+    if(this.state.firstRender !== nextState.firstRender)
+      return true;
+    return false;
+  }
+
   componentDidMount() {
     this.setState({firstRender: false});
   }

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Dimensions, LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Dimensions, LayoutAnimation, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ActivitySet from './ActivitySet';
 import FirstConnectionHelperModal from '../common/FirstConnectionHelperModal';
@@ -251,7 +251,7 @@ const localStyles = StyleSheet.create({
     flex: 1,
     height: 55,
     backgroundColor: '#42D3D3',
-    opacity: 0.75,
+    opacity: 0.97,
   },
   footerText: {
     color: 'white',
