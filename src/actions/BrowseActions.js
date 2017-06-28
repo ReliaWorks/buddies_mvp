@@ -12,6 +12,7 @@ import {
   POTENTIALS_FETCH,
   POTENTIALS_FETCH_SUCCESS,
   POTENTIALS_FETCH_FAILURE,
+  LOAD_MORE_POTENTIALS,
   LOAD_MORE_POTENTIALS_SUCCESS,
   SEEN_CONNECTION_HELPER,
   SET_CURRENT_GEOLOCATION,
@@ -78,6 +79,8 @@ export const potentialsFetch = () => {
 
 export const loadMorePotentials = (offset = 0) => {
   return (dispatch) => {
+    dispatch({ type: LOAD_MORE_POTENTIALS });
+
     const { currentUser } = firebase.auth();
     const potentials = [];
 
@@ -99,9 +102,9 @@ export const loadMorePotentials = (offset = 0) => {
       });
     }, (error) => {
       console.log(`API not responding at load more potentials.  Error = ${error}`);
-  });
-  }
-}
+    });
+  };
+};
 
 // export const potentialsFetch = (offset = 0, limit = POTENTIALS_LIMIT) => {
 //   return (dispatch) => {
