@@ -3,7 +3,7 @@ import { Text, TextInput, View, TouchableOpacity, Dimensions } from 'react-nativ
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { descriptionSaved } from '../../actions';
-import { NEXT_BUTTON_CONTAINER_HEIGHT, PROGRESS_BAR_HEIGHT, DESC_HEADER_HEIGHT } from '../../constants';
+import { NEXT_BUTTON_CONTAINER_HEIGHT, PROGRESS_BAR_HEIGHT, DESC_HEADER_HEIGHT, DESCRIPTION_PLACEHOLDER_SETUP } from '../../constants';
 
 const { width, height } = Dimensions.get('window');
 
@@ -11,7 +11,7 @@ class DescriptionSetup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      placeholder: "Describe your style as an activity partner.",
+      placeholder: DESCRIPTION_PLACEHOLDER_SETUP,
       text: '',
       height: 300,
     };

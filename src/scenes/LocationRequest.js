@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Dimensions, findNodeHandle, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,7 +14,9 @@ const MARGIN = 15;
 class LocationRequest extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    this.state = {
+      text: '',
+    };
   }
 
   onClose() {
@@ -23,7 +25,6 @@ class LocationRequest extends Component {
 
   onPress(address) {
     if(address) {
-      console.log('address:',address);
       this.props.setLocationFromAddress(address);
       Actions.pop();
     } else {
@@ -31,9 +32,28 @@ class LocationRequest extends Component {
     }
   }
 
+/*  _scroll(ref, offset) {
+    setTimeout(() => {
+      const scrollResponder = this.refs.myScrollView.getScrollResponder();
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        findNodeHandle(this.refs[ref]),
+        110,
+        true
+      );
+    }, 50);
+  }
+
+  inputFocused(ref) {
+    this._scroll(ref, 200);
+  }
+
+  inputBlurred(ref) {
+    this._scroll(ref, 0);
+  }
+*/
   renderLocationPrompt() {
     return(
-      <View style={styles.textContainer}>
+      <KeyboardAvoidingView style={styles.textContainer} behavior="padding">
         <Text style={styles.semiBoldText}>Enter your location below or enable</Text>
         <Text style={styles.semiBoldText}>location services in your phone settings.</Text>
         <TextInput
@@ -42,24 +62,23 @@ class LocationRequest extends Component {
           onChangeText={(text) => { this.setState({text}); }}
         />
         <Button styles={buttonStyles} onPress={() => this.onPress(this.state.text)}>Save Location</Button>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 
   render() {
-    return(
-      <View style={{flex: 1}}>
-        <View style={styles.container}>
-          <View style={{height: 50}} />
-          <View style={styles.textContainer}>
-            <Text style={styles.text}>Your location is needed</Text>
-            <Text style={styles.text}>to find partners.</Text>
-          </View>
-          <View style={{height: 25}} />
-          <Image source={LOCATION_ICON} style={styles.imageStyle} />
-          {this.renderLocationPrompt()}
+    return (
+      <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>Your location is needed</Text>
+          <Text style={styles.text}>to find partners.</Text>
         </View>
+        <Image source={LOCATION_ICON} style={styles.imageStyle} />
+        {this.renderLocationPrompt()}
+        <View style={{height: 250}} />
       </View>
+      </ScrollView>
     );
   }
 }
