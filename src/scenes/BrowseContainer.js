@@ -14,7 +14,7 @@ class BrowseContainer extends Component {
   componentWillMount() {
     if (this.props.currentUser.firstName === '')
         this.props.currentUserFetch();
-    if(this.props.connection.currentIndex === 0)
+    if(!this.props.connection.potentialsLoaded)
       this.props.potentialsFetch();
     if (!this.props.connection.listeningForNotifications)
       this.props.checkNotifications();
