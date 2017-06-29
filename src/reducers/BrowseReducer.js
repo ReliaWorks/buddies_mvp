@@ -24,6 +24,7 @@ const INITIAL_STATE = {
   selectedMatchPic: '',
   potentials: [],
   loadingPotentials: false,
+  potentialsLoaded: false,
   potentialsFetchStatus: true,
   morePotentialsLoading: false,
   shouldLoadMorePotentials: true,
@@ -59,7 +60,7 @@ export default(state = INITIAL_STATE, action) => {
       return { ...state, loadingPotentials: true, loadingCurrentUser: false };
     }
     case POTENTIALS_FETCH_SUCCESS: {
-      return { ...state, potentials: action.payload, loadingPotentials: false };
+      return { ...state, potentials: action.payload, loadingPotentials: false, potentialsLoaded: true };
     }
     case POTENTIALS_FETCH_FAILURE:
       return { ...state, loadingPotentials: false, potentialsFetchStatus: false};
