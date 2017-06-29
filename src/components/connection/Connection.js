@@ -50,7 +50,6 @@ class Connection extends Component {
     return (
       <View style={styles.commonalityView}>
         <Text style={styles.commonalityTextStyle}>{COMMONALITY_TEXT}</Text>
-        <View style={{height: 10}} />
         <ActivitySet value={{activitiesAndAffiliations: commonInterests}} />
       </View>
     );
@@ -72,26 +71,25 @@ const styles = StyleSheet.create({
   headerView: {
     justifyContent: 'flex-end',
     alignItems: 'center',
-//    flex: 0.1,
-    marginTop: 20,
-  },
-  imageView: {
-//    flex: 0.3,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    marginTop: 30,
-    marginBottom: 30
-  },
-  commonalityView: {
-//    flex: 0.4,
     marginTop: MARGIN,
     marginBottom: MARGIN,
   },
+  imageView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    paddingTop: 70 + MARGIN,
+    paddingBottom: 70 + MARGIN, 
+//    backgroundColor: 'purple'
+  },
+  commonalityView: {
+    marginBottom: MARGIN,
+    paddingTop: MARGIN * 2,
+    paddingBottom: 10,
+  },
   buttonsView: {
-//    flex: 0.3,
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: MARGIN,
+    marginBottom: MARGIN * 2,
     alignItems: 'center',
   },
   textStyle: {
@@ -113,7 +111,7 @@ const styles = StyleSheet.create({
     height: 50,
     marginLeft: MARGIN,
     marginRight: MARGIN,
-    marginBottom: 15,
+    marginBottom: 30,
   },
   headerTextStyle: {
     fontFamily: 'SourceSansPro-Bold',
@@ -142,7 +140,7 @@ const SayHiButtonStyles = {
     height: 50,
     marginLeft: MARGIN,
     marginRight: MARGIN,
-    marginBottom: 15,
+    marginBottom: 10,
   }
 };
 
