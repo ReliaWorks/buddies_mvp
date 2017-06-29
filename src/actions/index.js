@@ -6,3 +6,4 @@ export * from './MessageCenterActions';
 export * from './ProfileSetupActions';
 export * from './PhotoActions';
 export * from './ConnectionActions';
+export * from './LocationActions';

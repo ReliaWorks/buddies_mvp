@@ -3,7 +3,7 @@ import { Dimensions, findNodeHandle, Image, KeyboardAvoidingView, ScrollView, St
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { setLocationFromAddress } from '../actions/LocationActions';
+import { setLocationFromAddress, potentialsFetch } from '../actions';
 import { Button } from '../components/common';
 import { LOCATION_ICON } from '../constants';
 
@@ -32,25 +32,6 @@ class LocationRequest extends Component {
     }
   }
 
-/*  _scroll(ref, offset) {
-    setTimeout(() => {
-      const scrollResponder = this.refs.myScrollView.getScrollResponder();
-      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-        findNodeHandle(this.refs[ref]),
-        110,
-        true
-      );
-    }, 50);
-  }
-
-  inputFocused(ref) {
-    this._scroll(ref, 200);
-  }
-
-  inputBlurred(ref) {
-    this._scroll(ref, 0);
-  }
-*/
   renderLocationPrompt() {
     return(
       <KeyboardAvoidingView style={styles.textContainer} behavior="padding">
@@ -144,4 +125,4 @@ const mapStateToProps = ({ currentUser }) => {
   return { currentUser };
 };
 
-export default connect(mapStateToProps, { setLocationFromAddress })(LocationRequest);
+export default connect(mapStateToProps, { setLocationFromAddress, potentialsFetch })(LocationRequest);

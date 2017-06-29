@@ -35,7 +35,6 @@ export default styles = {
   },
   linkContainerStyle: {
     flexDirection: 'row',
-//    justifyContent: 'space-around',
     alignItems: 'center',
     flex: 1.2,
     marginLeft: 15,

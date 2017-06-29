@@ -160,8 +160,8 @@ class BrowseContainer extends Component {
     return(
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Image source={SERVER_DOWN_ROBOT} style={{width: 200, height: 200}} />
-        <Text style={{fontFamily: 'Source Sans Pro', fontSize: 18, margin: 15}}>
-          Having trouble. Try again later
+        <Text style={{fontFamily: 'Source Sans Pro', fontSize: 18, margin: 30, textAlign: 'center'}}>
+          Having trouble. Try logging out and logging back in or check back later.
         </Text>
       </View>
     );
