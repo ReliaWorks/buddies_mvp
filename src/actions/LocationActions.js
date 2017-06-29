@@ -35,11 +35,23 @@ export const getCurrentPosition = (currentUser, dispatch) => {
     },
     (error) => {
       if (!currentUser.hasLocation) {
-        Actions.location();
+        //checkIfLocation is in Firebase, if not, prompt user for location
+        getLocationFromFirebase(currentUser.uid);
         console.log("User declined geolocation services");
       }
     }
   );
+};
+
+const getLocationFromFirebase = (cuid) => {
+  firebase.database().ref(`/user_profiles/${cuid}/geoLocation`)
+    .once('value', snap => {
+      const geoLocation = snap.val();
+      if(!geoLocation) Actions.location();
+    })
+    .catch(error => {
+      Actions.location();
+    });
 };
 
 const stringToVariable = (str) => {
