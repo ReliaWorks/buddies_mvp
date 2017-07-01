@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import io.sentry.RNSentryPackage;
-import com.bugsnag.BugsnagReactNative;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -47,7 +46,6 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNSentryPackage(MainApplication.this),
-            BugsnagReactNative.getPackage(),
             new FIRMessagingPackage(),
             new LottiePackage(),
             new LinearGradientPackage(),

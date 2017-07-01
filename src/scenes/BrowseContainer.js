@@ -45,7 +45,7 @@ class BrowseContainer extends Component {
   }
 
   _onMomentumScrollEnd(e, state, context) {
-    const {potentials, currentIndex, shouldLoadMorePotentials} = this.props.connection;
+    const { potentials, currentIndex, shouldLoadMorePotentials } = this.props.connection;
 
     this.props.scrolled(this.swiper.state.index);
     const otherUserIndex = (this.swiper.state.index === 0) ? this.swiper.state.total - 1 : this.swiper.state.index - 1;

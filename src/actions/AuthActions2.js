@@ -241,7 +241,7 @@ function setupUserFirebase(accessTokenData, dispatch) {
     '/me',
     {
       parameters: {
-        fields: { string: 'id,first_name,last_name,location, email, birthday, albums{name}' },
+        fields: { string: 'id, first_name, last_name, location, email, birthday, albums{name}' },
         access_token: { string: token.toString() }
     },
     }, (error, result) => {
