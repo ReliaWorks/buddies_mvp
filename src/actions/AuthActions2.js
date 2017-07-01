@@ -227,6 +227,14 @@ function fetchProfilePhotos(result, dispatch, token) {
 }
 
 function setupUserFirebase(accessTokenData, dispatch) {
+  // the reason of this controll is; we found an error report on sentry that accesstoken can be null in some cases.
+  // we are guesing that user logs out from facebook while thay are logged into app and this causes they are trying to
+  // create a profile but does not have an accesstoken for facebook.
+  if (!(accessTokenData)) {
+    console.log('accessTokenData is not an object at setupUserFirebase. user id is:', firebase.auth().currentUser.uid);
+    _logoutUser(dispatch);
+  }
+
   const token = accessTokenData.accessToken;
 
   const infoRequest = new GraphRequest(
