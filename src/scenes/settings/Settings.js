@@ -173,9 +173,11 @@ class Settings extends Component {
 
   renderLocation() {
     const { location } = this.props.value;
-    return(
+    return (
       <View style={{...styles.preferenceContainer, flex: 0.7, flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={localStyles.locationHeaderText}>Location: <Text style={{fontFamily: 'Source Sans Pro'}}>{location.city}, {location.state}</Text></Text>
+        <Text style={localStyles.locationHeaderText}>Location: <Text style={{fontFamily: 'Source Sans Pro'}}>{location.city}, {location.state}
+          </Text>
+        </Text>
         {this.editIcon()}
       </View>
     );

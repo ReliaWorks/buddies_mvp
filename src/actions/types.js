@@ -31,6 +31,7 @@ export const FACEBOOK_ALBUM_PHOTOS_FETCHED = 'facebook_album_photos_fetched';
 
 export const CURRENT_USER_FETCH_START = 'current_user_fetch_start';
 export const CURRENT_USER_FETCH_SUCCESS = 'current_user_fetch_success';
+export const CURRENT_USER_FETCH_FAILURE = 'current_user_fetch_failure';
 export const CHAT_SELECTED = 'chat_selected';
 export const CHAT_PROFILE_FETCH = 'chat_profile_fetch';
 export const CHAT_PROFILE_FETCH_SUCCESS = 'chat_profile_fetch_success';

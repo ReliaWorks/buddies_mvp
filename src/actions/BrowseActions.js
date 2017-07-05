@@ -7,6 +7,7 @@ import {
   CONNECTION_SUCCESSFUL,
   CURRENT_USER_FETCH_START,
   CURRENT_USER_FETCH_SUCCESS,
+  CURRENT_USER_FETCH_FAILURE,
   CURRENT_CHAT_FETCH,
   KEEP_BROWSING,
   POTENTIALS_FETCH,
@@ -142,6 +143,7 @@ export const loadMorePotentials = (offset = 0) => {
 export const currentUserFetch = () => {
   const { currentUser } = firebase.auth();
 
+  if(!currentUser) Actions.login();
   return (dispatch) => {
     dispatch({ type: CURRENT_USER_FETCH_START });
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
@@ -153,6 +155,7 @@ export const currentUserFetch = () => {
           getCurrentPosition({uid: currentUser.uid, hasLocation: false}, dispatch);
         dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...userInfo, uid: currentUser.uid } });
       }, (error) => {
+        dispatch({ type: CURRENT_USER_FETCH_FAILURE });
         //.once errors when client does not have permission to read the data.
         console.log(`Error in currentUserFetch = ${error}`);
       });

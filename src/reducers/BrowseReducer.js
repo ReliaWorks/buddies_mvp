@@ -12,6 +12,7 @@ import {
   RESET_CURRENT_INDEX,
   CURRENT_USER_FETCH_START,
   CURRENT_USER_FETCH_SUCCESS,
+  CURRENT_USER_FETCH_FAILURE,
   IMAGE_LOADED,
   LOGOUT_USER,
   SET_NEW_NOTIFICATION,
@@ -24,7 +25,9 @@ const INITIAL_STATE = {
   selectedMatchPic: '',
   potentials: [],
   loadingPotentials: false,
+  potentialsLoaded: false,
   potentialsFetchStatus: true,
+  currentUserFetchStatus: true,
   morePotentialsLoading: false,
   shouldLoadMorePotentials: true,
   loadingCurrentUser: false,
@@ -55,11 +58,14 @@ export default(state = INITIAL_STATE, action) => {
     case CURRENT_USER_FETCH_SUCCESS: {
       return { ...state, loadingCurrentUser: false };
     }
+    case CURRENT_USER_FETCH_FAILURE: {
+      return { ...state, loadingCurrentUser: false, currentUserFetchStatus: false };
+    }
     case POTENTIALS_FETCH: {
       return { ...state, loadingPotentials: true, loadingCurrentUser: false };
     }
     case POTENTIALS_FETCH_SUCCESS: {
-      return { ...state, potentials: action.payload, loadingPotentials: false };
+      return { ...state, potentials: action.payload, loadingPotentials: false, potentialsLoaded: true };
     }
     case POTENTIALS_FETCH_FAILURE:
       return { ...state, loadingPotentials: false, potentialsFetchStatus: false};

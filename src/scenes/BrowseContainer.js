@@ -14,7 +14,7 @@ class BrowseContainer extends Component {
   componentWillMount() {
     if (this.props.currentUser.firstName === '')
         this.props.currentUserFetch();
-    if(this.props.connection.currentIndex === 0)
+    if(!this.props.connection.potentialsLoaded)
       this.props.potentialsFetch();
     if (!this.props.connection.listeningForNotifications)
       this.props.checkNotifications();
@@ -45,7 +45,7 @@ class BrowseContainer extends Component {
   }
 
   _onMomentumScrollEnd(e, state, context) {
-    const {potentials, currentIndex, shouldLoadMorePotentials} = this.props.connection;
+    const { potentials, currentIndex, shouldLoadMorePotentials } = this.props.connection;
 
     this.props.scrolled(this.swiper.state.index);
     const otherUserIndex = (this.swiper.state.index === 0) ? this.swiper.state.total - 1 : this.swiper.state.index - 1;
@@ -160,8 +160,8 @@ class BrowseContainer extends Component {
     return(
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Image source={SERVER_DOWN_ROBOT} style={{width: 200, height: 200}} />
-        <Text style={{fontFamily: 'Source Sans Pro', fontSize: 18, margin: 15}}>
-          Having trouble. Try again later
+        <Text style={{fontFamily: 'Source Sans Pro', fontSize: 18, margin: 30, textAlign: 'center'}}>
+          Having trouble. Try logging out and logging back in or check back later.
         </Text>
       </View>
     );
@@ -169,7 +169,7 @@ class BrowseContainer extends Component {
   render() {
     if(this.props.connection.loadingPotentials || this.props.connection.loadingCurrentUser)
       return <GlowLoader animationRef={this.animationRef} />;
-    else if(!this.props.connection.potentialsFetchStatus)
+    else if(!this.props.connection.potentialsFetchStatus || !this.props.connection.currentUserFetchStatus)
       return this.renderServerError();
     else return this.renderMatches();
   }
