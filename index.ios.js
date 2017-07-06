@@ -7,7 +7,6 @@ import { SENTRY_DNS } from './src/config';
 // https://github.com/getsentry/react-native-sentry/issues/57
 
 Sentry.config(SENTRY_DNS, {
-
   logLevel: SentryLog.Debug,
   autoBreadcrumbs: {
     xhr: false,
