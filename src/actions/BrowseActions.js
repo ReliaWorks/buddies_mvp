@@ -52,6 +52,10 @@ export const potentialsFetch = () => {
     dispatch({type: POTENTIALS_FETCH});
 
     const { currentUser } = firebase.auth();
+    if(!currentUser) {
+      dispatch({ type: POTENTIALS_FETCH_FAILURE });
+      Actions.login();
+    }
     const potentials = [];
 
     const shaObj = new jsSHA("SHA-256", "TEXT");
@@ -143,8 +147,12 @@ export const loadMorePotentials = (offset = 0) => {
 export const currentUserFetch = () => {
   const { currentUser } = firebase.auth();
 
-  if(!currentUser) Actions.login();
   return (dispatch) => {
+    if(!currentUser) {
+      dispatch({ type: CURRENT_USER_FETCH_FAILURE });
+      Actions.login();
+    }
+
     dispatch({ type: CURRENT_USER_FETCH_START });
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
       .once('value', snapshot => {
