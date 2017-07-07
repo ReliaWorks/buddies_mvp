@@ -34,8 +34,9 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
           const updates = {};
           updates['/user_profiles/' + user.uid + '/notificationToken'] = notificationToken;
 
-          firebase.database().ref().update(updates);
-      });
+          firebase.database().ref().update(updates)
+          .catch(err => console.log('error while n token is being saved : ', err));
+      }).catch(err => console.log('getFCMToken catch:', err));
 
       dispatch({
           type: ALREADY_AUTHENTICATED,
@@ -48,8 +49,11 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
       AccessToken.getCurrentAccessToken()
         .then(accessTokenData => {
           checkIfUserExists(accessTokenData, dispatch);
-        });
+        })
+        .catch(err => console.log('checkIfAlreadyLoggedInInner getCurrentAccessToken catch:', err));
     } else {
+      console.log('onAuthStateChanged giriş yapmış kullanıcı yok');
+
       Actions.login();
     }
   });
@@ -112,6 +116,7 @@ export const loginUser = () => {
 //                  getCurrentPosition({uid: auth.currentUser.uid}, dispatch);
                 })
                 .catch(err => {
+                  //dispatch({ type: LOGOUT_USER });
                   alert("Unable to log in. Try again later.");
                   console.log(`Error signing into Firebase ${err.code}: ${err.message}`);
               });
@@ -227,14 +232,6 @@ function fetchProfilePhotos(result, dispatch, token) {
 }
 
 function setupUserFirebase(accessTokenData, dispatch) {
-  // the reason of this controll is; we found an error report on sentry that accesstoken can be null in some cases.
-  // we are guesing that user logs out from facebook while thay are logged into app and this causes they are trying to
-  // create a profile but does not have an accesstoken for facebook.
-  if (!(accessTokenData)) {
-    console.log('accessTokenData is not an object at setupUserFirebase. user id is:', firebase.auth().currentUser.uid);
-    _logoutUser(dispatch);
-  }
-
   const token = accessTokenData.accessToken;
 
   const infoRequest = new GraphRequest(
@@ -282,20 +279,22 @@ function checkIfUserExists(accessTokenData, dispatch) {
   const user = firebase.auth().currentUser;
 
   firebase.database().ref(`/user_profiles/${user.uid}`)
-    .once('value', snapshot => {
+    .once('value')
+    .then(snapshot => {
       const exists = (snapshot.val() && snapshot.val().first_name);
       if(exists) {
         reactivateAccountIfDeactivated(snapshot.key, snapshot.val().status)
         .then(() => {
           dispatch({ type: LOGIN_USER, payload: user.uid });
           Actions.main();
-        });
+        }).catch(err => console.log('error at reativate'));
       } else {
         setupUserFirebase(accessTokenData, dispatch);
         Actions.profileSetup();
         dispatch({ type: LOGIN_USER, payload: user.uid });
       }
-    });
+    })
+    .catch(err => console.log('checkIfUserExists error while snap is being fetched:', err));
 }
 
 const reactivateAccountIfDeactivated = (uid, status) => {

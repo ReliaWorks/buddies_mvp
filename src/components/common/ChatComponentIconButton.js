@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Dimensions, View } from 'react-native';
+import { TouchableOpacity, Dimensions, View, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions, ActionConst } from 'react-native-router-flux';
 
@@ -30,19 +30,15 @@ class ChatComponentIconButton extends Component {
       <TouchableOpacity
         onPress={() => Actions.matches(ActionConst.RESET)}
         style={{
-          marginLeft: width - ICON_CLICKABLE_AREA_WIDTH,
-          alignItems: 'flex-end',
-        }}
+          ...styles.button,
+          ...(Platform.OS === 'android' ? styles.buttonAndroid : {})}}
       >
         {this.renderNotification(newNotification)}
         <CustomIcon
           name="message_icon"
           size={ICON_SIZE}
           color="black"
-          style={{
-            marginTop: -1 * ICON_SIZE,
-            paddingRight: ICON_PADDING,
-          }}
+          style={Platform.OS === 'ios' ? styles.iconIos : {}}
         />
       </TouchableOpacity>
       );
@@ -50,6 +46,17 @@ class ChatComponentIconButton extends Component {
 }
 
 const styles = {
+  button: {
+    marginLeft: width - ICON_CLICKABLE_AREA_WIDTH,
+    alignItems: 'flex-end',
+  },
+  buttonAndroid: {
+    marginTop: -35,
+  },
+  iconIos: {
+    marginTop: -1 * ICON_SIZE,
+    paddingRight: ICON_PADDING,
+  },
   newMessage: {
     position: 'absolute',
     width: 10,
