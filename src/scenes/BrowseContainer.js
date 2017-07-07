@@ -169,7 +169,7 @@ class BrowseContainer extends Component {
   render() {
     if(this.props.connection.loadingPotentials || this.props.connection.loadingCurrentUser)
       return <GlowLoader animationRef={this.animationRef} />;
-    else if(!this.props.connection.potentialsFetchStatus)
+    else if(!this.props.connection.potentialsFetchStatus || !this.props.connection.currentUserFetchStatus)
       return this.renderServerError();
     else return this.renderMatches();
   }

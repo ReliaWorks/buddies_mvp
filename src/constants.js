@@ -31,4 +31,4 @@ export const PRIVACY_POLICY = require('./assets/pdfs/06232017WavelengthPP.pdf');
 export const SAFETY_TIPS = require("./assets/pdfs/WavelengthSafetyTips.pdf");
 export const SERVER_DOWN_ROBOT = require("./assets/img/robot.jpg");
 
-export const CURRENT_APP_VERSION = '0.0.4 (13)';
+export const CURRENT_APP_VERSION = '0.0.6 (1)';
