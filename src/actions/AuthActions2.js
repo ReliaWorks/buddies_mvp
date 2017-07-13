@@ -34,8 +34,9 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
           const updates = {};
           updates['/user_profiles/' + user.uid + '/notificationToken'] = notificationToken;
 
-          firebase.database().ref().update(updates);
-      });
+          firebase.database().ref().update(updates)
+          .catch(err => console.log('error while n token is being saved : ', err));
+      }).catch(err => console.log('getFCMToken catch:', err));
 
       dispatch({
           type: ALREADY_AUTHENTICATED,
@@ -48,8 +49,11 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
       AccessToken.getCurrentAccessToken()
         .then(accessTokenData => {
           checkIfUserExists(accessTokenData, dispatch);
-        });
+        })
+        .catch(err => console.log('checkIfAlreadyLoggedInInner getCurrentAccessToken catch:', err));
     } else {
+      console.log('onAuthStateChanged giriş yapmış kullanıcı yok');
+
       Actions.login();
     }
   });
@@ -112,6 +116,7 @@ export const loginUser = () => {
 //                  getCurrentPosition({uid: auth.currentUser.uid}, dispatch);
                 })
                 .catch(err => {
+                  //dispatch({ type: LOGOUT_USER });
                   alert("Unable to log in. Try again later.");
                   console.log(`Error signing into Firebase ${err.code}: ${err.message}`);
               });
@@ -274,20 +279,22 @@ function checkIfUserExists(accessTokenData, dispatch) {
   const user = firebase.auth().currentUser;
 
   firebase.database().ref(`/user_profiles/${user.uid}`)
-    .once('value', snapshot => {
+    .once('value')
+    .then(snapshot => {
       const exists = (snapshot.val() && snapshot.val().first_name);
       if(exists) {
         reactivateAccountIfDeactivated(snapshot.key, snapshot.val().status)
         .then(() => {
           dispatch({ type: LOGIN_USER, payload: user.uid });
           Actions.main();
-        });
+        }).catch(err => console.log('error at reativate'));
       } else {
         setupUserFirebase(accessTokenData, dispatch);
         Actions.profileSetup();
         dispatch({ type: LOGIN_USER, payload: user.uid });
       }
-    });
+    })
+    .catch(err => console.log('checkIfUserExists error while snap is being fetched:', err));
 }
 
 const reactivateAccountIfDeactivated = (uid, status) => {

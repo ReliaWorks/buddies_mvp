@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { Dimensions, TouchableOpacity, TouchableHighlight, Platform } from 'react-native';
 import { Actions, ActionConst } from 'react-native-router-flux';
 //import Icon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -114,16 +114,19 @@ export const homeRightIconButton = () => {
       style={{
         marginLeft: width - ICON_CLICKABLE_AREA_WIDTH,
         alignItems: 'flex-end',
+        ...(Platform.OS === 'android' ? {marginTop: -35} : {})
       }}
     >
       <CustomIcon
         name="home_icon"
         size={ICON_SIZE - 5}
         color="black"
-        style={{
-          marginTop: -1 * ICON_SIZE,
-          paddingRight: ICON_PADDING,
-        }}
+        style={
+          Platform.OS === 'ios' ? {
+            marginTop: -1 * ICON_SIZE,
+            paddingRight: ICON_PADDING,
+          } : {}
+        }
       />
     </TouchableOpacity>
   );
