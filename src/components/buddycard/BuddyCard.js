@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Dimensions, LayoutAnimation, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Dimensions, LayoutAnimation, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, View, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ActivitySet from './ActivitySet';
 import FirstConnectionHelperModal from '../common/FirstConnectionHelperModal';
@@ -245,7 +245,7 @@ const localStyles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 60,
+    bottom: Platform.OS === 'ios' ? 60 : 83,
     borderColor: 'black',
     flexDirection: 'row',
     alignItems: 'stretch',

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Text, View, WebView } from 'react-native';
+import { WebView } from 'react-native';
 
-const PDF = ({path}) => {
-  console.log(`path = ${path}`);
-  return (
-    <WebView source={path} scalesPageToFit />
-  );
-};
+class PDF extends React.Component {
+  render() {
+    return (
+      <WebView source={this.props.path} scalesPageToFit />
+    );
+  }
+}
 
 export { PDF };

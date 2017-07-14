@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, PermissionsAndroid, Platform } from 'react-native';
 import firebase from 'firebase';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
@@ -11,8 +11,7 @@ import {
 } from './types';
 import { MAP_API_KEY } from '../config';
 
-export const getCurrentPosition = (currentUser, dispatch) => {
-  console.log('In LocationServices getCurrentPosition');
+const _getCurrentPosition = (currentUser, dispatch) => {
   navigator.geolocation.getCurrentPosition(
     (position) => {
       const initialPosition = JSON.stringify(position);
@@ -44,6 +43,26 @@ export const getCurrentPosition = (currentUser, dispatch) => {
       }
     }
   );
+};
+
+export const getCurrentPosition = (currentUser, dispatch) => {
+  if (Platform.OS === 'ios') {
+    _getCurrentPosition(currentUser, dispatch);
+  } else {
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      {
+        title: 'Permission to acces your location',
+        message: 'Wavelength needs access to your location so you can take better suggestion.'
+      }
+    ).then(granted => {
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        _getCurrentPosition(currentUser, dispatch);
+      } else {
+        console.log("Location permission denied");
+      }
+    });
+  }
 };
 
 const getLocationFromFirebase = (cuid) => {
@@ -87,8 +106,8 @@ function getCityStateCountry(currentUser, position, dispatch) {
           resolve(location);
         } else {
           getCityStateCountryMapAPI(uid, position, dispatch)
-            .then((location) => {
-              resolve(location);
+            .then((loc) => {
+              resolve(loc);
             })
             .catch(() => {
               reject();
@@ -111,7 +130,7 @@ function getCityStateCountry(currentUser, position, dispatch) {
 export const setLocationLocalStorage = (position, location) => {
   AsyncStorage.getItem(LOCATION_MAP_STORAGE_KEY)
     .then((result) => {
-      const value = result || {};
+      const value = JSON.parse(result) || {};
       const keys = Object.keys(value);
       //Keeps cache at a max of 20 items
       if (keys.length > 20) {
@@ -120,8 +139,10 @@ export const setLocationLocalStorage = (position, location) => {
       }
 
       value[position.latitude + '' + position.longitude] = location;
-      AsyncStorage.setItem(LOCATION_MAP_STORAGE_KEY, JSON.stringify(value));
-    });
+      AsyncStorage.setItem(LOCATION_MAP_STORAGE_KEY, JSON.stringify(value))
+        .catch(err => console.log('ln 141 catch:', err));
+    })
+    .catch(err => console.log('error while getting LOCATION_MAP_STORAGE_KEY: ', err));
 };
 
 export const getCityStateCountryMapAPI = (uid, position, dispatch) => {

@@ -86,7 +86,7 @@ def enableProguardInReleaseBuilds = false
 android {
     compileSdkVersion 25
     /*buildToolsVersion '25.0.0'*/
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '23.0.1'
 
     defaultConfig {
         applicationId "com.buddies_v3"
