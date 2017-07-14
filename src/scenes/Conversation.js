@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Image, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, View, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { GiftedChat } from 'react-native-gifted-chat';
 import ConnectionOptionsModal from './conversation/ConnectionOptionsModal';
@@ -81,8 +81,9 @@ class Conversation extends Component {
     return(
       <View
         style={{
-          flex: 0.1,
-          marginTop: -30,
+          //flex: 0.1,
+          ...(Platform.OS === 'ios' ? {flex: 0.1} : {height: 55}),
+          marginTop: Platform.OS === 'ios' ? -30 : -45,
           flexDirection: 'row',
           justifyContent: 'space-between',
           borderBottomWidth: 3,

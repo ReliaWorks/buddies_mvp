@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, findNodeHandle, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Dimensions, findNodeHandle, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -98,7 +98,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Source Sans Pro',
     fontSize: 18,
     borderWidth: 1,
-    borderColor: 'black'
+    borderColor: 'black',
+    alignSelf: Platform.OS === 'ios' ? 'auto' : 'stretch'
   }
 });
 
