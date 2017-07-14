@@ -28,6 +28,10 @@ class BuddyCard extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log("In BuddyCard componentDidMount");
+  }
+
   onOpenModal(index) {
     this.setState({ showModal: true, currentImageIndexOnSwiper: index });
   }
@@ -195,6 +199,7 @@ class BuddyCard extends Component {
     const { firstName, age, editable, imageLoaded, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
     const { locationText, nameText } = styles;
 
+    console.log(`In BuddyCard render`);
     return (
       <View style={{flex: 1}}>
         <View style={{flex: 1, alignSelf: 'stretch' }}>

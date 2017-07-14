@@ -12,6 +12,7 @@ import {
 import { MAP_API_KEY } from '../config';
 
 export const getCurrentPosition = (currentUser, dispatch) => {
+  console.log('In LocationServices getCurrentPosition');
   navigator.geolocation.getCurrentPosition(
     (position) => {
       const initialPosition = JSON.stringify(position);
@@ -26,6 +27,8 @@ export const getCurrentPosition = (currentUser, dispatch) => {
               user.geoLocation = position;
               user.uid = currentUser.uid;
             });
+          console.log(`wrote location to firebase: `);
+          console.log(location);
         })
         .catch(() => {
           console.log("Wasn't able to get the city, state info");

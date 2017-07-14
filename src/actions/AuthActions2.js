@@ -48,6 +48,7 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
       AccessToken.getCurrentAccessToken()
         .then(accessTokenData => {
           checkIfUserExists(accessTokenData, dispatch);
+          console.log(`CheckedIfUserExists`);
         });
     } else {
       Actions.login();
@@ -273,21 +274,27 @@ function setupUserFirebase(accessTokenData, dispatch) {
 function checkIfUserExists(accessTokenData, dispatch) {
   const user = firebase.auth().currentUser;
 
-  firebase.database().ref(`/user_profiles/${user.uid}`)
-    .once('value', snapshot => {
-      const exists = (snapshot.val() && snapshot.val().first_name);
-      if(exists) {
-        reactivateAccountIfDeactivated(snapshot.key, snapshot.val().status)
-        .then(() => {
+  if(user && user.uid) {
+    firebase.database().ref(`/user_profiles/${user.uid}`)
+      .once('value', snapshot => {
+        const exists = (snapshot.val() && snapshot.val().first_name);
+        if(exists) {
+          reactivateAccountIfDeactivated(snapshot.key, snapshot.val().status)
+          .then(() => {
+            dispatch({ type: LOGIN_USER, payload: user.uid });
+            Actions.main();
+          });
+        } else {
+          setupUserFirebase(accessTokenData, dispatch);
+          Actions.profileSetup();
           dispatch({ type: LOGIN_USER, payload: user.uid });
-          Actions.main();
-        });
-      } else {
-        setupUserFirebase(accessTokenData, dispatch);
-        Actions.profileSetup();
-        dispatch({ type: LOGIN_USER, payload: user.uid });
-      }
+        }
     });
+  } else {
+    setupUserFirebase(accessTokenData, dispatch);
+    Actions.profileSetup();
+    dispatch({ type: LOGIN_USER, payload: user.uid });
+  }
 }
 
 const reactivateAccountIfDeactivated = (uid, status) => {
