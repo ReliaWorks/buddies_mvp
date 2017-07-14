@@ -101,7 +101,7 @@ export const homeLeftIconButton = () => {
         name="home_icon"
         size={ICON_SIZE - 5}
         color="black"
-        style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_SIZE}}
+        style={{marginLeft: ICON_PADDING, width: ICON_SIZE, marginTop: Platform.OS === 'ios' ? 29 : 19}}
       />
     </TouchableOpacity>
     );
@@ -114,7 +114,7 @@ export const homeRightIconButton = () => {
       style={{
         marginLeft: width - ICON_CLICKABLE_AREA_WIDTH,
         alignItems: 'flex-end',
-        ...(Platform.OS === 'android' ? {marginTop: -35} : {})
+        ...(Platform.OS === 'android' ? {marginTop: -30, marginRight: ICON_PADDING} : {})
       }}
     >
       <CustomIcon
@@ -144,7 +144,7 @@ export const profileIconButton = () => {
         name="profile_icon"
         size={ICON_SIZE}
         color="black"
-        style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_SIZE}}
+        style={{marginLeft: ICON_PADDING, width: ICON_SIZE, marginTop: Platform.OS === 'ios' ? 29 : 12}}
       />
     </TouchableOpacity>
     );
@@ -161,7 +161,7 @@ export const wrenchIconButton = () => {
         color="black"
         style={{
           marginLeft: ICON_PADDING,
-          marginTop: 29,
+          marginTop: Platform.OS === 'ios' ? 29 : 15,
           width: ICON_SIZE,
         }}
       />

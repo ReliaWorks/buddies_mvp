@@ -29,16 +29,14 @@ class ChatComponentIconButton extends Component {
     return (
       <TouchableOpacity
         onPress={() => Actions.matches(ActionConst.RESET)}
-        style={{
-          ...styles.button,
-          ...(Platform.OS === 'android' ? styles.buttonAndroid : {})}}
+        style={Platform.OS === 'android' ? styles.buttonAndroid : styles.buttonIos}
       >
         {this.renderNotification(newNotification)}
         <CustomIcon
           name="message_icon"
           size={ICON_SIZE}
           color="black"
-          style={Platform.OS === 'ios' ? styles.iconIos : {}}
+          style={Platform.OS === 'ios' ? styles.iconIos : styles.iconAndroid}
         />
       </TouchableOpacity>
       );
@@ -46,15 +44,20 @@ class ChatComponentIconButton extends Component {
 }
 
 const styles = {
-  button: {
+  buttonIos: {
     marginLeft: width - ICON_CLICKABLE_AREA_WIDTH,
     alignItems: 'flex-end',
   },
   buttonAndroid: {
-    marginTop: -35,
+    marginLeft: width - ICON_CLICKABLE_AREA_WIDTH,
+    alignItems: 'flex-end',
+    marginTop: -28,
   },
   iconIos: {
     marginTop: -1 * ICON_SIZE,
+    paddingRight: ICON_PADDING,
+  },
+  iconAndroid: {
     paddingRight: ICON_PADDING,
   },
   newMessage: {
