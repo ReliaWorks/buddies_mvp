@@ -41,6 +41,7 @@ const styles = {
   imageNameLabel: {
     fontSize: 14,
     fontFamily: 'Source Sans Pro',
+    color: 'black',
     textAlign: 'center',
     marginTop: 10
   },

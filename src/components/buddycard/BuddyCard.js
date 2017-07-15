@@ -278,6 +278,7 @@ const localStyles = StyleSheet.create({
     marginTop: MARGIN,
     fontFamily: 'Source Sans Pro',
     backgroundColor: 'white',
+    color: 'black',
   },
 });
 

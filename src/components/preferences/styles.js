@@ -1,6 +1,7 @@
 export default styles = {
   headerText: {
     fontFamily: 'SourceSansPro-Bold',
+    color: 'black',
     fontSize: 14,
     marginLeft: 20,
     marginBottom: 5,

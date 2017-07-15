@@ -21,11 +21,13 @@ const localStyles = {
   addActivityIcon: {
     margin: 12,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    color: 'black',
   },
   addActivityIconTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'black',
     marginLeft: 10,
   }
 };

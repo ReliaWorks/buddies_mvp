@@ -159,7 +159,7 @@ class Routes extends Component {
         <Scene
           key="userView"
           component={UserView}
-          title="Profile Settings"
+          title="Edit Profile"
           leftButton={wrenchIconButton}
           rightButton={homeRightIconButton}
           type={ActionConst.RESET}
