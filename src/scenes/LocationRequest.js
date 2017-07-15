@@ -79,12 +79,15 @@ const styles = StyleSheet.create({
   semiBoldText: {
     fontSize: 16,
     fontFamily: 'Source Sans Pro',
-    fontWeight: '500',
-    textAlign: 'center'
+    fontWeight: '400',
+    textAlign: 'center',
+    color: 'black',
   },
   text: {
     fontSize: 20,
-    fontFamily: 'Source Sans Pro'
+    fontFamily: 'Source Sans Pro',
+    fontWeight: '500',
+    color: 'black',
   },
   imageStyle: {
     width: 52,

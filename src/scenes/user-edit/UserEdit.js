@@ -144,6 +144,7 @@ const styles = {
     fontFamily: 'Source Sans Pro',
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'black',
   },
   sectionContainer: {
     justifyContent: 'center',

@@ -137,7 +137,9 @@ const styles = {
   },
   headerText: {
     fontSize: 18,
-    fontFamily: 'SourceSansPro-SemiBold',
+    fontFamily: 'Source Sans Pro',
+    fontWeight: '500',
+    color: 'black'
   },
   noConvoThumbnailStyle: {
     flex: 1,
@@ -166,7 +168,9 @@ const styles = {
   },
   zeroStateText: {
     textAlign: 'left',
-    fontFamily: 'SourceSansPro-SemiBold',
+    fontFamily: 'Source Sans Pro',
+    fontWeight: '500',
+    color: 'black',
     fontSize: 24,
 //    color: '#00A3B7'
   },

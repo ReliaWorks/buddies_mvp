@@ -145,6 +145,7 @@ export const loadMorePotentials = (offset = 0) => {
 // };
 
 export const currentUserFetch = () => {
+  console.log(`In currentUserFetch`);
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {

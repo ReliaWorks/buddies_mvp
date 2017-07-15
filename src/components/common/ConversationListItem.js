@@ -88,6 +88,7 @@ const styles = {
   nameText: {
     fontFamily: 'SourceSansPro-Bold',
     fontSize: 14,
+    color: 'black',
     marginTop: MARGIN,
   },
   dateText: {
@@ -100,6 +101,7 @@ const styles = {
   msgText: {
     fontFamily: 'Source Sans Pro',
     fontSize: 14,
+    color: 'black',
   },
   newMessage: {
     position: 'absolute',

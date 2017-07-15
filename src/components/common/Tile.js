@@ -60,6 +60,7 @@ const styles = {
     alignSelf: 'center',
     fontFamily: 'SourceSansPro-Bold',
     fontSize: 12,
+    color: 'black',
     textAlign: 'center'
   },
   attribute: {

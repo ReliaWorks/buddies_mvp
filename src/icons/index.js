@@ -85,7 +85,12 @@ export const chatLeftIconButton = () => {
         name="message_icon"
         size={ICON_SIZE}
         color="black"
-        style={{marginLeft: ICON_PADDING, marginTop: 29, width: ICON_SIZE }}
+        style={{
+          marginLeft: ICON_PADDING,
+          marginTop: 29,
+          width: ICON_SIZE,
+//          color: 'black',
+        }}
       />
     </TouchableOpacity>
     );

@@ -175,7 +175,7 @@ class Settings extends Component {
     const { location } = this.props.value;
     return (
       <View style={{...styles.preferenceContainer, flex: 0.7, flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={localStyles.locationHeaderText}>Location: <Text style={{fontFamily: 'Source Sans Pro'}}>{location.city}, {location.state}
+        <Text style={localStyles.locationHeaderText}>Location: <Text style={{fontFamily: 'Source Sans Pro', fontWeight: '400'}}>{location.city}, {location.state}
           </Text>
         </Text>
         {this.editIcon()}
@@ -207,6 +207,7 @@ const localStyles = {
   locationHeaderText: {
     fontFamily: 'SourceSansPro-Bold',
     fontSize: 14,
+    color: 'black',
     marginLeft: 20,
     marginBottom: 5,
     marginTop: 10,
@@ -236,7 +237,8 @@ const localStyles = {
   },
   feedbackLinkStyle: {
     fontFamily: 'Source Sans Pro',
-    fontWeight: '700',
+    fontWeight: '400',
+    color: 'black',
     fontSize: 16,
     textAlign: 'center',
     textDecorationLine: 'underline'

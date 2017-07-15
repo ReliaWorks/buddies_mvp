@@ -96,6 +96,7 @@ class ProfileImages extends Component {
         pics = profileImages.slice(0, MAX_NUM_PHOTOS);
     }
 
+    console.log(`In ProfileImages render`);
     return (
       <View style={profileImageContainer}>
         <Swiper

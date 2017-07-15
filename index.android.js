@@ -19,4 +19,4 @@ import { SENTRY_DNS } from './src/config';
 //   }
 // }).install();
 
-AppRegistry.registerComponent('buddies_v3', () => App);
+AppRegistry.registerComponent('wavelength', () => App);

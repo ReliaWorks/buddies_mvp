@@ -81,6 +81,7 @@ const styles = {
     fontSize: 14,
     fontWeight: '100',
     fontFamily: 'Source Sans Pro',
+    color: 'black',
     textAlign: 'center',
     paddingTop: 10,
   }
