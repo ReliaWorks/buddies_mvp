@@ -26,8 +26,6 @@ const _getCurrentPosition = (currentUser, dispatch) => {
               user.geoLocation = position;
               user.uid = currentUser.uid;
             });
-          console.log(`wrote location to firebase: `);
-          console.log(location);
         })
         .catch(() => {
           console.log("Wasn't able to get the city, state info");

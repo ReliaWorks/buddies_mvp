@@ -11,7 +11,7 @@ import CustomIcon from '../../assets/icons';
 
 const { width, height } = Dimensions.get('window');
 
-const BOTTOM_PADDING = 120;
+const BOTTOM_PADDING = 150;
 const MARGIN = 15;
 
 class BuddyCard extends Component {
@@ -173,7 +173,7 @@ class BuddyCard extends Component {
     }
   }
 
-  renderDescription(description) {
+  renderDescription(description, editable) {
     return (
       <View style={localStyles.descriptionStyle}>
         <Text style={localStyles.descriptionText}>{description}</Text>
@@ -228,7 +228,7 @@ class BuddyCard extends Component {
                 </View>
                 {this.renderLocation(location, locationText)}
                 {this.renderActivitiesAffiliations(activities, affiliations, editable, imageLoaded)}
-                {this.renderDescription(description)}
+                {this.renderDescription(description, editable)}
                 </View>
               </TouchableWithoutFeedback>
             </ScrollView>
