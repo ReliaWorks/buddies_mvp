@@ -20,15 +20,12 @@ class BrowseContainer extends Component {
       this.props.potentialsFetch();
     if (!this.props.connection.listeningForNotifications)
       this.props.checkNotifications();
-    console.log("In BrowseContainer componentWillMount");
-    console.log(firebase.auth().currentUser);
   }
 
   componentDidMount() {
     if (!this.props.messageCenter.loaded) {
       this.props.matchesFetch();
     }
-    console.log(`In BrowseContainer componentDidMount`);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -87,9 +84,6 @@ class BrowseContainer extends Component {
   renderMatches() {
     const { currentIndex, potentials, numTimesConnected, numTimesMatched, seenConnectionHelper, morePotentialsLoading } = this.props.connection;
 
-    console.log(`In renderMatches. currentIndex = ${currentIndex}`);
-    console.log(`Potentials = `);
-    console.log(potentials);
     if(this.props.connection.loadingCurrentUser) return <Spinner size="large" />;
     else if(!potentials || potentials.length === 0) {
       return <NoMoreCards />;

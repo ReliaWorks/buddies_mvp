@@ -9,7 +9,9 @@ import { loginUser } from '../actions';
 import { TOS } from '../constants';
 
 const appName = "wavelength";
-const backgroundImageURL = require("../assets/img/wavelength.png");
+//const backgroundImageURL = require("../assets/img/wavelength.png");
+//const backgroundImageURL = require("../assets/img/wavelength71517.jpg");
+const backgroundImageURL = require("../assets/img/wavelength71517v2.jpg");
 
 const { width } = Dimensions.get('window');
 const LOGINFORM_MARGIN = 15;
@@ -41,6 +43,17 @@ class LoginForm extends Component {
       this.animation.play();
   }
 
+
+/*  <LinearGradient colors={['#FF4F7D', '#6091FF', '#75FED8']} style={styles.linearGradient}>
+    <View style={{justifyContent: 'center', flex: 35}}>
+      <Text style={styles.nameText}>Wavelength</Text>
+      <View style={{height: 10}} />
+      <Text style={styles.taglineText}>Meet people who share</Text>
+      <Text style={styles.taglineText}>your interests.</Text>
+    </View>
+    </LinearGradient>
+
+*/
   render() {
 //    if(this.props.loading)
 //      return <GlowLoader animationRef={this.animationRef} />;
@@ -53,13 +66,8 @@ class LoginForm extends Component {
       : null;
 
     return (
-      <LinearGradient colors={['#FF4F7D', '#6091FF', '#75FED8']} style={styles.linearGradient}>
-        <View style={{justifyContent: 'center', flex: 35}}>
-          <Text style={styles.nameText}>Wavelength</Text>
-          <View style={{height: 10}} />
-          <Text style={styles.taglineText}>Meet people who share</Text>
-          <Text style={styles.taglineText}>your interests.</Text>
-        </View>
+        <View style={styles.container}>
+          <Image source={backgroundImageURL} style={styles.backgroundImage}>
 
         {loadingComponent}
 
@@ -79,8 +87,9 @@ class LoginForm extends Component {
             Terms of Service
           </Text>
         </View>
+        </Image>
+        </View>
 
-      </LinearGradient>
     );
   }
 }
@@ -89,7 +98,7 @@ class LoginForm extends Component {
 
 const styles = {
   linearGradient: {
-    flex: 1,
+//    flex: 1,
     justifyContent: 'flex-end'
   },
   container: {
@@ -138,8 +147,10 @@ const styles = {
     marginTop: -35,
     marginBottom: 10,
   },
+
   loginButtonContainer: {
-    flex: 4,
+//    flex: 0.3,
+    height: 50,
     width: width - (LOGINFORM_MARGIN * 2),
     marginTop: 10,
     marginLeft: LOGINFORM_MARGIN,
@@ -148,16 +159,17 @@ const styles = {
     backgroundColor: 'black',
   },
   termsContainer: {
-    flex: 3,
+//    flex: 3,
     backgroundColor: 'transparent'
   },
   backgroundImage: {
+    flex: 1,
     alignSelf: 'stretch',
     alignItems: 'center',
-    justifyContent: 'space-around',
-    marginTop: -30,
-    marginLeft: LOGINFORM_MARGIN,
-    marginRight: LOGINFORM_MARGIN,
+    justifyContent: 'flex-end',
+    marginTop: -70,
+//    marginLeft: LOGINFORM_MARGIN,
+//    marginRight: LOGINFORM_MARGIN,
     width: null,
     height: null,
   }

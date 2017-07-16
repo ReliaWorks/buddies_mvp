@@ -10,6 +10,8 @@ const { height } = Dimensions.get('window');
 const MAX_NUM_PHOTOS = 7;
 
 class ProfileImages extends Component {
+//  swiper:Object;
+
   constructor(props) {
     super(props);
 
@@ -34,6 +36,10 @@ class ProfileImages extends Component {
     return false;
   }
 
+  componentWillMount() {
+//    if(this.state.firstRender && this.swiper)
+//      this.swiper.scrollBy(0);
+  }
   componentDidMount() {
     this.setState({firstRender: false});
   }
@@ -96,15 +102,16 @@ class ProfileImages extends Component {
         pics = profileImages.slice(0, MAX_NUM_PHOTOS);
     }
 
-    console.log(`In ProfileImages render`);
     return (
       <View style={profileImageContainer}>
         <Swiper
           loadMinimal
           horizontal={false}
           onMomentumScrollEnd={(e, state) => {
+            console.log(`onMomentumScrollEnd state.index = ${state.index}`);
             this.setState({currentImageIndexOnSwiper: state.index});
           }}
+          //this code allows the dots that are not selected to be white instead of the default gray
           dot={
             <View
               style={{

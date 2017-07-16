@@ -14,8 +14,6 @@ class PhotoEditContainer extends Component {
   }
 
   onImagesSelected(images, isPrimary, from = 'cameraRoll') {
-    // console.log('from:', from);
-    // this.props.photosSelected(images, isPrimary, from);
     this.props.photosSelected(images, 'CR', this.props.currentUser);
   }
 
