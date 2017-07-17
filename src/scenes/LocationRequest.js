@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderWidth: 1,
     borderColor: 'black',
-    alignSelf: Platform.OS === 'ios' ? 'auto' : 'stretch'
+    alignSelf: 'stretch',
   }
 });
 
