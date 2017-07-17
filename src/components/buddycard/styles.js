@@ -4,7 +4,9 @@ export default styles = {
     marginLeft: 15,
     marginRight: 5,
     marginTop: 15,
-    fontFamily: 'SourceSansPro-SemiBold',
+    fontFamily: 'Source Sans Pro',
+    color: 'black',
+    fontWeight: '600'
   },
   locationText: {
     fontSize: 14,

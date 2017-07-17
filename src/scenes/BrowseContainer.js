@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { Image, Modal, Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
+import firebase from 'firebase';
 import { connect } from 'react-redux';
 import BuddyCard from '../components/buddycard/BuddyCard';
 import { currentUserFetch, connectWithUser, imageLoaded, potentialsFetch, checkNotifications, recordView, scrolled, resetCurrentIndex, matchesFetch, loadMorePotentials } from '../actions';
@@ -12,8 +13,9 @@ class BrowseContainer extends Component {
   swiper:Object;
 
   componentWillMount() {
-    if (this.props.currentUser.firstName === '')
-        this.props.currentUserFetch();
+    if (this.props.currentUser.firstName === '') {
+      this.props.currentUserFetch();
+    }
     if(!this.props.connection.potentialsLoaded)
       this.props.potentialsFetch();
     if (!this.props.connection.listeningForNotifications)
@@ -82,7 +84,6 @@ class BrowseContainer extends Component {
   renderMatches() {
     const { currentIndex, potentials, numTimesConnected, numTimesMatched, seenConnectionHelper, morePotentialsLoading } = this.props.connection;
 
-    console.log(`In renderMatches. currentIndex = ${currentIndex}`);
     if(this.props.connection.loadingCurrentUser) return <Spinner size="large" />;
     else if(!potentials || potentials.length === 0) {
       return <NoMoreCards />;

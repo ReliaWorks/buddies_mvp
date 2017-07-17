@@ -51,6 +51,7 @@ const localStyles = {
   genderText: {
     marginLeft: 20,
     fontFamily: 'Source Sans Pro',
+    color: 'black',
     fontSize: 14,
   },
   genderHeaderContainer: {

@@ -1,4 +1,4 @@
-package com.buddies_v3;
+package com.reliaworks.wavelength;
 
 import com.facebook.react.ReactActivity;
 import android.content.Intent;
@@ -11,7 +11,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "buddies_v3";
+        return "wavelength";
     }
 
     @Override

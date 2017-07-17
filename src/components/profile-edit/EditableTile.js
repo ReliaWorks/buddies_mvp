@@ -50,6 +50,7 @@ const styles = {
     fontSize: 12,
     fontFamily: 'Source Sans Pro',
     textAlign: 'center',
+    color: 'black',
     paddingTop: 10,
   }
 };

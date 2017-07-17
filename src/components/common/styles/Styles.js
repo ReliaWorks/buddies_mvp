@@ -35,6 +35,7 @@ export const editIconContainer = {
 
 export const headerTextStyle = {
   fontSize: 22,
+  color: 'black',
   fontFamily: 'Source Sans Pro',
   padding: 10
 };
@@ -50,10 +51,12 @@ export const legalTextStyle = {
 };
 
 export const navTitleStyle = {
-  fontFamily: 'SourceSansPro-SemiBold',
+  fontFamily: 'Source Sans Pro',
   fontSize: 18,
-  width: width - 150,
-  zIndex: 99,
+  fontWeight: '500',
+  color: 'black',
+  width: width - 50,
+  zIndex: 99
 };
 
 export const navBarStyle = {
@@ -70,6 +73,7 @@ export const spinnerStyle = {
 export const centeredTextStyle = {
   fontSize: 20,
   fontFamily: 'Source Sans Pro',
+  color: 'black',
   textAlign: 'center',
   marginTop: 10,
   marginBottom: 10,

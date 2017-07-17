@@ -1,4 +1,4 @@
-package com.buddies_v3;
+package com.reliaworks.wavelength;
 
 import android.app.Application;
 
