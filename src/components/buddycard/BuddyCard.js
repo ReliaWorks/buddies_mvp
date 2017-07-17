@@ -11,7 +11,7 @@ import CustomIcon from '../../assets/icons';
 
 const { width, height } = Dimensions.get('window');
 
-const BOTTOM_PADDING = 120;
+const BOTTOM_PADDING = 150;
 const MARGIN = 15;
 
 class BuddyCard extends Component {
@@ -26,6 +26,10 @@ class BuddyCard extends Component {
       currentImageIndexOnSwiper: 0,
       scrollDirection: null,
     };
+  }
+
+  componentDidMount() {
+    console.log("In BuddyCard componentDidMount");
   }
 
   onOpenModal(index) {
@@ -169,7 +173,7 @@ class BuddyCard extends Component {
     }
   }
 
-  renderDescription(description) {
+  renderDescription(description, editable) {
     return (
       <View style={localStyles.descriptionStyle}>
         <Text style={localStyles.descriptionText}>{description}</Text>
@@ -195,6 +199,7 @@ class BuddyCard extends Component {
     const { firstName, age, editable, imageLoaded, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
     const { locationText, nameText } = styles;
 
+    console.log(`In BuddyCard render`);
     return (
       <View style={{flex: 1}}>
         <View style={{flex: 1, alignSelf: 'stretch' }}>
@@ -223,7 +228,7 @@ class BuddyCard extends Component {
                 </View>
                 {this.renderLocation(location, locationText)}
                 {this.renderActivitiesAffiliations(activities, affiliations, editable, imageLoaded)}
-                {this.renderDescription(description)}
+                {this.renderDescription(description, editable)}
                 </View>
               </TouchableWithoutFeedback>
             </ScrollView>
@@ -273,6 +278,7 @@ const localStyles = StyleSheet.create({
     marginTop: MARGIN,
     fontFamily: 'Source Sans Pro',
     backgroundColor: 'white',
+    color: 'black',
   },
 });
 

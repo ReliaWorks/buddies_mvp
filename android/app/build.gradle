@@ -89,7 +89,7 @@ android {
     buildToolsVersion '23.0.1'
 
     defaultConfig {
-        applicationId "com.buddies_v3"
+        applicationId "com.reliaworks.wavelength"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
@@ -145,8 +145,8 @@ dependencies {
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.facebook.react:react-native:+'
-    compile 'com.facebook.android:facebook-android-sdk:4.+'
-    //compile 'com.google.firebase:firebase-messaging:11.0.2'
+    compile 'com.facebook.android:facebook-android-sdk:4.22.1'
+    compile 'com.google.firebase:firebase-messaging:11.0.2'
 }
 
 // Run this once to be able to run the application with BUCK

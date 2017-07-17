@@ -18,7 +18,9 @@ const store = createStore(reducers, {}, composeEnhancers(applyMiddleware(ReduxTh
 class App extends Component {
 
   componentWillMount() {
-    firebase.initializeApp(FIREBASE_CONFIG);
+    if(!firebase.apps.length) {
+      firebase.initializeApp(FIREBASE_CONFIG);      
+    }
   }
 
   render() {

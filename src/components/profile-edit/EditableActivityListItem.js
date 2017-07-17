@@ -71,8 +71,10 @@ const styles = {
     borderTopColor: '#aaa',
   },
   name: {
-    fontFamily: 'SourceSansPro-SemiBold',
+    fontFamily: 'Source Sans Pro',
+    fontWeight: '500',
     fontSize: 14,
+    color: 'black',
   },
   value: {
     fontFamily: 'Source Sans Pro',

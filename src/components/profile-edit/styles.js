@@ -8,6 +8,7 @@ const IMAGE_WIDTH = (WIDTH - TOTAL_MARGIN) / (ITEMS_PER_ROW);
 export default styles = {
   sectionHeaderText: {
     fontFamily: 'SourceSansPro-Bold',
+    color: 'black',
     fontSize: 18,
   },
   title: {

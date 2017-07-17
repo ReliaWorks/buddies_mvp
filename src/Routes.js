@@ -44,8 +44,10 @@ class Routes extends Component {
           <Scene
             key="login"
             component={LoginForm}
+            hideNavBar
             navigationBarStyle={{
-              backgroundColor: '#FF4F7D',
+//              backgroundColor: '#FF4F7D',
+              backgroundColor: '#6DE8F7',
               borderBottomColor: 'transparent',
             }}
             type={ActionConst.RESET}
@@ -159,7 +161,7 @@ class Routes extends Component {
         <Scene
           key="userView"
           component={UserView}
-          title="Profile Settings"
+          title="Edit Profile"
           leftButton={wrenchIconButton}
           rightButton={homeRightIconButton}
           type={ActionConst.RESET}

@@ -27,8 +27,7 @@ export default class ActivityAttributeModal extends Component {
   }
 
   render() {
-    const selectedStyle = {fontWeight: 'bold'};
-    const {activity} = this.props;
+    const { activity } = this.props;
 
     return (
       <Modal

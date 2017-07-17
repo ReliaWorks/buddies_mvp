@@ -8,6 +8,7 @@ export default styles = {
   linkText: {
     textAlign: 'center',
     fontFamily: 'Source Sans Pro',
+    color: 'black',
     fontSize: 14,
     fontWeight: '700',
   },
@@ -15,6 +16,7 @@ export default styles = {
     textAlign: 'center',
     fontFamily: 'SourceSansPro-Bold',
     fontSize: 16,
+    color: 'black',
     marginTop: 10,
   },
   textStyle: {
