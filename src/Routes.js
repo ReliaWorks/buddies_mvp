@@ -250,10 +250,12 @@ class Routes extends Component {
         <Scene
           key="location"
           component={LocationRequest}
+          leftButtonStyle={{ borderWidth: 1, borderColor: 'red', padding: 20 }}
         />
         <Scene
           key="pdf"
           component={PDF}
+          leftButtonStyle={{ borderWidth: 1, borderColor: 'red', padding: 20 }}
         />
       </Router>
     );

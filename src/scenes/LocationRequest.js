@@ -39,6 +39,7 @@ class LocationRequest extends Component {
         <Text style={styles.semiBoldText}>location services in your phone settings.</Text>
         <TextInput
           style={styles.locationInput}
+          underlineColorAndroid='rgba(0,0,0,0)'
           placeholder="City, State or Zipcode"
           onChangeText={(text) => { this.setState({text}); }}
         />
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderWidth: 1,
     borderColor: 'black',
-    alignSelf: Platform.OS === 'ios' ? 'auto' : 'stretch'
+    alignSelf: 'stretch',
   }
 });
 
