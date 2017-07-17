@@ -52,8 +52,8 @@ export const legalTextStyle = {
 export const navTitleStyle = {
   fontFamily: 'SourceSansPro-SemiBold',
   fontSize: 18,
-  width: width - 50,
-  zIndex: 99
+  width: width - 150,
+  zIndex: 99,
 };
 
 export const navBarStyle = {

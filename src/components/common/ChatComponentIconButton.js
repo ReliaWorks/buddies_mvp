@@ -51,7 +51,7 @@ const styles = {
   buttonAndroid: {
     marginLeft: width - ICON_CLICKABLE_AREA_WIDTH,
     alignItems: 'flex-end',
-    marginTop: -28,
+    marginTop: -45,
   },
   iconIos: {
     marginTop: -1 * ICON_SIZE,
@@ -59,6 +59,7 @@ const styles = {
   },
   iconAndroid: {
     paddingRight: ICON_PADDING,
+    marginTop: 10,
   },
   newMessage: {
     position: 'absolute',
