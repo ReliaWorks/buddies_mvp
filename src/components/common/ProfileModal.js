@@ -40,9 +40,10 @@ class ProfileModal extends Component {
     if(loading) {
       return <Spinner size="large" />;
     }
+//    {this.renderCloseIcon()}
+
     return (
       <View style={{flex: 1}}>
-        {this.renderCloseIcon()}
         <BuddyCard
           value={{
             firstName,

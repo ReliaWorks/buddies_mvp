@@ -149,13 +149,15 @@ class Routes extends Component {
             key="conversation"
             component={Conversation}
             title="Chat"
-            type={ActionConst.RESET}
+//            type={ActionConst.RESET}
             hideNavBar
           />
           <Scene
             key="profile"
             component={ProfileModal}
             title="Profile"
+            leftButtonStyle={{ padding: 20 }}
+            leftButtonIconStyle={{ tintColor: 'black' }}
           />
         </Scene>
         <Scene
@@ -251,11 +253,13 @@ class Routes extends Component {
           key="location"
           component={LocationRequest}
           leftButtonStyle={{ padding: 20 }}
+          leftButtonIconStyle={{ tintColor: 'black' }}
         />
         <Scene
           key="pdf"
           component={PDF}
           leftButtonStyle={{ padding: 20 }}
+          leftButtonIconStyle={{ tintColor: 'black' }}
         />
       </Router>
     );
