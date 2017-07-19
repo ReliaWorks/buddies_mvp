@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Moment from 'moment';
@@ -76,10 +76,11 @@ const styles = {
     backgroundColor: 'white',
     borderBottomWidth: 1,
     borderColor: '#DEDEDE',
-    marginLeft: MARGIN,
+    marginLeft: Platform.OS === 'ios' ? MARGIN : MARGIN - 5,
     marginRight: MARGIN,
     paddingBottom: MARGIN / 2,
     paddingTop: MARGIN / 2,
+    ...(Platform.OS === 'ios' ? {} : {paddingLeft: 5})
   },
   convoContainerStyle: {
     marginLeft: MARGIN,
@@ -110,7 +111,7 @@ const styles = {
     borderRadius: 100 / 2,
     backgroundColor: '#FF4F7D',
     top: 45,
-    left: -5,
+    left: Platform.OS === 'ios' ? -5 : 0,
     zIndex: 99,
     borderWidth: 1,
     borderColor: 'white',
