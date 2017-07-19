@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, TouchableOpacity, TouchableHighlight, Platform } from 'react-native';
+import { Button, Dimensions, TouchableNativeFeedback, TouchableOpacity, TouchableHighlight, Platform, View } from 'react-native';
 import { Actions, ActionConst } from 'react-native-router-flux';
 //import Icon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -22,6 +22,7 @@ export const backIconButton = () => {
       <IonIcon
         name="ios-arrow-back-outline"
         size={ICON_SIZE}
+        color="black"
         style={{
           paddingLeft: ICON_PADDING,
           paddingTop: 15,
@@ -138,22 +139,36 @@ export const homeRightIconButton = () => {
 };
 
 export const profileIconButton = () => {
+  const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+
   return (
-    <TouchableOpacity
+    <Touchable
       onPress={() => Actions.userView()}
-      style={{width: ICON_CLICKABLE_AREA_WIDTH}}
       accessibilityLabel={'profileIconButton'}
       testID={'profileIconButton'}
+      disabled={false}
     >
+      <View
+        style={{
+        width: ICON_CLICKABLE_AREA_WIDTH,
+        height: 30,
+        marginTop: Platform.OS === 'ios' ? 29 : 12,
+        }}
+      >
       <CustomIcon
         name="profile_icon"
         size={ICON_SIZE}
         color="black"
-        style={{marginLeft: ICON_PADDING, width: ICON_SIZE, marginTop: Platform.OS === 'ios' ? 29 : 12}}
+        style={{
+          marginLeft: ICON_PADDING,
+          width: ICON_SIZE,
+        }}
       />
-    </TouchableOpacity>
+      </View>
+    </Touchable>
     );
 };
+
 export const wrenchIconButton = () => {
   return (
     <TouchableOpacity

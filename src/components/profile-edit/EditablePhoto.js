@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
-import { TRASH_ICON } from '../../scenes/profile-setup/strings';
 import CustomIcon from '../../assets/icons';
 import styles from './styles';
 
