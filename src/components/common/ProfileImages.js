@@ -105,7 +105,6 @@ class ProfileImages extends Component {
     return (
       <View style={profileImageContainer}>
         <Swiper
-          loadMinimal
           horizontal={false}
           onMomentumScrollEnd={(e, state) => {
             console.log(`onMomentumScrollEnd state.index = ${state.index}`);
@@ -149,7 +148,8 @@ class ProfileImages extends Component {
 
 const styles = {
   profileImageContainer: {
-    flex: 0.5,
+//    flex: 0.5,
+    height: (height * 0.505),
     borderBottomWidth: 4,
   },
   profileImage: {
