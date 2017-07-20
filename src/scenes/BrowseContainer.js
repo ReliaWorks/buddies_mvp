@@ -95,6 +95,7 @@ class BrowseContainer extends Component {
         ref={(component) => {
           this.swiper = component;
         }}
+        key={1}
         onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)}
         showPagination
         loadMinimal
