@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     marginTop: MARGIN,
     marginBottom: MARGIN * 2,
     alignItems: 'center',
+    zIndex: 3
   },
   textStyle: {
     textAlign: 'center',
