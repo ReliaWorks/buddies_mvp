@@ -11,7 +11,7 @@ import CustomIcon from '../../assets/icons';
 
 const { width, height } = Dimensions.get('window');
 
-const BOTTOM_PADDING = 150;
+const BOTTOM_PADDING = 150; //creates space for the Connect button
 const MARGIN = 15;
 
 class BuddyCard extends Component {
@@ -128,6 +128,7 @@ class BuddyCard extends Component {
   }
 
   renderDescription(description, editable, likeable) {
+    if(!description) return null;
     let descStyle = localStyles.descriptionStyle;
     if(editable || !likeable) descStyle = [descStyle, {marginBottom: 10}];
     return (
@@ -188,7 +189,6 @@ const localStyles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: Platform.OS === 'ios' ? 60 : 84,
-//    alignItems: 'stretch',
   },
   connectButton: {
     alignItems: 'center',

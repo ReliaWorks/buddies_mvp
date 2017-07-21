@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     paddingTop: 70 + MARGIN,
-    paddingBottom: 70 + MARGIN, 
+    paddingBottom: 70 + MARGIN,
 //    backgroundColor: 'purple'
   },
   commonalityView: {

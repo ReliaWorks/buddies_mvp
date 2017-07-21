@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, TouchableWithoutFeedback, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, Platform, TouchableWithoutFeedback, TouchableOpacity, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { Actions } from 'react-native-router-flux';
 import { buttonStyle } from './styles';
@@ -10,8 +10,6 @@ const { height } = Dimensions.get('window');
 const MAX_NUM_PHOTOS = 7;
 
 class ProfileImages extends Component {
-//  swiper:Object;
-
   constructor(props) {
     super(props);
 
@@ -36,10 +34,6 @@ class ProfileImages extends Component {
     return false;
   }
 
-  componentWillMount() {
-//    if(this.state.firstRender && this.swiper)
-//      this.swiper.scrollBy(0);
-  }
   componentDidMount() {
     this.setState({firstRender: false});
   }
@@ -107,7 +101,6 @@ class ProfileImages extends Component {
         <Swiper
           horizontal={false}
           onMomentumScrollEnd={(e, state) => {
-            console.log(`onMomentumScrollEnd state.index = ${state.index}`);
             this.setState({currentImageIndexOnSwiper: state.index});
           }}
           //this code allows the dots that are not selected to be white instead of the default gray
@@ -148,13 +141,14 @@ class ProfileImages extends Component {
 
 const styles = {
   profileImageContainer: {
-//    flex: 0.5,
     height: (height * 0.505),
+//    transform: Platform.OS === 'ios' ? [] : [{rotate: "90deg"}],
     borderBottomWidth: 4,
   },
   profileImage: {
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
+//    transform: Platform.OS === 'ios' ? [] : [{rotate: "-90deg"}],
     height: (height * 0.5),
     width: null,
   },

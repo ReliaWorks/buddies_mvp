@@ -51,20 +51,21 @@ class MessageCenter extends Component {
   }
 
   renderConversations(firstName) {
-    if(this.props.matchesWithChatDataSource.getRowCount() === 0)
-    return(
-      <View style={styles.zeroStateContainer}>
-        <View style={styles.zeroStateTextContainer}>
-        <Text style={{...styles.zeroStateText, textAlign: 'left'}}>
-          Hey {firstName},
-        </Text>
-        <View style={{height: 10}} />
-        <Text style={{...styles.zeroStateText, textAlign: 'left'}}>
-          {ZERO_CONVOS}
-        </Text>
+    if(this.props.matchesWithChatDataSource.getRowCount() === 0) {
+      return(
+        <View style={styles.zeroStateContainer}>
+          <View style={styles.zeroStateTextContainer}>
+          <Text style={{...styles.zeroStateText, textAlign: 'left'}}>
+            Hey {firstName},
+          </Text>
+          <View style={{height: 10}} />
+          <Text style={{...styles.zeroStateText, textAlign: 'left'}}>
+            {ZERO_CONVOS}
+          </Text>
+          </View>
         </View>
-      </View>
-    );
+      );
+    }
     return (
       <View style={{flex: 1}}>
           <ListView
@@ -83,7 +84,7 @@ class MessageCenter extends Component {
       return null;
     return (
       <View style={{flex: 1}}>
-      <View style={{flex: 0.30, marginTop: MARGIN, marginLeft: MARGIN }}>
+      <View style={{flex: 0.30, marginTop: MARGIN }}>
         <Text style={styles.headerText}>New Connections</Text>
         <ListView
           style={{...styles.container, marginTop: 10}}
@@ -116,7 +117,7 @@ class MessageCenter extends Component {
        return this.renderZeroState("Browse and connect with members to start chatting.");
     } else {
       return (
-        <View style={{flex: 1, marginBottom: MARGIN}}>
+        <View style={{flex: 1}}>
           <ScrollView style={styles.container}>
             {this.renderNewConnections()}
             {this.renderConversations(this.props.firstName)}
@@ -139,7 +140,8 @@ const styles = {
     fontSize: 18,
     fontFamily: 'Source Sans Pro',
     fontWeight: '500',
-    color: 'black'
+    color: 'black',
+    marginLeft: MARGIN,
   },
   noConvoThumbnailStyle: {
     flex: 1,

@@ -131,6 +131,7 @@ class Routes extends Component {
             key="matches"
             component={MessageCenterContainer}
             leftButton={homeLeftIconButton}
+            title="wavelength"
 /*            navigationBarBackgroundImage={{
               uri: MSG_CENTER_URL,
               width: width,
