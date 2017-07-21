@@ -1,10 +1,12 @@
 
 import React, {Component} from 'react';
-import { Text, TouchableOpacity, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { Dimensions, Text, TouchableOpacity, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Modal from 'react-native-modal';
 import ImagePicker from 'react-native-image-crop-picker';
 import { Button } from '../../common';
+
+const { width } = Dimensions.get('window');
 
 export default class AddPhotosModal extends Component {
   render() {
@@ -15,7 +17,10 @@ export default class AddPhotosModal extends Component {
         style={styles.container}
         transparent
       >
-        <Button onPress={() => this.renderImageCropper()}>
+        <Button
+          onPress={() => this.renderImageCropper()}
+          styles={PhotoAddButtonStyles}
+        >
           <Text>Camera Roll</Text>
         </Button>
 
@@ -24,6 +29,7 @@ export default class AddPhotosModal extends Component {
             this.props.close();
             Actions.addPhotoFbAlbums();
           }}
+          styles={PhotoAddButtonStyles}
         >
           <Text>Facebook</Text>
         </Button>
@@ -63,12 +69,33 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     backgroundColor: 'transparent',
-    marginTop: MARGIN,
+    marginTop: MARGIN * 1.5,
+    marginBottom: MARGIN * 0.5,
   },
   cancelButtonText: {
     color: 'white',
     fontFamily: 'Source Sans Pro',
+    fontWeight: '500',
     fontSize: 14,
     backgroundColor: 'transparent',
   }
 });
+
+const PhotoAddButtonStyles = {
+  textStyle: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+    fontFamily: 'Source Sans Pro',
+    fontWeight: '700',
+  },
+  buttonStyle: {
+    justifyContent: 'center',
+    backgroundColor: '#42D3D3',
+    width: width - (MARGIN * 2.25),
+    height: 55,
+    marginLeft: MARGIN,
+    marginRight: MARGIN,
+    marginBottom: 5,
+  }
+};
