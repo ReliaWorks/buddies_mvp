@@ -80,9 +80,11 @@ const styles = {
     alignItems: 'center'
   },
   addActivityIconTitle: {
+    fontFamily: 'Source Sans Pro',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '500',
     marginLeft: 10,
+    color: 'black',
   }
 };
 
