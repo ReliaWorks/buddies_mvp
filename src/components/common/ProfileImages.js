@@ -46,7 +46,7 @@ class ProfileImages extends Component {
     if(!editable) return;
     return (
       <View style={styles.editIconBox}>
-        <TouchableOpacity onPress={() => Actions.photoEdit()} style={buttonStyle}>
+        <TouchableOpacity onPress={() => Actions.userEdit()} style={buttonStyle}>
           <CustomIcon
             name="edit_icon"
             size={ICON_SIZE - 5}
@@ -76,12 +76,12 @@ class ProfileImages extends Component {
                 this.props.imageLoaded();
             }}
           >
-            {this.showEditableButton(editable)}
           </Image>
         </TouchableWithoutFeedback>
       </View>
     );
   }
+//  {this.showEditableButton(editable)}
 
   render() {
     const { profileImages, editable } = this.props.value;

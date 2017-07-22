@@ -5,7 +5,7 @@ export const attributeOptions = (name) => {
     case 'Tennis':
       return ['none', '2.0', '2.5', '3.0', '3.5', '4.0', '4.5', '5.0', '5.5', '6.0', '6.5', '7.0',];
     case 'Walking':
-      return ['none', '20', '18', '16', '14', '12', '10'];
+      return ['none', '24', '22', '20', '18', '16', '14'];
     default:
       return ['none', 'Beginner', 'Intermediate', 'Advanced', 'Expert'];
   }
@@ -14,11 +14,11 @@ export const attributeOptions = (name) => {
 export const attributeShortDescription = (name) => {
   switch (name) {
     case 'Running':
-      return 'Running Pace (min/mile)';
+      return 'Pace (min/mile)';
     case 'Tennis':
       return 'USTA NTRP rating';
     case 'Walking':
-      return 'Walking Pace (min/mile)';
+      return 'Pace (min/mile)';
     default:
       return 'Level';
   }
@@ -60,7 +60,7 @@ export const scrollPosition = (name) => {
     case 'Tennis':
       return {x: 0, y: 210};
     case 'Walking':
-      return {x: 0, y: 250};
+      return {x: 0, y: 70};
     default:
       return {x: 0, y: 45};
   }

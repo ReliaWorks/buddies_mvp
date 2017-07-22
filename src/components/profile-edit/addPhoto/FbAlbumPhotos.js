@@ -39,7 +39,7 @@ class FbAlbums extends Component {
         style={styles.photosItem}
         onPress={() => {
           //this.renderImageCropper(rowData.source);
-          Actions.photoEdit();
+          Actions.userEdit();
           this.props.photosSelected(rowData.source, 'FB', this.props.currentUser);
         }}
       >
@@ -54,7 +54,7 @@ class FbAlbums extends Component {
       width: 650,
       height: 650
     }).then(croppedUri => {
-      Actions.photoEdit();
+      Actions.userEdit();
       this.props.photosSelected(croppedUri, 'FB', this.props.currentUser);
     }).catch(error => {
       console.log('imagepicker catch:', error);

@@ -19,11 +19,11 @@ const EditableActivityListItem = ({
   return (
     <View style={styles.container}>
       <View style={styles.activity}>
-        <Text style={styles.name}>{tileName}</Text>
-        {renderCloseIcon(onRemove, tileId, tileName)}
-      </View>
-      <View style={styles.attribute}>
-        <Text style={styles.value}>{listDescription(tileName, attribute)}</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={styles.name}>{tileName}</Text>
+          <Text style={styles.value}>   {listDescription(tileName, attribute)}</Text>
+        </View>
+        <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
           style={styles.editIconContainer}
           onPress={() => onEdit({
@@ -38,6 +38,8 @@ const EditableActivityListItem = ({
             color="#aaaaaa"
           />
         </TouchableOpacity>
+        {renderCloseIcon(onRemove, tileId, tileName)}
+        </View>
       </View>
     </View>
   );
@@ -54,7 +56,6 @@ const styles = {
   activity: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-//    borderBottomWidth: 1,
     paddingBottom: 10,
     paddingTop: 10,
     paddingLeft: 15,
@@ -82,7 +83,7 @@ const styles = {
     color: '#808184',
   },
   editIconContainer: {
-    marginRight: 3
+    marginRight: 15
   },
 };
 

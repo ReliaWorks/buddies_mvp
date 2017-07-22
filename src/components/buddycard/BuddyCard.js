@@ -110,7 +110,7 @@ class BuddyCard extends Component {
       activitiesAndAffiliations = affiliations;
     }
     return (
-      <View>
+      <View style={{backgroundColor: 'white'}}>
         <ActivitySet value={{activitiesAndAffiliations}} imageLoaded={imageLoaded} />
       </View>
     );
@@ -143,8 +143,8 @@ class BuddyCard extends Component {
     const { locationText, nameText } = styles;
 
     return (
-        <View>
-         <View style={{flexDirection: 'row'}}>
+        <View style={{backgroundColor: 'white'}}>
+         <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
             <Text style={nameText}>
               {firstName}
               {this.renderAge(age)}

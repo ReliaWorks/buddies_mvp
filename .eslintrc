@@ -20,5 +20,6 @@
       "eqeqeq": 0,
       "no-unused-vars": 0,
       "no-return-assign": 0,
+      "no-multi-spaces": 0,
   }
 }
