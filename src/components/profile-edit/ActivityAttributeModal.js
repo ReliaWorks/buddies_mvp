@@ -39,9 +39,9 @@ export default class ActivityAttributeModal extends Component {
         <View style={styles.altContainer}>
           <View style={styles.topContainer}>
             <TouchableOpacity style={styles.cancelButton} onPress={() => this.props.onClose()}>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
+              <Text style={styles.headerText}>Cancel</Text>
             </TouchableOpacity>
-            <Text>{attributeShortDescription(activity.name)}</Text>
+            <Text style={styles.headerText}>{attributeShortDescription(activity.name)}</Text>
             <TouchableOpacity
             style={styles.saveButton}
               onPress={() => {
@@ -49,16 +49,17 @@ export default class ActivityAttributeModal extends Component {
                 this.props.onClose();
               }}
             >
-              <Text style={styles.saveButtonText}>Save</Text>
+              <Text style={styles.headerText}>Save</Text>
             </TouchableOpacity>
           </View>
 
           <ScrollView contentOffset={scrollPosition(activity.name)}>
             {attributeOptions(activity.name).map(name => {
-              const style = name === this.state.attribute ? [styles.item, styles.selectedItem] : styles.item;
+              const itemContainerStyle = name === this.state.attribute ? [styles.itemContainer, styles.selectedItem] : styles.itemContainer;
+              const itemTextStyle = name === this.state.attribute ? [styles.itemText, styles.selectedItemText] : styles.itemText;
               return (
-                <TouchableOpacity style={styles.itemContainer} key={name} onPress={() => this.setState({attribute: name})}>
-                  <Text style={style}>{name}</Text>
+                <TouchableOpacity style={itemContainerStyle} key={name} onPress={() => this.setState({attribute: name})}>
+                  <Text style={itemTextStyle}>{name}</Text>
                 </TouchableOpacity>
               );
             })}
@@ -96,30 +97,31 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     flex: 1
   },
-  cancelButtonText: {
+  headerText: {
     color: 'black',
     textAlign: 'center',
     fontFamily: 'Source Sans Pro',
+    fontSize: 16,
   },
   list: {
     flex: 3,
-    //borderWidth: 1,
   },
   itemContainer: {
-
-  },
-  item: {
     padding: 10,
+  },
+  itemText: {
+    color: 'black',
     textAlign: 'center',
+    fontFamily: 'Source Sans Pro',
+    fontSize: 14,
+  },
+  selectedItemText: {
+    color: 'white',
   },
   selectedItem: {
-    fontWeight: 'bold',
+    backgroundColor: '#4A90E2',
   },
   saveButton: {
     flex: 1,
   },
-  saveButtonText: {
-    textAlign: 'center',
-    fontFamily: 'Source Sans Pro',
-  }
 });
