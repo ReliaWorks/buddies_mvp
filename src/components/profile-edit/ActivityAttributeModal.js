@@ -33,7 +33,7 @@ export default class ActivityAttributeModal extends Component {
       <Modal
         isVisible={this.props.isVisible}
         style={styles.container}
-        backdropOpacity={0.1}
+        backdropOpacity={0.2}
         transparent
       >
         <View style={styles.altContainer}>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     flex: 3,
   },
   itemContainer: {
-    padding: 10,
+    padding: 7,
   },
   itemText: {
     color: 'black',
@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   },
   selectedItemText: {
     color: 'white',
+    fontWeight: '700',
   },
   selectedItem: {
     backgroundColor: '#4A90E2',
