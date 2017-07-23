@@ -15,7 +15,7 @@ const Confirm = ({ children, visible, onAccept, onDecline, actionText = 'Remove'
     >
       <View
         style={{
-          flex: 0.15,
+          flex: 3,
           backgroundColor: 'rgba(0, 0, 0, 0.75)',
         }}
       />
@@ -39,7 +39,7 @@ const Confirm = ({ children, visible, onAccept, onDecline, actionText = 'Remove'
       </View>
       <View
         style={{
-          flex: 0.6,
+          flex: 6,
           backgroundColor: 'rgba(0, 0, 0, 0.75)',
         }}
       />
@@ -56,7 +56,7 @@ const styles = {
   containerStyle: {
     backgroundColor: 'rgba(0, 0, 0, 0.75)',
     position: 'relative',
-    flex: 0.4,
+    flex: 4,
     justifyContent: 'center'
   },
   textStyle: {
@@ -67,7 +67,7 @@ const styles = {
     fontWeight: '700',
   },
   buttonStyle: {
-    flex: 1,
+    flex: 10,
     justifyContent: 'center',
     backgroundColor: '#42D3D3',
     height: 50,

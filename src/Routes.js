@@ -192,7 +192,7 @@ class Routes extends Component {
             color: 'white'
           }}
           leftTitle="Cancel"
-          onLeft={() => Actions.photoEdit()}
+          onLeft={() => Actions.userEdit()}
           leftButtonTextStyle={{...navBackNextStyle, color: 'white', alignSelf: 'flex-start'}}
         />
         <Scene

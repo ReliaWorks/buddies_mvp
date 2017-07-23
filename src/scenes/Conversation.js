@@ -81,7 +81,6 @@ class Conversation extends Component {
     return(
       <View
         style={{
-          //flex: 0.1,
           ...(Platform.OS === 'ios' ? {flex: 0.1} : {height: 55}),
           marginTop: Platform.OS === 'ios' ? -30 : -45,
           flexDirection: 'row',
