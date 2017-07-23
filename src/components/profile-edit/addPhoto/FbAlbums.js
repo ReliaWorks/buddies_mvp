@@ -58,7 +58,9 @@ export default connect(mapStateToProps, { fetchFacebookAlbums, fetchFacebookAlbu
 const styles = StyleSheet.create({
   albumList: {
     alignItems: 'stretch',
-    margin: 10,
+    marginBottom: 12,
+    marginTop: 12,
+    marginLeft: 8,
   },
   noAlbumsWarningText: {
     marginTop: 70,
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
   },
   albumItem: {
     flexDirection: 'row',
-    margin: 5,
+    marginBottom: 5,
   },
   albumItemImage: {
     width: 60,
@@ -82,6 +84,8 @@ const styles = StyleSheet.create({
   albumItemName: {
     fontSize: 16,
     fontFamily: 'Source Sans Pro',
+    fontWeight: '500',
+    color: 'black',
     flexWrap: "wrap",
   },
   albumItemImageCount: {

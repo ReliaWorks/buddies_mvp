@@ -149,7 +149,6 @@ const styles = {
   },
 
   loginButtonContainer: {
-//    flex: 0.3,
     height: 50,
     width: width - (LOGINFORM_MARGIN * 2),
     marginTop: 10,
@@ -159,7 +158,6 @@ const styles = {
     backgroundColor: 'black',
   },
   termsContainer: {
-//    flex: 3,
     backgroundColor: 'transparent'
   },
   backgroundImage: {

@@ -37,7 +37,7 @@ class Settings extends Component {
 
   renderHeader() {
     return (
-      <View style={{marginBottom: MARGIN, marginTop: MARGIN, flex: 0.3 }}>
+      <View style={localStyles.headerContainer}>
         <Text style={styles.headerText}>
           Preferences
         </Text>
@@ -49,7 +49,7 @@ class Settings extends Component {
 
   renderPreferences() {
     return (
-      <View style={{flex: 5, justifyContent: 'space-between', marginTop: 10, marginBottom: 10}}>
+      <View style={{flex: 25, justifyContent: 'space-between', marginTop: 10, marginBottom: 10}}>
         <GenderPreference />
         <LocationPreference />
       </View>
@@ -58,7 +58,7 @@ class Settings extends Component {
 
   renderFeedbackButton() {
     return (
-      <View style={{justifyContent: 'center', flex: 1}}>
+      <View style={{justifyContent: 'center', flex: 10}}>
         <Text
           style={localStyles.feedbackLinkStyle}
           onPress={this.openFeedbackLink}
@@ -102,15 +102,19 @@ class Settings extends Component {
     this.props.onLogout();
     this.setState({showLogoutConfirmModal: false});
   }
-  renderLogoutButton() {
+
+/*  <Button
+    onPress={this.showLogoutConfirmModal.bind(this)}
+    style={localStyles}
+  >
+*/
+  renderLogout() {
     return (
-      <View>
-        <Button
+      <View style={styles.linkContainerStyle}>
+        <Text
           onPress={this.showLogoutConfirmModal.bind(this)}
-          style={localStyles}
-        >
-          Logout
-        </Button>
+          style={styles.linkText}
+        >Logout</Text>
         <Confirm
           visible={this.state.showLogoutConfirmModal}
           onAccept={this.cancelLogout.bind(this)}
@@ -119,6 +123,8 @@ class Settings extends Component {
         >
           Are you sure you want to logout?
         </Confirm>
+        <View style={{borderWidth: 1, borderColor: 'lightgray', height: 25 }} />
+        {this.renderDeactivateButton()}
       </View>
     );
   }
@@ -135,13 +141,11 @@ class Settings extends Component {
   }
   renderDeactivateButton() {
     return (
-      <View style={{flex: 1, marginTop: 10}}>
+      <View>
         <Text
           onPress={this.showDeactivationConfirmModal.bind(this)}
-          style={{...localStyles.feedbackLinkStyle, fontSize: 14}}
-        >
-          Deactivate Account
-        </Text>
+          style={styles.linkText}
+        >Deactivate Account</Text>
         <Confirm
           visible={this.state.showDeactivateConfirmModal}
           onAccept={this.cancelDeactivation.bind(this)}
@@ -174,7 +178,7 @@ class Settings extends Component {
   renderLocation() {
     const { location } = this.props.value;
     return (
-      <View style={{...styles.preferenceContainer, flex: 0.7, flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{...styles.preferenceContainer, flex: 7, flexDirection: 'row', alignItems: 'center'}}>
         <Text style={localStyles.locationHeaderText}>Location: <Text style={{fontFamily: 'Source Sans Pro', fontWeight: '400'}}>{location.city}, {location.state}
           </Text>
         </Text>
@@ -186,26 +190,35 @@ class Settings extends Component {
 //        {this.renderFeedbackButton()}
   render() {
     return (
-      <View style={{flex: 1, justifyContent: 'space-between', backgroundColor: '#F8F8F8'}}>
+      <View style={localStyles.pageContainer}>
         {this.renderHeader()}
         {this.renderPreferences()}
         {this.renderLocation()}
         {this.renderLinks()}
-        {this.renderLogoutButton()}
-        {this.renderDeactivateButton()}
+        {this.renderLogout()}
       </View>
     );
   }
 }
 
 const localStyles = {
+  pageContainer: {
+    flex: 10,
+    justifyContent: 'space-between',
+    backgroundColor: '#F8F8F8',
+    marginTop: -10,
+  },
+  headerContainer: {
+    marginTop: MARGIN + 10,
+  },
   locationContainer: {
-    margin: 15,
+    margin: MARGIN,
     backgroundColor: 'white',
     borderWidth: 1,
   },
   locationHeaderText: {
-    fontFamily: 'SourceSansPro-Bold',
+    fontFamily: 'Source Sans Pro',
+    fontWeight: '500',
     fontSize: 14,
     color: 'black',
     marginLeft: 20,
@@ -227,7 +240,7 @@ const localStyles = {
     fontWeight: '700',
   },
   buttonStyle: {
-    flex: 1,
+    flex: 10,
     justifyContent: 'center',
     backgroundColor: 'black',
     width: width - (MARGIN * 2),
