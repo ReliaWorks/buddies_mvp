@@ -17,6 +17,7 @@ class UserEdit extends Component {
     this.state = {
       text: this.props.description,
       height: 300,
+      scrollEnabled: true
     };
   }
   componentWillUnmount() {
@@ -99,6 +100,10 @@ class UserEdit extends Component {
 //    }
 //  }}
 
+  setScrollEnabled(enabled) {
+    this.setState({scrollEnabled: enabled});
+  }
+
   render() {
     const { activities, affiliations } = this.props;
 
@@ -108,8 +113,9 @@ class UserEdit extends Component {
         style={styles.scrollViewContainer}
         keyboardDismissMode='interactive'
         testID={'ScrollView'}
+        scrollEnabled={this.state.scrollEnabled}
       >
-        <PhotoEditContainer />
+        <PhotoEditContainer setScrollEnabled={this.setScrollEnabled.bind(this)} />
         {this.renderActivities(activities)}
         {this.renderAffiliations(affiliations)}
         {this.renderDescription()}

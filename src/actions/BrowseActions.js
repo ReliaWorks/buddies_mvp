@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import firebase from 'firebase';
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
@@ -157,11 +158,15 @@ export const currentUserFetch = () => {
     firebase.database().ref(`/user_profiles/${currentUser.uid}`)
       .once('value', snapshot => {
         const userInfo = snapshot.val();
+
         if(userInfo && userInfo.location)
           getCurrentPosition({uid: currentUser.uid, hasLocation: true}, dispatch);
         else
           getCurrentPosition({uid: currentUser.uid, hasLocation: false}, dispatch);
-        dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...userInfo, uid: currentUser.uid } });
+
+        const orderedProfileImages = updateOrdersOfProfileImages(currentUser.uid, userInfo.profileImages);
+
+        dispatch({ type: CURRENT_USER_FETCH_SUCCESS, payload: {...userInfo, uid: currentUser.uid, profileImages: orderedProfileImages } });
       }, (error) => {
         dispatch({ type: CURRENT_USER_FETCH_FAILURE });
         //.once errors when client does not have permission to read the data.
@@ -229,6 +234,24 @@ export const connectWithUser = (currentUser, buddy, connectStatus) => {
         } else dispatch({ type: KEEP_BROWSING });
       });
   };
+};
+
+const updateOrdersOfProfileImages = (uid, profileImages) => {
+  const updates = {};
+  let order = 0;
+
+  const orderedImages = _.mapValues(profileImages, (image, key) => {
+    if (!image.order) {
+      order++;
+      updates[`/user_profiles/${uid}/profileImages/${key}/order`] = order;
+      return ({...image, order});
+    }
+    return image;
+  });
+
+  firebase.database().ref().update(updates);
+
+  return orderedImages;
 };
 
 const successfullyConnected = (dispatch, buddy, currentUser) => {

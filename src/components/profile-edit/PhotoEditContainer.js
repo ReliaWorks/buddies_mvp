@@ -37,6 +37,7 @@ class PhotoEditContainer extends Component {
         facebookAlbums={this.props.currentUser.facebookAlbums}
         onFetchFacebookAlbumPhotos={this.onFetchFacebookAlbumPhotos.bind(this)}
         facebookAlbumPhotos={this.props.currentUser.facebookAlbumPhotos}
+        setScrollEnabled={this.props.setScrollEnabled}
       />
     );
   }
