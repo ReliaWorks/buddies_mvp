@@ -28,6 +28,10 @@ export const FACEBOOK_ALBUMS_REQUESTED = 'facebook_albums_requested';
 export const FACEBOOK_ALBUMS_FETCHED = 'facebook_albums_fetched';
 export const FACEBOOK_ALBUM_PHOTOS_REQUESTED = 'facebook_album_photos_requested';
 export const FACEBOOK_ALBUM_PHOTOS_FETCHED = 'facebook_album_photos_fetched';
+export const IMAGE_PAN_STARTED = 'image_pan_started';
+export const IMAGE_PAN_STOPPED = 'image_pan_stopped';
+export const IMAGE_REORDERED = 'image_reordered';
+
 
 export const CURRENT_USER_FETCH_START = 'current_user_fetch_start';
 export const CURRENT_USER_FETCH_SUCCESS = 'current_user_fetch_success';

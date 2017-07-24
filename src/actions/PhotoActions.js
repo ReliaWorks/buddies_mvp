@@ -13,7 +13,10 @@ import {
   FACEBOOK_ALBUMS_REQUESTED,
   FACEBOOK_ALBUMS_FETCHED,
   FACEBOOK_ALBUM_PHOTOS_REQUESTED,
-  FACEBOOK_ALBUM_PHOTOS_FETCHED
+  FACEBOOK_ALBUM_PHOTOS_FETCHED,
+  IMAGE_PAN_STARTED,
+  IMAGE_PAN_STOPPED,
+  IMAGE_REORDERED
 } from './types';
 import { INACTIVE, ACTIVE, DEFAULT_PROFILE_PHOTO } from '../constants';
 
@@ -108,7 +111,8 @@ export const photosSelected = (photo, from, currentUser) => {
   return (dispatch) => {
     //const { currentUser } = firebase.auth();
 
-    const isPrimary = currentUser.profileImages.length === 0;
+    const numOfImages = currentUser.profileImages.length;
+    const isPrimary = numOfImages === 0;
 
     console.log('in AC; isPrimary:', isPrimary, ' from: ', from);
 
@@ -122,12 +126,12 @@ export const photosSelected = (photo, from, currentUser) => {
     .then(uri => {
       const newImageRef = firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`).push();
       console.log('uri:', uri);
-      newImageRef.set({ url: uri, type: from })
+      newImageRef.set({ url: uri, type: from, order: numOfImages + 1 })
         .then(() => {
           dispatch({
             type: PHOTO_UPLOADED,
             payload: {
-              photo: { key: newImageRef.key, url: uri },
+              photo: { key: newImageRef.key, url: uri, order: numOfImages + 1 },
               localUrl: photoUri
             }
           });
@@ -243,5 +247,48 @@ export const fetchFacebookAlbumPhotos = (albumId, offset = 0) => {
         new GraphRequestManager().addRequest(request).start();
       })
       .catch(error => console.log('error while fetchFacebookAlbumPhotos', error));
+  };
+};
+
+export const imagePanStarted = (image, initialTouchPosition) => {
+  return (dispatch) => {
+    dispatch({type: IMAGE_PAN_STARTED, payload: {image, initialTouchPosition}});
+  };
+};
+export const imagePanStopped = () => {
+  return (dispatch) => {
+    dispatch({type: IMAGE_PAN_STOPPED});
+  };
+};
+
+export const imageReordered = (profileImages, imageKey1, imageKey2) => {
+  return (dispatch) => {
+    console.log(imageKey1, ' ==> ', imageKey2);
+
+    let newImagesArray = profileImages;
+    const index1 = profileImages.findIndex(image => image.key === imageKey1);
+    const index2 = profileImages.findIndex(image => image.key === imageKey2);
+    const image1 = {...profileImages[index1]};
+
+    newImagesArray.splice(index1, 1);
+    const newIndex = index1 > index2 ? index2 + 1 : index2;
+    newImagesArray.splice(newIndex, 0, image1);
+
+    const updates = {};
+    const {uid} = firebase.auth().currentUser;
+
+    newImagesArray = newImagesArray.map((image, index) => {
+      const order = index + 1;
+      updates[`/user_profiles/${uid}/profileImages/${image.key}/order`] = order;
+      return ({...image, order});
+    });
+
+    dispatch({ type: IMAGE_REORDERED, payload: newImagesArray });
+
+    firebase.database().ref().update(updates);
+
+    if (index1 === 0) {
+      updatePrimaryPicReferences(newImagesArray[0].url);
+    }
   };
 };

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, TouchableWithoutFeedback, View, PanResponder } from 'react-native';
 import CustomIcon from '../../assets/icons';
 import styles from './styles';
 
@@ -7,9 +7,17 @@ class EditablePhoto extends Component {
   onRemove() {
     this.props.onRemove(this.props.photo);
   }
+
+  containerRef() {
+    return this.refs.container;
+  }
+
   render() {
     return (
-      <View style={{ marginRight: 5, marginTop: 5 }}>
+      <View
+        ref='container'
+        style={{ marginRight: 5, marginTop: 5 }}
+      >
         <Image
           style={styles.smallImageStyle}
           source={{ uri: this.props.url }}
