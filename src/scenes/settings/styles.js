@@ -10,7 +10,9 @@ export default styles = {
     fontFamily: 'Source Sans Pro',
     color: 'black',
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '500',
+    marginLeft: 7,
+    marginRight: 7,
   },
   headerText: {
     textAlign: 'center',
@@ -38,12 +40,13 @@ export default styles = {
   linkContainerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1.2,
+    justifyContent: 'center',
+    flex: 5,
     marginLeft: 15,
     marginRight: 15,
   },
   preferenceContainer: {
-    flex: 1,
+    flex: 10,
     backgroundColor: 'white',
     marginLeft: 14,
     marginRight: 14,
@@ -64,7 +67,7 @@ export default styles = {
     height: 10,
   },
   logoutContainerStyle: {
-    flex: 1,
+    flex: 10,
     alignSelf: 'center',
   }
 };

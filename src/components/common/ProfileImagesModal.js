@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Image, Modal, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Dimensions, Image, Modal, Platform, TouchableOpacity, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 
@@ -36,16 +36,13 @@ const ProfileImagesModal = ({ profileImages, onClose, visible, initialIndex}) =>
       animationType="none"
       onRequestClose={onClose}
     >
-      <View style={{backgroundColor: 'black', flex: 1}}>
+      <View style={styles.swiperContainer}>
         {renderCloseIcon(onClose)}
         <Swiper
-          loadMinimal
-          contentContainerStyle={{
-            flex: 1,
-            alignItems: 'stretch'
-          }}
+          loadMinimal={Platform.OS == 'ios'}
+          contentContainerStyle={styles.swiperContainer}
           index={initialIndex}
-          horizontal={false}
+          horizontal={Platform.OS == 'android'}
           dot={
             <View
               style={{
@@ -92,11 +89,22 @@ const ProfileImagesModal = ({ profileImages, onClose, visible, initialIndex}) =>
 const styles = StyleSheet.create({
   fullScreenImg: {
     flex: 1,
-    // width: width,
-    // height: height * 0.60,
+    //width: Platform.OS === 'ios' ? width : height,
+    //height: Platform.OS === 'ios' ? height : width,
     marginTop: 50,
     marginBottom: 200,
+    transform: Platform.OS === 'ios' ? [] : [{rotate: "90deg"}],
   },
+  swiperContentStyle: {
+    flex: 1,
+    alignItems: 'stretch',
+    backgroundColor: 'black',
+  },
+  swiperContainer: {
+    backgroundColor: 'black',
+    flex: 1,
+    transform: Platform.OS === 'ios' ? [] : [{rotate: "-90deg"}],
+  }
 });
 
 export { ProfileImagesModal };

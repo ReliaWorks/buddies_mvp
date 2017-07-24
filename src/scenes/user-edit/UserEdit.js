@@ -3,6 +3,7 @@ import { Dimensions, findNodeHandle, ScrollView, Text, TextInput, View } from 'r
 import { Actions } from 'react-native-router-flux';
 import ActivitiesEdit from '../../components/profile-edit/ActivitiesEdit';
 import AffiliationsEdit from '../../components/profile-edit/AffiliationsEdit';
+import PhotoEditContainer from '../../components/profile-edit/PhotoEditContainer';
 import { Button } from '../../components/common';
 import { DESCRIPTION_PLACEHOLDER } from '../../constants';
 
@@ -108,6 +109,7 @@ class UserEdit extends Component {
         keyboardDismissMode='interactive'
         testID={'ScrollView'}
       >
+        <PhotoEditContainer />
         {this.renderActivities(activities)}
         {this.renderAffiliations(affiliations)}
         {this.renderDescription()}

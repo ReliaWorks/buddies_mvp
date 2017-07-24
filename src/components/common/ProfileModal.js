@@ -15,7 +15,7 @@ class ProfileModal extends Component {
       <TouchableOpacity onPress={() => Actions.pop()}>
       <View
         style={{
-          flex: 0.05,
+          flex: 5,
           marginTop: -30,
           flexDirection: 'row',
           justifyContent: 'center',
@@ -40,10 +40,10 @@ class ProfileModal extends Component {
     if(loading) {
       return <Spinner size="large" />;
     }
-//    {this.renderCloseIcon()}
 
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 100}}>
+      { this.renderCloseIcon() }
         <BuddyCard
           value={{
             firstName,

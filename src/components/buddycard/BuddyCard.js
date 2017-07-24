@@ -11,12 +11,10 @@ import CustomIcon from '../../assets/icons';
 
 const { width, height } = Dimensions.get('window');
 
-const BOTTOM_PADDING = 150;
+const BOTTOM_PADDING = 150; //creates space for the Connect button
 const MARGIN = 15;
 
 class BuddyCard extends Component {
-  offset: 0;
-
   constructor(props) {
     super(props);
 
@@ -26,10 +24,6 @@ class BuddyCard extends Component {
       currentImageIndexOnSwiper: 0,
       scrollDirection: null,
     };
-  }
-
-  componentDidMount() {
-    console.log("In BuddyCard componentDidMount");
   }
 
   onOpenModal(index) {
@@ -64,12 +58,7 @@ class BuddyCard extends Component {
     if(!likeable) return;
     return (
       <View style={localStyles.footer}>
-        <TouchableOpacity
-          onPress={() => {
-            onConnect();
-          }}
-          style={localStyles.connectButton}
-        >
+        <TouchableOpacity onPress={() => onConnect()} style={localStyles.connectButton}>
             <Text style={localStyles.footerText}>Connect</Text>
         </TouchableOpacity>
       </View>
@@ -121,7 +110,7 @@ class BuddyCard extends Component {
       activitiesAndAffiliations = affiliations;
     }
     return (
-      <View>
+      <View style={{backgroundColor: 'white'}}>
         <ActivitySet value={{activitiesAndAffiliations}} imageLoaded={imageLoaded} />
       </View>
     );
@@ -138,71 +127,43 @@ class BuddyCard extends Component {
     return <Text style={locationTextStyle}>{location.city}, {location.state}</Text>;
   }
 
-  expandDescription() {
-    LayoutAnimation.easeInEaseOut();
-    this.setState({descriptionExpanded: !this.state.descriptionExpanded});
-  }
-
-  descContainerStyle() {
-    if(this.state.descriptionExpanded) {
-      return {
-        flex: 1.8,
-        backgroundColor: 'white',
-      };
-    } else if(this.props.value.editable) {
-      if(height < 600)
-        return {
-          flex: 0.387,
-          backgroundColor: 'white',
-        };
-      else if(height > 600 && height <= 700)
-        return {
-          flex: 0.405,
-          backgroundColor: 'white',
-        };
-      else if(height > 700)
-          return {
-            flex: 0.415,
-            backgroundColor: 'white',
-          };
-    } else {
-        return {
-          flex: 0.495,
-          backgroundColor: 'white',
-      };
-    }
-  }
-
-  renderDescription(description, editable) {
+  renderDescription(description, editable, likeable) {
+    if(!description) return null;
+    let descStyle = localStyles.descriptionStyle;
+    if(editable || !likeable) descStyle = [descStyle, {marginBottom: 10}];
     return (
-      <View style={localStyles.descriptionStyle}>
+      <View style={descStyle}>
         <Text style={localStyles.descriptionText}>{description}</Text>
       </View>
     );
   }
 
-  onInfoScroll(event) {
-    const currentOffset = event.nativeEvent.contentOffset.y;
-    LayoutAnimation.easeInEaseOut();
-    if(currentOffset > (this.offset)) {
-      this.setState({descriptionExpanded: true});
-    } else if(currentOffset < (this.offset)) {
-      this.setState({descriptionExpanded: false});
-    }
-    this.offset = currentOffset;
-  }
-
-//  onScroll={this.onInfoScroll.bind(this)}
-//  scrollEventThrottle={1}>
-
-  render() {
+  renderBuddyInfo() {
     const { firstName, age, editable, imageLoaded, likeable, location, profileImages, activities, affiliations, description, uid } = this.props.value;
     const { locationText, nameText } = styles;
 
-    console.log(`In BuddyCard render`);
+    return (
+        <View style={{backgroundColor: 'white'}}>
+         <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
+            <Text style={nameText}>
+              {firstName}
+              {this.renderAge(age)}
+            </Text>
+            {this.showEditableButton(editable)}
+          </View>
+          {this.renderLocation(location, locationText)}
+          {this.renderActivitiesAffiliations(activities, affiliations, editable, imageLoaded)}
+          {this.renderDescription(description, editable, likeable)}
+      </View>
+    );
+  }
+
+  render() {
+    const { editable, likeable, profileImages, uid } = this.props.value;
+
     return (
       <View style={{flex: 1}}>
-        <View style={{flex: 1, alignSelf: 'stretch' }}>
+      <ScrollView>
           <ProfileImages
             value={{profileImages, editable}}
             onOpenModal={this.onOpenModal.bind(this)}
@@ -214,27 +175,9 @@ class BuddyCard extends Component {
             visible={this.state.showModal}
             initialIndex={this.state.currentImageIndexOnSwiper}
           />
-
-          <View style={this.descContainerStyle()}>
-            <ScrollView>
-              <TouchableWithoutFeedback onPress={this.expandDescription.bind(this)}>
-              <View>
-               <View style={{flexDirection: 'row'}}>
-                  <Text style={nameText}>
-                    {firstName}
-                    {this.renderAge(age)}
-                  </Text>
-                  {this.showEditableButton(editable)}
-                </View>
-                {this.renderLocation(location, locationText)}
-                {this.renderActivitiesAffiliations(activities, affiliations, editable, imageLoaded)}
-                {this.renderDescription(description, editable)}
-                </View>
-              </TouchableWithoutFeedback>
-            </ScrollView>
-            {this.renderMatchControls(likeable, uid, this.props.onConnect)}
-          </View>
-        </View>
+        {this.renderBuddyInfo()}
+      </ScrollView>
+      {this.renderMatchControls(likeable, uid, this.props.onConnect)}
       </View>
     );
   }
@@ -245,15 +188,11 @@ const localStyles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: Platform.OS === 'ios' ? 60 : 83,
-    borderColor: 'black',
-    flexDirection: 'row',
-    alignItems: 'stretch',
+    bottom: Platform.OS === 'ios' ? 60 : 84,
   },
   connectButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
     height: 55,
     backgroundColor: '#42D3D3',
     opacity: 0.97,

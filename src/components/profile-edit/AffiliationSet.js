@@ -78,8 +78,7 @@ const styles = {
   },
   title: {
     alignSelf: 'center',
-    fontSize: 14,
-    fontWeight: '100',
+    fontSize: 12,
     fontFamily: 'Source Sans Pro',
     color: 'black',
     textAlign: 'center',

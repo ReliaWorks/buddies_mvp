@@ -65,7 +65,7 @@ const styles = {
   },
   attribute: {
     textAlign: 'center',
-    fontSize: 9,
+    fontSize: 12,
     fontFamily: 'SourceSansPro-Light',
   }
 };
