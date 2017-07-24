@@ -67,7 +67,7 @@ export default(state = INITIAL_STATE, action) => {
     }
     case CURRENT_USER_FETCH_SUCCESS: {
       const photos = action.payload.profileImages;
-      const profileImages = [];
+      let profileImages = [];
       if(photos) {
         _.map(photos, (img, key) => {
           //if(img.status === ACTIVE) {
@@ -75,6 +75,8 @@ export default(state = INITIAL_STATE, action) => {
           //}
         });
       }
+      profileImages = _.sortBy(profileImages, image => image.order);
+
       const firstName = action.payload.first_name;
       const age = action.payload.age;
       const email = action.payload.email;

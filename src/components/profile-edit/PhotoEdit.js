@@ -37,6 +37,7 @@ class PhotoEdit extends Component {
   }
   setScrollEnabled(enabled) {
     this.setState({scrollEnabled: enabled});
+    this.props.setScrollEnabled(enabled);
   }
 
   renderPics() {

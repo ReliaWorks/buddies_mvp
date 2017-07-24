@@ -111,7 +111,8 @@ export const photosSelected = (photo, from, currentUser) => {
   return (dispatch) => {
     //const { currentUser } = firebase.auth();
 
-    const isPrimary = currentUser.profileImages.length === 0;
+    const numOfImages = currentUser.profileImages.length;
+    const isPrimary = numOfImages === 0;
 
     console.log('in AC; isPrimary:', isPrimary, ' from: ', from);
 
@@ -125,12 +126,12 @@ export const photosSelected = (photo, from, currentUser) => {
     .then(uri => {
       const newImageRef = firebase.database().ref(`user_profiles/${currentUser.uid}/profileImages`).push();
       console.log('uri:', uri);
-      newImageRef.set({ url: uri, type: from })
+      newImageRef.set({ url: uri, type: from, order: numOfImages + 1 })
         .then(() => {
           dispatch({
             type: PHOTO_UPLOADED,
             payload: {
-              photo: { key: newImageRef.key, url: uri },
+              photo: { key: newImageRef.key, url: uri, order: numOfImages + 1 },
               localUrl: photoUri
             }
           });
@@ -279,7 +280,6 @@ export const imageReordered = (profileImages, imageKey1, imageKey2) => {
     newImagesArray = newImagesArray.map((image, index) => {
       const order = index + 1;
       updates[`/user_profiles/${uid}/profileImages/${image.key}/order`] = order;
-
       return ({...image, order});
     });
 
