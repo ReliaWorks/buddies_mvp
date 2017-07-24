@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import _ from 'lodash';
 import { MARGIN } from '../common/styles';
 import EditablePhoto from './EditablePhoto';
 import CustomIcon from '../../assets/icons';
 import { AddIcon } from '../../icons/AddIcon';
 import AddPhotosModal from './addPhoto/AddPhotosModal';
 import UploadingPhoto from './UploadingPhoto';
+import ImagePanResponder from './ImagePanResponder';
 import { Confirm } from '../common';
 import styles from './styles';
 
@@ -19,6 +21,7 @@ class PhotoEdit extends Component {
       modalVisible: false,
       showDeleteConfirmModal: false,
       removedPhoto: null,
+      scrollEnabled: true
     };
   }
   closeModal() {
@@ -31,6 +34,9 @@ class PhotoEdit extends Component {
     //   this.props.onImagesSelected(images, false, from);
     // }
     this.props.onImagesSelected(images);
+  }
+  setScrollEnabled(enabled) {
+    this.setState({scrollEnabled: enabled});
   }
 
   renderPics() {
@@ -53,7 +59,12 @@ class PhotoEdit extends Component {
       : null;
     return (
       <View style={{flex: 0.75}}>
-      <ScrollView>
+      <ScrollView scrollEnabled={this.state.scrollEnabled}>
+        <ImagePanResponder
+          setScrollEnabled={this.setScrollEnabled.bind(this)}
+          getImageContainerRefs={this.getImageContainerRefs.bind(this)}
+          profileImages={this.props.profileImages}
+        >
         <View style={{width: width}}>
           {this.renderPrimaryPic(firstProfileImage, onRemove)}
 
@@ -61,10 +72,12 @@ class PhotoEdit extends Component {
             {otherImages.map((img) => {
               return (
                 <EditablePhoto
+                  ref={img.key}
                   url={img.url}
                   photo={img}
                   key={img.key}
                   onRemove={(photo) => this.removePic(photo)}
+                  onImagePanStarted={this.props.onImagePanStarted}
                 />
               );
             })}
@@ -85,11 +98,21 @@ class PhotoEdit extends Component {
               close={this.closeModal.bind(this)}
               getSelectedImages={this.getSelectedImages.bind(this)}
             />
+          </View>
         </View>
-      </View>
+        </ImagePanResponder>
       </ScrollView>
       </View>
     );
+  }
+
+  getImageContainerRefs() {
+    return _.map(this.props.profileImages, i => {
+      return {
+        ref: this.refs[i.key].measure ? this.refs[i.key] : this.refs[i.key].containerRef(),
+        key: i.key
+      };
+    });
   }
 
   cancelDelete() {
@@ -107,7 +130,10 @@ class PhotoEdit extends Component {
 
   renderPrimaryPic(firstProfileImage, onRemove) {
     return(
-      <View style={{ marginLeft: MARGIN, marginTop: MARGIN, height: 300, width: width - (MARGIN * 2) }}>
+      <View
+        ref={firstProfileImage.key}
+        style={{ marginLeft: MARGIN, marginTop: MARGIN, height: 300, width: width - (MARGIN * 2) }}
+      >
         <Image
           style={localStyles.mainImageStyle}
           source={{ uri: firstProfileImage.url }}

@@ -25,6 +25,9 @@ import {
   FACEBOOK_ALBUMS_FETCHED,
   FACEBOOK_ALBUM_PHOTOS_REQUESTED,
   FACEBOOK_ALBUM_PHOTOS_FETCHED,
+  IMAGE_PAN_STARTED,
+  IMAGE_PAN_STOPPED,
+  IMAGE_REORDERED
 } from '../actions/types';
 import { ACTIVE } from '../constants';
 import {getAttribute} from '../components/profile-edit/activityAttributeUtils';
@@ -47,6 +50,7 @@ const INITIAL_STATE = {
   geolocation: {},
   description: '',
   seenConnectionHelper: false,
+  reorder: {}
 };
 
 export default(state = INITIAL_STATE, action) => {
@@ -67,7 +71,7 @@ export default(state = INITIAL_STATE, action) => {
       if(photos) {
         _.map(photos, (img, key) => {
           //if(img.status === ACTIVE) {
-            profileImages.push({url: img.url, key: key, type: img.type});
+            profileImages.push({url: img.url, key: key, type: img.type, order: img.order});
           //}
         });
       }
@@ -240,6 +244,16 @@ export default(state = INITIAL_STATE, action) => {
         ...state,
         facebookAlbumPhotos: { id, name, photos: tempPhotos }
       };
+    }
+    case IMAGE_PAN_STARTED: {
+      const {image, initialTouchPosition} = action.payload;
+      return {...state, reorder: {image, initialTouchPosition}};
+    }
+    case IMAGE_PAN_STOPPED: {
+      return {...state, reorder: {}};
+    }
+    case IMAGE_REORDERED: {
+      return {...state, reorder: {}, profileImages: action.payload};
     }
     case SET_CURRENT_GEOLOCATION: {
       return { ...state, geolocation: action.payload };
