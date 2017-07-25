@@ -54,6 +54,8 @@
 
   [FIRApp configure];
   [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+  
+  [UIApplication sharedApplication].applicationIconBadgeNumber=0;
 
   return YES;
 }
@@ -72,6 +74,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
   [FBSDKAppEvents activateApp];
+  [UIApplication sharedApplication].applicationIconBadgeNumber=0;
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
