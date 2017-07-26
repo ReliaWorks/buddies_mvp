@@ -55,8 +55,8 @@ export const navTitleStyle = {
   fontSize: 18,
   fontWeight: '500',
   color: 'black',
-  width: width - 50,
-  zIndex: 99
+  width: width - 120,
+  zIndex: 99,
 };
 
 export const navBarStyle = {

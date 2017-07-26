@@ -101,7 +101,7 @@ export const homeLeftIconButton = () => {
   return (
     <TouchableOpacity
       onPress={() => Actions.browse()}
-      style={{width: ICON_CLICKABLE_AREA_WIDTH}}
+      style={{width: ICON_CLICKABLE_AREA_WIDTH, paddingBottom: 3}}
     >
       <CustomIcon
         name="home_icon"
@@ -120,7 +120,7 @@ export const homeRightIconButton = () => {
       style={{
         marginLeft: width - ICON_CLICKABLE_AREA_WIDTH,
         alignItems: 'flex-end',
-        ...(Platform.OS === 'android' ? {marginTop: -30, marginRight: ICON_PADDING} : {})
+        ...(Platform.OS === 'android' ? {marginTop: -50, marginRight: 0, padding: 10, paddingTop: 15} : {}),
       }}
     >
       <CustomIcon
@@ -151,8 +151,9 @@ export const profileIconButton = () => {
       <View
         style={{
         width: ICON_CLICKABLE_AREA_WIDTH,
-        height: 30,
-        marginTop: Platform.OS === 'ios' ? 29 : 12,
+        height: Platform.OS === 'ios' ? 30 : 50,
+        marginTop: Platform.OS === 'ios' ? 29 : 0,
+        paddingTop: Platform.OS === 'ios' ? 0 : 12
         }}
       >
       <CustomIcon
@@ -173,7 +174,7 @@ export const wrenchIconButton = () => {
   return (
     <TouchableOpacity
       onPress={() => Actions.settings()}
-      style={{width: ICON_CLICKABLE_AREA_WIDTH}}
+      style={{width: ICON_CLICKABLE_AREA_WIDTH, ...(Platform.OS === 'android' ? {paddingBottom: 5} : {}) }}
     >
       <IonIcon
         name="ios-settings"
