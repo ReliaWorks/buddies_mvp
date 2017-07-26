@@ -29,6 +29,8 @@ export const FACEBOOK_ALBUMS_FETCHED = 'facebook_albums_fetched';
 export const FACEBOOK_ALBUM_PHOTOS_REQUESTED = 'facebook_album_photos_requested';
 export const FACEBOOK_ALBUM_PHOTOS_FETCHED = 'facebook_album_photos_fetched';
 export const IMAGE_PAN_STARTED = 'image_pan_started';
+export const IMAGE_MOVED_OVER = 'image_moved_over';
+export const IMAGE_MOVING_OUTSIDE = 'image_moving_outside';
 export const IMAGE_PAN_STOPPED = 'image_pan_stopped';
 export const IMAGE_REORDERED = 'image_reordered';
 

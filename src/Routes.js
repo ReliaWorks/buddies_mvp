@@ -241,13 +241,13 @@ class Routes extends Component {
         <Scene
           key="location"
           component={LocationRequest}
-          leftButtonStyle={{ padding: 20 }}
+          leftButtonStyle={{ padding: 25 }}
           leftButtonIconStyle={{ tintColor: 'black' }}
         />
         <Scene
           key="pdf"
           component={PDF}
-          leftButtonStyle={{ padding: 20 }}
+          leftButtonStyle={{ padding: 25 }}
           leftButtonIconStyle={{ tintColor: 'black' }}
         />
       </Router>
