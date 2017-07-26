@@ -97,8 +97,10 @@ const styles = StyleSheet.create({
   },
   locationInput: {
     height: 40,
+    width: width - (MARGIN * 4),
     padding: 10,
-    margin: MARGIN,
+    marginTop: MARGIN,
+    marginBottom: MARGIN,
     fontFamily: 'Source Sans Pro',
     fontSize: 18,
     borderWidth: 1,

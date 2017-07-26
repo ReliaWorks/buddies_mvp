@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, 
 import { Actions } from 'react-native-router-flux';
 import { GiftedChat } from 'react-native-gifted-chat';
 import ConnectionOptionsModal from './conversation/ConnectionOptionsModal';
-import { Confirm } from '../components/common';
+import { EventTeaser, Confirm } from '../components/common';
 import { backIconButton, moreIconButton } from '../icons';
 import { fetchConversation, updateConversationNotifications, saveMessage, closeConversation, loadEarlier, unMatchWithUser } from '../actions';
 import { DEFAULT_PROFILE_PHOTO } from '../constants';
@@ -65,18 +65,6 @@ class Conversation extends Component {
     );
   }
 
-/*  <TouchableHighlight>
-    <View style={{width: 75, height: 50}}>
-      <Text style={{paddingLeft: 15, paddingTop: 15, fontFamily: 'Source Sans Pro'}} onPress={() => Actions.matches()}>
-        Back
-      </Text>
-    </View>
-  </TouchableHighlight>
-
-  <TouchableHighlight>
-    <View style={{width: 75, height: 50}} />
-  </TouchableHighlight>
-*/
   renderHeader() {
     return(
       <View
@@ -125,7 +113,6 @@ class Conversation extends Component {
 
   unMatch() {
     this.props.unMatchWithUser(this.props.connection.selectedMatchId);
-    //this.closeModals();
   }
 
   render() {
@@ -148,6 +135,7 @@ class Conversation extends Component {
             avatar: profileImage,
           }}
           renderFooter={this.renderFooter.bind(this)}
+          eventData={this.props.commonality.eventData}
         />
         <ConnectionOptionsModal
           visible={this.state.showConnectionOptionsModal}
@@ -187,8 +175,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ currentUser, connection, chat, messageCenter }) => {
-  return { currentUser, connection, chat, messageCenter };
+const mapStateToProps = ({ currentUser, connection, chat, messageCenter, commonality }) => {
+  return { currentUser, connection, chat, messageCenter, commonality };
 };
 
 export default connect(mapStateToProps, { updateConversationNotifications, fetchConversation, saveMessage, closeConversation, loadEarlier, unMatchWithUser })(Conversation);

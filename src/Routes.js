@@ -10,12 +10,11 @@ import ActivitySetupScene from './scenes/activity-setup/';
 import AffiliationSetupScene from './scenes/affiliation-setup/';
 import DescriptionSetup from './scenes/profile-setup/DescriptionSetup';
 import UserEditContainer from './scenes/user-edit/UserEditContainer';
-//import PhotoEditContainer from './components/profile-edit/PhotoEditContainer';
 import UserView from './scenes/UserView';
 import MessageCenterContainer from './scenes/message-center';
 import ConnectionContainer from './components/connection';
 import Conversation from './scenes/Conversation';
-import { PDF, PictureModal, FirstConnectionHelperModal } from './components/common';
+import { EventTeaser, PDF, PictureModal, FirstConnectionHelperModal } from './components/common';
 import ProfileModal from './components/common/ProfileModal';
 import ChatComponentIconButton from './components/common/ChatComponentIconButton';
 import FbAlbums from './components/profile-edit/addPhoto/FbAlbums';
@@ -255,18 +254,6 @@ class Routes extends Component {
     );
   }
 }
-
-/*<Scene
-  key="photoEdit"
-  component={PhotoEditContainer}
-  title="Edit Your Photos"
-  navigationBarStyle={{
-    borderBottomWidth: 3,
-    borderBottomColor: 'black',
-  }}
-  leftButton={profileIconButton}
-  type={ActionConst.RESET}
-/>*/
 
 const styles = {
   routerStyle: {

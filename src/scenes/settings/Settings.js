@@ -49,7 +49,7 @@ class Settings extends Component {
 
   renderPreferences() {
     return (
-      <View style={{flex: 25, justifyContent: 'space-between', marginTop: 10, marginBottom: 10}}>
+      <View style={{flex: 20, justifyContent: 'space-between', marginTop: 10, marginBottom: 10}}>
         <GenderPreference />
         <LocationPreference />
       </View>
@@ -178,7 +178,7 @@ class Settings extends Component {
   renderLocation() {
     const { location } = this.props.value;
     return (
-      <View style={{...styles.preferenceContainer, flex: 7, flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{...styles.preferenceContainer, flex: 4, flexDirection: 'row', alignItems: 'center'}}>
         <Text style={localStyles.locationHeaderText}>Location: <Text style={{fontFamily: 'Source Sans Pro', fontWeight: '400'}}>{location.city}, {location.state}
           </Text>
         </Text>
