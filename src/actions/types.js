@@ -32,7 +32,6 @@ export const IMAGE_PAN_STARTED = 'image_pan_started';
 export const IMAGE_PAN_STOPPED = 'image_pan_stopped';
 export const IMAGE_REORDERED = 'image_reordered';
 
-
 export const CURRENT_USER_FETCH_START = 'current_user_fetch_start';
 export const CURRENT_USER_FETCH_SUCCESS = 'current_user_fetch_success';
 export const CURRENT_USER_FETCH_FAILURE = 'current_user_fetch_failure';
@@ -67,3 +66,4 @@ export const LOCATION_MAP_STORAGE_KEY = 'location_map_storage_key';
 export const API_SECRET_KEY = "dsnsdhjhj332sdnm$sms092nvy!@5";
 
 export const FIND_COMMONALITY = 'find_commonality';
+export const FIND_EVENT = 'find_event';
