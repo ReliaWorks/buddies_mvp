@@ -33,6 +33,7 @@ const checkIfAlreadyLoggedInInner = (dispatch) => {
       FCM.getFCMToken().then(notificationToken => {
           const updates = {};
           updates['/user_profiles/' + user.uid + '/notificationToken'] = notificationToken;
+          updates['/user_profiles/' + user.uid + '/badgeNumber'] = 0;
 
           firebase.database().ref().update(updates)
           .catch(err => console.log('error while n token is being saved : ', err));
