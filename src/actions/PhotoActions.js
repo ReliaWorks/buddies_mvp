@@ -15,6 +15,8 @@ import {
   FACEBOOK_ALBUM_PHOTOS_REQUESTED,
   FACEBOOK_ALBUM_PHOTOS_FETCHED,
   IMAGE_PAN_STARTED,
+  IMAGE_MOVED_OVER,
+  IMAGE_MOVING_OUTSIDE,
   IMAGE_PAN_STOPPED,
   IMAGE_REORDERED
 } from './types';
@@ -250,17 +252,29 @@ export const fetchFacebookAlbumPhotos = (albumId, offset = 0) => {
   };
 };
 
-export const imagePanStarted = (image, initialTouchPosition) => {
+export const imagePanStarted = (draggingImage, initialTouchPosition) => {
   return (dispatch) => {
-    dispatch({type: IMAGE_PAN_STARTED, payload: {image, initialTouchPosition}});
+    dispatch({type: IMAGE_PAN_STARTED, payload: {draggingImage, initialTouchPosition}});
   };
 };
+
+export const imageMovedOver = (movedOverImageKey) => {
+  return dispatch => {
+    dispatch({type: IMAGE_MOVED_OVER, payload: {movedOverImageKey}});
+  };
+};
+
+export const imageMovingOutside = () => {
+  return dispatch => {
+    dispatch({type: IMAGE_MOVING_OUTSIDE});
+  };
+};
+
 export const imagePanStopped = () => {
   return (dispatch) => {
     dispatch({type: IMAGE_PAN_STOPPED});
   };
 };
-
 export const imageReordered = (profileImages, imageKey1, imageKey2) => {
   return (dispatch) => {
     console.log(imageKey1, ' ==> ', imageKey2);
@@ -269,11 +283,19 @@ export const imageReordered = (profileImages, imageKey1, imageKey2) => {
     const index1 = profileImages.findIndex(image => image.key === imageKey1);
     const index2 = profileImages.findIndex(image => image.key === imageKey2);
     const image1 = {...profileImages[index1]};
+    const image2 = {...profileImages[index2]};
 
     newImagesArray.splice(index1, 1);
-    const newIndex = index1 > index2 ? index2 + 1 : index2;
-    newImagesArray.splice(newIndex, 0, image1);
-
+    if (index1 > index2) {
+      newImagesArray.splice(index2, 1);
+      newImagesArray.splice(index2, 0, image1);
+      newImagesArray.splice(index2 + 1, 0, image2);
+    } else {
+      newImagesArray.splice(index2 - 1, 1);
+      newImagesArray.splice(index2 - 1, 0, image1);
+      newImagesArray.splice(index2, 0, image2);
+    }
+    
     const updates = {};
     const {uid} = firebase.auth().currentUser;
 
@@ -292,3 +314,35 @@ export const imageReordered = (profileImages, imageKey1, imageKey2) => {
     }
   };
 };
+
+// export const imageReordered = (profileImages, imageKey1, imageKey2) => {
+//   return (dispatch) => {
+//     console.log(imageKey1, ' ==> ', imageKey2);
+//
+//     let newImagesArray = profileImages;
+//     const index1 = profileImages.findIndex(image => image.key === imageKey1);
+//     const index2 = profileImages.findIndex(image => image.key === imageKey2);
+//     const image1 = {...profileImages[index1]};
+//
+//     newImagesArray.splice(index1, 1);
+//     const newIndex = index1 > index2 ? index2 + 1 : index2;
+//     newImagesArray.splice(newIndex, 0, image1);
+//
+//     const updates = {};
+//     const {uid} = firebase.auth().currentUser;
+//
+//     newImagesArray = newImagesArray.map((image, index) => {
+//       const order = index + 1;
+//       updates[`/user_profiles/${uid}/profileImages/${image.key}/order`] = order;
+//       return ({...image, order});
+//     });
+//
+//     dispatch({ type: IMAGE_REORDERED, payload: newImagesArray });
+//
+//     firebase.database().ref().update(updates);
+//
+//     if (index1 === 0) {
+//       updatePrimaryPicReferences(newImagesArray[0].url);
+//     }
+//   };
+// };

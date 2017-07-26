@@ -26,6 +26,8 @@ import {
   FACEBOOK_ALBUM_PHOTOS_REQUESTED,
   FACEBOOK_ALBUM_PHOTOS_FETCHED,
   IMAGE_PAN_STARTED,
+  IMAGE_MOVED_OVER,
+  IMAGE_MOVING_OUTSIDE,
   IMAGE_PAN_STOPPED,
   IMAGE_REORDERED
 } from '../actions/types';
@@ -248,8 +250,15 @@ export default(state = INITIAL_STATE, action) => {
       };
     }
     case IMAGE_PAN_STARTED: {
-      const {image, initialTouchPosition} = action.payload;
-      return {...state, reorder: {image, initialTouchPosition}};
+      const {draggingImage, initialTouchPosition} = action.payload;
+      return {...state, reorder: {draggingImage, initialTouchPosition}};
+    }
+    case IMAGE_MOVED_OVER: {
+      const {movedOverImageKey} = action.payload;
+      return {...state, reorder: {...state.reorder, movedOverImageKey}};
+    }
+    case IMAGE_MOVING_OUTSIDE: {
+      return {...state, reorder: {...state.reorder, movedOverImageKey: null}};
     }
     case IMAGE_PAN_STOPPED: {
       return {...state, reorder: {}};
