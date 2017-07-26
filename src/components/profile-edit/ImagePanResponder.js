@@ -49,6 +49,7 @@ class ImagePanResponder extends Component {
         this.props.imagePanStopped();
       }
     }
+    this.draggingRef.setNativeProps({style: {opacity: 1}});
   }
   handleLongPress(evt) {
     const {pageX: x, pageY: y, locationX, locationY} = evt.nativeEvent;
@@ -69,12 +70,16 @@ class ImagePanResponder extends Component {
         this.props.setScrollEnabled(false);
 
         this.floating.setNativeProps({ style: initialImageStyle(x, y) });
+
+        this.draggingRef = refsAndKeys.filter(item => item.key === image[0].key)[0].ref;
+        this.draggingRef.setNativeProps({style: {opacity: 0.4}});
       }
     }, 50);
   }
 
   handlePress() {
     this.props.imagePanStopped();
+    this.draggingRef.setNativeProps({style: {opacity: 1}});
   }
 
   setRef(ref) {
@@ -103,6 +108,6 @@ export default connect(mapStateToProps, { imagePanStarted, imageMovedOver, image
 
 const isInside = (x, y, item) => item.x1 < x && item.x2 > x && item.y1 < y && item.y2 > y;
 
-const initialImageStyle = (x, y) => ({position: 'absolute', left: x - 30, top: y - 90, height: 60, width: 60, borderWidth: 1, borderColor: 'white', borderRadius: 4 });
-const movingImageStyle = (x, y) => ({ position: 'absolute', left: x - 30, top: y - 90 });
+const initialImageStyle = (x, y) => ({position: 'absolute', left: x - 50, top: y - 110, height: 100, width: 100, borderWidth: 1, borderColor: 'white', borderRadius: 4 });
+const movingImageStyle = (x, y) => ({ position: 'absolute', left: x - 50, top: y - 110 });
 const releasedImageStyle = {left: 0, top: 0, borderWidth: 0, height: 0, width: 0};
