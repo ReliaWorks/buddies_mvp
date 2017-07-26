@@ -3,7 +3,18 @@ import firebase from 'firebase';
 
 import {
   FIND_COMMONALITY,
+  FIND_EVENT,
 } from './types';
+
+export const findEvent = (ouid) => {
+  return (dispatch) => {
+    firebase.database().ref(`events`)
+      .once('value', snapshot => {
+        const event = {};
+        dispatch({type: FIND_EVENT, payload: event});
+      });
+  };
+};
 
 export const findCommonality = (ouid, activities, affiliations) => {
   return (dispatch) => {
