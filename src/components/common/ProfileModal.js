@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
+import { TouchableOpacity, TouchableNativeFeedback, Text, View, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import BuddyCard from '../buddycard/BuddyCard';
@@ -11,20 +11,21 @@ class ProfileModal extends Component {
     this.props.chatProfileFetch(this.props.connection.selectedMatchId);
   }
   renderCloseIcon() {
+    const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+    const platformSpecificStyle = Platform.OS === 'ios' ? {flex: 5, marginTop: -30} : {height: 35, marginTop: -50};
+
     return (
-      <TouchableOpacity onPress={() => Actions.pop()}>
-      <View
-        style={{
-          flex: 5,
-          marginTop: -30,
-          flexDirection: 'row',
-          justifyContent: 'center',
-          borderBottomWidth: 3,
-        }}
-      >
-        <Text style={{fontFamily: 'Source Sans Pro'}}>Return to chat</Text>
-      </View>
-      </TouchableOpacity>
+      <Touchable onPress={() => Actions.pop()}>
+        <View
+          style={[platformSpecificStyle, {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            borderBottomWidth: 3,
+          }]}
+        >
+          <Text style={{fontFamily: 'Source Sans Pro'}}>Return to chat</Text>
+        </View>
+      </Touchable>
     );
   }
 
