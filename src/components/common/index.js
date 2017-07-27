@@ -3,6 +3,7 @@ export * from './CardItem';
 export * from './Confirm';
 export * from './Deck';
 export * from './EmptyNewConnectionList';
+export * from './EventDetail';
 export * from './EventTeaser';
 export * from './FullSizeImageModal';
 export * from './Header';

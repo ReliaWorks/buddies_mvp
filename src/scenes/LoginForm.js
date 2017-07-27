@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, View, Image, Text, TouchableHighlight, WebView } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import LinearGradient from 'react-native-linear-gradient';
+//import LinearGradient from 'react-native-linear-gradient';
 import { Button, Spinner, GlowLoader } from '../components/common';
 import { legalTextStyle } from '../components/common/styles';
 import { loginUser } from '../actions';
@@ -11,7 +11,7 @@ import { TOS } from '../constants';
 const appName = "wavelength";
 //const backgroundImageURL = require("../assets/img/wavelength.png");
 //const backgroundImageURL = require("../assets/img/wavelength71517.jpg");
-const backgroundImageURL = require("../assets/img/wavelength71517v2.jpg");
+const backgroundImageURL = require("../assets/img/intro.jpg");
 
 const { width } = Dimensions.get('window');
 const LOGINFORM_MARGIN = 15;
