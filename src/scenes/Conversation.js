@@ -4,9 +4,9 @@ import { Image, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, 
 import { Actions } from 'react-native-router-flux';
 import { GiftedChat } from 'react-native-gifted-chat';
 import ConnectionOptionsModal from './conversation/ConnectionOptionsModal';
-import { EventTeaser, Confirm } from '../components/common';
+import { EventTeaser, Confirm, Spinner } from '../components/common';
 import { backIconButton, moreIconButton } from '../icons';
-import { fetchConversation, updateConversationNotifications, saveMessage, closeConversation, loadEarlier, unMatchWithUser } from '../actions';
+import { fetchConversation, findEvent, updateConversationNotifications, saveMessage, closeConversation, loadEarlier, unMatchWithUser } from '../actions';
 import { DEFAULT_PROFILE_PHOTO } from '../constants';
 
 class Conversation extends Component {
@@ -21,6 +21,7 @@ class Conversation extends Component {
 
   componentWillMount() {
     this.props.fetchConversation(this.props.connection, this.props.currentUser);
+    this.props.findEvent(this.props.connection.selectedMatchId);
   }
 
   componentWillUnmount() {
@@ -122,6 +123,10 @@ class Conversation extends Component {
     if(currentUser && currentUser.profileImages && currentUser.profileImages.length > 0)
       profileImage = currentUser.profileImages[0].url;
 
+    if(this.props.commonality.loadingEvent) {
+      return <Spinner size="large" />;
+    }
+    console.log(this.props.commonality.eventData);
     return (
       <View style={{flex: 1}}>
         {this.renderHeader()}
@@ -179,4 +184,4 @@ const mapStateToProps = ({ currentUser, connection, chat, messageCenter, commona
   return { currentUser, connection, chat, messageCenter, commonality };
 };
 
-export default connect(mapStateToProps, { updateConversationNotifications, fetchConversation, saveMessage, closeConversation, loadEarlier, unMatchWithUser })(Conversation);
+export default connect(mapStateToProps, { updateConversationNotifications, findEvent, fetchConversation, saveMessage, closeConversation, loadEarlier, unMatchWithUser })(Conversation);

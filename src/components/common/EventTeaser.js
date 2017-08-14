@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 75,
+    marginBottom: MARGIN * 2,
   },
   headerText: {
     fontSize: 18,
