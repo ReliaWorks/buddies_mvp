@@ -19,13 +19,14 @@ import {
   SEEN_CONNECTION_HELPER,
   SET_CURRENT_GEOLOCATION,
   SET_CURRENT_LOCATION,
-  API_SECRET_KEY,
   SET_NEW_NOTIFICATION,
   BROWSED_TO_NEXT_USER,
   RESET_CURRENT_INDEX,
   IMAGE_LOADED,
 } from './types';
 import { DEFAULT_PROFILE_PHOTO, POTENTIALS_LIMIT } from '../constants';
+import { API_SECRET_KEY } from '../config';
+
 import { getCurrentPosition } from './LocationActions';
 
 const jsSHA = require("jssha");

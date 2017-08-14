@@ -1,18 +1,43 @@
 import _ from 'lodash';
 import firebase from 'firebase';
-
+import axios from 'axios';
 import {
   FIND_COMMONALITY,
-  FIND_EVENT,
+  EVENT_FETCH_START,
+  EVENT_FETCH_SUCCESS,
+  EVENT_FETCH_FAILURE,
 } from './types';
+import { API_SECRET_KEY } from '../config';
+
+const jsSHA = require("jssha");
 
 export const findEvent = (ouid) => {
   return (dispatch) => {
-    firebase.database().ref(`events`)
-      .once('value', snapshot => {
-        const event = {};
-        dispatch({type: FIND_EVENT, payload: event});
-      });
+    dispatch({type: EVENT_FETCH_START});
+
+    const { currentUser } = firebase.auth();
+    if(!currentUser) {
+      dispatch({ type: EVENT_FETCH_FAILURE });
+      Actions.login();
+    }
+    const shaObj = new jsSHA("SHA-256", "TEXT");
+    shaObj.update(API_SECRET_KEY + currentUser.uid);
+    const hash = shaObj.getHash("HEX");
+
+    axios.get(`https://activities-test-a3871.appspot.com/match_event/${currentUser.uid}/${ouid}`, {
+      headers: { authorization: `${hash}:${currentUser.uid}`}
+    })
+      .then(response => {
+        const event = response.data;
+
+        dispatch({
+          type: EVENT_FETCH_SUCCESS,
+          payload: event
+        });
+      }, (error) => {
+        console.log(`Event API not responding.  Error = ${error}`);
+        dispatch({type: EVENT_FETCH_FAILURE});
+    });
   };
 };
 
