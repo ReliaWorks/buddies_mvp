@@ -65,7 +65,8 @@ export const MATCHES_FETCH_FAIL = 'matches_fetch_fail';
 export const SET_CURRENT_GEOLOCATION = 'set_geolocation';
 export const SET_CURRENT_LOCATION = 'set_location';
 export const LOCATION_MAP_STORAGE_KEY = 'location_map_storage_key';
-export const API_SECRET_KEY = "dsnsdhjhj332sdnm$sms092nvy!@5";
 
 export const FIND_COMMONALITY = 'find_commonality';
-export const FIND_EVENT = 'find_event';
+export const EVENT_FETCH_START = 'event_fetch_start';
+export const EVENT_FETCH_FAILURE = 'event_fetch_failure';
+export const EVENT_FETCH_SUCCESS = 'event_fetch_success';
