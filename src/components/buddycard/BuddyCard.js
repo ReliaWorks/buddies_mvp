@@ -11,7 +11,7 @@ import CustomIcon from '../../assets/icons';
 
 const { width, height } = Dimensions.get('window');
 
-const BOTTOM_PADDING = 150; //creates space for the Connect button
+const BOTTOM_PADDING = 125; //creates space for the Connect button
 const MARGIN = 15;
 
 class BuddyCard extends Component {
@@ -143,7 +143,7 @@ class BuddyCard extends Component {
     const { locationText, nameText } = styles;
 
     return (
-        <View style={{backgroundColor: 'white'}}>
+        <View style={{backgroundColor: 'white', marginBottom: editable === true ? MARGIN : BOTTOM_PADDING}}>
          <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
             <Text style={nameText}>
               {firstName}
@@ -210,7 +210,8 @@ const localStyles = StyleSheet.create({
     marginTop: 10,
     marginLeft: MARGIN,
     marginRight: MARGIN,
-    marginBottom: BOTTOM_PADDING,
+    marginBottom: MARGIN,
+//    marginBottom: BOTTOM_PADDING,
   },
   descriptionText: {
     fontSize: 18,
