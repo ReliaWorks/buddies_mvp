@@ -16,6 +16,7 @@ import {
   IMAGE_LOADED,
   LOGOUT_USER,
   SET_NEW_NOTIFICATION,
+  SET_CURRENT_LOCATION
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -108,6 +109,9 @@ export default(state = INITIAL_STATE, action) => {
         selectedMatchName: name,
         selectedConversationId: conversationId
       };
+    }
+    case SET_CURRENT_LOCATION: {
+      return { ...state, potentialsLoaded: false };
     }
     case LOGOUT_USER: {
       return INITIAL_STATE;
