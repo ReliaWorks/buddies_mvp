@@ -812,6 +812,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		783FFFC71F72D90900253522 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				BF6A33A84A6148BAAFB1C9B9 /* libRNVectorIcons.a */,
+				F12FAB9E21824A0197DE4B65 /* libRNRandomBytes.a */,
+				3AA594BD700848BBAF8D9345 /* libRNImagePicker.a */,
+				CFB3091F3F6F44ECB30FBE93 /* libRNFetchBlob.a */,
+				F01C4F2F30804CE39D774091 /* libRCTImageResizer.a */,
+				5545E9248E6B4C3387123929 /* libimageCropPicker.a */,
+				D8CF3EBFA11545D0B903B6AF /* libBVLinearGradient.a */,
+				F58D3C017FC34C5DBAF7FD31 /* libLottie.a */,
+				616C64492E49434CA9503C2F /* libLottieReactNative.a */,
+				7AFE99D4E7754605A1DBC35F /* libRNFIRMessaging.a */,
+				4F46A1CFCB354E929F87CAEE /* libRNSentry.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -873,6 +891,7 @@
 				00E356EF1AD99517003FC87E /* buddies_v3Tests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				13AE508B22414452A53B19EA /* Resources */,
+				783FFFC71F72D90900253522 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1744,7 +1763,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PublicBetaVersionIcons;
 				CODE_SIGN_ENTITLEMENTS = buddies_v3/buddies_v3.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1788,7 +1807,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PublicBetaVersionIcons;
 				CODE_SIGN_ENTITLEMENTS = buddies_v3/buddies_v3.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
