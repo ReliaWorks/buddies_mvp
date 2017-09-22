@@ -1763,7 +1763,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PublicBetaVersionIcons;
 				CODE_SIGN_ENTITLEMENTS = buddies_v3/buddies_v3.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1807,7 +1807,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PublicBetaVersionIcons;
 				CODE_SIGN_ENTITLEMENTS = buddies_v3/buddies_v3.entitlements;
 				CURRENT_PROJECT_VERSION = 1;

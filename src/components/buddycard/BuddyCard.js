@@ -211,7 +211,6 @@ const localStyles = StyleSheet.create({
     marginLeft: MARGIN,
     marginRight: MARGIN,
     marginBottom: MARGIN,
-//    marginBottom: BOTTOM_PADDING,
   },
   descriptionText: {
     fontSize: 18,
