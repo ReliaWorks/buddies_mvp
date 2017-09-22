@@ -53,6 +53,7 @@ const styles = {
     marginLeft: 10,
     marginRight: 10,
     marginTop: 10,
+    marginBottom: 5,
     width: 75,
     height: 100,
   },

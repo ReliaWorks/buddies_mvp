@@ -276,9 +276,7 @@ function checkIfUserExists(user, ref, accessTokenData, dispatch) {
         reactivateAccountIfDeactivated(snapshot.key, snapshot.val().status)
         .then(() => {
           Actions.main();
-          console.log('login öncesi');
           dispatch({ type: LOGIN_USER, payload: accessTokenData.uid });
-          console.log('login hemen sonrası');
         });
       } else {
         setupUserFirebase(user,ref, accessTokenData, dispatch);
