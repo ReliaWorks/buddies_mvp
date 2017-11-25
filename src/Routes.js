@@ -247,8 +247,12 @@ class Routes extends Component {
         <Scene
           key="pdf"
           component={PDF}
-          leftButtonStyle={{ padding: 25 }}
+          leftButtonStyle={{ marginBottom: 25 }}
           leftButtonIconStyle={{ tintColor: 'black' }}
+          navigationBarStyle={{
+            borderBottomWidth: 3,
+            borderBottomColor: 'black'
+          }}
         />
       </Router>
     );
